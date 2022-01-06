@@ -1,0 +1,25 @@
+MODELS
+
+USER:-
+id, gmail, password, first Name, Last Name, type(student, teacher), profile, bio 
+
+CLASS:-
+id, title, description, profile_pic, USER(type=teacher), date_started
+
+CLASS ENTROLLMENT:-
+CLASS, USER(type=student)
+
+ASSIGNMENT:-
+id, title, date_added, date_due, total_marks, CLASS
+
+SUBMISSION:-
+id, submission_date, data(file), USER(type=student), ASSIGNMENT
+
+CORRECTION:-
+id, date_corrected, SUBMISSION, given_mark, extra_message
+
+MESSAGE_PUBLIC:-
+id, content, CLASS, USER
+
+MESSAGE_PRIVATE:-
+Future maybe..
