@@ -1,7 +1,7 @@
 MODELS
 
 USER:-
-id, gmail, password, first Name, Last Name, type(student, teacher), profile, bio 
+id, gmail, password, username(not unique), type(student, teacher), profile, bio 
 
 CLASS:-
 id, title, description, profile_pic, USER(type=teacher), date_started
