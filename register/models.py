@@ -40,6 +40,7 @@ class CustomUserManager(BaseUserManager):
         user.is_staff = True
         user.is_superuser = True
         user.is_active = True
+        user.is_email_verified = True
         user.save(using=self._db)
         return user
 
@@ -61,6 +62,7 @@ class CustomUser(AbstractBaseUser):
     account_type = models.CharField(max_length=7, choices=ACCOUNT_TYPES, blank=False, null=False)
     profile_pic = models.ImageField(blank=True, upload_to=get_image_upload_location, default='profile/default.jpg')
     bio = models.TextField(max_length=120, null=True, blank=True)
+    is_email_verified = models.BooleanField(default=False)
 
     objects = CustomUserManager()
 
