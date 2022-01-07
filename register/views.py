@@ -4,4 +4,4 @@ from django.http import HttpResponse
 # Create your views here.
 
 def choose_type_of_account(request):
-    return HttpResponse('asdas')
+    return render(request, 'register/create.html', {})

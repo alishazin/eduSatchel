@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Choose The Account Type{% endblock title %}
+
+{% block headextra %}
+<link rel='stylesheet' href="{% static 'css/register/create.css' %}">
+<script src="{% static 'js/register/create.js' %}"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&Montserrat">
+{% endblock headextra %}
+
+{% block body %}
+<i class="bi bi-journals" id="book"></i>
+<i class="bi bi-send-fill" ></i>
+<i class="bi bi-trophy" id="trophy"></i>
+<i class="bi bi-bar-chart-fill" id="graph"></i>
+<i class="bi bi-calculator" id="calc"></i>
+<div class="card-box">
+    <img src="/media/source/register/teacher.png">
+    <div class="header">Teacher</div>
+    <ul>
+        <li>Can start courses</li>
+        <li>Can provide assignments</li>
+        <li>Can monitor the activities of their students</li>
+    </ul>
+    <div class="button-box">
+        <div class="button-bg" id="teacher">
+            <button>CREATE</button>
+        </div>
+    </div>
+</div>
+<div class="card-box">
+    <img src="/media/source/register/student.png">
+    <div class="header">Student</div>
+    <ul>
+        <li>Can entroll in the courses</li>
+        <li>Can submit assignments</li>
+    </ul>
+    <div class="button-box">
+        <div class="button-bg" id="student">
+            <button>CREATE</button>
+        </div>
+    </div>
+</div>
+<script>
+    var teacherRedirect = "{% url 'create-teacher' %}";
+    var studentRedirect = "{% url 'create-student' %}";
+    document.body.onload = onLoad();
+</script>
+{% endblock body %}
