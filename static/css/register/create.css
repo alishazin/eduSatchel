@@ -4,6 +4,8 @@
     border: 1.5px solid var(--secondary-color);
     border-radius: 15px;
     padding: 10px;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
 }
 .card-box:first-of-type {
     margin-right: 10px;

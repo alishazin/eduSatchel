@@ -14,3 +14,13 @@
     --light-text-color: rgb(230, 230, 230);
     --error-red-color: red;
 }
+@keyframes on-load-translate-animation {
+    from {
+        transform: translateY(-8px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
