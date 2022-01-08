@@ -1,20 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'register/base.html' %}
 {% load static %}
 
 {% block title %}Choose The Account Type{% endblock title %}
 
-{% block headextra %}
+{% block headextraextra %}
 <link rel='stylesheet' href="{% static 'css/register/create.css' %}">
 <script src="{% static 'js/register/create.js' %}"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&Montserrat">
-{% endblock headextra %}
+{% endblock headextraextra %}
 
-{% block body %}
-<i class="bi bi-journals" id="book"></i>
-<i class="bi bi-send-fill" ></i>
-<i class="bi bi-trophy" id="trophy"></i>
-<i class="bi bi-bar-chart-fill" id="graph"></i>
-<i class="bi bi-calculator" id="calc"></i>
+{% block bodyextra %}
 <div class="card-box">
     <img src="/media/source/register/teacher.png">
     <div class="header">Teacher</div>
@@ -47,4 +42,4 @@
     var studentRedirect = "{% url 'create-student' %}";
     document.body.onload = onLoad();
 </script>
-{% endblock body %}
+{% endblock bodyextra %}

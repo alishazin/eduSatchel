@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Choose The Account Type{% endblock title %}
+
+{% block headextra %}
+<link rel='stylesheet' href="{% static 'css/register/base.css' %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&Montserrat">
+{% block headextraextra %}
+{% endblock headextraextra %}
+{% endblock headextra %}
+
+{% block body %}
+<i class="bi bi-journals" id="book"></i>
+<i class="bi bi-trophy" id="trophy"></i>
+<i class="bi bi-bar-chart-fill" id="graph"></i>
+<i class="bi bi-calculator" id="calc"></i>
+{% block bodyextra %}
+{% endblock bodyextra %}
+{% endblock body %}
