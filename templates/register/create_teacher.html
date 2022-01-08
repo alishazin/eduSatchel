@@ -16,6 +16,7 @@
         <p>As Teacher</p>
     </div>
     <form method="POST" action=".">
+        {% csrf_token %}
         <div class="field-parent">
             <input type="email" name="email">
             <label>Email</label>

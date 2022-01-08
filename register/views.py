@@ -10,3 +10,7 @@ def choose_type_of_account(request):
 class SignUpTeacherOneView(View):
     def get(self, request):
         return render(request, 'register/create_teacher.html', {})
+
+    def post(self, request):
+        print(request.POST)
+        return HttpResponse('2')
