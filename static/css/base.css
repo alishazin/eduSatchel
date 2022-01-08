@@ -2,10 +2,15 @@
     box-sizing: border-box;
 }
 :root {
-    --primary-color: #2b6777;
-    --primary-light-color: #c8d8e4;
+    --primary-color: #022449;
     --secondary-color: #52ab98;
-    --tertiary-color: #f2f2f2;
-    --fourth-color: white; 
+    --secondary-light-color: #96FFFF;
+    --secondary-lighter-color: #C8EFF9;
+    --tertiary-color: #F27D92;
     --text-color: #757575; 
+    --shadow-color: rgba(0, 0, 0, 0.349);
+    --shadow-light-color: rgba(0, 0, 0, 0.171);
+    --green-color: #00ff00;
+    --light-text-color: rgb(230, 230, 230);
+    --error-red-color: red;
 }

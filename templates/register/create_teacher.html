@@ -1,0 +1,47 @@
+{% extends 'register/base.html' %}
+{% load static %}
+
+{% block title %}Choose The Account Type{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/register/create_teacher.css' %}">
+<script src="{% static 'js/register/create_teacher.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="parent">
+    {% include 'register/blocks/progress_line.html' %}
+    <div class="header-container">
+        <h1>Sign Up</h1>
+        <p>As Teacher</p>
+    </div>
+    <form method="POST" action=".">
+        <div class="field-parent">
+            <input type="email" name="email">
+            <label>Email</label>
+            <div class="error-div"></div>
+        </div>
+        <div class="field-parent">
+            <input type="text" name="username">
+            <label>Name</label>
+            <div class="error-div"></div>
+        </div>
+        <div class="field-parent">
+            <input type="text" name="password1">
+            <label>Password</label>
+            <div class="error-div"></div>
+        </div>
+        <div class="field-parent">
+            <input type="text" name="password2">
+            <label>Confirm Password</label>
+        </div>
+        <div class="button-container">
+            <a href="{% url 'log-in' %}">Log In</a>
+            <button>NEXT</button>
+        </div>
+    </form>
+</div>
+<script>
+    document.body.onload = onLoad();
+</script>
+{% endblock bodyextra %}
