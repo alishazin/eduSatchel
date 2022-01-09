@@ -1,6 +1,6 @@
 .card-box {
     height: fit-content;
-    width: 220px;
+    width: 270px;
     border: 1.5px solid var(--secondary-color);
     border-radius: 15px;
     padding: 10px;
@@ -15,11 +15,11 @@
 }
 .card-box > img {
     width: 100%;
-    height: 180px;
+    height: 240px;
 }
 .card-box > .header {
     font-family: "Lato", Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 24px;
     padding-left: 10px;
     font-weight: bold;
     color: var(--primary-color)
@@ -30,9 +30,9 @@
 }
 .card-box > ul > li {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
+    font-size: 15px;
     color: var(--text-color);
-    line-height: 17px;
+    line-height: 22px;
 }
 .card-box > ul > li:not(.card-box > ul > li:last-of-type) {
     margin-bottom: 6px;
@@ -42,15 +42,17 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 70px;
+    margin-top: 30px;
+    margin-bottom: 0;
+    height: 90px;
 }
 .card-box > .button-box > .button-bg {
     position: relative;
     overflow: visible;
     background-color: var(--secondary-color);
-    width: 80px;
-    height: 30px;
-    border-radius: 15px;
+    width: 90px;
+    height: 40px;
+    border-radius: 25px;
     z-index: 1;
     transition: background-color 0.5s;
 }
@@ -62,10 +64,10 @@
     border: 2px solid var(--secondary-color);
     color: var(--secondary-color);
     outline: none;
-    font-size: 13px;
+    font-size: 15px;
     font-family: "Montserrat", Verdana, Geneva, Tahoma, sans-serif;
     background-color: white;
-    border-radius: 15px;
+    border-radius: 25px;
     transition: left 0.5s, color 0.5s, border-color 0.5s;
 }
 .card-box > .button-box > .button-bg:hover {
@@ -79,7 +81,7 @@
 .card-box > .button-box > .button-bg:active {
     opacity: 0.7;
 }
-@media (max-width:500px) {
+@media (max-width:600px) {
     body {
         flex-direction: column;
         padding-top: 170px;

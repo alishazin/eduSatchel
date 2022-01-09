@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from base64 import b64encode
-from validate_email import validate_email
 
 import os
 
@@ -12,8 +11,6 @@ ACCOUNT_TYPES = (
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password, account_type):
-        if validate_email(self.normalize_email(email)) == False:
-            raise ValueError("Email does not exist!.")
         if not email:
             raise ValueError("User must have an email address.")
         if not username:

@@ -20,14 +20,14 @@ function addClickEventToField() {
     inputField.forEach((field) => {
         field.onfocus = () => {
             const label = field.parentElement.children[1];
-            label.style.top = '-7px';
-            label.style.fontSize = '11px';
+            label.style.top = '-8px';
+            label.style.fontSize = '13px';
         }
         field.onblur = () => {
             if (field.value.length === 0) {
                 const label = field.parentElement.children[1];
-                label.style.top = '10px';
-                label.style.fontSize = '13px';
+                label.style.top = '12.7px';
+                label.style.fontSize = '15px';
             }
         }
     })

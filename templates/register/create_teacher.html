@@ -18,22 +18,22 @@
     <form method="POST" action=".">
         {% csrf_token %}
         <div class="field-parent">
-            <input type="email" name="email">
+            <input type="email" name="email" autocapitalize="none" autocomplete="email" required id="id_email">
             <label>Email</label>
             <div class="error-div"></div>
         </div>
         <div class="field-parent">
-            <input type="text" name="username">
+            <input type="text" name="username" maxlength="30" autocapitalize="none" autocomplete="username" required id="id_username">
             <label>Name</label>
             <div class="error-div"></div>
         </div>
         <div class="field-parent">
-            <input type="text" name="password1">
+            <input type="password" name="password1" autocomplete="new-password" required id="id_password1">
             <label>Password</label>
             <div class="error-div"></div>
         </div>
         <div class="field-parent">
-            <input type="text" name="password2">
+            <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
             <label>Confirm Password</label>
         </div>
         <div class="button-container">

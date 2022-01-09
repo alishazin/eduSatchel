@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
+from .backends import validate_user_one
 
 # Create your views here.
 
@@ -12,5 +13,7 @@ class SignUpTeacherOneView(View):
         return render(request, 'register/create_teacher.html', {})
 
     def post(self, request):
-        print(request.POST)
-        return HttpResponse('2')
+        statusDict = validate_user_one(request.POST)
+        print(statusDict)
+        return HttpResponse('1')
+        
