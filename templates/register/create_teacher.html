@@ -18,19 +18,19 @@
     <form method="POST" action=".">
         {% csrf_token %}
         <div class="field-parent">
-            <input type="email" name="email" autocapitalize="none" autocomplete="email" required id="id_email">
+            <input type="email" name="email" autocapitalize="none" autocomplete="email" required id="id_email" value="{{ latest_email }}">
             <label>Email</label>
-            <div class="error-div"></div>
+            <div class="error-div">{{ email_error }}</div>
         </div>
         <div class="field-parent">
-            <input type="text" name="username" maxlength="30" autocapitalize="none" autocomplete="username" required id="id_username">
+            <input type="text" name="username" maxlength="30" autocapitalize="none" autocomplete="username" required id="id_username" value="{{ latest_username }}">
             <label>Name</label>
-            <div class="error-div"></div>
+            <div class="error-div">{{ username_error }}</div>
         </div>
         <div class="field-parent">
             <input type="password" name="password1" autocomplete="new-password" required id="id_password1">
             <label>Password</label>
-            <div class="error-div"></div>
+            <div class="error-div">{{ password_error }}</div>
         </div>
         <div class="field-parent">
             <input type="password" name="password2" autocomplete="new-password" required id="id_password2">

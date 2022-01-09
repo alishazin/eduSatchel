@@ -61,7 +61,7 @@
     width: 100%;
     z-index: 1;
     border-radius: 8px;
-    border: 1.5px solid var(--secondary-color);
+    border: 2px solid var(--secondary-color);
     outline: none;
     background-color: transparent;
     padding-left: 15px;

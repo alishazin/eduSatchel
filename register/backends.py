@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
-from validate_email import validate_email
+from .models import CustomUser
 
 import re
 
@@ -25,18 +25,53 @@ def check_if_valid_email_format(email):
     else:
         return False
 
+def check_if_valid_username_format(username):
+    check = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789'
+    for i in username:
+        if i not in check:
+            return False
+    return True
+
 def validate_user_one(data):
     returnDict = {
         'general' : '',
         'email' : '',
+        'latest_email' : '',
         'username' : '',
+        'latest_username' : '',
         'password' : '',
     }
     if 'email' in data.keys() and 'username' in data.keys() and 'password1' in data.keys() and 'password2' in data.keys():
+        returnDict['latest_email'] = data['email']
+        returnDict['latest_username'] = data['username']
         # Email check
         if not check_if_valid_email_format(data['email'].strip()):
-            returnDict['email'] = 'Invalid email address!'
+            returnDict['email'] = 'Invalid email address.'
             return returnDict
+
+        if CustomUser.objects.filter(email=data['email']):
+            returnDict['email'] = 'An account with this gmail exist.'
+            return returnDict
+
+        # username check
+        if len(data['username']) < 3 and len(data['username']) > 30:
+            returnDict['username'] = 'Username should be between 3 and 30 characters in length.'
+            return returnDict
+
+        if not check_if_valid_username_format(data['username']):
+            returnDict['username'] = 'Username should only contain (a-z) and (0-9)'
+            return returnDict
+
+        # password check
+        if len(data['password1']) < 8:
+            returnDict['password'] = 'Password should contain atleast 8 characters'
+            return returnDict
+
+        if data['password1'] != data['password2']:
+            returnDict['password'] = 'Password confirmation failed'
+            return returnDict
+
+        return True
     else: 
         returnDict['general'] = 'Something went wrong. Try refreshing the page!'
         return returnDict
