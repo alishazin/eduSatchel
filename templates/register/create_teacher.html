@@ -17,6 +17,14 @@
     </div>
     <form method="POST" action=".">
         {% csrf_token %}
+        {% if general_error %}
+            <script>
+                const confirmation = window.confirm('{{ general_error }}');
+                if (confirmation) {
+                    location.href = "{% url 'create-teacher' %}"; 
+                }
+            </script>
+        {% endif %}
         <div class="field-parent">
             <input type="email" name="email" autocapitalize="none" autocomplete="email" required id="id_email" value="{{ latest_email }}">
             <label>Email</label>
