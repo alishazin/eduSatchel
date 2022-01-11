@@ -3,6 +3,16 @@ from django.contrib.auth.backends import ModelBackend
 from .models import CustomUser
 
 import re
+from threading import Thread
+import time
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.core.mail import EmailMessage
+from django.conf import settings
+from .utils import generate_token
 
 class CaseInsensitiveModelBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
@@ -75,3 +85,22 @@ def validate_user_one(data):
     else: 
         returnDict['general'] = 'Something went wrong. Refresh the page ?'
         return returnDict
+
+def send_email_for_verification(userObj, request):
+    current_site = get_current_site(request)
+    email_subject = 'Activate Your Account'
+    email_body = render_to_string('email_formats/account_activate.html', {
+        'userObj': userObj,
+        'domain': current_site,
+        'uid': urlsafe_base64_encode(force_bytes(userObj.pk)),
+        'token': generate_token.make_token(userObj),
+    })
+
+    emailToSend = EmailMessage(
+        subject=email_subject, 
+        body=email_body, 
+        from_email=settings.EMAIL_HOST_USER,
+        to=[userObj.email],
+    )
+
+    emailToSend.send()
