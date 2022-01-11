@@ -127,17 +127,6 @@
     color: white;
     background-color: var(--tertiary-color);
 }
-@media (max-width:500px) {
-    body {
-        background-color: var(--primary-color);
-    }
-    body > i {
-        color: var(--secondary-lighter-color) !important;
-    }
-    .parent {
-        box-shadow: none;
-    }
-}
 /* Change the white to any color */
 /* Change autocomplete styles in WebKit */
 input:-webkit-autofill,
@@ -152,4 +141,15 @@ select:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
     -webkit-box-shadow: 0 0 0px 1000px var(--primary-color) inset;
     transition: background-color 5000s ease-in-out 0s;
+}
+@media (max-width:500px) {
+    body {
+        background-color: var(--primary-color) !important;
+    }
+    body > i {
+        color: var(--secondary-lighter-color) !important;
+    }
+    .parent {
+        box-shadow: none !important;
+    }
 }

@@ -11,7 +11,7 @@ function animateProgressLine() {
         setTimeout(() => {
             ballOne.innerHTML = '<i class="bi bi-check"></i>';
             ballOne.style.backgroundColor = 'var(--green-color)';  
-        }, 600);
+        }, 1050);
     }, 200);
 }
 

@@ -68,13 +68,14 @@
     font-family: "Montserrat", Verdana, Geneva, Tahoma, sans-serif;
     background-color: white;
     border-radius: 25px;
+    cursor: pointer;
     transition: left 0.5s, color 0.5s, border-color 0.5s;
 }
 .card-box > .button-box > .button-bg:hover {
     background-color: var(--tertiary-color);
 }
 .card-box > .button-box > .button-bg:hover > button {
-    left: 10px;
+    left: 12px;
     color: var(--tertiary-color);
     border-color: var(--tertiary-color);
 }

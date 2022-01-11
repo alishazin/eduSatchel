@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.views import View
+from django.urls import reverse
 from .backends import validate_user_one
+from .models import CustomUser
 
 # Create your views here.
 
@@ -22,8 +24,15 @@ class SignUpTeacherOneView(View):
     def post(self, request):
         returnStatus = validate_user_one(request.POST)
         if returnStatus == True:
-            # next step
-            return HttpResponse('Success')
+            CustomUser.objects.create(
+                email = request.POST['email'].strip(),
+                username = request.POST['username'].strip(),
+                password = request.POST['password1'].strip(),
+                account_type = 'student',
+            )
+            return render(request, 'register/create_email_verification.html', {
+                'email' : request.POST['email'],
+            })
         else:
             return render(request, 'register/create_teacher.html', {
                 'general_error' : returnStatus['general'],
@@ -33,3 +42,7 @@ class SignUpTeacherOneView(View):
                 'latest_username' : returnStatus['latest_username'],
                 'password_error' : returnStatus['password'],
             })
+
+class SignUpTeacherTwoView(View):
+    def get(self, request):
+        return render(request, 'register/create_email_verification.html', {})

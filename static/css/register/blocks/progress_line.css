@@ -22,7 +22,7 @@
     background-color: var(--green-color);
     height: 100%;
     border-radius: 8px;
-    transition: width 1s;
+    transition: width 1.5s;
 }
 .parent > .progress-container > .line > .ball {
     position: absolute;

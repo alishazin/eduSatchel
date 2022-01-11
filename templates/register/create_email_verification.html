@@ -1,0 +1,22 @@
+{% extends 'register/base.html' %}
+{% load static %}
+
+{% block title %}Choose The Account Type{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/register/create_email_verification.css' %}">
+<script src="{% static 'js/register/create_email_verification.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="parent">
+    {% include 'register/blocks/progress_line.html' %}
+    <div class="content-container">
+        <i class="bi bi-inbox"></i>
+        <h2>Check the inbox of {{ email }} for a URL to verify the email.</h2>
+    </div>
+</div>
+<script>
+    document.body.onload = onLoad();
+</script>
+{% endblock bodyextra %}
