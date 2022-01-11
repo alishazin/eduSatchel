@@ -2,7 +2,7 @@
 
 Hi {{ userObj.username }},
 
-Email sent by {{ domain }} for resetting your password.
+Email sent by {{ domain }} for verifying your account.
 
 Please use the link below to verify your account.
 http://{{ domain }}{% url 'activate-account' uidb64=uid token=token %}
