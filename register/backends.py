@@ -3,7 +3,6 @@ from django.contrib.auth.backends import ModelBackend
 from .models import CustomUser
 
 import re
-from threading import Thread
 import time
 
 from django.contrib.sites.shortcuts import get_current_site
@@ -104,3 +103,10 @@ def send_email_for_verification(userObj, request):
     )
 
     emailToSend.send()
+
+def expire_account(userObj):
+    # expiration time = 10 min = 600 sec
+    time.sleep(600)
+    newUserObj = CustomUser.objects.get(pk=userObj.pk)
+    if newUserObj.is_email_verified == False:
+        newUserObj.delete()

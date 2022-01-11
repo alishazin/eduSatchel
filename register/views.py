@@ -4,9 +4,11 @@ from django.views import View
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 
-from .backends import validate_user_one, send_email_for_verification
+from .backends import validate_user_one, send_email_for_verification, expire_account
 from .models import CustomUser
 from .utils import generate_token
+
+from threading import Thread
 
 # Create your views here.
 
@@ -34,6 +36,7 @@ class SignUpTeacherInitialView(View):
                 account_type = 'student',
             )
             send_email_for_verification(user_obj, request)
+            Thread(target=lambda : expire_account(user_obj)).start()
             return render(request, 'register/create_email_verification.html', {
                 'email' : request.POST['email'],
             })

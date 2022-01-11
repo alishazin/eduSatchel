@@ -26,19 +26,20 @@
 }
 .parent > .progress-container > .line > .ball {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     background-color: var(--secondary-lighter-color);
-    top: calc(50% - 10px);
+    top: calc(50% - 12.5px);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 13px;
+    font-size: 16px;
     color: var(--primary-color);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: monospace, Arial, Helvetica, sans-serif;
     z-index: 2;
     transition: background-color 0.2s;
+    font-weight: bold;
 }
 .parent > .progress-container > .line > #one {
     left: calc(25% - 10px);
@@ -50,6 +51,7 @@
     left: calc(75% - 10px);
 }
 .parent > .progress-container > .line > .ball > i {
-    font-size: 16px;
+    font-size: 19px;
     color: white;
+    transform: translateY(1px);
 }
