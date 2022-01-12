@@ -17,7 +17,7 @@ def choose_type_of_account(request):
 
 class SignUpTeacherInitialView(View):
     def get(self, request):
-        return render(request, 'register/create_teacher.html', {
+        return render(request, 'register/create_initial.html', {
             'general_error' : '',
             'email_error' : '',
             'latest_email' : '',
@@ -51,16 +51,17 @@ class SignUpTeacherInitialView(View):
             })
 
 class SignUpTeacherFinalView(View):
-    def get(self, request, uidb64, token):
-        try: 
-            uid = force_str(urlsafe_base64_decode(uidb64))
-            user = CustomUser.objects.get(pk=uid)
-        except:
-            user = None
+    pass
+    # def get(self, request, uidb64, token):
+    #     try: 
+    #         uid = force_str(urlsafe_base64_decode(uidb64))
+    #         user = CustomUser.objects.get(pk=uid)
+    #     except:
+    #         user = None
 
-        if user and generate_token.check_token(user, token):
-            user.is_email_verified = True
-            user.save()
-            return HttpResponse('Verified')
-        else:
-            return HttpResponse('Not Verified!')
+    #     if user and generate_token.check_token(user, token):
+    #         user.is_email_verified = True
+    #         user.save()
+    #         # add verified code
+    #     else:
+    #         # add not verified code
