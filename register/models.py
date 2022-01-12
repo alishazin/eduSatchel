@@ -8,6 +8,8 @@ ACCOUNT_TYPES = (
     ('student','Student'),
     ('teacher', 'Teacher'),
 )
+def get_image_upload_location(self, filename):
+    return f"profile/{b64encode(os.urandom(32)).decode('utf-8')}/{filename}"
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password, account_type):
@@ -44,9 +46,6 @@ class CustomUserManager(BaseUserManager):
 # Create your models here.
 
 class CustomUser(AbstractBaseUser):
-
-    def get_image_upload_location(self, filename):
-        return f"profile/{b64encode(os.urandom(32)).decode('utf-8')}/{filename}"
 
     email = models.EmailField(verbose_name='email', max_length=254, unique=True) 
     username = models.CharField(max_length=30, unique=False)

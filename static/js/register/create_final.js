@@ -1,5 +1,8 @@
 function onLoad() {
     animateProgressLine();
+    addClickEventToField();
+    addEventToProfilePic();
+    addEventToRemovePic();
 }
 
 function animateProgressLine() {
@@ -23,4 +26,45 @@ function animateProgressLine() {
             ballThree.style.backgroundColor = 'var(--green-color)';  
         }, 1050);
     }, 200);
+}
+
+function addClickEventToField() {
+    const inputField = document.querySelector('.parent > form > .field-parent > textarea');
+    const onFocusFunc = function () {
+        const label = inputField.parentElement.children[1];
+        label.style.top = '-8px';
+        label.style.fontSize = '13px';
+    };
+    // made asynchronous for giving chrome time to add former value
+    setTimeout(() => {
+        if (inputField.value.length > 0) {
+            onFocusFunc();
+        }
+    }, 100) 
+    inputField.onfocus = onFocusFunc;
+    inputField.onblur = () => {
+        if (inputField.value.length === 0) {
+            const label = inputField.parentElement.children[1];
+            label.style.top = '12.7px';
+            label.style.fontSize = '15px';
+        }
+    }
+}
+
+function addEventToProfilePic() {
+    const inputImg = document.querySelector(".parent > form > .profile-container > input[type='file']");
+    const overlay = document.querySelector(".parent > form > .profile-container > .image-container > .check-overlay");
+    inputImg.onchange = (e) => {
+        overlay.style.opacity = '1';
+    }
+}
+
+function addEventToRemovePic() {
+    const butt = document.querySelector(".parent > form > .profile-container > .remove-butt");
+    const inputImg = document.querySelector(".parent > form > .profile-container > input[type='file']");
+    const overlay = document.querySelector(".parent > form > .profile-container > .image-container > .check-overlay");
+    butt.onclick = () => {
+        overlay.style.opacity = '0';
+        inputImg.value = null;
+    }
 }

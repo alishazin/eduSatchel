@@ -9,6 +9,7 @@ from .models import CustomUser
 from .utils import generate_token
 
 from threading import Thread
+from PIL import Image
 
 # Create your views here.
 
@@ -67,3 +68,18 @@ class SignUpTeacherFinalView(View):
 
     def get(self, request):
         return render(request, 'register/create_final.html', {})
+
+    def post(self, request):
+        print(request.POST)
+        print(request.FILES)
+        # file = request.FILES['profile_pic']
+        # a = CustomUser.objects.get(id=1)
+        # try:
+        #     Image.open(file)
+        #     print("Passed")
+        # except:
+        #     print("NOOO MAte!")
+        # else:
+        #     a.profile_pic = file
+        #     a.save()
+        return HttpResponse('asdas')
