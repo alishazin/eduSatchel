@@ -51,7 +51,6 @@ class SignUpTeacherInitialView(View):
             })
 
 class SignUpTeacherFinalView(View):
-    pass
     # def get(self, request, uidb64, token):
     #     try: 
     #         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -65,3 +64,6 @@ class SignUpTeacherFinalView(View):
     #         # add verified code
     #     else:
     #         # add not verified code
+
+    def get(self, request):
+        return render(request, 'register/create_final.html', {})

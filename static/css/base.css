@@ -11,6 +11,7 @@
     --shadow-color: rgba(0, 0, 0, 0.349);
     --shadow-light-color: rgba(0, 0, 0, 0.171);
     --green-color: #00ff00;
+    --green-light-color: #83ff83;
     --light-text-color: rgb(230, 230, 230);
     --error-red-color: red;
 }

@@ -1,0 +1,27 @@
+{% extends 'register/base.html' %}
+{% load static %}
+
+{% block title %}Choose The Account Type{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/register/create_final.css' %}">
+<script src="{% static 'js/register/create_final.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="parent">
+    {% include 'register/blocks/progress_line.html' %}
+    <form method="POST" action=".">
+        {% csrf_token %}
+        
+    </form>
+    <div class="separator"></div>
+    <div class="confirmation-container">
+        <i class="bi bi-check-circle-fill"></i>
+        <p>Verification completed</p>
+    </div>
+</div>
+<script>
+    document.body.onload = onLoad();
+</script>
+{% endblock bodyextra %}
