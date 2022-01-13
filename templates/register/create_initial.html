@@ -13,7 +13,7 @@
     {% include 'register/blocks/progress_line.html' %}
     <div class="header-container">
         <h1>Sign Up</h1>
-        <p>As Teacher</p>
+        <p>As {{ account_for }}</p>
     </div>
     <form method="POST" action=".">
         {% csrf_token %}

@@ -1,0 +1,14 @@
+{% autoescape off %}
+
+Hi {{ userObj.username }},
+
+Email sent by {{ domain }} for verifying your account.
+
+Please use the link below to verify your account.
+http://{{ domain }}{% url 'activate-student' uidb64=uid token=token %}
+
+Thanks for using our site!
+
+The {{ domain }} team.
+
+{% endautoescape %}

@@ -86,10 +86,11 @@ def validate_user_one(data):
         returnDict['general'] = 'Something went wrong. Refresh the page ?'
         return returnDict
 
-def send_email_for_verification(userObj, request):
+def send_email_for_verification(userObj, request, accountType):
     current_site = get_current_site(request)
     email_subject = 'Activate Your Account'
-    email_body = render_to_string('email_formats/account_activate.html', {
+    emailContent = 'activate_student' if accountType == 'student' else 'activate_teacher'
+    email_body = render_to_string(f'email_formats/{emailContent}.html', {
         'userObj': userObj,
         'domain': current_site,
         'uid': urlsafe_base64_encode(force_bytes(userObj.pk)),
