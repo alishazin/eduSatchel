@@ -50,7 +50,7 @@ class SignUpTeacherInitialView(View):
                 'password_error' : returnStatus['password'],
             })
 
-class SignUpFinalView(View):
+class SignUpTeacherFinalView(View):
     def get(self, request, uidb64, token):
         try: 
             uid = force_str(urlsafe_base64_decode(uidb64))
