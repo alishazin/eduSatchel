@@ -19,10 +19,7 @@
         {% csrf_token %}
         {% if general_error %}
             <script>
-                const confirmation = window.confirm('{{ general_error }}');
-                if (confirmation) {
-                    location.href = "{% url 'create-teacher' %}"; 
-                }
+                alert("{{ general_error }}")
             </script>
         {% endif %}
         <div class="field-parent">
