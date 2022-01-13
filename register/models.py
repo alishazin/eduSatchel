@@ -57,7 +57,7 @@ class CustomUser(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False) 
     account_type = models.CharField(max_length=7, choices=ACCOUNT_TYPES, blank=False, null=False)
     profile_pic = models.ImageField(blank=True, upload_to=get_image_upload_location, default='profile/default.jpg')
-    bio = models.TextField(max_length=120, null=True, blank=True)
+    bio = models.TextField(max_length=300, null=True, blank=True)
     is_email_verified = models.BooleanField(default=False)
 
     objects = CustomUserManager()

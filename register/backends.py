@@ -4,6 +4,7 @@ from .models import CustomUser
 
 import re
 import time
+from PIL import Image
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -63,8 +64,8 @@ def validate_user_one(data):
             return returnDict
 
         # username check
-        if len(data['username'].strip()) < 3 and len(data['username'].strip()) > 30:
-            returnDict['username'] = 'Username should be between 3 and 30 characters in length.'
+        if len(data['username'].strip()) < 3 or len(data['username'].strip()) > 30:
+            returnDict['username'] = 'Should be between 3 and 30 characters.'
             return returnDict
 
         if not check_if_valid_username_format(data['username'].strip()):
@@ -110,3 +111,46 @@ def expire_account(userObj):
     newUserObj = CustomUser.objects.get(pk=userObj.pk)
     if newUserObj.is_email_verified == False:
         newUserObj.delete()
+
+def check_if_valid_profile(file):
+    try:
+        Image.open(file)
+    except:
+        return False
+    else:
+        return True
+
+def validate_final_signup(data, files):
+
+    returnDict = {
+        'general' : '',
+        'profile' : '',
+        'bio' : '',
+    }
+
+    profileAvailable = False
+
+    if 'bio' in data.keys():
+
+        if 'profile_pic' in files.keys():
+            profileAvailable = True
+            file = files['profile_pic']
+
+            if not check_if_valid_profile(file):
+                returnDict['profile'] = 'Invalid format or corrupted image'
+                return returnDict
+
+        if len(data['bio'].strip()) == 0:
+            returnDict['bio'] = 'It is required field'
+            return returnDict
+
+        if len(data['bio'].strip()) > 300:
+            returnDict['bio'] = 'Should be less than 300 characters.'
+            return returnDict
+
+        if profileAvailable:
+            return 'both'
+        return 'bioOnly'
+    else:
+        returnDict['general'] = 'Something went wrong. Refresh the page ?'
+        return returnDict

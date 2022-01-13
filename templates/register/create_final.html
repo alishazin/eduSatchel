@@ -13,8 +13,13 @@
     {% include 'register/blocks/progress_line.html' %}
     <form method="POST" action="." enctype="multipart/form-data">
         {% csrf_token %}
+        {% if general_error %}
+            <script>
+                alert("{{ general_error }}")
+            </script>
+        {% endif %}
         <div class="profile-container">
-            <div class="error-div"></div>
+            <div class="error-div">{{ profile_error }}</div>
             <div class="image-container">
                 <img style="background-image: url('/media/profile/default.jpg');"></img>
                 <div class="check-overlay">
@@ -29,9 +34,9 @@
             <input type="file" name="profile_pic" id="profile_pic_id" accept="image/*">
         </div>
         <div class="field-parent">
-            <textarea name="bio" id="id_email" required></textarea>
+            <textarea name="bio" id="id_email" required maxlength="300"></textarea>
             <label>Bio</label>
-            <div class="error-div"></div>
+            <div class="error-div">{{ bio_error }}</div>
         </div>
         <button>SignUp</button>
     </form>
