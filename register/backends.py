@@ -121,37 +121,54 @@ def check_if_valid_profile(file):
     else:
         return True
 
-def validate_final_signup(data, files):
+def validate_final_signup(accountType, data, files):
 
-    returnDict = {
-        'general' : '',
-        'profile' : '',
-        'bio' : '',
-    }
+    if accountType == 'teacher':
+        returnDict = {
+            'general' : '',
+            'profile' : '',
+            'bio' : '',
+        }
 
-    profileAvailable = False
+        profileAvailable = False
 
-    if 'bio' in data.keys():
+        if 'bio' in data.keys():
+
+            if 'profile_pic' in files.keys():
+                profileAvailable = True
+                file = files['profile_pic']
+
+                if not check_if_valid_profile(file):
+                    returnDict['profile'] = 'Invalid format or corrupted image'
+                    return returnDict
+
+            if len(data['bio'].strip()) == 0:
+                returnDict['bio'] = 'It is required field'
+                return returnDict
+
+            if len(data['bio'].strip()) > 300:
+                returnDict['bio'] = 'Should be less than 300 characters.'
+                return returnDict
+
+            if profileAvailable:
+                return 'both'
+            return 'bioOnly'
+        else:
+            returnDict['general'] = 'Something went wrong. Refresh the page ?'
+            return returnDict
+
+    else:
+        returnDict = {
+            'profile' : '',
+        }
 
         if 'profile_pic' in files.keys():
-            profileAvailable = True
             file = files['profile_pic']
 
             if not check_if_valid_profile(file):
                 returnDict['profile'] = 'Invalid format or corrupted image'
                 return returnDict
 
-        if len(data['bio'].strip()) == 0:
-            returnDict['bio'] = 'It is required field'
-            return returnDict
+            return True
 
-        if len(data['bio'].strip()) > 300:
-            returnDict['bio'] = 'Should be less than 300 characters.'
-            return returnDict
-
-        if profileAvailable:
-            return 'both'
-        return 'bioOnly'
-    else:
-        returnDict['general'] = 'Something went wrong. Refresh the page ?'
-        return returnDict
+        return False

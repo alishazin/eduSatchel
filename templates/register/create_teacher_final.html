@@ -1,0 +1,49 @@
+{% extends 'register/base.html' %}
+{% load static %}
+
+{% block title %}Extra Details{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/register/create_final.css' %}">
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="parent">
+    {% include 'register/blocks/progress_line.html' %}
+    <form method="POST" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if general_error %}
+            <script>
+                alert("{{ general_error }}")
+            </script>
+        {% endif %}
+        <div class="profile-container">
+            <div class="error-div">{{ profile_error }}</div>
+            <div class="image-container">
+                <img style="background-image: url('/media/profile/default.jpg');"></img>
+                <div class="check-overlay">
+                    <i class="bi bi-check2"></i>
+                </div>
+            </div>
+            <label for='profile_pic_id'>
+                <i class="bi bi-cloud-arrow-up-fill"></i>
+                <p>Upload profile</p>
+            </label>
+            <div class="remove-butt">Remove</div>
+            <input type="file" name="profile_pic" id="profile_pic_id" accept="image/*">
+        </div>
+        <div class="field-parent">
+            <textarea name="bio" id="id_email" required maxlength="300"></textarea>
+            <label>Bio</label>
+            <div class="error-div">{{ bio_error }}</div>
+        </div>
+        <button>SignUp</button>
+    </form>
+    <div class="separator"></div>
+    <div class="confirmation-container">
+        <i class="bi bi-check-circle-fill"></i>
+        <p>Verification completed</p>
+    </div>
+</div>
+<script src="{% static 'js/register/create_final.js' %}" onload="onLoadTeacher()"></script>
+{% endblock bodyextra %}

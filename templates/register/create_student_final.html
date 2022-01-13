@@ -1,11 +1,10 @@
 {% extends 'register/base.html' %}
 {% load static %}
 
-{% block title %}Choose The Account Type{% endblock title %}
+{% block title %}Extra Details{% endblock title %}
 
 {% block headextraextra %}
 <link rel='stylesheet' href="{% static 'css/register/create_final.css' %}">
-<script src="{% static 'js/register/create_final.js' %}"></script>
 {% endblock headextraextra %}
 
 {% block bodyextra %}
@@ -13,11 +12,6 @@
     {% include 'register/blocks/progress_line.html' %}
     <form method="POST" action="." enctype="multipart/form-data">
         {% csrf_token %}
-        {% if general_error %}
-            <script>
-                alert("{{ general_error }}")
-            </script>
-        {% endif %}
         <div class="profile-container">
             <div class="error-div">{{ profile_error }}</div>
             <div class="image-container">
@@ -33,11 +27,6 @@
             <div class="remove-butt">Remove</div>
             <input type="file" name="profile_pic" id="profile_pic_id" accept="image/*">
         </div>
-        <div class="field-parent">
-            <textarea name="bio" id="id_email" required maxlength="300"></textarea>
-            <label>Bio</label>
-            <div class="error-div">{{ bio_error }}</div>
-        </div>
         <button>SignUp</button>
     </form>
     <div class="separator"></div>
@@ -46,7 +35,5 @@
         <p>Verification completed</p>
     </div>
 </div>
-<script>
-    document.body.onload = onLoad();
-</script>
+<script src="{% static 'js/register/create_final.js' %}" onload="onLoadStudent()"></script>
 {% endblock bodyextra %}

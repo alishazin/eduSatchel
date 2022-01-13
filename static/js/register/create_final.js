@@ -1,6 +1,12 @@
-function onLoad() {
+function onLoadTeacher() {
     animateProgressLine();
+    addEventToProfilePic();
+    addEventToRemovePic();
     addClickEventToField();
+}
+
+function onLoadStudent() {
+    animateProgressLine();
     addEventToProfilePic();
     addEventToRemovePic();
 }

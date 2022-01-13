@@ -1,11 +1,10 @@
 {% extends 'register/base.html' %}
 {% load static %}
 
-{% block title %}Choose The Account Type{% endblock title %}
+{% block title %}Create Account{% endblock title %}
 
 {% block headextraextra %}
 <link rel='stylesheet' href="{% static 'css/register/create_initial.css' %}">
-<script src="{% static 'js/register/create_initial.js' %}"></script>
 {% endblock headextraextra %}
 
 {% block bodyextra %}
@@ -47,7 +46,5 @@
         </div>
     </form>
 </div>
-<script>
-    document.body.onload = onLoad();
-</script>
+<script src="{% static 'js/register/create_initial.js' %}" onload="onLoad()"></script>
 {% endblock bodyextra %}
