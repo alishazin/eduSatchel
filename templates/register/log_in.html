@@ -1,0 +1,18 @@
+{% extends 'register/base.html' %}
+{% load static %}
+
+{% block title %}Log In{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/register/log_in.css' %}">
+<script src="{% static 'js/register/log_in.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="parent">
+    
+</div>
+<script>
+    document.body.onload = onLoad();
+</script>
+{% endblock bodyextra %}

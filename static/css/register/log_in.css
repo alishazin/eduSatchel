@@ -1,0 +1,9 @@
+.parent {
+    width: 450px;
+    height: fit-content;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--shadow-color);
+    border-radius: 15px;
+    padding: 10px;
+    height: 100px;
+}

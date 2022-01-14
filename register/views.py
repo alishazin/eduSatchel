@@ -10,8 +10,6 @@ from .utils import generate_token
 
 from threading import Thread
 
-# Create your views here.
-
 def choose_type_of_account(request):
     return render(request, 'register/create.html', {})
 
@@ -188,3 +186,9 @@ class SignUpStudentFinalView(View):
                 })
         else:
             raise Http404
+
+# Login
+
+class LogInView(View):
+    def get(self, request):
+        return render(request, 'register/log_in.html', {})
