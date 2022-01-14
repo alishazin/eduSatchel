@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponse
 from django.views import View
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
+from django.contrib.auth import logout, authenticate, login
 
 from .backends import validate_user_one, send_email_for_verification, expire_account, validate_final_signup
 from .models import CustomUser
@@ -30,7 +31,8 @@ class SignUpTeacherInitialView(View):
     def post(self, request):
         returnStatus = validate_user_one(request.POST)
         if returnStatus == True:
-            user_obj = CustomUser.objects.create(
+            # create_user should be user, not create() as it will not hash the password, so wont be able to authenticate
+            user_obj = CustomUser.objects.create_user(
                 email = request.POST['email'].strip(),
                 username = request.POST['username'].strip(),
                 password = request.POST['password1'].strip(),
@@ -120,7 +122,8 @@ class SignUpStudentInitialView(View):
     def post(self, request):
         returnStatus = validate_user_one(request.POST)
         if returnStatus == True:
-            user_obj = CustomUser.objects.create(
+            # create_user should be user, not create() as it will not hash the password, so wont be able to authenticate
+            user_obj = CustomUser.objects.create_user(
                 email = request.POST['email'].strip(),
                 username = request.POST['username'].strip(),
                 password = request.POST['password1'].strip(),
@@ -192,3 +195,13 @@ class SignUpStudentFinalView(View):
 class LogInView(View):
     def get(self, request):
         return render(request, 'register/log_in.html', {})
+
+    def post(self, request):
+        user = authenticate(
+            email='saleelapp129@gmail.com', 
+            password='12345678'
+        )
+        if user is not None:
+            login(request, user, backend='register.backends.CaseInsensitiveModelBackend')
+            return HttpResponse('Login completed')
+        return HttpResponse('Login Failed')

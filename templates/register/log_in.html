@@ -10,7 +10,11 @@
 
 {% block bodyextra %}
 <div class="parent">
-    
+    <p style="color: red;">{{ request.user }}</p>
+    <form method="POST" action='.'>
+        {% csrf_token %}
+        <button>log in</button>
+    </form>
 </div>
 <script>
     document.body.onload = onLoad();

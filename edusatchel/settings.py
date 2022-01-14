@@ -30,8 +30,8 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'register.CustomUser'
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.AllowAllUsersModelBackend',
-    'register.backends.CaseInsensitiveModelBackend'
+    'register.backends.CaseInsensitiveModelBackend',
+    'django.contrib.auth.backends.AllowAllUsersModelBackend'
 )
 
 # Application definition
