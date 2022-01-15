@@ -35,7 +35,7 @@ function addClickEventToField() {
             if (field.value.length === 0) {
                 const label = field.parentElement.children[1];
                 label.style.top = '12.7px';
-                label.style.fontSize = '15px';
+                label.style.fontSize = '14px';
             }
         }
     })

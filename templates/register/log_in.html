@@ -10,10 +10,31 @@
 
 {% block bodyextra %}
 <div class="parent">
-    <p style="color: red;">{{ request.user }}</p>
+    <div class="header-container">
+        <h1>Log In</h1>
+    </div>
     <form method="POST" action='.'>
         {% csrf_token %}
-        <button>log in</button>
+        {% if general_error %}
+            <script>
+                alert("{{ general_error }}")
+            </script>
+        {% endif %}
+        <div class="field-parent">
+            <input type="email" name="email" autocapitalize="none" autocomplete="email" required id="id_email" value="{{ latest_email }}">
+            <label>Email</label>
+            <div class="error-div">{{ email_error }}</div>
+        </div>
+        <div class="field-parent">
+            <input type="password" name="password" autocomplete="password" required id="id_password">
+            <label>Password</label>
+            <div class="error-div">{{ password_error }}</div>
+            <div class="eye-container">
+                <i class="bi bi-eye"></i>
+                <div class="cut-line"></div>
+            </div>
+        </div>
+        <!-- <button>log in</button> -->
     </form>
 </div>
 <script>
