@@ -89,6 +89,25 @@
     padding: 0 10px;
     padding-top: 5px;
 }
+.parent > form > .field-parent > .forgot-pass-div {
+    width: 100%;
+    position: absolute;
+    top: 60%;
+    height: 40%;
+    z-index: 2;
+    padding: 0 10px;
+    padding-top: 5px;
+}
+.parent > form > .field-parent > .forgot-pass-div > a {
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--secondary-lighter-color);
+    text-decoration: none;
+    transform: translateY(5px);
+}
+.parent > form > .field-parent > .forgot-pass-div > a:hover {
+    text-decoration: underline;
+}
 .parent > form > .field-parent > .eye-container {
     position: absolute;
     right: 11px;
@@ -118,6 +137,7 @@
     transition: opacity 0.3s;
 }
 .parent > form > button {
+    margin-top: 12px;
     padding: 8px 12px;
     font-family: "Montserrat", Verdana, Geneva, Tahoma, sans-serif;
     font-size: 16px;
