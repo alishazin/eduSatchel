@@ -5,7 +5,8 @@ from .views import (
     SignUpStudentInitialView, 
     SignUpTeacherFinalView, 
     SignUpStudentFinalView,
-    LogInView
+    LogInView,
+    ForgotPasswordView,
 )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path('teacher/activate-user/<uidb64>/<token>/', SignUpTeacherFinalView.as_view(), name='activate-teacher'),
     path('student/activate-user/<uidb64>/<token>/', SignUpStudentFinalView.as_view(), name='activate-student'),
     path('login/', LogInView.as_view(), name="log-in"),
+    path('forgot-password/', ForgotPasswordView.as_view(), name="forgot-password"),
 ]

@@ -1,0 +1,26 @@
+{% extends 'register/base.html' %}
+{% load static %}
+
+{% block title %}Log In{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/register/forgot-pass.css' %}">
+<script src="{% static 'js/register/forgot-pass.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="parent">
+    <form method="POST" action='.'>
+        {% csrf_token %}
+        {% if general_error %}
+            <script>
+                alert("{{ general_error }}")
+            </script>
+        {% endif %}
+        <button>Log In</button>
+    </form>
+</div>
+<script>
+    document.body.onload = onLoad();
+</script>
+{% endblock bodyextra %}

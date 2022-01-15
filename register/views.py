@@ -217,3 +217,9 @@ class LogInView(View):
                 'general_error' : 'Something went wrong. Refresh the page ?',
                 'error_details' : '',
             })
+
+# Forgot Password And Reset
+
+class ForgotPasswordView(View):
+    def get(self, request):
+        return render(request, 'register/forgot-pass.html', {})
