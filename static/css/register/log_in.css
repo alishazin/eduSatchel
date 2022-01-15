@@ -117,6 +117,22 @@
     transform: rotateZ(45deg);
     transition: opacity 0.3s;
 }
+.parent > form > button {
+    padding: 8px 12px;
+    font-family: "Montserrat", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--tertiary-color);
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--tertiary-color);
+    transition: color 0.3s, background-color 0.3s;
+}
+.parent > form > button:hover {
+    color: white;
+    background-color: var(--tertiary-color);
+}
 /* Change the white to any color */
 /* Change autocomplete styles in WebKit */
 input:-webkit-autofill,
