@@ -197,11 +197,23 @@ class LogInView(View):
         return render(request, 'register/log_in.html', {})
 
     def post(self, request):
-        user = authenticate(
-            email='saleelapp129@gmail.com', 
-            password='12345678'
-        )
-        if user is not None:
-            login(request, user, backend='register.backends.CaseInsensitiveModelBackend')
-            return HttpResponse('Login completed')
-        return HttpResponse('Login Failed')
+        data = request.POST
+
+        if 'email' in data.keys() and 'password' in data.keys():
+            user = authenticate(
+                email=data['email'], 
+                password=data['password']
+            )
+            if user is not None:
+                login(request, user, backend='register.backends.CaseInsensitiveModelBackend')
+                return HttpResponse('Login completed')
+            else:
+                return render(request, 'register/log_in.html', {
+                    'general_error' : '',
+                    'error_details' : 'Email or password is incorrect',
+                })
+        else:
+            return render(request, 'register/log_in.html', {
+                'general_error' : 'Something went wrong. Refresh the page ?',
+                'error_details' : '',
+            })
