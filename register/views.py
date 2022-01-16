@@ -7,7 +7,7 @@ from django.utils.encoding import force_str
 from django.contrib.auth import logout, authenticate, login
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 
 from .backends import (
     validate_user_one, 
@@ -266,6 +266,16 @@ class ForgotPasswordView(View):
             return render(request, 'register/forgot-pass.html', {
                 'error' : f"No verified user with gmail '{email}'",
             })
-        return render(request, 'register/reset-pass-send.html', {
+        return render(request, 'register/reset_pass_send.html', {
             'to_email' : email,
+        })
+
+from django.contrib.auth.views import PasswordResetConfirmView
+
+class ResetPasswordView(View):
+    def get(self, request, uidb64, token):
+        print(uidb64)
+        print(token)
+        return render(request, 'register/reset_password.html', {
+            'form' : SetPasswordForm(),
         })
