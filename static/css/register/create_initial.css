@@ -173,6 +173,6 @@ select:-webkit-autofill:focus {
     }
     .parent > form > .button-container > p {
         padding-bottom: 10px;
-        font-size: 14px;
+        font-size: 15px;
     }
 }
