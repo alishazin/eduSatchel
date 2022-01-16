@@ -1,3 +1,4 @@
+from re import template
 from django.urls import path
 from .views import (
     choose_type_of_account, 
@@ -17,4 +18,5 @@ urlpatterns = [
     path('student/activate-user/<uidb64>/<token>/', SignUpStudentFinalView.as_view(), name='activate-student'),
     path('login/', LogInView.as_view(), name="log-in"),
     path('forgot-password/', ForgotPasswordView.as_view(), name="forgot-password"),
+    path('reset-password/<uidb64>/<token>/', ForgotPasswordView.as_view(), name="dummy-name"),
 ]

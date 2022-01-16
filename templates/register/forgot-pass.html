@@ -1,7 +1,7 @@
 {% extends 'register/base.html' %}
 {% load static %}
 
-{% block title %}Log In{% endblock title %}
+{% block title %}Forgot Password{% endblock title %}
 
 {% block headextraextra %}
 <link rel='stylesheet' href="{% static 'css/register/forgot-pass.css' %}">
@@ -17,6 +17,8 @@
                 alert("{{ general_error }}")
             </script>
         {% endif %}
+        <input type="email" name="email" autocomplete="email" maxlength="254" required id="id_email">
+        <p style="color: white;">{{ error }}</p>
         <button>Log In</button>
     </form>
 </div>

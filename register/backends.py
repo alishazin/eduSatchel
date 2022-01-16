@@ -1,18 +1,21 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
-from .models import CustomUser
-
-import re
-import time
-from PIL import Image
-
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.contrib.auth import get_user_model
+
+
+import re
+import time
+from PIL import Image
+
+
 from .utils import generate_token
+from .models import CustomUser
 
 class CaseInsensitiveModelBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
@@ -172,3 +175,9 @@ def validate_final_signup(accountType, data, files):
             return True
 
         return False
+        
+def get_verified_users_from_generator_if_any(generator):
+    for user in generator:
+        if user.is_email_verified:
+            return user
+    return False
