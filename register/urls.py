@@ -19,5 +19,5 @@ urlpatterns = [
     path('student/activate-user/<uidb64>/<token>/', SignUpStudentFinalView.as_view(), name='activate-student'),
     path('login/', LogInView.as_view(), name="log-in"),
     path('forgot-password/', ForgotPasswordView.as_view(), name="forgot-password"),
-    path('reset-password/<uidb64>/<token>/', ResetPasswordView.as_view(), name="reset-password"),
+    path('reset-password/<uidb64>/<token>/', ResetPasswordView.as_view(template_name='register/reset_password.html'), name="reset-password"),
 ]

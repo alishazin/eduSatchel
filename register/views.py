@@ -1,12 +1,13 @@
 import email
 from django.shortcuts import redirect, render
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import View
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from django.contrib.auth import logout, authenticate, login
 from django.conf import settings
 from django.contrib import messages
+from django import forms
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 
 from .backends import (
@@ -271,11 +272,83 @@ class ForgotPasswordView(View):
         })
 
 from django.contrib.auth.views import PasswordResetConfirmView
+from django.contrib.auth.tokens import default_token_generator
+from django.core.exceptions import ValidationError, ImproperlyConfigured
 
-class ResetPasswordView(View):
-    def get(self, request, uidb64, token):
-        print(uidb64)
-        print(token)
-        return render(request, 'register/reset_password.html', {
-            'form' : SetPasswordForm(),
-        })
+class CustomSetPasswordForm(SetPasswordForm):
+
+    error_messages = {
+        'general_error': 'Something went wrong. Refresh the page ?',
+        'password_mismatch': 'The two password fields didn’t match.',
+        'password_less_characters': 'Password should contain atleast 8 characters',
+    }
+
+    new_password1 = forms.CharField(
+        label="New password",
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        strip=False,
+    )
+
+    def clean_new_password2(self):
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+        if password1 and password2:
+            if password1 != password2:
+                raise ValidationError(
+                    self.error_messages['password_mismatch'],
+                    code='password_mismatch',
+                )
+            if len(password1) < 8:
+                raise ValidationError(
+                    self.error_messages['password_less_characters'],
+                    code='password_less_characters',
+                )
+        else:
+            raise ValidationError(
+                self.error_messages['general_error'],
+                code='general_error',
+            )
+
+        return password2
+
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+from django.views.decorators.debug import sensitive_post_parameters
+
+INTERNAL_RESET_SESSION_TOKEN = '_password_reset_token'
+
+class ResetPasswordView(PasswordResetConfirmView):
+    form_class = CustomSetPasswordForm
+    success_url = '/register/login/'
+
+    @method_decorator(sensitive_post_parameters())
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        if 'uidb64' not in kwargs or 'token' not in kwargs:
+            raise ImproperlyConfigured(
+                "The URL path must contain 'uidb64' and 'token' parameters."
+            )
+
+        self.validlink = False
+        self.user = self.get_user(kwargs['uidb64'])
+
+        if self.user is not None:
+            token = kwargs['token']
+            if token == self.reset_url_token:
+                session_token = self.request.session.get(INTERNAL_RESET_SESSION_TOKEN)
+                if self.token_generator.check_token(self.user, session_token):
+                    # If the token is valid, display the password reset form.
+                    self.validlink = True
+                    return super().dispatch(*args, **kwargs)
+            else:
+                if self.token_generator.check_token(self.user, token):
+                    # Store the token in the session and redirect to the
+                    # password reset form at a URL without the token. That
+                    # avoids the possibility of leaking the token in the
+                    # HTTP Referer header.
+                    self.request.session[INTERNAL_RESET_SESSION_TOKEN] = token
+                    redirect_url = self.request.path.replace(token, self.reset_url_token)
+                    return HttpResponseRedirect(redirect_url)
+                raise Http404
+        else:
+            raise Http404
