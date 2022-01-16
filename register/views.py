@@ -6,6 +6,8 @@ from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from django.contrib.auth import logout, authenticate, login
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.forms import PasswordResetForm
 
 from .backends import (
     validate_user_one, 
@@ -96,12 +98,14 @@ class SignUpTeacherFinalView(View):
             if returnStatus == 'bioOnly':
                 user.bio = data['bio']
                 user.save()
+                messages.error(request, 'Account created successfully')
                 return redirect('/register/login/')
 
             elif returnStatus == 'both':
                 user.profile_pic = files['profile_pic']
                 user.bio = data['bio']
                 user.save()
+                messages.error(request, 'Account created successfully')
                 return redirect('/register/login/')
                 
             else:
@@ -186,9 +190,11 @@ class SignUpStudentFinalView(View):
             if returnStatus == True:
                 user.profile_pic = files['profile_pic']
                 user.save()
+                messages.error(request, 'Account created successfully')
                 return redirect('/register/login/')
 
             elif returnStatus == False:
+                messages.error(request, 'Account created successfully')
                 return redirect('/register/login/')
 
             else:
@@ -237,8 +243,6 @@ class LogInView(View):
 
 # Forgot Password And Reset
 
-from django.contrib.auth.forms import PasswordResetForm
-
 class ForgotPasswordView(View):
     def get(self, request):
         return render(request, 'register/forgot-pass.html', {})
@@ -265,5 +269,3 @@ class ForgotPasswordView(View):
         return render(request, 'register/reset-pass-send.html', {
             'to_email' : email,
         })
-
-        # add message space in login and signup pages

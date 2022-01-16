@@ -25,3 +25,11 @@
         opacity: 1;
     }
 }
+@keyframes message-changing-clr {
+    from {
+        color: white;
+    }
+    to {
+        color: var(--green-light-color);
+    }
+}

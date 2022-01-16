@@ -6,6 +6,27 @@
     border-radius: 15px;
     padding: 10px;
 }
+.parent > .message-div {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.parent > .message-div > i {
+    color: var(--green-light-color);
+    margin-right: 10px;
+    font-size: 18px;
+    transform: translateY(1px);
+}
+.parent > .message-div > p {
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    animation-name: message-changing-clr;
+    animation-duration: 1.5s;
+    animation-iteration-count: 6;
+    animation-direction: alternate;
+}
 .parent > .header-container {
     height: fit-content;
     width: 100%;

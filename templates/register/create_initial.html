@@ -9,6 +9,14 @@
 
 {% block bodyextra %}
 <div class="parent">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="message-div">
+                <i class="bi bi-info-circle-fill"></i>
+                <p>{{ msg }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
     {% include 'register/blocks/progress_line.html' %}
     <div class="header-container">
         <h1>Sign Up</h1>

@@ -10,6 +10,20 @@
 
 {% block bodyextra %}
 <div class="parent">
+    {% if messages %}
+        <style>
+            .parent {
+                padding-top: 10px;
+            }
+        </style>
+        {% for msg in messages %}
+            <div class="message-div">
+                <i class="bi bi-info-circle-fill"></i>
+                <p>{{ msg }}</p>
+            </div>
+            <div class="separator"></div>
+        {% endfor %}
+    {% endif %}
     <div class="header-container">
         <h1>Log In</h1>
     </div>

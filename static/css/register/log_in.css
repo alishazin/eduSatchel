@@ -6,6 +6,34 @@
     border-radius: 15px;
     padding: 20px 0;
 }
+.parent > .message-div {
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.parent > .message-div > i {
+    color: var(--green-light-color);
+    margin-right: 10px;
+    font-size: 18px;
+    transform: translateY(1px);
+}
+.parent > .message-div > p {
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    animation-name: message-changing-clr;
+    animation-duration: 1.5s;
+    animation-iteration-count: 6;
+    animation-direction: alternate;
+}
+.parent > .separator {
+    width: 90%;
+    transform: translateX(5%);
+    height: 2px;
+    border-radius: 5px;
+    background-color: var(--secondary-light-color);
+}
 .parent > .header-container {
     height: fit-content;
     width: 100%;
@@ -140,6 +168,7 @@
     display: flex;
     width: 100%;
     padding: 0 45px;
+    padding-top: 20px;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
@@ -205,6 +234,7 @@ select:-webkit-autofill:focus {
     }
     .parent > form > .button-container {
         padding: 0 10px;
+        padding-top: 20px;
     }
     .parent > form > .button-container > p {
         font-size: 14px;
