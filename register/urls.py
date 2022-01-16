@@ -11,7 +11,7 @@ from .views import (
 )
 
 urlpatterns = [
-    path('create/', choose_type_of_account),
+    path('create/', choose_type_of_account, name='create-account'),
     path('create/teacher/', SignUpTeacherInitialView.as_view(), name="create-teacher"),
     path('create/student/', SignUpStudentInitialView.as_view(), name="create-student"),
     path('teacher/activate-user/<uidb64>/<token>/', SignUpTeacherFinalView.as_view(), name='activate-teacher'),

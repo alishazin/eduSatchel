@@ -136,7 +136,32 @@
     transform: rotateZ(45deg);
     transition: opacity 0.3s;
 }
-.parent > form > button {
+.parent > form > .button-container {
+    display: flex;
+    width: 100%;
+    padding: 0 45px;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: fit-content;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.parent > form > .button-container > p {
+    color: var(--secondary-lighter-color);
+}
+.parent > form > .button-container > p > a {
+    color: var(--tertiary-color);
+    font-size: inherit;
+    font-family: inherit;
+    text-decoration: none;
+}
+.parent > form > .button-container > p > a:hover {
+    text-decoration: underline;
+}
+.parent > form > .button-container > button {
     margin-top: 15px;
     padding: 8px 12px;
     font-family: "Montserrat", Verdana, Geneva, Tahoma, sans-serif;
@@ -149,7 +174,7 @@
     color: var(--tertiary-color);
     transition: color 0.3s, background-color 0.3s;
 }
-.parent > form > button:hover {
+.parent > form > .button-container > button:hover {
     color: white;
     background-color: var(--tertiary-color);
 }
@@ -177,5 +202,11 @@ select:-webkit-autofill:focus {
     }
     .parent {
         box-shadow: none !important;
+    }
+    .parent > form > .button-container {
+        padding: 0 10px;
+    }
+    .parent > form > .button-container > p {
+        font-size: 14px;
     }
 }

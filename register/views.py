@@ -267,4 +267,3 @@ class ForgotPasswordView(View):
         })
 
         # add message space in login and signup pages
-        # add sign up redirect in login page
