@@ -89,6 +89,13 @@
     padding: 0 10px;
     padding-top: 5px;
 }
+.parent > form > .field-parent.conf-pass-box {
+    margin-bottom: 40px;
+    height: 42px;
+}
+.parent > form > .field-parent.conf-pass-box > input {
+    height: 100%;
+}
 .parent > form > .button-container {
     display: flex;
     width: 100%;
@@ -98,18 +105,23 @@
     height: 60px;
     animation-name: on-load-translate-animation;
     animation-duration: 1s;
-}
-.parent > form > .button-container > a {
-    color: var(--secondary-lighter-color);
     font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.parent > form > .button-container > p {
+    color: var(--secondary-lighter-color);
+}
+.parent > form > .button-container > p > a {
+    color: var(--secondary-color);
+    font-size: inherit;
+    font-family: inherit;
     text-decoration: none;
 }
-.parent > form > .button-container > a:hover {
+.parent > form > .button-container > p > a:hover {
     text-decoration: underline;
 }
-.parent > form > .button-container > a:active {
-    color: var(--secondary-light-color);
+.parent > form > .button-container > p > a:active {
+    color: var(--secondary-color);
 }
 .parent > form > .button-container > button {
     padding: 8px 12px;
@@ -151,5 +163,16 @@ select:-webkit-autofill:focus {
     }
     .parent {
         box-shadow: none !important;
+    }
+    .parent > form > .button-container {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+    .parent > form > .field-parent.conf-pass-box {
+        margin-bottom: 10px;
+    }
+    .parent > form > .button-container > p {
+        padding-bottom: 10px;
+        font-size: 14px;
     }
 }

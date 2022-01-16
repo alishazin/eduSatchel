@@ -265,3 +265,6 @@ class ForgotPasswordView(View):
         return render(request, 'register/reset-pass-send.html', {
             'to_email' : email,
         })
+
+        # add message space in login and signup pages
+        # add sign up redirect in login page

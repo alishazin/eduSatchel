@@ -36,12 +36,12 @@
             <label>Password</label>
             <div class="error-div">{{ password_error }}</div>
         </div>
-        <div class="field-parent">
+        <div class="field-parent conf-pass-box">
             <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
             <label>Confirm Password</label>
         </div>
         <div class="button-container">
-            <a href="{% url 'log-in' %}">Log In</a>
+            <p>Already a user? <a href="{% url 'log-in' %}">Log In</a></p>
             <button>NEXT</button>
         </div>
     </form>
