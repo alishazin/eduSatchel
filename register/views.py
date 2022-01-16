@@ -96,13 +96,13 @@ class SignUpTeacherFinalView(View):
             if returnStatus == 'bioOnly':
                 user.bio = data['bio']
                 user.save()
-                return HttpResponse("completed bioOnly")
+                return redirect('/register/login/')
 
             elif returnStatus == 'both':
                 user.profile_pic = files['profile_pic']
                 user.bio = data['bio']
                 user.save()
-                return HttpResponse("completed both")
+                return redirect('/register/login/')
                 
             else:
                 return render(request, 'register/create_teacher_final.html', {
@@ -186,10 +186,10 @@ class SignUpStudentFinalView(View):
             if returnStatus == True:
                 user.profile_pic = files['profile_pic']
                 user.save()
-                return HttpResponse("completed With profile")
+                return redirect('/register/login/')
 
             elif returnStatus == False:
-                return HttpResponse("completed without profile")
+                return redirect('/register/login/')
 
             else:
                 return render(request, 'register/create_student_final.html', {
