@@ -1,0 +1,17 @@
+{% extends 'register/base.html' %}
+{% load static %}
+
+{% block title %}Password Reset Email Send{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/register/reset-pass-send.css' %}">
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="parent">
+    <p style="color: white;">An email has been send to <span style="color: var(--secondary-light-color);">{{ to_email }}</span> reset your password</p>
+</div>
+<script>
+    document.body.onload = onLoad();
+</script>
+{% endblock bodyextra %}

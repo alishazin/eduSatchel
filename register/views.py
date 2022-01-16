@@ -262,4 +262,6 @@ class ForgotPasswordView(View):
             return render(request, 'register/forgot-pass.html', {
                 'error' : f"No verified user with gmail '{email}'",
             })
-        return HttpResponse('Successfull')
+        return render(request, 'register/reset-pass-send.html', {
+            'to_email' : email,
+        })
