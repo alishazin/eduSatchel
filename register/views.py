@@ -221,7 +221,7 @@ class LogInView(View):
         if 'email' in data.keys() and 'password' in data.keys():
             user = authenticate(
                 email=data['email'].strip(), 
-                password=data['password'].strip()
+                password=data['password']
             )
 
             if user is not None:
@@ -322,8 +322,14 @@ class ResetPasswordView(PasswordResetConfirmView):
 
             if password1 == password2:
                 if len(password1) >= 8:
-                    messages.error(request, 'Password changed successfully')
-                    return super().post(request, *args, **kwargs)
+                    if password1.strip() != '':
+                        messages.error(request, 'Password changed successfully')
+                        return super().post(request, *args, **kwargs)
+                    else:
+                        return render(request, 'register/reset_password.html', {
+                            'general_error' : '',
+                            'error' : 'Blank passwords are not allowed.',
+                        })     
                 else:
                     return render(request, 'register/reset_password.html', {
                         'general_error' : '',

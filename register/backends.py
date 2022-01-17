@@ -76,11 +76,15 @@ def validate_user_one(data):
             return returnDict
 
         # password check
-        if len(data['password1'].strip()) < 8:
+        if len(data['password1']) < 8:
             returnDict['password'] = 'Password should contain atleast 8 characters'
             return returnDict
+            
+        if len(data['password1'].strip()) == 0:
+            returnDict['password'] = 'Blank passwords are not allowed'
+            return returnDict
 
-        if data['password1'].strip() != data['password2'].strip():
+        if data['password1'] != data['password2']:
             returnDict['password'] = 'Password confirmation failed'
             return returnDict
 
