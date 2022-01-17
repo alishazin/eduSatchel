@@ -246,7 +246,7 @@ class LogInView(View):
 
 class ForgotPasswordView(View):
     def get(self, request):
-        return render(request, 'register/forgot-pass.html', {})
+        return render(request, 'register/forgot_pass.html', {})
 
     def post(self, request):
         email = request.POST['email']
@@ -264,7 +264,7 @@ class ForgotPasswordView(View):
                 )
 
         else:
-            return render(request, 'register/forgot-pass.html', {
+            return render(request, 'register/forgot_pass.html', {
                 'error' : f"No verified user with gmail '{email}'",
             })
         return render(request, 'register/reset_pass_send.html', {
@@ -311,6 +311,8 @@ class CustomSetPasswordForm(SetPasswordForm):
 
         return password2
 
+
+
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.debug import sensitive_post_parameters
@@ -352,3 +354,30 @@ class ResetPasswordView(PasswordResetConfirmView):
                 raise Http404
         else:
             raise Http404
+
+    def post(self, request, *args, **kwargs):
+        data = request.POST
+
+        if 'new_password1' in data.keys() and 'new_password2' in data.keys():
+            password1 = request.POST['new_password1']
+            password2 = request.POST['new_password2']
+
+            if password1 == password2:
+                if len(password1) >= 8:
+                    return super().post(request, *args, **kwargs)
+                else:
+                    return render(request, 'register/reset_password.html', {
+                        'general_error' : '',
+                        'error' : 'Password should contain atleast 8 characters.',
+                    })     
+            else:
+                return render(request, 'register/reset_password.html', {
+                    'general_error' : '',
+                    'error' : 'The two password fields didn’t match.',
+                })   
+
+        else:
+            return render(request, 'register/reset_password.html', {
+                'general_error' : 'Something went wrong. Refresh the page ?',
+                'error' : '',
+            })
