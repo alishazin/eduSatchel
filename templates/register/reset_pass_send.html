@@ -9,9 +9,9 @@
 
 {% block bodyextra %}
 <div class="parent">
-    <p style="color: white;">An email has been send to <span style="color: var(--secondary-light-color);">{{ to_email }}</span> reset your password</p>
+    <div class="content-container">
+        <i class="bi bi-envelope-dash"></i>
+        <h2>An email has been send to <span>{{ to_email }}</span> for resetting your password.</h2>
+    </div>
 </div>
-<script>
-    document.body.onload = onLoad();
-</script>
 {% endblock bodyextra %}
