@@ -130,7 +130,7 @@
 .parent > form > .field-parent > .forgot-pass-div > a {
     font-size: 14px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: var(--secondary-lighter-color);
+    color: var(--tertiary-color);
     text-decoration: none;
 }
 .parent > form > .field-parent > .forgot-pass-div > a:hover {

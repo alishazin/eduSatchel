@@ -5,10 +5,13 @@ from django.views import View
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
 from django.contrib.auth import logout, authenticate, login
-from django.conf import settings
 from django.contrib import messages
-from django import forms
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import PasswordResetForm
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+from django.views.decorators.debug import sensitive_post_parameters
+from django.contrib.auth.views import PasswordResetConfirmView
+from django.core.exceptions import ImproperlyConfigured
 
 from .backends import (
     validate_user_one, 
@@ -19,6 +22,7 @@ from .backends import (
 )
 from .models import CustomUser
 from .utils import generate_token
+from .forms import CustomSetPasswordForm
 
 from threading import Thread
 
@@ -271,52 +275,6 @@ class ForgotPasswordView(View):
             'to_email' : email,
         })
 
-from django.contrib.auth.views import PasswordResetConfirmView
-from django.contrib.auth.tokens import default_token_generator
-from django.core.exceptions import ValidationError, ImproperlyConfigured
-
-class CustomSetPasswordForm(SetPasswordForm):
-
-    error_messages = {
-        'general_error': 'Something went wrong. Refresh the page ?',
-        'password_mismatch': 'The two password fields didn’t match.',
-        'password_less_characters': 'Password should contain atleast 8 characters',
-    }
-
-    new_password1 = forms.CharField(
-        label="New password",
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
-        strip=False,
-    )
-
-    def clean_new_password2(self):
-        password1 = self.cleaned_data.get('new_password1')
-        password2 = self.cleaned_data.get('new_password2')
-        if password1 and password2:
-            if password1 != password2:
-                raise ValidationError(
-                    self.error_messages['password_mismatch'],
-                    code='password_mismatch',
-                )
-            if len(password1) < 8:
-                raise ValidationError(
-                    self.error_messages['password_less_characters'],
-                    code='password_less_characters',
-                )
-        else:
-            raise ValidationError(
-                self.error_messages['general_error'],
-                code='general_error',
-            )
-
-        return password2
-
-
-
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import never_cache
-from django.views.decorators.debug import sensitive_post_parameters
-
 INTERNAL_RESET_SESSION_TOKEN = '_password_reset_token'
 
 class ResetPasswordView(PasswordResetConfirmView):
@@ -364,6 +322,7 @@ class ResetPasswordView(PasswordResetConfirmView):
 
             if password1 == password2:
                 if len(password1) >= 8:
+                    messages.error(request, 'Password changed successfully')
                     return super().post(request, *args, **kwargs)
                 else:
                     return render(request, 'register/reset_password.html', {
