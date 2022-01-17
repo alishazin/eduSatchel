@@ -1,7 +1,7 @@
 {% extends 'register/base.html' %}
 {% load static %}
 
-{% block title %}Forgot Password{% endblock title %}
+{% block title %}Request Password Reset{% endblock title %}
 
 {% block headextraextra %}
 <link rel='stylesheet' href="{% static 'css/register/forgot_pass.css' %}">
@@ -10,6 +10,9 @@
 
 {% block bodyextra %}
 <div class="parent">
+    <div class="header-container">
+        <h1>Request Password Reset</h1>
+    </div>
     <form method="POST" action='.'>
         {% csrf_token %}
         {% if general_error %}
@@ -17,8 +20,11 @@
                 alert("{{ general_error }}")
             </script>
         {% endif %}
-        <input type="email" name="email" autocomplete="email" maxlength="254" required id="id_email">
-        <p style="color: white;">{{ error }}</p>
+        <div class="field-parent">
+            <input type="email" name="email" autocomplete="email" maxlength="254" required id="id_email">
+            <label>Email</label>
+            <div class="error-div">{{ error }}</div>
+        </div>
         <button>Log In</button>
     </form>
 </div>
