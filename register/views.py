@@ -1,4 +1,3 @@
-import email
 from django.shortcuts import redirect, render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import View
