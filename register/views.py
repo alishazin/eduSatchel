@@ -9,8 +9,9 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.debug import sensitive_post_parameters
-from django.contrib.auth.views import PasswordResetConfirmView
+from django.contrib.auth.views import PasswordResetConfirmView, PasswordChangeView
 from django.core.exceptions import ImproperlyConfigured
+from edusatchel.decorators import authentication_check
 
 from .backends import (
     validate_user_one, 
@@ -18,6 +19,7 @@ from .backends import (
     expire_account, 
     validate_final_signup, 
     get_verified_users_from_generator_if_any,
+    validate_password_change,
 )
 from .models import CustomUser
 from .utils import generate_token
@@ -349,5 +351,24 @@ class ResetPasswordView(PasswordResetConfirmView):
 # Change Password
 
 class ChangePasswordView(View):
+    @authentication_check
     def get(self, request):
-        return render(request, 'register/change_password.html', {})
+        return render(request, 'register/change_password.html', {
+            'old_pass_error' : '',
+            'new_pass_error' : '',
+            'general_error' : '',
+        })
+
+    @authentication_check
+    def post(self, request):
+        returnStatus = validate_password_change(request)
+        if returnStatus != True:
+            return render(request, 'register/change_password.html', {
+                'old_pass_error' : returnStatus['old_pass_error'],
+                'new_pass_error' : returnStatus['new_pass_error'],
+                'general_error' : returnStatus['general_error'],
+            })
+
+        request.user.set_password(request.POST['new_password1'])
+        request.user.save()
+        return HttpResponse("Password Changed!")

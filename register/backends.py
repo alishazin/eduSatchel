@@ -185,3 +185,38 @@ def get_verified_users_from_generator_if_any(generator):
         if user.is_email_verified:
             return user
     return False
+
+def validate_password_change(request):
+    returnDict = {
+        'old_pass_error' : '',
+        'new_pass_error' : '',
+        'general_error' : '',
+    }
+    data = request.POST
+    if 'old_password' in data.keys() and 'new_password1' in data.keys() and 'new_password2' in data.keys():
+        oldPassword = data['old_password']
+        newPassword1 = data['new_password1']
+        newPassword2 = data['new_password2']
+
+        # Old Password check
+        if not request.user.check_password(oldPassword):
+            returnDict['old_pass_error'] = 'Old Password is not correct'
+            return returnDict
+
+        # New Password check
+        if len(newPassword1) < 8:
+            returnDict['new_pass_error'] = 'Password should contain atleast 8 characters'
+            return returnDict
+            
+        if len(newPassword1.strip()) == 0:
+            returnDict['new_pass_error'] = 'Blank passwords are not allowed'
+            return returnDict
+
+        if newPassword1 != newPassword2:
+            returnDict['new_pass_error'] = 'Password confirmation failed'
+            return returnDict
+                
+        return True
+    else:
+        returnDict['general_error'] = 'Something went wrong. Refresh the page ?'
+        return returnDict
