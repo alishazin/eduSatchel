@@ -345,3 +345,9 @@ class ResetPasswordView(PasswordResetConfirmView):
                 'general_error' : 'Something went wrong. Refresh the page ?',
                 'error' : '',
             })
+
+# Change Password
+
+class ChangePasswordView(View):
+    def get(self, request):
+        return render(request, 'register/change_password.html', {})

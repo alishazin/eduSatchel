@@ -9,6 +9,7 @@ from .views import (
     LogInView,
     ForgotPasswordView,
     ResetPasswordView,
+    ChangePasswordView
 )
 
 urlpatterns = [
@@ -20,4 +21,5 @@ urlpatterns = [
     path('login/', LogInView.as_view(), name="log-in"),
     path('forgot-password/', ForgotPasswordView.as_view(), name="forgot-password"),
     path('reset-password/<uidb64>/<token>/', ResetPasswordView.as_view(template_name='register/reset_password.html'), name="reset-password"),
+    path('change-password/', ChangePasswordView.as_view(), name="change-password"),
 ]
