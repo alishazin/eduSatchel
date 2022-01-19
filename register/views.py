@@ -1,3 +1,5 @@
+from django.urls import reverse
+from symbol import pass_stmt
 from django.shortcuts import redirect, render
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.views import View
@@ -372,3 +374,16 @@ class ChangePasswordView(View):
         request.user.set_password(request.POST['new_password1'])
         request.user.save()
         return HttpResponse("Password Changed!")
+
+# Logout
+
+class LogoutView(View):
+    @authentication_check
+    def get(self, request):
+        return render(request, 'register/logout.html', {})
+
+    @authentication_check
+    def post(self, request):
+        logout(request)
+        messages.error(request, 'Logged out successfully')
+        return redirect(reverse('log-in'))
