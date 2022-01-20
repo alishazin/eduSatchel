@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% endblock title %}
+
+{% block headextra %}
+<link rel='stylesheet' href="{% static 'css/home/base.css' %}">
+<script src="{% static 'js/home/base.js' %}"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&Montserrat&Poppins">
+{% block headextraextra %}
+{% endblock headextraextra %}
+{% endblock headextra %}
+
+{% block body %}
+<div class="nav-bar">
+    <div class="content-box" id="home-box">
+        <i class="bi bi-house-door"></i>
+        <span>Home</span>
+    </div>
+    <div class="separator"></div>
+    <div class="content-box" id="profile-box">
+        <i class="bi bi-person-circle"></i>
+        <span>Profile</span>
+    </div>
+</div>
+<div class="parent-content">
+    {% block bodyextra %}
+    {% endblock bodyextra %}
+</div>
+<script>
+    document.body.onload = onBaseLoad();
+</script>
+{% endblock body %}

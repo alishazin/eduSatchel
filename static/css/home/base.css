@@ -1,0 +1,79 @@
+body {
+    position: relative;
+    height: calc( 100vh - 18px );
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(248, 248, 248);
+    /* border: 1px solid black; */
+}
+body > .nav-bar {
+    width: 100%;
+    max-width: 1400px;
+    height: 60px;
+    border-radius: 10px;
+    background-color: var(--primary-color);
+    box-shadow: 0px 10px 10px var(--shadow-light-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body > .nav-bar > .separator {
+    width: 3px;
+    height: 70%;
+    background-color: white;
+    border-radius: 5px;
+}
+body > .nav-bar > .content-box {
+    cursor: pointer;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+    transition: opacity 0.2s;
+}
+body > .nav-bar > .content-box.selected {
+    color: var(--tertiary-color);
+}
+body > .nav-bar > .content-box.selected#home-box > i {
+    transform: translateX(-48px);
+}
+body > .nav-bar > .content-box.selected#home-box > span {
+    transform: translateX(-5px) translateY(-1px);
+    opacity: 1;
+}
+body > .nav-bar > .content-box.selected#profile-box > span {
+    transform: translateX(48px);
+    opacity: 1;
+}
+body > .nav-bar > .content-box:active {
+    opacity: 0.8;
+}
+body > .nav-bar > .content-box > i {
+    font-size: 30px;
+    transition: transform 0.3s;
+}
+body > .nav-bar > .content-box > span {
+    color: inherit;
+    margin-left: 10px;
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 17px;
+    display: inline;
+    transition: opacity 0.3s;
+}
+body > .nav-bar > .content-box > span {
+    position: absolute;
+    opacity: 0;
+}
+body > .parent-content {
+    margin-top: 10px;
+    height: calc(100% - 70px);
+    width: 100%;
+    max-width: 1400px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: -2px 2px 10px var(--shadow-light-color), 2px -2px 10px rgb(248, 248, 248);
+}
