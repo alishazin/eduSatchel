@@ -19,7 +19,33 @@ CORRECTION:-
 id, date_corrected, SUBMISSION, given_mark, extra_message
 
 MESSAGE_PUBLIC:-
-id, content, CLASS, USER
+id, content, file, CLASS, USER
 
 MESSAGE_PRIVATE:-
 Future maybe..
+
+Things a teacher can do:-
+1. create class 
+2. provide assignment 
+3. correct submissions
+4. Edit their profile
+5. Send normal responseless messages, able to attach files(more than one if needed) too.
+6. See all due works in general
+7. See data of a student, about submission of all the assignments in that class
+8. Archieve classes (no more message will be allowed by anyone)
+9. Recieve notification if any student submit response, any student exit class, any student send public message, if an assignments due date is over
+(notified about students who havent submitted yet!)
+
+Things a student can do:-
+1. Join class
+2. submit response with files
+3. Edit their profile
+4. Send normal responseless messages, able to attach files(more than one if needed) too.
+5. See all due works of student in all classes entrolled
+6. Exit from a class
+7. Recieve notification if any assignments are provided, if assignment is corrected, if a class is archieved
+
+All Apps
+1. register (signup, login, changepassword, forgotpassword, logout)
+2. home (home page(create class for teacher, join class for student, all classes created for teacger, all classes entrolled for students), profile page)
+3. class (option to go back to home page, yet to be added...)
