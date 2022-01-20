@@ -29,5 +29,7 @@
 </div>
 <script>
     document.body.onload = onBaseLoad();
+    var homeURL = "{% url 'home:home-page' %}";
+    var profileURL = "{% url 'home:profile-page' %}";
 </script>
 {% endblock body %}

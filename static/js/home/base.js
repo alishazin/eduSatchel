@@ -1,5 +1,6 @@
 function onBaseLoad() {
     addHoverToNavBarContentBox();
+    addClickToNavBarContentBox();
 }
 
 function addHoverToNavBarContentBox() {
@@ -23,5 +24,14 @@ function addHoverToNavBarContentBox() {
             span.style.opacity = '0';
             icon.style.transform = 'translateX(0)';
         }
+    }
+}
+
+function addClickToNavBarContentBox() {
+    document.querySelector('body > .nav-bar > #home-box').onclick = () => {
+        location.href = homeURL;
+    }
+    document.querySelector('body > .nav-bar > #profile-box').onclick = () => {
+        location.href = profileURL;
     }
 }

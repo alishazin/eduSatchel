@@ -11,7 +11,7 @@ body {
 body > .nav-bar {
     width: 100%;
     max-width: 1400px;
-    height: 60px;
+    height: 70px;
     border-radius: 10px;
     background-color: var(--primary-color);
     box-shadow: 0px 10px 10px var(--shadow-light-color);
@@ -33,10 +33,9 @@ body > .nav-bar > .content-box {
     align-items: center;
     padding: 0 20px;
     position: relative;
-    transition: opacity 0.2s;
 }
 body > .nav-bar > .content-box.selected {
-    color: var(--tertiary-color);
+    color: var(--secondary-light-color);
 }
 body > .nav-bar > .content-box.selected#home-box > i {
     transform: translateX(-48px);
@@ -70,7 +69,7 @@ body > .nav-bar > .content-box > span {
 }
 body > .parent-content {
     margin-top: 10px;
-    height: calc(100% - 70px);
+    height: calc(100% - 80px);
     width: 100%;
     max-width: 1400px;
     background-color: white;

@@ -1,0 +1,16 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/home/home.css' %}">
+<script src="{% static 'js/home/home.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<p>Home Page</p>
+<script>
+    document.body.onload = onLoad();
+</script>
+{% endblock bodyextra %}
