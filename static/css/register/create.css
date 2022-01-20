@@ -7,7 +7,7 @@ body {
     text-align: center;
     margin-bottom: 10px;
     padding: 10px;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     border-radius: 15px;
     display: flex;
     justify-content: center;
