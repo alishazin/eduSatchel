@@ -42,8 +42,8 @@
     </div>
 </div>
 <script>
-    var teacherRedirect = "{% url 'create-teacher' %}";
-    var studentRedirect = "{% url 'create-student' %}";
+    var teacherRedirect = "{% url 'register:create-teacher' %}";
+    var studentRedirect = "{% url 'register:create-student' %}";
     document.body.onload = onLoad();
 </script>
 {% endblock bodyextra %}

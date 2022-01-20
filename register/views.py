@@ -107,14 +107,14 @@ class SignUpTeacherFinalView(View):
                 user.bio = data['bio']
                 user.save()
                 messages.error(request, 'Account created successfully')
-                return redirect('/register/login/')
+                return redirect(reverse('register:log-in'))
 
             elif returnStatus == 'both':
                 user.profile_pic = files['profile_pic']
                 user.bio = data['bio']
                 user.save()
                 messages.error(request, 'Account created successfully')
-                return redirect('/register/login/')
+                return redirect(reverse('register:log-in'))
                 
             else:
                 return render(request, 'register/create_teacher_final.html', {
@@ -199,11 +199,11 @@ class SignUpStudentFinalView(View):
                 user.profile_pic = files['profile_pic']
                 user.save()
                 messages.error(request, 'Account created successfully')
-                return redirect('/register/login/')
+                return redirect(reverse('register:log-in'))
 
             elif returnStatus == False:
                 messages.error(request, 'Account created successfully')
-                return redirect('/register/login/')
+                return redirect(reverse('register:log-in'))
 
             else:
                 return render(request, 'register/create_student_final.html', {
@@ -341,7 +341,7 @@ class ResetPasswordView(PasswordResetConfirmView):
             else:
                 return render(request, 'register/reset_password.html', {
                     'general_error' : '',
-                    'error' : 'The two password fields didn’t match.',
+                    'error' : "The two password fields didn't match.",
                 })   
 
         else:
@@ -386,4 +386,4 @@ class LogoutView(View):
     def post(self, request):
         logout(request)
         messages.error(request, 'Logged out successfully')
-        return redirect(reverse('log-in'))
+        return redirect(reverse('register:log-in'))

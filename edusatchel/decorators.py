@@ -11,6 +11,6 @@ def authentication_check(function):
             return function(*args, **kwargs)
         else:
             messages.error(request, "You have not logged in yet!")
-            return redirect(reverse('log-in'))
+            return redirect(reverse('register:log-in'))
 
     return wrapper

@@ -1,4 +1,3 @@
-from re import template
 from django.urls import path
 from .views import (
     choose_type_of_account, 
@@ -12,6 +11,8 @@ from .views import (
     ChangePasswordView,
     LogoutView,
 )
+
+app_name = 'register'
 
 urlpatterns = [
     path('create/', choose_type_of_account, name='create-account'),
