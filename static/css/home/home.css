@@ -93,6 +93,8 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     left: 120px;
     top: 130px;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
 }
 @media (max-width:415px) {
     .parent-content > .main-content {
