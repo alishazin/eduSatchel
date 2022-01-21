@@ -22,6 +22,11 @@
         <i class="bi bi-person-circle"></i>
         <span>Profile</span>
     </div>
+    <div class="separator"></div>
+    <div class="content-box" id="notification-box">
+        <i class="bi bi-bell"></i>
+        <span>Notifications</span>
+    </div>
 </div>
 
 {% block messagespace %}
@@ -35,5 +40,6 @@
     document.body.onload = onBaseLoad();
     var homeURL = "{% url 'home:home-page' %}";
     var profileURL = "{% url 'home:profile-page' %}";
+    var notificationsURL = "{% url 'home:notifications-page' %}";
 </script>
 {% endblock body %}

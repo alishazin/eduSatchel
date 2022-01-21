@@ -34,7 +34,7 @@ body > .nav-bar > .content-box {
     padding: 0 20px;
     position: relative;
 }
-body > .nav-bar > .content-box.selected {
+/* body > .nav-bar > .content-box.selected {
     color: var(--tertiary-color);
 }
 body > .nav-bar > .content-box.selected#home-box > i {
@@ -47,7 +47,13 @@ body > .nav-bar > .content-box.selected#home-box > span {
 body > .nav-bar > .content-box.selected#profile-box > span {
     transform: translateX(48px);
     opacity: 1;
+} */
+body > .nav-bar > .content-box.selected {
+    color: var(--tertiary-color);
 }
+body > .nav-bar > .content-box.selected > span {
+    display: inline;
+} 
 body > .nav-bar > .content-box:active {
     opacity: 0.8;
 }
@@ -62,10 +68,9 @@ body > .nav-bar > .content-box > span {
     font-size: 17px;
     display: inline;
     transition: opacity 0.3s;
-}
-body > .nav-bar > .content-box > span {
-    position: absolute;
-    opacity: 0;
+    display: none;
+    /* position: absolute;
+    opacity: 0; */
 }
 body > .message-div {
     width: 100%;

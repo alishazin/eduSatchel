@@ -33,13 +33,17 @@ class HomePageView(AccountTypeView):
 class ProfilePageView(View):
     def get(self, request):
         return render(request, 'home/profile.html', {})
+        
+class NotificationsPageView(View):
+    def get(self, request):
+        return render(request, 'home/notifications.html', {})
 
-class CreateNewClass(View):
+class CreateNewClassView(View):
     @authentication_check(account_type='teacher')
     def get(self, request):
         return HttpResponse('Create New')
 
-class JoinNewClass(View):
+class JoinNewClassView(View):
     @authentication_check(account_type='student')
     def get(self, request):
         return HttpResponse('Join New')

@@ -1,0 +1,16 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/home/notifications.css' %}">
+<script src="{% static 'js/home/notifications.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<p>Notifications Page</p>
+<script>
+    document.body.onload = onLoad();
+</script>
+{% endblock bodyextra %}
