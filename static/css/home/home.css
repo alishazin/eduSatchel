@@ -100,7 +100,25 @@
     .parent-content > .main-content > .class-box {
         width: 100%;
     }
-    /* Add responsiveness for create-new */
+    .parent-content > .main-content > .create-new > .horizontal-line {
+        display: none;
+    }
+    .parent-content > .main-content > .create-new > .vertical-line {
+        display: none;
+    }
+    .parent-content > .main-content > .create-new  {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .parent-content > .main-content > .create-new > .icon-container {
+        position: static;
+    }
+    .parent-content > .main-content > .create-new > .text-area {
+        position: static;
+        margin-top: 20px;
+    }
 }
 @media (max-width:315px) {
     .parent-content > .header-container {
