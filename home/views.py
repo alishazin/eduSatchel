@@ -6,11 +6,11 @@ from edusatchel.decorators import authentication_check
 
 class AccountTypeView(View):
     @authentication_check()
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         if request.user.account_type == 'teacher':
-            return self.teacher_get(request)
+            return self.teacher_get(request, *args, **kwargs)
         else:
-            return self.student_get(request)
+            return self.student_get(request, *args, **kwargs)
 
 # Create your views here.
 
