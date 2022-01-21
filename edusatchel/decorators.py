@@ -1,4 +1,3 @@
-
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -14,7 +13,7 @@ def authentication_check(account_type=None):
                 if account_type == None or account_type == request.user.account_type:
                     return function(*args, **kwargs)
                 else:
-                    print("NOT ALLOWED!")
+                    messages.error(request, f"You should be a {account_type} to access it!")
                     return redirect(reverse('home:home-page'))
             else:
                 messages.error(request, "You have not logged in yet!")

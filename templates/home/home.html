@@ -8,6 +8,30 @@
 <script src="{% static 'js/home/home.js' %}"></script>
 {% endblock headextraextra %}
 
+{% block messagespace %}
+    {% if messages %}
+        {% for msg in messages %}
+            <style>
+                body > .parent-content {
+                    height: calc(100% - 140px);
+                }
+                @media (max-width:415px) {
+                    body > .message-div {
+                        height: 70px;
+                    }
+                    body > .parent-content {
+                        height: calc(100% - 160px);
+                    }
+                }
+            </style>
+            <div class="message-div">
+                <i class="bi bi-info-circle-fill"></i>
+                <p>{{ msg }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock messagespace %}
+
 {% block bodyextra %}
 <div class="header-container">
     <h1>{{ header }}</h1>

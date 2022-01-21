@@ -67,6 +67,29 @@ body > .nav-bar > .content-box > span {
     position: absolute;
     opacity: 0;
 }
+body > .message-div {
+    width: 100%;
+    max-width: 1510px;
+    margin-top: 10px;
+    height: 50px;
+    background-color: var(--green-light-color);
+    border-radius: 10px;
+    color: white;
+    padding-left: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+body > .message-div > i {
+    font-size: 20px;
+    margin-right: 10px;
+    color: inherit;
+}
+body > .message-div > p {
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: inherit;
+}
 body > .parent-content {
     margin-top: 10px;
     height: calc(100% - 80px);

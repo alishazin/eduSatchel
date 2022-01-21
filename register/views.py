@@ -1,7 +1,6 @@
 from django.urls import reverse
-from symbol import pass_stmt
 from django.shortcuts import redirect, render
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.views import View
 from django.utils.http import urlsafe_base64_decode
 from django.utils.encoding import force_str
@@ -11,7 +10,7 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.debug import sensitive_post_parameters
-from django.contrib.auth.views import PasswordResetConfirmView, PasswordChangeView
+from django.contrib.auth.views import PasswordResetConfirmView
 from django.core.exceptions import ImproperlyConfigured
 from edusatchel.decorators import authentication_check
 
@@ -230,7 +229,8 @@ class LogInView(View):
             if user is not None:
                 if user.is_email_verified:
                     login(request, user, backend='register.backends.CaseInsensitiveModelBackend')
-                    return HttpResponse('Login completed')
+                    messages.error(request, f"Login completed successfully!")
+                    return redirect('home:home-page')
 
                 else:
                     return render(request, 'register/log_in.html', {
@@ -353,7 +353,7 @@ class ResetPasswordView(PasswordResetConfirmView):
 # Change Password
 
 class ChangePasswordView(View):
-    @authentication_check
+    @authentication_check()
     def get(self, request):
         return render(request, 'register/change_password.html', {
             'old_pass_error' : '',
@@ -361,7 +361,7 @@ class ChangePasswordView(View):
             'general_error' : '',
         })
 
-    @authentication_check
+    @authentication_check()
     def post(self, request):
         returnStatus = validate_password_change(request)
         if returnStatus != True:
@@ -373,16 +373,17 @@ class ChangePasswordView(View):
 
         request.user.set_password(request.POST['new_password1'])
         request.user.save()
-        return HttpResponse("Password Changed!")
+        messages.error(request, f"Password changed successfully!")
+        return redirect(reverse('register:log-in'))
 
 # Logout
 
 class LogoutView(View):
-    @authentication_check
+    @authentication_check()
     def get(self, request):
         return render(request, 'register/logout.html', {})
 
-    @authentication_check
+    @authentication_check()
     def post(self, request):
         logout(request)
         messages.error(request, 'Logged out successfully')
