@@ -4,9 +4,7 @@ from django.urls import reverse
 from django.views import View
 from edusatchel.decorators import authentication_check
 
-# Create your views here.
-
-class HomePageView(View):
+class AccountTypeView(View):
     @authentication_check()
     def get(self, request):
         if request.user.account_type == 'teacher':
@@ -14,6 +12,9 @@ class HomePageView(View):
         else:
             return self.student_get(request)
 
+# Create your views here.
+
+class HomePageView(AccountTypeView): 
     def teacher_get(self, request):
         return render(request, 'home/home.html', {
             'header' : 'Classes Created',
