@@ -33,11 +33,12 @@
     width: 350px;
     height: 200px;
     border-radius: 10px;
-    box-shadow: 2px -2px 10px rgb(253, 253, 253), -2px 2px 10px var(--shadow-light-color);
+    box-shadow: 2px -2px 10px rgb(253, 253, 253), -2px 2px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
     transition: box-shadow 0.2s;
 }
 .parent-content > .main-content > .class-box:hover {
-    box-shadow: 2px -2px 10px rgb(253, 253, 253), -2px 2px 10px var(--shadow-color);
+    box-shadow: 2px -2px 10px rgb(253, 253, 253), -2px 2px 10px rgba(0, 0, 0, 0.7);
 }
 .parent-content > .main-content > .create-new {
     position: relative;
@@ -79,7 +80,7 @@
     color: inherit;
     transform: translateY(2px) translateX(1px);
 }
-.parent-content > .main-content > .create-new > .icon-container:hover {
+.parent-content > .main-content > .create-new:hover > .icon-container {
     transform: scale(1.2);
 }
 .parent-content > .main-content > .create-new > .icon-container:active {
