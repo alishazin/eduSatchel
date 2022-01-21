@@ -16,6 +16,7 @@ body > .nav-bar {
     background-color: var(--primary-color);
     box-shadow: 0px 10px 10px var(--shadow-light-color);
     display: flex;
+    /* justify-content: flex-start; */
     justify-content: center;
     align-items: center;
 }
@@ -34,43 +35,46 @@ body > .nav-bar > .content-box {
     padding: 0 20px;
     position: relative;
 }
-/* body > .nav-bar > .content-box.selected {
-    color: var(--tertiary-color);
-}
-body > .nav-bar > .content-box.selected#home-box > i {
-    transform: translateX(-48px);
-}
-body > .nav-bar > .content-box.selected#home-box > span {
-    transform: translateX(-5px) translateY(-1px);
-    opacity: 1;
-}
-body > .nav-bar > .content-box.selected#profile-box > span {
-    transform: translateX(48px);
-    opacity: 1;
-} */
 body > .nav-bar > .content-box.selected {
     color: var(--tertiary-color);
 }
-body > .nav-bar > .content-box.selected > span {
-    display: inline;
-} 
 body > .nav-bar > .content-box:active {
     opacity: 0.8;
-}
-body > .nav-bar > .content-box > i {
-    font-size: 30px;
-    transition: transform 0.3s;
 }
 body > .nav-bar > .content-box > span {
     color: inherit;
     margin-left: 10px;
     font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
     font-size: 17px;
-    display: inline;
-    transition: opacity 0.3s;
     display: none;
-    /* position: absolute;
-    opacity: 0; */
+}
+body > .nav-bar > .content-box > i {
+    font-size: 30px;
+    transition: transform 0.5s;
+}
+body > .nav-bar > .content-box.selected > span {
+    display: inline;
+}
+body > .nav-bar > .content-box:not(.selected):hover {
+    opacity: 0.8;
+}
+body > .nav-bar > .content-box > i > .counter {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--tertiary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 18px;
+    top: -2px;
+    font-size: 13px;
+    font-style: normal;
+    color: var(--primary-color);
+    z-index: 1;
+    font-weight: bold;
+    font-family: "Montserrat", Arial, Helvetica, sans-serif;
 }
 body > .message-div {
     width: 100%;
@@ -124,4 +128,9 @@ body .parent-content ::-webkit-scrollbar-thumb {
 }
 body .parent-content ::-webkit-scrollbar-thumb:hover {
     background: #00000065;
+}
+@media (max-width:450px) {
+    body > .nav-bar > .content-box.selected > span {
+        display: none;
+    }
 }
