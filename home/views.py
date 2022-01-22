@@ -73,4 +73,4 @@ class CreateNewClassView(View):
 class JoinNewClassView(View):
     @authentication_check(account_type='student')
     def get(self, request):
-        return HttpResponse('Join New')
+        return render(request, 'home/join_new.html', {})

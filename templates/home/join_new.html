@@ -1,0 +1,44 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Create New Class{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/home/create_new.css' %}">
+<script src="{% static 'js/home/join_new.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="sub-container">
+    <form method="POST" action=".">
+        {% csrf_token %}
+        {% if general_error %}
+            <script>
+                alert("{{ general_error }}")
+            </script>
+        {% endif %}
+        <div class="field-parent">
+            <label>Class ID</label>
+            <input type="text" name="class_id" id="id_class_id" required>
+            <div class="error-div">{{ class_id_error }}</div>
+        </div>
+        <button>Join</button>
+    </form>
+    <div class="separator"></div>
+    <div class="more-details">
+        <div class="list-conatiner">
+            <ul>
+                <li>Every class will be provided with a unique ID.</li>
+                <li>Students will be able to send join request using that ID.</li>
+                <li>Students are allowed to join the class if the teacher accepts the request.</li>
+                <li>These requests will be shown up in the notifications</li>
+                <li>You can restrict students from sending join requests by checking 'Block join requests'.</li>
+                <li>You can change it later from the settings if needed.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    document.body.onload = onLoad();
+</script>
+{% endblock bodyextra %}
