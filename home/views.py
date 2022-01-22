@@ -41,7 +41,7 @@ class NotificationsPageView(View):
 class CreateNewClassView(View):
     @authentication_check(account_type='teacher')
     def get(self, request):
-        return HttpResponse('Create New')
+        return render(request, 'home/create_new.html', {})
 
 class JoinNewClassView(View):
     @authentication_check(account_type='student')
