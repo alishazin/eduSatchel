@@ -43,6 +43,11 @@ class CreateNewClassView(View):
     def get(self, request):
         return render(request, 'home/create_new.html', {})
 
+    @authentication_check(account_type='teacher')
+    def post(self, request):
+        print(request.POST)
+        return HttpResponse('Recieved')
+
 class JoinNewClassView(View):
     @authentication_check(account_type='student')
     def get(self, request):

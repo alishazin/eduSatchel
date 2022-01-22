@@ -1,3 +1,9 @@
+.parent-content {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    flex-direction: column !important;
+}
 .parent-content > .header-container {
     position: relative;
     height: 100px;
