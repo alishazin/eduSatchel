@@ -66,7 +66,7 @@ class CustomUser(AbstractBaseUser):
     REQUIRED_FIELDS = ['username', 'account_type']
 
     def __str__(self):
-        return self.email
+        return f'{self.email} <{self.account_type}>'
 
     def has_perm(self, perm, obj=None):
         return self.is_admin

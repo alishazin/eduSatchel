@@ -74,3 +74,8 @@ class JoinNewClassView(View):
     @authentication_check(account_type='student')
     def get(self, request):
         return render(request, 'home/join_new.html', {})
+
+    @authentication_check(account_type='student')
+    def post(self, request):
+        print(request.POST)
+        return HttpResponse("Successfully joined class")
