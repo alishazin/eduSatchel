@@ -5,6 +5,7 @@
 
 {% block headextraextra %}
 <link rel='stylesheet' href="{% static 'css/home/create_new.css' %}">
+<link rel='stylesheet' href="{% static 'css/home/join_new.css' %}">
 <script src="{% static 'js/home/join_new.js' %}"></script>
 {% endblock headextraextra %}
 
@@ -19,7 +20,7 @@
         {% endif %}
         <div class="field-parent">
             <label>Class ID</label>
-            <input type="text" name="class_id" id="id_class_id" required>
+            <input type="text" name="class_id" id="id_class_id" required autocomplete="off">
             <div class="error-div">{{ class_id_error }}</div>
         </div>
         <button>Request Join</button>

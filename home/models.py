@@ -22,6 +22,10 @@ class Class(models.Model):
 class ClassEnrollment(models.Model):
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    enrolled = models.BooleanField(default=False)
+    # enrolled will be False when sending join request, it will be made True
+    # when teacher accepts it.
+    # class will be shown up on home screen only if enrolled is True
 
     def __str__(self):
         return f'<{self.student}> In <{self.class_obj}>'

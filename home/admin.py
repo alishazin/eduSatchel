@@ -8,7 +8,7 @@ class ClassAdmin(admin.ModelAdmin):
     readonly_fields = ('id', 'date_started')
 
 class ClassEnrollmentAdmin(admin.ModelAdmin):
-    list_display = ('class_obj', 'student') 
+    list_display = ('class_obj', 'student', 'enrolled') 
 
 
 admin.site.register(Class, ClassAdmin)

@@ -4,8 +4,10 @@ from django.urls import reverse
 from django.views import View
 from edusatchel.decorators import authentication_check
 
-from .backends import validate_new_class
-from .models import Class
+from .backends import (
+    validate_new_class,
+    validate_join_class,
+)
 
 class AccountTypeView(View):
     @authentication_check()
@@ -54,7 +56,6 @@ class CreateNewClassView(View):
             title = request.POST['title'].strip()
             description = request.POST['description'].strip()
             active = False if 'active' in request.POST.keys() else True
-            print(active)
             
             request.user.class_set.create(
                 title=title,
@@ -77,5 +78,17 @@ class JoinNewClassView(View):
 
     @authentication_check(account_type='student')
     def post(self, request):
-        print(request.POST)
-        return HttpResponse("Successfully joined class")
+        returnStatus = validate_join_class(request)
+
+        if returnStatus[0] == True:
+
+            request.user.classenrollment_set.create(
+                class_obj=returnStatus[1],
+            )
+            return HttpResponse("Successfully joined class")
+
+        else:
+            return render(request, 'home/join_new.html', {
+                'class_id_error' : returnStatus[1]['class_id_error'],
+                'general_error' : returnStatus[1]['general_error'],
+            })
