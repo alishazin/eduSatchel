@@ -8,7 +8,7 @@ function addSelectedToNavBar() {
 }
 
 function addClickEventToCustomCheckBox() {
-    const realhiddenCheckBox = document.querySelector('.parent-content > .sub-container > form > #id_state');
+    const realhiddenCheckBox = document.querySelector('.parent-content > .sub-container > form > #id_active');
     const checkboxParent = document.querySelector('.parent-content > .sub-container > form > .checkbox-custom-container > .checkbox');
     const icon = document.querySelector('.parent-content > .sub-container > form > .checkbox-custom-container > .checkbox > i');
     checkboxParent.onclick = () => {

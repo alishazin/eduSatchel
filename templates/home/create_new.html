@@ -12,17 +12,22 @@
 <div class="sub-container">
     <form method="POST" action=".">
         {% csrf_token %}
+        {% if general_error %}
+            <script>
+                alert("{{ general_error }}")
+            </script>
+        {% endif %}
         <div class="field-parent">
             <label>Title</label>
             <input type="text" name="title" id="id_title" required maxlength="80" minlength="5">
-            <div class="error-div"></div>
+            <div class="error-div">{{ title_error }}</div>
         </div>
         <div class="field-parent">
             <label>Description</label>
             <textarea name="description" id="id_description" required maxlength="300" minlength="5"></textarea>
-            <div class="error-div"></div>
+            <div class="error-div">{{ description_error }}</div>
         </div>
-        <input type="checkbox" style="display: none;" id="id_state" name="state">
+        <input type="checkbox" style="display: none;" id="id_active" name="active">
         <div class="checkbox-custom-container">
             <div class="checkbox"><i class="bi bi-check"></i></div>
             <span>Block join requests</span>

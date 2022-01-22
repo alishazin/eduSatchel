@@ -23,6 +23,10 @@
     flex-direction: column;
     padding: 50px;
 }
+.parent-content > .sub-container > form ::selection {
+    color: white;
+    background: dodgerblue;
+}
 .parent-content > .sub-container > form > .field-parent {
     width: 100%;
     display: flex;
@@ -63,7 +67,7 @@
     margin-top: 8px;
     height: 20px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 15px;
+    font-size: 13px;
     color: rgb(255, 91, 91);
     padding-left: 5px;
 }
