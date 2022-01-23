@@ -103,7 +103,7 @@ def get_list_for_notification_obj(notification_objects):
     returnList = []
     for obj in notification_objects:
         ISTdatetime = get_IST_from_UTC(obj.time)
-        returnList.append([obj.header, obj.body, check_if_today_or_yesterday(ISTdatetime), [ISTdatetime.hour, ISTdatetime.minute], obj.seen])
+        returnList.append([obj.header, obj.body, check_if_today_or_yesterday(ISTdatetime), f'{ISTdatetime.hour}:{ISTdatetime.minute}', obj.seen])
         if obj.seen == False:
             obj.seen = True
             obj.save()
@@ -115,10 +115,10 @@ def get_IST_from_UTC(timedate):
 def check_if_today_or_yesterday(argumentDate):
     dateNow = datetime.datetime.now()
     if argumentDate.day == dateNow.day and argumentDate.month == dateNow.month and argumentDate.year == dateNow.year:
-        return ['Today']
+        return 'Today'
     else:
         dateYesterday = dateNow - timedelta(days = 1)
         if argumentDate.day == dateYesterday.day and argumentDate.month == dateYesterday.month and argumentDate.year == dateYesterday.year:
-            return ['Yesterday']
+            return 'Yesterday'
 
-    return [argumentDate.day, argumentDate.month, argumentDate.year]
+    return f'{argumentDate.day}/{argumentDate.month}/{argumentDate.year}'

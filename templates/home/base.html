@@ -27,6 +27,8 @@
         <i>
             {% if notifications != False %}
                 <div class="counter">{{ notifications }}</div>
+                {% else %}
+                <div class="counter" style="display: none;"></div>
             {% endif %}
             <i class="bi bi-bell"></i>
         </i>

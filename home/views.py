@@ -11,7 +11,6 @@ from .backends import (
     validate_new_class,
     validate_join_class,
     get_number_of_unseen_notification,
-    get_notification_data_and_read_unseen,
 )
 
 class AccountTypeView(View):
@@ -52,12 +51,8 @@ class ProfilePageView(View):
         
 class NotificationsPageView(View):
     def get(self, request):
-        returnData = get_notification_data_and_read_unseen(request, stepCount=1)
-        dataList = returnData[0]
-        print(json.dumps(dataList))
         return render(request, 'home/notifications.html', {
             'notifications' : get_number_of_unseen_notification(request),
-            'dataJSON' : dataList,
         })
 
 class CreateNewClassView(View):

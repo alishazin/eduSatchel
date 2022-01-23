@@ -1,8 +1,15 @@
 
 from django.http import Http404, HttpResponse
 from django.views import View
+from django.shortcuts import redirect, render
 
 from edusatchel.decorators import authentication_check
+from .backends import (
+    get_number_of_unseen_notification,
+    get_notification_data_and_read_unseen,
+)
+
+import json
 
 class GetOnlyViewBase(View):
     @authentication_check()
@@ -15,4 +22,8 @@ class GetOnlyViewBase(View):
 
 class NotificationGetOnlyView(GetOnlyViewBase):
     def get_only(self, request, stepCount):
-        return HttpResponse(stepCount)
+        returnData = get_notification_data_and_read_unseen(request, stepCount=stepCount)
+        dataList = returnData[0]
+        import time
+        time.sleep(2)
+        return HttpResponse(json.dumps([dataList, returnData[1], get_number_of_unseen_notification(request)]))
