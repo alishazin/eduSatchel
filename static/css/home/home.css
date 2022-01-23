@@ -45,6 +45,10 @@
     position: relative;
     overflow: hidden;
 }
+.parent-content > .main-content > .class-box:not(.create-new, .join-new) {
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
+}
 .parent-content > .main-content > .class-box:hover {
     transform: scale(1.07);
 }

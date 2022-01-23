@@ -6,8 +6,6 @@ import uuid
 
 # Create your models here.
 
-# all the cascades will be changed in the future
-
 class Class(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     teacher = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -30,3 +28,12 @@ class ClassEnrollment(models.Model):
 
     def __str__(self):
         return f'<{self.student}> In <{self.class_obj}>'
+
+class Notification(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    header = models.CharField(max_length=80, null=False, blank=False)
+    body = models.TextField(null=False, blank=False)
+    seen = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'<{self.header}> For <{self.user}>'

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Class, ClassEnrollment
+from .models import Class, ClassEnrollment, Notification
 
 # Register your models here.
 
@@ -10,6 +10,10 @@ class ClassAdmin(admin.ModelAdmin):
 class ClassEnrollmentAdmin(admin.ModelAdmin):
     list_display = ('class_obj', 'student', 'enrolled') 
 
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'header', 'seen') 
+
 
 admin.site.register(Class, ClassAdmin)
 admin.site.register(ClassEnrollment, ClassEnrollmentAdmin)
+admin.site.register(Notification, NotificationAdmin)
