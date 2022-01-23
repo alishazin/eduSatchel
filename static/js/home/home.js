@@ -1,6 +1,25 @@
 function onLoad() {
     addSelectedToNavBar();
     responsiveMainContent();
+    addRandomColorToClassCards();
+}
+
+function shuffleArray(array) {
+    array.sort(() => Math.random() - 0.5);
+    return array
+}
+
+function addRandomColorToClassCards() {
+    const cards = Array.from(document.querySelectorAll('.parent-content > .main-content > .class-box:not(.create-new, .join-new)'));
+    console.log(cards);
+    let shuffledColors =  shuffleArray(allColors);
+    let countColors = shuffledColors.length;
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].style.backgroundColor = shuffledColors[i % countColors];
+        if ((i % countColors) === countColors - 1) {
+            shuffledColors = shuffleArray(allColors);
+        }
+    }
 }
 
 function addSelectedToNavBar() {
