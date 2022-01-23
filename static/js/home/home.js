@@ -2,6 +2,25 @@ function onLoad() {
     addSelectedToNavBar();
     responsiveMainContent();
     addRandomColorToClassCards();
+    cardPopupController();
+}
+
+function cardPopupController() {
+    const titleContainer = Array.from(document.querySelectorAll('.parent-content > .main-content > .class-box > .title-container'));
+    titleContainer.forEach((self) => {
+        const popup = self.children[1];
+        popup.onwheel = (event) => {
+            event.preventDefault();
+            popup.scrollLeft += event.deltaY / 3;
+        }
+        popup.onblur = () => {
+            popup.style.display = 'none';
+        }
+        self.onclick = () => {
+            popup.style.display = 'flex';
+            popup.focus();
+        }
+    })
 }
 
 function shuffleArray(array) {
@@ -10,8 +29,8 @@ function shuffleArray(array) {
 }
 
 function addRandomColorToClassCards() {
+    var allColors = ['rgb(255, 104, 104)', 'rgb(68, 196, 255)', 'rgb(255, 196, 0)', 'rgb(74, 255, 201)', 'rgb(173, 111, 255)'];
     const cards = Array.from(document.querySelectorAll('.parent-content > .main-content > .class-box:not(.create-new, .join-new)'));
-    console.log(cards);
     let shuffledColors =  shuffleArray(allColors);
     let countColors = shuffledColors.length;
     for (let i = 0; i < cards.length; i++) {

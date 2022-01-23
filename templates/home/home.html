@@ -45,12 +45,33 @@
         </div>
         <div class="text-area">{{ create_new_title }}</div>
     </div>
-    <div class="class-box">
-        
-    </div>
+    {% if class_obj_array %}
+        {% for class_obj in class_obj_array %}
+            <div class="class-box">
+                <div class="title-container">
+                    <p>{{ class_obj.title }}</p>
+                    <div class="popup" tabindex='1'>{{ class_obj.title }}</div>
+                </div>
+                <div class="horizontal-line one"></div>
+                <div class="horizontal-line two"></div>
+                <span class="teacher-name">{{ class_obj.teacher.username }}</span>
+            </div>
+        {% endfor %}
+    {% elif classenrollment_obj_array %}
+        {% for classenrollment_obj in classenrollment_obj_array %}
+            <div class="class-box">
+                <div class="title-container">
+                    <p>{{ classenrollment_obj.class_obj.title }}</p>
+                    <div class="popup" tabindex='1'>{{ classenrollment_obj.class_obj.title }}</div>
+                </div>
+                <div class="horizontal-line one"></div>
+                <div class="horizontal-line two"></div>
+                <span class="teacher-name">{{ classenrollment_obj.class_obj.teacher.username }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 <script>
-    var allColors = ['rgb(255, 104, 104)', 'rgb(68, 196, 255)', 'rgb(255, 196, 0)', 'rgb(74, 255, 201)', 'rgb(173, 111, 255)'];
     document.body.onload = onLoad();
 </script>
 {% endblock bodyextra %}

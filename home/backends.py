@@ -40,7 +40,7 @@ def validate_join_class(request):
     }
 
     if 'class_id' in data.keys():
-        id = data['class_id']
+        id = data['class_id'].strip()
         try:
             class_obj = Class.objects.filter(id=id)[0]
         except:

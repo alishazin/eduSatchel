@@ -28,7 +28,6 @@
 .parent-content > .main-content {
     width: 100%;
     max-height: calc(100% - 100px);
-    min-height: fit-content;
     padding: 25px;
     padding-right: 21px;
     display: grid;
@@ -43,9 +42,75 @@
     box-shadow: 2px -2px 10px rgb(253, 253, 253), -2px 2px 10px var(--shadow-light-color);
     cursor: pointer;
     transition: box-shadow 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
 }
 .parent-content > .main-content > .class-box:hover {
     transform: scale(1.07);
+}
+.parent-content > .main-content > .class-box > .title-container {
+    position: relative;
+    left: 0;
+    top: 40px;
+    width: calc(100% - 40px);
+    transform: translateX(20px);
+}
+.parent-content > .main-content > .class-box > .title-container > p {
+    position: absolute;
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    font-size: 25px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+}
+.parent-content > .main-content > .class-box > .title-container > .popup {
+    position: absolute;
+    width: 200px;
+    height: 40px;
+    font-size: 13px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 5px 8px;
+    border-radius: 5px;
+    top: -20px;
+    left: 10px;
+    z-index: 1;
+    box-shadow: 0 0 10px var(--shadow-color);
+    color: black;
+    background-color: white;
+    display: none;
+    overflow-x: scroll;
+    white-space: nowrap;
+    outline: none;
+    justify-content: flex-start;
+    align-items: center;
+}
+.parent-content > .main-content > .class-box > .horizontal-line {
+    position: absolute;
+    left: 0;
+    width: calc(100% - 50px);
+    border-radius: 0 5px 5px 0;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+.parent-content > .main-content > .class-box > .horizontal-line.one {
+    top: calc(50% + 10px);
+}
+.parent-content > .main-content > .class-box > .horizontal-line.two {
+    top: calc(50% + 30px);
+}
+.parent-content > .main-content > .class-box > .teacher-name {
+    position: absolute;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+    color: white;
+    font-size: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: calc(100% - 40px);
+    bottom: 30px;
+    left: 20px;
 }
 .parent-content > .main-content > .create-new {
     position: relative;
@@ -135,5 +200,14 @@
         justify-content: center;
         padding-left: 0;
         font-size: 25px;
+    }
+    .parent-content > .main-content > .class-box > .horizontal-line {
+        width: 100%;
+    }
+    .parent-content > .main-content > .class-box > .title-container {
+        top: 35px;
+    }
+    .parent-content > .main-content > .class-box > .title-container > .popup {
+        width: 150px;
     }
 }

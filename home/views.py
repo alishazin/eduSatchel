@@ -25,6 +25,7 @@ class HomePageView(AccountTypeView):
             'header' : 'Classes Created',
             'create_new_title' : 'Create A New Class',
             'url_new' : f"{reverse('home:create-class')}",
+            'class_obj_array' : request.user.class_set.all(),
         })
 
     def student_get(self, request):
@@ -32,6 +33,7 @@ class HomePageView(AccountTypeView):
             'header' : 'Classes Entrolled',
             'create_new_title' : 'Join A New Class',
             'url_new' : f"{reverse('home:join-class')}",
+            'classenrollment_obj_array' : request.user.classenrollment_set.filter(enrolled=True),
         })
 
 
