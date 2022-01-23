@@ -1,6 +1,8 @@
 
 from .models import Class
 
+DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP = 3
+
 def validate_new_class(request):
     data = request.POST
 
@@ -70,3 +72,34 @@ def validate_join_class(request):
     else:
         returnDict['general_error'] = 'Something went wrong. Refresh the page ?'
         return [False, returnDict]
+
+def get_number_of_unseen_notification(request):
+    notifications = request.user.notification_set.filter(seen=False)
+    if notifications:
+        length = len(notifications)
+        return length if length <= 9 else '9+'
+    else:
+        return False
+
+def get_notification_data_and_read_unseen(request, stepCount):
+    allNotification = request.user.notification_set.all().order_by('-id')
+
+    if stepCount == 1:
+        currentStepData = get_list_for_notification_obj(allNotification[0 : DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * stepCount])
+    else:
+        currentStepData = get_list_for_notification_obj(allNotification[DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * (stepCount - 1) : DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * stepCount])
+
+    returnStep = 0 if (DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * stepCount) >= len(allNotification) else stepCount + 1
+
+    print(currentStepData) # [] no data avalilabe, usally happens when passing exceeded stepCount
+    print(returnStep) # 0 (no more step)
+
+def get_list_for_notification_obj(notification_objects):
+    """ seen is set to True while taking data to frontend """
+    returnList = []
+    for obj in notification_objects:
+        returnList.append([obj.header, obj.body, obj.seen])
+        if obj.seen == False:
+            obj.seen = True
+            obj.save()
+    return returnList

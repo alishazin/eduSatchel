@@ -8,6 +8,8 @@ from edusatchel.decorators import authentication_check
 from .backends import (
     validate_new_class,
     validate_join_class,
+    get_number_of_unseen_notification,
+    get_notification_data_and_read_unseen,
 )
 
 class AccountTypeView(View):
@@ -27,6 +29,7 @@ class HomePageView(AccountTypeView):
             'create_new_title' : 'Create A New Class',
             'url_new' : f"{reverse('home:create-class')}",
             'class_obj_array' : request.user.class_set.all(),
+            'notifications' : get_number_of_unseen_notification(request),
         })
 
     def student_get(self, request):
@@ -35,21 +38,29 @@ class HomePageView(AccountTypeView):
             'create_new_title' : 'Join A New Class',
             'url_new' : f"{reverse('home:join-class')}",
             'classenrollment_obj_array' : request.user.classenrollment_set.filter(enrolled=True),
+            'notifications' : get_number_of_unseen_notification(request),
         })
 
 
 class ProfilePageView(View):
     def get(self, request):
-        return render(request, 'home/profile.html', {})
+        return render(request, 'home/profile.html', {
+            'notifications' : get_number_of_unseen_notification(request),
+        })
         
 class NotificationsPageView(View):
     def get(self, request):
-        return render(request, 'home/notifications.html', {})
+        get_notification_data_and_read_unseen(request, stepCount=3)
+        return render(request, 'home/notifications.html', {
+            'notifications' : get_number_of_unseen_notification(request),
+        })
 
 class CreateNewClassView(View):
     @authentication_check(account_type='teacher')
     def get(self, request):
-        return render(request, 'home/create_new.html', {})
+        return render(request, 'home/create_new.html', {
+            'notifications' : get_number_of_unseen_notification(request),
+        })
 
     @authentication_check(account_type='teacher')
     def post(self, request):
@@ -73,12 +84,15 @@ class CreateNewClassView(View):
                 'title_error' : returnStatus['title_error'],
                 'description_error' : returnStatus['description_error'],
                 'general_error' : returnStatus['general_error'],
+                'notifications' : get_number_of_unseen_notification(request),
             })
 
 class JoinNewClassView(View):
     @authentication_check(account_type='student')
     def get(self, request):
-        return render(request, 'home/join_new.html', {})
+        return render(request, 'home/join_new.html', {
+            'notifications' : get_number_of_unseen_notification(request),
+        })
 
     @authentication_check(account_type='student')
     def post(self, request):
@@ -96,4 +110,5 @@ class JoinNewClassView(View):
             return render(request, 'home/join_new.html', {
                 'class_id_error' : returnStatus[1]['class_id_error'],
                 'general_error' : returnStatus[1]['general_error'],
+                'notifications' : get_number_of_unseen_notification(request),
             })

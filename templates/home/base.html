@@ -24,7 +24,12 @@
     </div>
     <div class="separator"></div>
     <div class="content-box" id="notification-box">
-        <i><div class="counter" style="display: none;">5</div><i class="bi bi-bell"></i></i>
+        <i>
+            {% if notifications != False %}
+                <div class="counter">{{ notifications }}</div>
+            {% endif %}
+            <i class="bi bi-bell"></i>
+        </i>
         <span>Notifications</span>
     </div>
 </div>
