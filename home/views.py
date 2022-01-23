@@ -50,7 +50,7 @@ class ProfilePageView(View):
         
 class NotificationsPageView(View):
     def get(self, request):
-        get_notification_data_and_read_unseen(request, stepCount=3)
+        get_notification_data_and_read_unseen(request, stepCount=1)
         return render(request, 'home/notifications.html', {
             'notifications' : get_number_of_unseen_notification(request),
         })

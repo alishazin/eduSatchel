@@ -1,3 +1,67 @@
-p {
-    color: greenyellow;
+.parent-content {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+}
+.parent-content > .left-content {
+    width: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+.parent-content > .right-content {
+    width: 50%;
+    background-color: var(--secondary-color);
+    height: 100%;
+}
+.parent-content > .left-content > .msg-header-item {
+    height: 70px;
+    border-bottom: 2px solid #ddd;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+.parent-content > .left-content > .msg-header-item:hover  {
+    background-color: rgba(211, 211, 211, 0.3);
+}
+.parent-content > .left-content > .msg-header-item > .seen-box {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.parent-content > .left-content > .msg-header-item > .seen-box > .ball {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    z-index: 1;
+}
+.parent-content > .left-content > .msg-header-item.seen > .seen-box > .ball {
+    background-color: var(--green-light-color);
+    transition: width 0.2s, height 0.2s;
+}
+.parent-content > .left-content > .msg-header-item.seen:hover > .seen-box > .ball {
+    width: 15px;
+    height: 15px;
+}
+.parent-content > .left-content > .msg-header-item > .header-area {
+    width: calc(100% - 60px);
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.parent-content > .left-content > .msg-header-item > .header-area > p {
+    font-size: 18px;
+    font-family: "Merriweather", Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(124, 124, 124);
+}
+.parent-content > .left-content > .msg-header-item.seen > .header-area > p {
+    font-weight: bold;
 }
