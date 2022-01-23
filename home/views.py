@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -64,7 +65,8 @@ class CreateNewClassView(View):
                 description=description,
                 active=active,
             )
-            return HttpResponse("Successfully created class")
+            messages.error(request, 'Class created successfully')
+            return redirect(reverse('home:home-page'))
 
         else:
             return render(request, 'home/create_new.html', {
@@ -87,7 +89,8 @@ class JoinNewClassView(View):
             request.user.classenrollment_set.create(
                 class_obj=returnStatus[1],
             )
-            return HttpResponse("Successfully joined class")
+            messages.error(request, 'Join Request send successfully')
+            return redirect(reverse('home:home-page'))
 
         else:
             return render(request, 'home/join_new.html', {
