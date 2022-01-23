@@ -3,7 +3,61 @@
     justify-content: flex-start !important;
     align-items: center !important;
 }
+.parent-content > .loading-box, .parent-content > .no-network-box {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.parent-content > .no-network-box {
+    display: none;
+}
+.parent-content > .loading-box > .spinner {
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid var(--primary-color);
+    width: 48px;
+    height: 48px;
+    animation: loading-spin 1.5s linear infinite;
+}
+.parent-content > .loading-box > p {
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    animation: loading-para-color 1.5s linear infinite;
+}
+.parent-content > .no-network-box > i {
+    font-size: 150px;
+    color: transparent;
+    background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+.parent-content > .no-network-box > p {
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.parent-content > .no-network-box > button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-family: "Montserrat", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    border: 1px solid var(--tertiary-color);
+    color: var(--tertiary-color);
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+}
+.parent-content > .no-network-box > button:hover {
+    background-color: var(--tertiary-color);
+    color: white;
+}
 .parent-content > .left-content {
+    display: none !important;
     width: 50%;
     background-color: white;
     display: flex;
@@ -14,6 +68,7 @@
     overflow: auto;
 }
 .parent-content > .right-content {
+    display: none !important;
     width: 50%;
     background-color: var(--secondary-color);
     height: 100%;

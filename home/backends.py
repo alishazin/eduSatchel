@@ -96,6 +96,7 @@ def get_notification_data_and_read_unseen(request, stepCount):
 
     print(currentStepData) # [] no data avalilabe, usally happens when passing exceeded stepCount
     print(returnStep) # 0 (no more step)
+    return currentStepData, returnStep
 
 def get_list_for_notification_obj(notification_objects):
     """ seen is set to True while taking data to frontend """
