@@ -1,4 +1,7 @@
 
+import datetime
+from datetime import timedelta
+
 from .models import Class
 
 DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP = 3
@@ -98,8 +101,23 @@ def get_list_for_notification_obj(notification_objects):
     """ seen is set to True while taking data to frontend """
     returnList = []
     for obj in notification_objects:
-        returnList.append([obj.header, obj.body, obj.seen])
+        ISTdatetime = get_IST_from_UTC(obj.time)
+        returnList.append([obj.header, obj.body, check_if_today_or_yesterday(ISTdatetime), [ISTdatetime.hour, ISTdatetime.minute], obj.seen])
         if obj.seen == False:
             obj.seen = True
             obj.save()
     return returnList
+
+def get_IST_from_UTC(timedate):
+    return timedate + timedelta(hours=5, minutes=30)
+
+def check_if_today_or_yesterday(argumentDate):
+    dateNow = datetime.datetime.now()
+    if argumentDate.day == dateNow.day and argumentDate.month == dateNow.month and argumentDate.year == dateNow.year:
+        return ['Today']
+    else:
+        dateYesterday = dateNow - timedelta(days = 1)
+        if argumentDate.day == dateYesterday.day and argumentDate.month == dateYesterday.month and argumentDate.year == dateYesterday.year:
+            return ['Yesterday']
+
+    return [argumentDate.day, argumentDate.month, argumentDate.year]

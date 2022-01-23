@@ -11,8 +11,8 @@ class ClassEnrollmentAdmin(admin.ModelAdmin):
     list_display = ('class_obj', 'student', 'enrolled') 
 
 class NotificationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'header', 'seen') 
-    readonly_fields = ('id',)
+    list_display = ('id', 'user', 'header', 'time', 'seen') 
+    readonly_fields = ('id', 'time')
 
 
 admin.site.register(Class, ClassAdmin)
