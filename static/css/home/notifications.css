@@ -11,6 +11,7 @@
     align-items: center;
     flex-direction: column;
     height: 100%;
+    overflow: auto;
 }
 .parent-content > .right-content {
     width: 50%;
@@ -19,7 +20,7 @@
 }
 .parent-content > .left-content > .msg-header-item {
     height: 70px;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 1.5px solid #ddd;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -51,7 +52,7 @@
     height: 15px;
 }
 .parent-content > .left-content > .msg-header-item > .header-area {
-    width: calc(100% - 60px);
+    width: calc(100% - 180px);
     height: 100%;
     display: flex;
     justify-content: flex-start;
@@ -61,7 +62,25 @@
     font-size: 18px;
     font-family: "Merriweather", Verdana, Geneva, Tahoma, sans-serif;
     color: rgb(124, 124, 124);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .parent-content > .left-content > .msg-header-item.seen > .header-area > p {
     font-weight: bold;
+}
+.parent-content > .left-content > .msg-header-item > .date-area {
+    width: 120px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.parent-content > .left-content > .msg-header-item > .date-area > p {
+    font-size: 13px;
+    font-family: "Poppins", Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(173, 173, 173);
+}
+.parent-content > .left-content > .msg-header-item.seen > .date-area > p {
+    color: rgb(65, 65, 65);
 }
