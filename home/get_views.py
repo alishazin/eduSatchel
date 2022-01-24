@@ -22,6 +22,8 @@ class GetOnlyViewBase(View):
 
 class NotificationGetOnlyView(GetOnlyViewBase):
     def get_only(self, request, stepCount):
+        if stepCount == 0:
+            return HttpResponse("Invalid stepCount")
         returnData = get_notification_data_and_read_unseen(request, stepCount=stepCount)
         dataList = returnData[0]
         import time

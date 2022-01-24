@@ -2,6 +2,7 @@
 var currentParent = 'primary';
 
 var allData = {
+    busy : false,
     stepCount : 1,
     data : [],
     next_id : 1,
@@ -20,25 +21,43 @@ var allData = {
 function onLoad() {
     addSelectedToNavBar();
     startAsyncGetData()
+    addScrollEventToLeftContainer();
+}
+
+function addScrollEventToLeftContainer() {
+    const leftContainer = document.querySelector('.parent-content > .left-content'); 
+    leftContainer.onscroll = (e) => {
+        if ((leftContainer.scrollHeight - 3) <= (leftContainer.scrollTop + leftContainer.clientHeight)) {
+            if (allData.busy === false && allData.stepCount !== 0) {
+                startAsyncGetData();
+            }
+        }
+    }
 }
 
 async function startAsyncGetData() {
-    try {
-        leftContainerLoadingController(true);
-        
-        const data = await sendPostRequestToGetData();
-        await allData.addData(data);
-
-        leftContainerLoadingController(false);
-        
-        addItemsContainers();
-
-    } catch(error) {
-        // if (error = 'no network') {
-        //     raiseNoNetworkError();
-        // }
-        console.log(error)
-
+    if (allData.stepCount !== 0) {
+        try {
+            allData.busy = true;
+            leftContainerLoadingController(true);
+            
+            const data = await sendGetRequestToGetData();
+            await allData.addData(data);
+            
+            leftContainerLoadingController(false);
+            
+            addItemsContainers();
+            allData.busy = false;
+            
+        } catch(error) {
+            if (error === 'no network') {
+                raiseNoNetworkError();
+            } else if (error === 'Error From Backend') {
+                alert('Something went wrong. Refresh the page ?')
+                location.href = "/home/notifications/";
+            }
+    
+        }
     }
 }
 
@@ -74,6 +93,7 @@ function addItemsContainers() {
 
         leftContainer.appendChild(messageHeaderItem);
     }
+    allData.widgetAddedTill = allData.next_id - 1
 }
 
 function leftContainerLoadingController(state) {
@@ -124,18 +144,22 @@ function raiseNoNetworkError() {
     noNetworkDiv.style.display = 'flex';
 }
 
-function sendPostRequestToGetData() {
+function sendGetRequestToGetData() {
     return new Promise((resolve, reject) => {
         var req = new XMLHttpRequest();
         req.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                const parsedResponse = JSON.parse(this.responseText);
-                resolve(parsedResponse);
+                if (this.responseText === 'Invalid stepCount') {
+                    reject("Error From Backend")
+                } else {
+                    const parsedResponse = JSON.parse(this.responseText);
+                    resolve(parsedResponse);
+                }
             }
         }
-        // req.onerror = function() {
-        //     reject('no network');
-        // }
+        req.onerror = function() {
+            reject('no network');
+        }
         req.open('GET', `/home/notifications/get-data/${allData.stepCount}`);
         req.send();
     })

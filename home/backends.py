@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from .models import Class
 
-DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP = 3
+DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP = 25
 
 def validate_new_class(request):
     data = request.POST
