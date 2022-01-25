@@ -5,8 +5,11 @@ from django.urls import reverse
 from django.views import View
 from edusatchel.decorators import authentication_check
 
-import json
 
+from .send_notifications import (
+    after_creating_class,
+    after_joining_class,
+)
 from .backends import (
     validate_new_class,
     validate_join_class,
@@ -71,11 +74,12 @@ class CreateNewClassView(View):
             description = request.POST['description'].strip()
             active = False if 'active' in request.POST.keys() else True
             
-            request.user.class_set.create(
+            newClassObj = request.user.class_set.create(
                 title=title,
                 description=description,
                 active=active,
             )
+            after_creating_class(request.user, newClassObj)
             messages.error(request, 'Class created successfully')
             return redirect(reverse('home:home-page'))
 
@@ -103,6 +107,7 @@ class JoinNewClassView(View):
             request.user.classenrollment_set.create(
                 class_obj=returnStatus[1],
             )
+            after_joining_class(request.user, returnStatus[1])
             messages.error(request, 'Join Request send successfully')
             return redirect(reverse('home:home-page'))
 

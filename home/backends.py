@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from .models import Class
 
-DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP = 3
+DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP = 25
 
 def validate_new_class(request):
     data = request.POST
@@ -103,11 +103,16 @@ def get_list_for_notification_obj(notification_objects):
     returnList = []
     for obj in notification_objects:
         ISTdatetime = get_IST_from_UTC(obj.time)
-        returnList.append([obj.header, obj.body, check_if_today_or_yesterday(ISTdatetime), f'{ISTdatetime.hour}:{ISTdatetime.minute}', obj.seen])
+        returnList.append([obj.header, obj.body, check_if_today_or_yesterday(ISTdatetime), f'{add_zero_to_left(ISTdatetime.hour)}:{add_zero_to_left(ISTdatetime.minute)}', obj.seen])
         if obj.seen == False:
             obj.seen = True
             obj.save()
     return returnList
+
+def add_zero_to_left(value):
+    if len(str(value)) == 1:
+        return f'0{value}'
+    return value
 
 def get_IST_from_UTC(timedate):
     return timedate + timedelta(hours=5, minutes=30)

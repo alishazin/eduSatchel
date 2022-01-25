@@ -21,6 +21,10 @@
 }
 .parent-content > .no-network-box > p, .parent-content > .no-notifications-box > p {
     font-size: 18px;
+    color: transparent;
+    background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .parent-content > .no-network-box > button {
@@ -93,9 +97,11 @@
 }
 .parent-content > .right-content > .content-box > .header {
     padding: 30px 10px;
-    font-size: 20px;
+    font-size: 22px;
+    padding-bottom: 20px;
     font-family: "Lato", "Poppins", Arial, Helvetica, sans-serif;
     color: var(--secondary-color);
+    font-weight: bold;
 }
 .parent-content > .right-content > .content-box > .content {
     padding: 10px 12px;
@@ -103,7 +109,6 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--secondary-color);
     word-break: normal;
-    text-indent: 10px;
     line-height: 27px;
 }
 .parent-content > .right-content > .content-box > .date-box {
@@ -299,7 +304,7 @@
 }
 .parent-content > .small-content > .small-item > .dropdown-part.open {
     padding: 10px 25px;
-    height: 180px !important;
+    height: 250px !important;
 }
 .parent-content > .small-content > .small-item > .dropdown-part > .header {
     font-size: 20px;
