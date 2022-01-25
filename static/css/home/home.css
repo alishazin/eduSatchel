@@ -45,7 +45,7 @@
     position: relative;
     overflow: hidden;
 }
-.parent-content > .main-content > .class-box:not(.create-new, .join-new) {
+.parent-content > .main-content > .class-box:not(.create-new, .join-new) > .teacher-name {
     animation-name: on-load-translate-animation;
     animation-duration: 1s;
 }

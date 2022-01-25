@@ -26,6 +26,4 @@ class NotificationGetOnlyView(GetOnlyViewBase):
             return HttpResponse("Invalid stepCount")
         returnData = get_notification_data_and_read_unseen(request, stepCount=stepCount)
         dataList = returnData[0]
-        import time
-        time.sleep(2)
         return HttpResponse(json.dumps([dataList, returnData[1], get_number_of_unseen_notification(request)]))
