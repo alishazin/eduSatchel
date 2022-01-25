@@ -17,7 +17,7 @@ var currentParent = {
             leftContainer.style.display = 'none';
             rightContainer.style.display = 'none';
 
-            smallContent.style.display = 'flex';
+            smallContent.style.display = 'block';
         }
         this._state = arg;
     }
@@ -54,6 +54,7 @@ function onLoad() {
     addSelectedToNavBar();
     startAsyncGetData()
     addScrollEventToLeftContainer();
+    addScrollEventToSmallContainer();
     addClickEventToLeftContainerItems();
     addResponsiveness();
     addClickEventToDropdown();
@@ -71,19 +72,32 @@ function addScrollEventToLeftContainer() {
     }
 }
 
+function addScrollEventToSmallContainer() {
+    const smallContainer = document.querySelector('.parent-content > .small-content'); 
+    smallContainer.onscroll = (e) => {
+        if ((smallContainer.scrollHeight - 3) <= (smallContainer.scrollTop + smallContainer.clientHeight)) {
+            if (allData.busy === false && allData.stepCount !== 0) {
+                startAsyncGetData();
+            }
+        }
+    }
+}
+
 async function startAsyncGetData() {
     if (allData.stepCount !== 0) {
         try {
             allData.busy = true;
             leftContainerLoadingController(true);
+            smallContainerLoadingController(true);
             
             const data = await sendGetRequestToGetData();
             await allData.addData(data);
             
             leftContainerLoadingController(false);
+            smallContainerLoadingController(false);
+            allData.busy = false;
             
             addItemsContainers();
-            allData.busy = false;
             
         } catch(error) {
             if (error === 'no network') {
@@ -99,9 +113,12 @@ async function startAsyncGetData() {
 
 function addItemsContainers() {
     const leftContainer = document.querySelector('.parent-content > .left-content'); 
+    const smallContainer = document.querySelector('.parent-content > .small-content'); 
     const data = allData.data;
     for (let i = allData.widgetAddedTill + 1; i < allData.next_id; i++) {
         let subData = data[i];
+
+        // Left Container
         let messageHeaderItem = null;
         if (subData[4] === false) { messageHeaderItem = createElementWithClass('div', ['msg-header-item', 'seen']) }
         else { messageHeaderItem = createElementWithClass('div', ['msg-header-item']) }
@@ -128,11 +145,61 @@ function addItemsContainers() {
         messageHeaderItem.appendChild(dateArea)
 
         leftContainer.appendChild(messageHeaderItem);
+
+        // Small Container
+        let smallItem = null;
+        if (subData[4] === false) { smallItem = createElementWithClass('div', ['small-item', 'seen']) }
+        else { smallItem = createElementWithClass('div', ['small-item']) }
+        
+        const visiblePart = createElementWithClass('div', ['visible-part'])
+        const seenBoxSmall = createElementWithClass('div', ['seen-box'])
+        
+        const ballSmall = createElementWithClass('div', ['ball'])
+        seenBoxSmall.appendChild(ballSmall)
+        visiblePart.appendChild(seenBoxSmall)
+        
+        const header = createElementWithClass('div', ['header'])
+        
+        const paraHeaderSmall = createElementWithClass('p', [], subData[0])
+        header.appendChild(paraHeaderSmall)
+        visiblePart.appendChild(header)
+        
+        const buttBox = createElementWithClass('div', ['button-box'])
+        
+        const icon = createElementWithClass('i', ['bi','bi-caret-down'])
+        buttBox.appendChild(icon)
+        visiblePart.appendChild(buttBox)
+        
+        smallItem.appendChild(visiblePart)
+
+        const dropdownPart = createElementWithClass('div', ['dropdown-part'])
+        dropdownPart.tabIndex = '0'
+
+        const headerDrop = createElementWithClass('div', ['header'], subData[0])
+        dropdownPart.appendChild(headerDrop)
+        
+        const contentDrop = createElementWithClass('div', ['content'], subData[1])
+        dropdownPart.appendChild(contentDrop)
+
+        const extraContent = createElementWithClass('div', ['extra-content'])
+
+        const timeExtra = createElementWithClass('div', ['time'], subData[3])
+        const dateExtra = createElementWithClass('div', ['date'], subData[2])
+        extraContent.appendChild(timeExtra)
+        extraContent.appendChild(dateExtra)
+
+        dropdownPart.appendChild(extraContent)
+
+        smallItem.appendChild(dropdownPart)
+
+        smallContainer.appendChild(smallItem)
     }
     allData.widgetAddedTill = allData.next_id - 1
 
     // Adding onclick Event
     addClickEventToLeftContainerItems();
+    addClickEventToDropdown();
+    addFocusEventToDropdown();
 }
 
 function leftContainerLoadingController(state) {
@@ -149,6 +216,23 @@ function leftContainerLoadingController(state) {
         leftContainer.appendChild(loadingBox);
     } else if (state === false) {
         document.querySelector('.parent-content > .left-content > .loading-box').remove();
+    }
+} 
+
+function smallContainerLoadingController(state) {
+    const smallContainer = document.querySelector('.parent-content > .small-content'); 
+    if (state === true) {
+        const loadingBox = createElementWithClass('div', ['loading-box']);
+
+        const spinner = createElementWithClass('div', ['spinner'])
+        loadingBox.appendChild(spinner);
+        
+        const para = createElementWithClass('p', [], 'Loading')
+        loadingBox.appendChild(para);
+
+        smallContainer.appendChild(loadingBox);
+    } else if (state === false) {
+        document.querySelector('.parent-content > .small-content > .loading-box').remove();
     }
 } 
 
@@ -256,6 +340,7 @@ function addClickEventToDropdown() {
     smallContainerItems.forEach((item) => {
         item.onclick = () => {
             if (currentDropDown.arrow !== null) {
+                //  This code, if user chooses to do fast
                 currentDropDown.arrow.style.transform = 'rotate(0)';
                 currentDropDown.dropdown.style.overflow = 'hidden';
                 currentDropDown.dropdown.className = 'dropdown-part';

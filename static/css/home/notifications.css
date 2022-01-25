@@ -102,8 +102,9 @@
     font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--secondary-color);
-    word-break: break-all;
+    word-break: normal;
     text-indent: 10px;
+    line-height: 27px;
 }
 .parent-content > .right-content > .content-box > .date-box {
     padding: 20px 12px;
@@ -222,10 +223,6 @@
 .parent-content > .small-content > .small-item {
     min-height: 70px;
     border-bottom: 1.5px solid #ddd;
-    display: flex;
-    justify-content: flex-start; 
-    align-items: center;
-    flex-direction: column;
     width: 100%;
     overflow: hidden;
 }
@@ -301,7 +298,7 @@
 }
 .parent-content > .small-content > .small-item > .dropdown-part.open {
     padding: 10px 25px;
-    height: 180px;
+    height: 180px !important;
 }
 .parent-content > .small-content > .small-item > .dropdown-part > .header {
     font-size: 20px;
@@ -317,10 +314,11 @@
     font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: rgb(65, 65, 65);
-    word-break: break-all;
+    word-break: normal;
     text-indent: 10px;
     width: 100%;
     margin-bottom: 20px;
+    line-height: 25px;
 }
 .parent-content > .small-content > .small-item > .dropdown-part > .extra-content {
     display: flex;
@@ -339,4 +337,30 @@
     font-size: 15px;
     color:rgb(141, 141, 141);
     font-family: "Poppins", Verdana, Geneva, Tahoma, sans-serif;
+}
+.parent-content > .small-content > .loading-box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    min-height: 120px;
+}
+.parent-content > .small-content > .loading-box > .spinner {
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid var(--primary-color);
+    width: 48px;
+    height: 48px;
+    animation: loading-spin 1.5s linear infinite;
+}
+.parent-content > .small-content > .loading-box > p {
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    animation: loading-para-color 1.5s linear infinite;
+}
+@media (max-width:300px) {
+    .parent-content > .small-content > .small-item > .dropdown-part > .content {
+        word-break: break-all;
+    }
 }
