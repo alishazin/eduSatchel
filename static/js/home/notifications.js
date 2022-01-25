@@ -1,5 +1,33 @@
 
-var currentParent = 'primary';
+var currentParent = {
+    _state : 'primary',
+    get state () {
+        return this._state
+    },
+    set state (arg) {
+        const leftContainer = document.querySelector('.parent-content > .left-content');
+        const rightContainer = document.querySelector('.parent-content > .right-content');
+        const smallContent = document.querySelector('.parent-content > .small-content');
+        if (arg === 'primary') {
+            smallContent.style.display = 'none'
+            
+            leftContainer.style.display = 'flex';
+            rightContainer.style.display = 'flex';
+        } else if (arg === 'secondary') {
+            leftContainer.style.display = 'none';
+            rightContainer.style.display = 'none';
+
+            smallContent.style.display = 'flex';
+        }
+        this._state = arg;
+    }
+};
+// primary(750px and above), secondary(less than 750px)
+
+var currentDropDown = {
+    arrow : null,
+    dropdown : null,
+}
 
 var allData = {
     busy : false,
@@ -10,8 +38,6 @@ var allData = {
         this.stepCount = data[1];
         updateNotificationAlert(data[2]);
         for (let x of data[0]) {
-            // x.splice(0, 0, this.next_id)
-            // this.data.push(x)
             this.data[this.next_id] = x;
             this.next_id++;
         }
@@ -29,6 +55,9 @@ function onLoad() {
     startAsyncGetData()
     addScrollEventToLeftContainer();
     addClickEventToLeftContainerItems();
+    addResponsiveness();
+    addClickEventToDropdown();
+    addFocusEventToDropdown();
 }
 
 function addScrollEventToLeftContainer() {
@@ -144,7 +173,7 @@ function updateNotificationAlert(num) {
 
 function raiseNoNetworkError() {
     const noNetworkDiv = document.querySelector('.parent-content > .no-network-box');
-    if (currentParent === 'primary') {
+    if (currentParent.state === 'primary') {
         const leftContainer = document.querySelector('.parent-content > .left-content');
         const rightContainer = document.querySelector('.parent-content > .right-content');
         
@@ -209,4 +238,54 @@ function addContentToRightContainer(id, element) {
     rightContent.currentlySelected = element;
     rightContent.seen = data[4];
     element.classList += ' selected';
+}
+
+function addResponsiveness() {
+    (window.onresize = () => {
+        const width = window.innerWidth;
+        if (width >= 750 && currentParent.state === 'secondary') {
+            currentParent.state = 'primary'
+        } else if (width < 750 && currentParent.state === 'primary') {
+            currentParent.state = 'secondary'
+        }
+    })();
+}
+
+function addClickEventToDropdown() {
+    const smallContainerItems = Array.from(document.querySelectorAll('.parent-content > .small-content > .small-item > .visible-part'));
+    smallContainerItems.forEach((item) => {
+        item.onclick = () => {
+            if (currentDropDown.arrow !== null) {
+                currentDropDown.arrow.style.transform = 'rotate(0)';
+                currentDropDown.dropdown.style.overflow = 'hidden';
+                currentDropDown.dropdown.className = 'dropdown-part';
+            }
+            const dropdown = item.parentElement.children[1];
+            dropdown.classList += ' open';
+            setTimeout(() => {
+                dropdown.style.overflow = 'auto';
+            }, 500);
+            
+            currentDropDown.arrow = item.children[2].children[0];
+            currentDropDown.arrow.style.transform = 'rotate(180deg)';
+            currentDropDown.dropdown = dropdown;
+            setTimeout(() => {
+                item.parentElement.children[1].focus();
+            }, 500)
+        }
+    })
+}
+
+function addFocusEventToDropdown() {
+    const dropdownBoxes = Array.from(document.querySelectorAll('.parent-content > .small-content > .small-item > .dropdown-part'));
+    dropdownBoxes.forEach((dropdown) => {
+        dropdown.onblur = () => {
+            currentDropDown.arrow.style.transform = 'rotate(0)';
+            currentDropDown.dropdown.style.overflow = 'hidden';
+            currentDropDown.dropdown.className = 'dropdown-part';
+
+            currentDropDown.arrow = null;
+            currentDropDown.dropdown = null;
+        }
+    })
 }
