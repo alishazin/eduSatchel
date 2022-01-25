@@ -6,6 +6,7 @@ from .views import (
     CreateNewClassView,
     JoinNewClassView,
     NotificationsPageView,
+    SettingsPageView,
 )
 from .get_views import (
     NotificationGetOnlyView,
@@ -19,5 +20,6 @@ urlpatterns = [
     path('join-new/', JoinNewClassView.as_view(), name='join-class'),
     path('profile/', ProfilePageView.as_view(), name='profile-page'),
     path('notifications/', NotificationsPageView.as_view(), name='notifications-page'),
+    path('settings/', SettingsPageView.as_view(), name='settings-page'),
     path('notifications/get-data/<int:stepCount>/', NotificationGetOnlyView.as_view(), name='notifications-get-only'),
 ]

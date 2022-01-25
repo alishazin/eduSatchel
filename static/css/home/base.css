@@ -151,3 +151,8 @@ body ::-webkit-scrollbar-thumb:hover {
         display: none;
     }
 }
+@media (max-width:300px) {
+    body > .nav-bar > .content-box > i {
+        font-size: 25px;
+    }
+}

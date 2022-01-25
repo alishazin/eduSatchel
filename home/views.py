@@ -58,6 +58,12 @@ class NotificationsPageView(View):
             'notifications' : get_number_of_unseen_notification(request),
         })
 
+class SettingsPageView(View):
+    def get(self, request):
+        return render(request, 'home/settings.html', {
+            'notifications' : get_number_of_unseen_notification(request),
+        })
+
 class CreateNewClassView(View):
     @authentication_check(account_type='teacher')
     def get(self, request):

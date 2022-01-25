@@ -26,13 +26,18 @@
     <div class="content-box" id="notification-box">
         <i>
             {% if notifications != False %}
-                <div class="counter">{{ notifications }}</div>
-                {% else %}
-                <div class="counter" style="display: none;"></div>
+            <div class="counter">{{ notifications }}</div>
+            {% else %}
+            <div class="counter" style="display: none;"></div>
             {% endif %}
             <i class="bi bi-bell"></i>
         </i>
         <span>Notifications</span>
+    </div>
+    <div class="separator"></div>
+    <div class="content-box" id="settings-box">
+        <i class="bi bi-gear"></i>
+        <span>Settings</span>
     </div>
 </div>
 
@@ -48,5 +53,6 @@
     var homeURL = "{% url 'home:home-page' %}";
     var profileURL = "{% url 'home:profile-page' %}";
     var notificationsURL = "{% url 'home:notifications-page' %}";
+    var settingsURL = "{% url 'home:settings-page' %}";
 </script>
 {% endblock body %}
