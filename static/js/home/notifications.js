@@ -8,16 +8,35 @@ var currentParent = {
         const leftContainer = document.querySelector('.parent-content > .left-content');
         const rightContainer = document.querySelector('.parent-content > .right-content');
         const smallContent = document.querySelector('.parent-content > .small-content');
+        const noNetworkDiv = document.querySelector('.parent-content > .no-network-box');
+        const noNotificationDiv = document.querySelector('.parent-content > .no-notifications-box');
         if (arg === 'primary') {
             smallContent.style.display = 'none'
+            smallContent.style.display = 'none';
+            noNetworkDiv.style.display = 'none';
             
             leftContainer.style.display = 'flex';
             rightContainer.style.display = 'flex';
         } else if (arg === 'secondary') {
             leftContainer.style.display = 'none';
             rightContainer.style.display = 'none';
+            smallContent.style.display = 'none';
+            noNetworkDiv.style.display = 'none';
 
             smallContent.style.display = 'block';
+        } else if (arg === 'no network') {
+            leftContainer.style.display = 'none';
+            rightContainer.style.display = 'none';
+            smallContent.style.display = 'none';
+
+            noNetworkDiv.style.display = 'flex';
+        } else if (arg === 'no notifications') {
+            leftContainer.style.display = 'none';
+            rightContainer.style.display = 'none';
+            smallContent.style.display = 'none';
+            noNetworkDiv.style.display = 'none';
+
+            noNotificationDiv.style.display = 'flex';
         }
         this._state = arg;
     }
@@ -35,11 +54,15 @@ var allData = {
     data : {},
     next_id : 1,
     addData : function (data) {
-        this.stepCount = data[1];
-        updateNotificationAlert(data[2]);
-        for (let x of data[0]) {
-            this.data[this.next_id] = x;
-            this.next_id++;
+        if (this.next_id === 1 && data[0].length === 0) {
+            currentParent.state = 'no notifications';
+        } else {
+            this.stepCount = data[1];
+            updateNotificationAlert(data[2]);
+            for (let x of data[0]) {
+                this.data[this.next_id] = x;
+                this.next_id++;
+            }
         }
     },
     widgetAddedTill : 0,
@@ -101,7 +124,7 @@ async function startAsyncGetData() {
             
         } catch(error) {
             if (error === 'no network') {
-                raiseNoNetworkError();
+                currentParent.state = 'no network';
             } else if (error === 'Error From Backend') {
                 alert('Something went wrong. Refresh the page ?')
                 location.href = "/home/notifications/";
@@ -255,18 +278,6 @@ function updateNotificationAlert(num) {
     }
 }
 
-function raiseNoNetworkError() {
-    const noNetworkDiv = document.querySelector('.parent-content > .no-network-box');
-    if (currentParent.state === 'primary') {
-        const leftContainer = document.querySelector('.parent-content > .left-content');
-        const rightContainer = document.querySelector('.parent-content > .right-content');
-        
-        leftContainer.style.display = 'none';
-        rightContainer.style.display = 'none';
-    }
-    noNetworkDiv.style.display = 'flex';
-}
-
 function sendGetRequestToGetData() {
     return new Promise((resolve, reject) => {
         var req = new XMLHttpRequest();
@@ -326,11 +337,13 @@ function addContentToRightContainer(id, element) {
 
 function addResponsiveness() {
     (window.onresize = () => {
-        const width = window.innerWidth;
-        if (width >= 750 && currentParent.state === 'secondary') {
-            currentParent.state = 'primary'
-        } else if (width < 750 && currentParent.state === 'primary') {
-            currentParent.state = 'secondary'
+        if (currentParent.state !== 'no netwok') {
+            const width = window.innerWidth;
+            if (width >= 750 && currentParent.state === 'secondary') {
+                currentParent.state = 'primary'
+            } else if (width < 750 && currentParent.state === 'primary') {
+                currentParent.state = 'secondary'
+            }
         }
     })();
 }

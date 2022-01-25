@@ -3,7 +3,7 @@
     justify-content: flex-start !important;
     align-items: center !important;
 }
-.parent-content > .no-network-box {
+.parent-content > .no-network-box, .parent-content > .no-notifications-box {
     height: 100%;
     width: 100%;
     display: flex;
@@ -12,14 +12,14 @@
     flex-direction: column;
     display: none;
 }
-.parent-content > .no-network-box > i {
+.parent-content > .no-network-box > i, .parent-content > .no-notifications-box > i {
     font-size: 150px;
     color: transparent;
     background: linear-gradient(135deg, var(--primary-color), var(--tertiary-color));
     -webkit-background-clip: text;
     background-clip: text;
 }
-.parent-content > .no-network-box > p {
+.parent-content > .no-network-box > p, .parent-content > .no-notifications-box > p {
     font-size: 18px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
