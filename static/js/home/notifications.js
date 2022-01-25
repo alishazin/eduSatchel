@@ -352,40 +352,62 @@ function addClickEventToDropdown() {
     const smallContainerItems = Array.from(document.querySelectorAll('.parent-content > .small-content > .small-item > .visible-part'));
     smallContainerItems.forEach((item) => {
         item.onclick = () => {
-            if (currentDropDown.arrow !== null) {
-                //  This code, if user chooses to do fast
-                currentDropDown.arrow.style.transform = 'rotate(0)';
-                currentDropDown.dropdown.style.overflow = 'hidden';
-                currentDropDown.dropdown.className = 'dropdown-part';
+            const dropdownPart = item.parentElement.children[1];
+
+            if (dropdownPart === currentDropDown.dropdown) {
+                closeCurrentDropdown();
+            } else {
+
+                if (currentDropDown.arrow !== null) {
+                    //  This code, if user chooses to do fast
+                    currentDropDown.arrow.style.transform = 'rotate(0)';
+                    currentDropDown.dropdown.style.overflow = 'hidden';
+                    currentDropDown.dropdown.className = 'dropdown-part';
+                }
+                const dropdown = item.parentElement.children[1];
+                dropdown.classList += ' open';
+                setTimeout(() => {
+                    dropdown.style.overflow = 'auto';
+                }, 500);
+                
+                currentDropDown.arrow = item.children[2].children[0];
+                currentDropDown.arrow.style.transform = 'rotate(180deg)';
+                currentDropDown.dropdown = dropdown;
             }
-            const dropdown = item.parentElement.children[1];
-            dropdown.classList += ' open';
-            setTimeout(() => {
-                dropdown.style.overflow = 'auto';
-            }, 500);
-            
-            currentDropDown.arrow = item.children[2].children[0];
-            currentDropDown.arrow.style.transform = 'rotate(180deg)';
-            currentDropDown.dropdown = dropdown;
-            setTimeout(() => {
-                item.parentElement.children[1].focus();
-            }, 500)
         }
     })
 }
 
+function getAllClasses(elementList) {
+    const newArray = [];
+    for (let x of elementList) {
+        newArray.push(x.className);
+    }
+    return newArray;
+}
+
 function addFocusEventToDropdown() {
-    const dropdownBoxes = Array.from(document.querySelectorAll('.parent-content > .small-content > .small-item > .dropdown-part'));
-    dropdownBoxes.forEach((dropdown) => {
-        dropdown.onblur = () => {
-            if (currentDropDown.arrow !== null) {
-                currentDropDown.arrow.style.transform = 'rotate(0)';
-                currentDropDown.dropdown.style.overflow = 'hidden';
-                currentDropDown.dropdown.className = 'dropdown-part';
-    
-                currentDropDown.arrow = null;
-                currentDropDown.dropdown = null;
+    document.onclick = (e) => {
+        let proceed = false;
+
+        for (let x of getAllClasses(e.path)) {
+            if (x !== undefined && x.trim() === 'visible-part') {
+                proceed = true;
+                break;
             }
         }
-    })
+        
+        if (!proceed && currentDropDown.arrow !== null) {
+            closeCurrentDropdown();
+        }
+    }
+}
+
+function closeCurrentDropdown() {
+    currentDropDown.arrow.style.transform = 'rotate(0)';
+    currentDropDown.dropdown.style.overflow = 'hidden';
+    currentDropDown.dropdown.className = 'dropdown-part';
+
+    currentDropDown.arrow = null;
+    currentDropDown.dropdown = null;
 }
