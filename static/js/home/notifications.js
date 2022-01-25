@@ -365,12 +365,14 @@ function addFocusEventToDropdown() {
     const dropdownBoxes = Array.from(document.querySelectorAll('.parent-content > .small-content > .small-item > .dropdown-part'));
     dropdownBoxes.forEach((dropdown) => {
         dropdown.onblur = () => {
-            currentDropDown.arrow.style.transform = 'rotate(0)';
-            currentDropDown.dropdown.style.overflow = 'hidden';
-            currentDropDown.dropdown.className = 'dropdown-part';
-
-            currentDropDown.arrow = null;
-            currentDropDown.dropdown = null;
+            if (currentDropDown.arrow !== null) {
+                currentDropDown.arrow.style.transform = 'rotate(0)';
+                currentDropDown.dropdown.style.overflow = 'hidden';
+                currentDropDown.dropdown.className = 'dropdown-part';
+    
+                currentDropDown.arrow = null;
+                currentDropDown.dropdown = null;
+            }
         }
     })
 }
