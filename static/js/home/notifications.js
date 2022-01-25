@@ -352,19 +352,18 @@ function addClickEventToDropdown() {
     const smallContainerItems = Array.from(document.querySelectorAll('.parent-content > .small-content > .small-item > .visible-part'));
     smallContainerItems.forEach((item) => {
         item.onclick = () => {
-            const dropdownPart = item.parentElement.children[1];
+            const dropdown = item.parentElement.children[1];
 
-            if (dropdownPart === currentDropDown.dropdown) {
+            if (dropdown === currentDropDown.dropdown) {
                 closeCurrentDropdown();
             } else {
 
                 if (currentDropDown.arrow !== null) {
-                    //  This code, if user chooses to do fast
                     currentDropDown.arrow.style.transform = 'rotate(0)';
                     currentDropDown.dropdown.style.overflow = 'hidden';
                     currentDropDown.dropdown.className = 'dropdown-part';
                 }
-                const dropdown = item.parentElement.children[1];
+
                 dropdown.classList += ' open';
                 setTimeout(() => {
                     dropdown.style.overflow = 'auto';
