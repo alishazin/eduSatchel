@@ -1,3 +1,92 @@
-p {
-    color: greenyellow;
+.parent-content {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    flex-direction: column;
+    overflow: auto !important;
+}
+.parent-content > .content-small {
+    width: 100%;
+    min-height: 70px;
+    background-color: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.parent-content > .content-small > .icon-box {
+    width: 80px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+}
+.parent-content > .content-small > .icon-box > i {
+    font-size: 30px;
+    color: white;
+}
+.parent-content > .content-small > .title-box {
+    height: 100%;
+    width: calc(100% - 160px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 20px;
+    border-bottom: 1.5px solid gainsboro;
+}
+.parent-content > .content-small > .title-box > p {
+    color: rgb(136, 136, 136);
+    font-size: 16px;
+    font-family: "Nunito", Verdana, Geneva, Tahoma, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.parent-content > .content-small > .button-box {
+    height: 100%;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1.5px solid gainsboro;
+}
+.parent-content > .content-small > .button-box > .button {
+    font-family: "Montserrat", Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 8px;
+    border: 1px solid var(--tertiary-color);
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--tertiary-color);
+    transition: color 0.3s, background-color 0.3s;
+}
+.parent-content > .content-small.with-icon > .button-box > .button {
+    padding: 4px 8px;
+    font-size: 18px;
+}
+.parent-content > .content-small > .button-box > .button:hover {
+    color: white;
+    background-color: var(--tertiary-color);
+}
+@media (max-width:500px) {
+    .parent-content > .content-small > .title-box > p {
+        font-size: 14px;
+    }
+    .parent-content > .content-small > .icon-box {
+        width: 50px;
+    }
+    .parent-content > .content-small > .icon-box > i {
+        font-size: 22px;
+    }
+    .parent-content > .content-small > .title-box {
+        width: calc(100% - 130px);
+    }
+}
+@media (max-width:370px) {
+    .parent-content > .content-small > .icon-box {
+        display: none;
+    }
+    .parent-content > .content-small > .title-box {
+        width: calc(100% - 80px);
+    }
 }
