@@ -69,9 +69,6 @@
     background-color: var(--tertiary-color);
 }
 @media (max-width:500px) {
-    .parent-content > .content-small > .title-box > p {
-        font-size: 14px;
-    }
     .parent-content > .content-small > .icon-box {
         width: 50px;
     }

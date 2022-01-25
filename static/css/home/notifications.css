@@ -190,7 +190,7 @@
     align-items: center;
 }
 .parent-content > .left-content > .msg-header-item > .header-area > p {
-    font-size: 18px;
+    font-size: 16px;
     font-family: "Merriweather", Verdana, Geneva, Tahoma, sans-serif;
     color: rgb(124, 124, 124);
     white-space: nowrap;
@@ -368,5 +368,13 @@
 @media (max-width:300px) {
     .parent-content > .small-content > .small-item > .dropdown-part > .content {
         word-break: break-all;
+    }
+    .parent-content > .small-content > .small-item > .visible-part > .seen-box {
+        width: 30px;
+        height: 100%;
+    }
+    .parent-content > .small-content > .small-item > .visible-part > .header {
+        padding-left: 0;
+        width: calc(100% - 80px);
     }
 }
