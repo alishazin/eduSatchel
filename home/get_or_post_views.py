@@ -45,8 +45,6 @@ class NotificationGetOnlyView(GetOnlyViewBase):
 
 class ProfileChangePostOnlyView(PostOnlyViewBase):
     def post_only(self, request):
-        import time
-        time.sleep(5)
         files = request.FILES
         if 'testprofile' in files.keys() and check_if_valid_profile(files['testprofile']):
             fileObj = files['testprofile']

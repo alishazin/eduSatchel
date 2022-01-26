@@ -33,26 +33,25 @@ function addSelectedToNavBar() {
 function addHoverEventToEditPopup() {
     const popup = document.querySelector('.parent-content > .top-box > .profile-holder > .popup-box');
     const inputFile = document.querySelector('.parent-content > .top-box > .profile-holder > .popup-box > label > input');
+    const removeProfileButt = document.querySelector('.parent-content > .top-box > .profile-holder > .popup-box > label > .row-two');
     popup.onmouseover = () => {
         setTimeout(() => {
             inputFile.removeAttribute('disabled');
+            removeProfileButt.addEventListener('click', asyncRemoveProfileAndOpen);
         }, 500)
     }
     popup.onmouseleave = () => {
         inputFile.setAttribute('disabled', true);
+        removeProfileButt.removeEventListener('click', asyncRemoveProfileAndOpen);
     }
 }
 
 function addEventToInput() {
     const inputFile = document.querySelector('.parent-content > .top-box > .profile-holder > .popup-box > label > input');
-    const removeProfileButt = document.querySelector('.parent-content > .top-box > .profile-holder > .popup-box > label > .row-two');
     inputFile.onchange = () => {
         const formdata = new FormData();
         formdata.append('testprofile', inputFile.files[0]);
         asyncImageUploadAndOpen(formdata);
-    }
-    removeProfileButt.onclick = () => {
-        asyncRemoveProfileAndOpen();
     }
 }
 

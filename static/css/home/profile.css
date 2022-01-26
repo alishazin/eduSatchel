@@ -102,3 +102,16 @@
     align-items: center;
     padding-left: 10px;
 }
+@media (max-width:400px) {
+    .parent-content > .top-box {
+        height: 200px;
+    }
+    .parent-content > .top-box > .profile-holder {
+        width: 150px;
+        height: 150px;
+    }
+    .parent-content > .top-box > .profile-holder > .popup-box {
+        left: calc(50% - 17.5px);
+        bottom: -20px;
+    }
+}
