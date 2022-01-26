@@ -14,15 +14,17 @@
         <div class="loading-box">
             <div class="spinner"></div>
         </div>
-        <img src="/media/profile/default.jpg">
+        <img src="{{ user.profile_pic_path }}">
         <div class="popup-box">
             <i class="bi bi-pencil"></i>
             <label><input disabled type="file" style="display: none; position: fixed; top: -100px;" name="profile_pic" id="profile_pic_id" accept="image/*"><div class="row-one">Change Profile</div></label>
             <label><div class="row-two">Remove Profile</div></label>
         </div>
     </div>
+    <p class="error"></p>
 </div>
 <script>
+    var csrftoken = "{{ csrf_token }}";
     document.body.onload = onLoad();
 </script>
 {% endblock bodyextra %}

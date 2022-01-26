@@ -1,8 +1,11 @@
 
 import datetime
+from django.conf import settings
 from datetime import timedelta
 
 from .models import Class
+
+import os
 
 DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP = 25
 
@@ -127,3 +130,9 @@ def check_if_today_or_yesterday(argumentDate):
             return 'Yesterday'
 
     return f'{argumentDate.day}/{argumentDate.month}/{argumentDate.year}'
+
+def get_file_format_from_content_type(contentType):
+    length = len(contentType)
+    for i in range(length):
+        if contentType[i] == '/':
+            return contentType[i + 1: length]

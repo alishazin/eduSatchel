@@ -2,14 +2,20 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from base64 import b64encode
 
-import os
+import uuid
 
 ACCOUNT_TYPES = (
     ('student','Student'),
     ('teacher', 'Teacher'),
 )
 def get_image_upload_location(self, filename):
-    return f"profile/{b64encode(os.urandom(32)).decode('utf-8')}/{filename}"
+    format = ''
+    reversedStr = filename[::-1]
+    for i in range(len(reversedStr)):
+        if reversedStr[i] == '.':
+            format = reversedStr[0 : i]
+            break
+    return f"profile/{self.image_storage_id}/image.{format[::-1]}"
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password, account_type):
@@ -59,6 +65,7 @@ class CustomUser(AbstractBaseUser):
     profile_pic = models.ImageField(blank=True, upload_to=get_image_upload_location, default='profile/default.jpg')
     bio = models.TextField(max_length=300, null=True, blank=True)
     is_email_verified = models.BooleanField(default=False)
+    image_storage_id = models.UUIDField(default=uuid.uuid4, editable=False)
 
     objects = CustomUserManager()
 
@@ -73,3 +80,7 @@ class CustomUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+    @property
+    def profile_pic_path(self):
+        return f'/media/{self.profile_pic}'

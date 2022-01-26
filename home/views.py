@@ -16,6 +16,8 @@ from .backends import (
     get_number_of_unseen_notification,
 )
 
+import os
+
 class AccountTypeView(View):
     @authentication_check()
     def get(self, request, *args, **kwargs):
@@ -47,18 +49,21 @@ class HomePageView(AccountTypeView):
 
 
 class ProfilePageView(View):
+    @authentication_check()
     def get(self, request):
         return render(request, 'home/profile.html', {
             'notifications' : get_number_of_unseen_notification(request),
         })
         
 class NotificationsPageView(View):
+    @authentication_check()
     def get(self, request):
         return render(request, 'home/notifications.html', {
             'notifications' : get_number_of_unseen_notification(request),
         })
 
 class SettingsPageView(View):
+    @authentication_check()
     def get(self, request):
         return render(request, 'home/settings.html', {
             'notifications' : get_number_of_unseen_notification(request),

@@ -30,20 +30,13 @@ function addSelectedToNavBar() {
     document.querySelector('body > .nav-bar > .content-box#profile-box').classList += ' selected';
 }
 
-function sendPOSTRequest() {
-    setInterval(() => {
-        const fileInput = document.querySelector('.parent-content > input');
-        console.log(fileInput.files[0]);
-    }, 1000)
-}
-
 function addHoverEventToEditPopup() {
     const popup = document.querySelector('.parent-content > .top-box > .profile-holder > .popup-box');
     const inputFile = document.querySelector('.parent-content > .top-box > .profile-holder > .popup-box > label > input');
     popup.onmouseover = () => {
         setTimeout(() => {
             inputFile.removeAttribute('disabled');
-        }, 300)
+        }, 500)
     }
     popup.onmouseleave = () => {
         inputFile.setAttribute('disabled', true);
@@ -53,10 +46,41 @@ function addHoverEventToEditPopup() {
 function addEventToInput() {
     const inputFile = document.querySelector('.parent-content > .top-box > .profile-holder > .popup-box > label > input');
     inputFile.onchange = () => {
-        asyncImageUploadAndOpen(inputFile.files[0]);
+        const formdata = new FormData();
+        formdata.append('testprofile', inputFile.files[0]);
+        asyncImageUploadAndOpen(formdata);
     }
 }
 
-async function asyncImageUploadAndOpen(file) {
-    loadingObj.state = true;
+async function asyncImageUploadAndOpen(formdata) {
+    try {
+        loadingObj.state = true;
+        await sendPOSTRequest(formdata);
+        loadingObj.state = false;
+        location.href = '/home/profile/';
+    } catch(error) {
+        if (error == 'invalid') {
+            loadingObj.state = false;
+            document.querySelector('.parent-content > .top-box > .error').innerText = 'Invalid Image Format!';
+        }
+    }
+}
+
+function sendPOSTRequest(formdata) {
+    return new Promise((resolve, reject) => {
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const response = this.responseText;
+                if (response == 'invalid') {
+                    reject("invalid")
+                } else if (response == 'success') {
+                    resolve(response);
+                }
+            }
+        }
+        req.open('POST', '/home/profile/test-profile/'); 
+        req.setRequestHeader("X-CSRFToken", csrftoken); 
+        req.send(formdata);
+    })
 }
