@@ -10,7 +10,8 @@ from .views import (
 )
 from .get_or_post_views import (
     NotificationGetOnlyView,
-    ProfileTestPostOnlyView,
+    ProfileChangePostOnlyView,
+    ProfileRemovePostOnlyView,
 )
 
 app_name = 'home'
@@ -23,5 +24,6 @@ urlpatterns = [
     path('notifications/', NotificationsPageView.as_view(), name='notifications-page'),
     path('settings/', SettingsPageView.as_view(), name='settings-page'),
     path('notifications/get-data/<int:stepCount>/', NotificationGetOnlyView.as_view(), name='notifications-get-only'),
-    path('profile/test-profile/', ProfileTestPostOnlyView.as_view(), name='profile-test-post-only'),
+    path('profile/change-profile/', ProfileChangePostOnlyView.as_view(), name='profile-change-post-only'),
+    path('profile/remove-profile/', ProfileRemovePostOnlyView.as_view(), name='profile-remove-post-only'),
 ]

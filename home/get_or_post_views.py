@@ -43,8 +43,10 @@ class NotificationGetOnlyView(GetOnlyViewBase):
         dataList = returnData[0]
         return HttpResponse(json.dumps([dataList, returnData[1], get_number_of_unseen_notification(request)]))
 
-class ProfileTestPostOnlyView(PostOnlyViewBase):
+class ProfileChangePostOnlyView(PostOnlyViewBase):
     def post_only(self, request):
+        import time
+        time.sleep(5)
         files = request.FILES
         if 'testprofile' in files.keys() and check_if_valid_profile(files['testprofile']):
             fileObj = files['testprofile']
@@ -64,3 +66,14 @@ class ProfileTestPostOnlyView(PostOnlyViewBase):
 
             return HttpResponse("success")
         return HttpResponse("invalid")
+
+class ProfileRemovePostOnlyView(PostOnlyViewBase):
+    def post_only(self, request):
+        if request.user.profile_pic == 'profile/default.jpg':
+            return HttpResponse('invalid')
+        else:
+            pathToFile = os.path.join(settings.MEDIA_ROOT, str(request.user.profile_pic))
+            os.remove(pathToFile)
+            request.user.profile_pic = 'profile/default.jpg'
+            request.user.save()
+            return HttpResponse("success")

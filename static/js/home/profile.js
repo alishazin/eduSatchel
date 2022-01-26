@@ -45,17 +45,35 @@ function addHoverEventToEditPopup() {
 
 function addEventToInput() {
     const inputFile = document.querySelector('.parent-content > .top-box > .profile-holder > .popup-box > label > input');
+    const removeProfileButt = document.querySelector('.parent-content > .top-box > .profile-holder > .popup-box > label > .row-two');
     inputFile.onchange = () => {
         const formdata = new FormData();
         formdata.append('testprofile', inputFile.files[0]);
         asyncImageUploadAndOpen(formdata);
+    }
+    removeProfileButt.onclick = () => {
+        asyncRemoveProfileAndOpen();
+    }
+}
+
+async function asyncRemoveProfileAndOpen() {
+    try {
+        loadingObj.state = true;
+        await sendPOSTRequestRemoveProfile();
+        loadingObj.state = false;
+        location.href = '/home/profile/';
+    } catch(error) {
+        if (error == 'invalid') {
+            loadingObj.state = false;
+            document.querySelector('.parent-content > .top-box > .error').innerText = 'No Profile Added Yet!';
+        }
     }
 }
 
 async function asyncImageUploadAndOpen(formdata) {
     try {
         loadingObj.state = true;
-        await sendPOSTRequest(formdata);
+        await sendPOSTRequestChangeProfile(formdata);
         loadingObj.state = false;
         location.href = '/home/profile/';
     } catch(error) {
@@ -66,7 +84,7 @@ async function asyncImageUploadAndOpen(formdata) {
     }
 }
 
-function sendPOSTRequest(formdata) {
+function sendPOSTRequestRemoveProfile() {
     return new Promise((resolve, reject) => {
         var req = new XMLHttpRequest();
         req.onreadystatechange = function() {
@@ -79,7 +97,25 @@ function sendPOSTRequest(formdata) {
                 }
             }
         }
-        req.open('POST', '/home/profile/test-profile/'); 
+        req.open('POST', '/home/profile/remove-profile/'); 
+        req.setRequestHeader("X-CSRFToken", csrftoken); 
+        req.send();
+    })
+}
+function sendPOSTRequestChangeProfile(formdata) {
+    return new Promise((resolve, reject) => {
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const response = this.responseText;
+                if (response == 'invalid') {
+                    reject("invalid")
+                } else if (response == 'success') {
+                    resolve(response);
+                }
+            }
+        }
+        req.open('POST', '/home/profile/change-profile/'); 
         req.setRequestHeader("X-CSRFToken", csrftoken); 
         req.send(formdata);
     })
