@@ -103,14 +103,14 @@ class SignUpTeacherFinalView(View):
             returnStatus = validate_final_signup('teacher', data, files)
 
             if returnStatus == 'bioOnly':
-                user.bio = data['bio']
+                user.bio = data['bio'].strip()
                 user.save()
                 messages.error(request, 'Account created successfully')
                 return redirect(reverse('register:log-in'))
 
             elif returnStatus == 'both':
                 user.profile_pic = files['profile_pic']
-                user.bio = data['bio']
+                user.bio = data['bio'].strip()
                 user.save()
                 messages.error(request, 'Account created successfully')
                 return redirect(reverse('register:log-in'))

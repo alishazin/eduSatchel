@@ -23,8 +23,20 @@
     </div>
     <p class="error"></p>
 </div>
+<div class="extra-box">
+    {% if user.account_type == 'teacher' %}
+        <div class="bio-box">
+            <div class="spinner"></div>
+            <label>Bio</label>
+            <textarea maxlength="300">{{ user.bio }}</textarea>
+            <button class="disabled">Save</button>
+        </div>
+    {% endif %}
+</div>
 <script>
     var csrftoken = "{{ csrf_token }}";
+    var initialBio = "{{ user.bio }}";
+    var accountType = "{{ user.account_type }}";
     document.body.onload = onLoad();
 </script>
 {% endblock bodyextra %}

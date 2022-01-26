@@ -75,3 +75,8 @@ class ProfileRemovePostOnlyView(PostOnlyViewBase):
             request.user.profile_pic = 'profile/default.jpg'
             request.user.save()
             return HttpResponse("success")
+
+class BioUpdatePostOnlyView(PostOnlyViewBase):
+    @authentication_check(account_type='teacher')
+    def post_only(self, request):
+        return HttpResponse("success")

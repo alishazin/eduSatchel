@@ -3,6 +3,7 @@
     justify-content: flex-start !important;
     align-items: center !important;
     flex-direction: column !important;
+    overflow: auto !important;
 }
 .parent-content > .top-box {
     width: 100%;
@@ -102,9 +103,84 @@
     align-items: center;
     padding-left: 10px;
 }
+.parent-content > .extra-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: calc(100% - 300px);
+    width: 100%;
+    padding: 20px;
+}
+.parent-content > .extra-box > .bio-box {
+    width: 500px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+}
+.parent-content > .extra-box > .bio-box > .spinner {
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid var(--primary-color);
+    width: 48px;
+    height: 48px;
+    animation: loading-spin 1.5s linear infinite;
+    position: absolute;
+    left: calc(50% - 24px);
+    top: calc(50% - 30px);
+    display: none;
+}
+.parent-content > .extra-box > .bio-box > label {
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+.parent-content > .extra-box > .bio-box > textarea {
+    resize: none;
+    font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+    outline: none;
+    padding: 8px 12px;
+    height: 180px;
+    width: 100%;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+.parent-content > .extra-box > .bio-box > button {
+    align-self: flex-end;
+    padding: 8px 12px;
+    font-family: "Montserrat", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--tertiary-color);
+    outline: none;
+    background-color: transparent;
+    color: var(--tertiary-color);
+    transition: color 0.3s, background-color 0.3s, opacity 0.3s;
+}
+.parent-content > .extra-box > .bio-box > button.disabled {
+    opacity: 0.5;
+}
+.parent-content > .extra-box > .bio-box > button:not(.disabled):hover {
+    color: white;
+    background-color: var(--tertiary-color);
+}
+@media (max-width:550px) {
+    .parent-content > .extra-box > .bio-box {
+        width: 100%;
+    }
+}
 @media (max-width:400px) {
     .parent-content > .top-box {
         height: 200px;
+    }
+    .parent-content > .extra-box {
+        height: calc(100% - 200px);
     }
     .parent-content > .top-box > .profile-holder {
         width: 150px;

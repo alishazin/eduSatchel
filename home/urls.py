@@ -12,6 +12,7 @@ from .get_or_post_views import (
     NotificationGetOnlyView,
     ProfileChangePostOnlyView,
     ProfileRemovePostOnlyView,
+    BioUpdatePostOnlyView,
 )
 
 app_name = 'home'
@@ -26,4 +27,5 @@ urlpatterns = [
     path('notifications/get-data/<int:stepCount>/', NotificationGetOnlyView.as_view(), name='notifications-get-only'),
     path('profile/change-profile/', ProfileChangePostOnlyView.as_view(), name='profile-change-post-only'),
     path('profile/remove-profile/', ProfileRemovePostOnlyView.as_view(), name='profile-remove-post-only'),
+    path('profile/update-bio/', BioUpdatePostOnlyView.as_view(), name='bio-update-post-only'),
 ]
