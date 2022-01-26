@@ -9,7 +9,19 @@
 {% endblock headextraextra %}
 
 {% block bodyextra %}
-<p>Profile Page</p>
+<div class="top-box">
+    <div class="profile-holder">
+        <div class="loading-box">
+            <div class="spinner"></div>
+        </div>
+        <img src="/media/profile/default.jpg">
+        <div class="popup-box">
+            <i class="bi bi-pencil"></i>
+            <label><input disabled type="file" style="display: none; position: fixed; top: -100px;" name="profile_pic" id="profile_pic_id" accept="image/*"><div class="row-one">Change Profile</div></label>
+            <label><div class="row-two">Remove Profile</div></label>
+        </div>
+    </div>
+</div>
 <script>
     document.body.onload = onLoad();
 </script>

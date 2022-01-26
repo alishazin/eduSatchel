@@ -1,3 +1,98 @@
-p {
-    color: greenyellow;
+.parent-content {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    flex-direction: column !important;
+}
+.parent-content > .top-box {
+    width: 100%;
+    height: 300px;
+    border-bottom: 2px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.parent-content > .top-box > .profile-holder {
+    position: relative;
+    height: 220px;
+    width: 220px;
+    border-radius: 50%;
+    border: 1px solid var(--secondary-color);
+}
+.parent-content > .top-box > .profile-holder > img {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    border-radius: 50%;
+}
+.parent-content > .top-box > .profile-holder > .loading-box {
+    z-index: 2;
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: white;
+}
+.parent-content > .top-box > .profile-holder > .loading-box > .spinner {
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid var(--primary-color);
+    width: 48px;
+    height: 48px;
+    animation: loading-spin 1.5s linear infinite;
+}
+.parent-content > .top-box > .profile-holder > .popup-box {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    left: 180px;
+    bottom: 30px;
+    border-radius: 50%;
+    background-color: white;
+    z-index: 1;
+    box-shadow: 0 0 10px var(--shadow-light-color);
+    transition: border-radius 0.3s, width 0.3s, height 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+.parent-content > .top-box > .profile-holder > .popup-box:hover {
+    border-radius: 10px;
+    width: 120px;
+    height: 60px;
+}
+.parent-content > .top-box > .profile-holder > .popup-box > i {
+    color: var(--text-color);   
+}
+.parent-content > .top-box > .profile-holder > .popup-box > label {
+    display: none;
+    width: 100%;
+    height: 50%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+.parent-content > .top-box > .profile-holder > .popup-box > label:hover, .parent-content > .top-box > .profile-holder > .popup-box > label:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+.parent-content > .top-box > .profile-holder > .popup-box > .row-one {
+    border-bottom: 1px solid #ddd;
+}
+.parent-content > .top-box > .profile-holder > .popup-box:hover > i {
+    display: none;
+}
+.parent-content > .top-box > .profile-holder > .popup-box:hover > label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
 }
