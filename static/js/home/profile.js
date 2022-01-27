@@ -24,7 +24,7 @@ function onLoad() {
     }
     if (accountType === 'teacher') {
         bioLoading = {
-            div : document.querySelector('.parent-content > .extra-box > .bio-box > .spinner'),
+            div : document.querySelector('.parent-content > .extra-box > .content-box > .bio-box > .spinner'),
             _state : false,
             get state() {
                 return this._state;
@@ -40,7 +40,7 @@ function onLoad() {
         }
     
         bioButton = {
-            div : document.querySelector('.parent-content > .extra-box > .bio-box > button'),
+            div : document.querySelector('.parent-content > .extra-box > .content-box > .bio-box > button'),
             _disabled : true, 
             get disabled() {
                 return this._disabled;
@@ -64,12 +64,29 @@ function onLoad() {
 }
 
 async function asyncChangeBio() {
-    if (bioButton.disabled == false) {
-        bioLoading.state = true;
-        bioButton.disabled = true;
-        const newBio = await sendPOSTRequestUpdateBio();
+    try {
+        if (bioButton.disabled == false) {
+            bioLoading.state = true;
+            bioButton.disabled = true;
+            const newBio = await sendPOSTRequestUpdateBio();
+            bioLoading.state = false;
+            initialBio = newBio;
+            setBioValue(newBio);
+        }
+    } catch(error) {
+        if (error == 'invalid') {
+            alert("Bio cannot be longer than 300 characters")
+        } else if (error == 'wrong') {
+            alert("Something Went Wrong. Refresh the page ?")
+            location.href = '/home/profile/';
+        }
         bioLoading.state = false;
     }
+}
+
+function setBioValue(newValue) {
+    const input = document.querySelector('.parent-content > .extra-box > .content-box > .bio-box > textarea');
+    input.value = newValue;
 }
 
 function addSelectedToNavBar() {
@@ -77,7 +94,7 @@ function addSelectedToNavBar() {
 }
 
 function compareBioInput() {
-    const input = document.querySelector('.parent-content > .extra-box > .bio-box > textarea');
+    const input = document.querySelector('.parent-content > .extra-box > .content-box > .bio-box > textarea');
     input.oninput = () => {
         const value = input.value.trim();
         if (initialBio != value && bioButton.disabled == true) {
@@ -144,15 +161,22 @@ async function asyncImageUploadAndOpen(formdata) {
 function sendPOSTRequestUpdateBio() {
     return new Promise((resolve, reject) => {
         var req = new XMLHttpRequest();
+        const value = document.querySelector('.parent-content > .extra-box > .content-box > .bio-box > textarea').value.trim();
         req.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 const response = this.responseText;
-                console.log(response);
-            }
+                if (response == 'success') {
+                    resolve(value);
+                } else {
+                    reject(response);
+                }
+            } 
         }
+        formdata = new FormData();
+        formdata.append('bio', value)
         req.open('POST', '/home/profile/update-bio/'); 
         req.setRequestHeader("X-CSRFToken", csrftoken); 
-        req.send();
+        req.send(formdata);
     })
 }
 

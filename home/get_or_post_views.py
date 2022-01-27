@@ -79,4 +79,15 @@ class ProfileRemovePostOnlyView(PostOnlyViewBase):
 class BioUpdatePostOnlyView(PostOnlyViewBase):
     @authentication_check(account_type='teacher')
     def post_only(self, request):
-        return HttpResponse("success")
+        data = request.POST
+        if 'bio' in data.keys():
+            bio = data['bio'].strip()
+            if len(bio) > 300:
+                return HttpResponse("invalid")
+            
+            request.user.bio = bio
+            request.user.save()
+            return HttpResponse("success")
+
+        return HttpResponse("wrong")
+                

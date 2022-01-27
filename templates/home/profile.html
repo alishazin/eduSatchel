@@ -24,14 +24,32 @@
     <p class="error"></p>
 </div>
 <div class="extra-box">
-    {% if user.account_type == 'teacher' %}
-        <div class="bio-box">
-            <div class="spinner"></div>
-            <label>Bio</label>
-            <textarea maxlength="300">{{ user.bio }}</textarea>
-            <button class="disabled">Save</button>
+    <div class="content-box">
+        {% if user.account_type == 'teacher' %}
+            <style>
+                .parent-content > .extra-box > .content-box  {
+                    grid-template-areas: 'bio bio username'
+                        'bio bio account';
+                }
+            </style>
+            <div class="bio-box">
+                <div class="spinner"></div>
+                <label>Bio</label>
+                <textarea maxlength="300">{{ user.bio }}</textarea>
+                <button class="disabled">Save</button>
+            </div>
+        {% endif %}
+        <div class="username-box">
+            <div class="header">Username</div>
+            <div class="ball"></div>
+            <span>{{ user.username }}</span>
         </div>
-    {% endif %}
+        <div class="account-type-box">
+            <div class="header">Account Type</div>
+            <div class="ball"></div>
+            <span>{{ user.account_type|capfirst }}</span>
+        </div>
+    </div>
 </div>
 <script>
     var csrftoken = "{{ csrf_token }}";
