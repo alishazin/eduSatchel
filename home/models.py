@@ -1,4 +1,3 @@
-import datetime
 from django.db import models
 from register.models import CustomUser
 
@@ -17,6 +16,10 @@ class Class(models.Model):
 
     def __str__(self):
         return f'<{self.title}> By <{self.teacher}>'
+
+    @property
+    def get_url(self):
+        return f'/class/{self.id}/'
 
 class ClassEnrollment(models.Model):
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)

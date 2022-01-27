@@ -47,7 +47,7 @@
     </div>
     {% if class_obj_array %}
         {% for class_obj in class_obj_array %}
-            <div class="class-box">
+            <div class="class-box" onclick="location.href = '{{ class_obj.get_url }}'">
                 <div class="title-container">
                     <p>{{ class_obj.title }}</p>
                     <div class="popup" tabindex='1'>{{ class_obj.title }}</div>
@@ -59,7 +59,7 @@
         {% endfor %}
     {% elif classenrollment_obj_array %}
         {% for classenrollment_obj in classenrollment_obj_array %}
-            <div class="class-box">
+            <div class="class-box" onclick="location.href = '{{ classenrollment_obj.class_obj.get_url }}'">
                 <div class="title-container">
                     <p>{{ classenrollment_obj.class_obj.title }}</p>
                     <div class="popup" tabindex='1'>{{ classenrollment_obj.class_obj.title }}</div>
