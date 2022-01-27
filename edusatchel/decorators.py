@@ -1,6 +1,8 @@
+from django.http import Http404
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
+from home.models import Class
 
 def authentication_check(account_type=None):
 
@@ -18,6 +20,36 @@ def authentication_check(account_type=None):
             else:
                 messages.error(request, "You have not logged in yet!")
                 return redirect(reverse('register:log-in'))
+
+        return wrapper
+
+    return authentication_decorator
+
+def classentry_check(account_type):
+
+    def authentication_decorator(function):
+
+        def wrapper(*args, **kwargs):
+            request = args[1]
+            classID = kwargs['classID']
+
+            try:
+                classObj = Class.objects.get(id=classID)
+            except:
+                raise Http404
+            else:
+                if request.user.is_authenticated:
+                    if account_type == 'teacher' and classObj.teacher == request.user:
+                        return function(*args, **kwargs)
+                    else:
+                        classEntrolled = request.user.classenrollment_set.filter(class_obj=classObj, enrolled=True)
+                        if account_type == 'student' and classEntrolled:
+                            return function(*args, **kwargs)
+                        else:
+                            raise Http404
+                else:
+                    messages.error(request, "You have not logged in yet!")
+                    return redirect(reverse('register:log-in'))
 
         return wrapper
 

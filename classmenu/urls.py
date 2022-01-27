@@ -6,5 +6,5 @@ from .views import ClassMenuView
 app_name = 'classmenu'
 
 urlpatterns = [
-    path('', ClassMenuView.as_view()),
+    path('<classID>/', ClassMenuView.as_view()),
 ]
