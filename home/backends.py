@@ -97,8 +97,6 @@ def get_notification_data_and_read_unseen(request, stepCount):
 
     returnStep = 0 if (DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * stepCount) >= len(allNotification) else stepCount + 1
 
-    print(currentStepData) # [] no data avalilabe, usally happens when passing exceeded stepCount
-    print(returnStep) # 0 (no more step)
     return currentStepData, returnStep
 
 def get_list_for_notification_obj(notification_objects):
