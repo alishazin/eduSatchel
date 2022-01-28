@@ -8,4 +8,6 @@ from edusatchel.decorators import classentry_check
 class ClassMenuView(View):
     @classentry_check()
     def get(self, request, classID):
-        return render(request, 'classmenu/class.html', {})
+        return render(request, 'classmenu/class.html', {
+            'classID' : classID,
+        })
