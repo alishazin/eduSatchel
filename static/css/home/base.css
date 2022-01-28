@@ -14,6 +14,11 @@
         border-top-color: var(--primary-color);
     }
 }
+@keyframes loading-spin-colorless {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+    100% { transform: rotate(360deg); }
+}
 @keyframes loading-para-color {
     0% {color: var(--primary-color);}
     30% {color: var(--secondary-color);}

@@ -170,11 +170,11 @@ body ::-webkit-scrollbar-track {
     background: transparent;
 }
 body ::-webkit-scrollbar-thumb {
-    background: #00000031;
+    background: #00000018;
     border-radius: 2px;
 }
 body ::-webkit-scrollbar-thumb:hover {
-    background: #00000065;
+    background: #0000003d;
 }
 @media (max-width:300px) {
     body > .parent-content > .nav-bar-box > .nav-bar > .last-item {

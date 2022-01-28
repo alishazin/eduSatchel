@@ -18,10 +18,23 @@
     <div class="item class-id">
         <div class="header">Class ID</div>
         <div class="id-box">
-            <span>{{ classID }}</span>
+            <span>{{ classObj.id }}</span>
             <div class="icon-box" title="copy">
                 <i class="bi bi-clipboard"></i>
             </div>
+        </div>
+    </div>
+    <div class="item teacher-details">
+        <div class="header">Teacher Details</div>
+        <div class="sub-box">
+            <img src="{{ user.profile_pic_path }}"></img>
+            <div class="name-box"><p>{{ classObj.teacher.username }}</p></div>
+        </div>
+        <div class="extra-box">
+            <div class="bio-box">{{ classObj.teacher.bio }}</div>
+        </div>
+        <div class="extend-div">
+            <i class="bi bi-chevron-compact-down"></i>
         </div>
     </div>
 </div>
