@@ -5,6 +5,7 @@
     box-shadow: 0 0 10px var(--shadow-color);
     border-radius: 15px;
     padding: 10px;
+    padding-bottom: 50px;
 }
 .parent > .message-div {
     padding-top: 10px;
