@@ -46,6 +46,10 @@ function onBaseLoad() {
             }
             this._extendState = arg;
         },
+        selectItem : function (arg) {
+            const allItems = Array.from(document.querySelectorAll('body > .parent-content > .nav-bar-box > .nav-bar > .item'));
+            allItems[arg - 1].classList += ' selected';
+        },
         setCallbacks : function () {
             this.pullerDiv.onclick = () => {
                 navBarObj.state = navBarObj.state === true ? false : true;

@@ -25,13 +25,15 @@ def authentication_check(account_type=None):
 
     return authentication_decorator
 
-def classentry_check(account_type):
+def classentry_check(account_type=None):
+    account_type = account_type
 
     def authentication_decorator(function):
 
         def wrapper(*args, **kwargs):
             request = args[1]
             classID = kwargs['classID']
+            type_account = account_type
 
             try:
                 classObj = Class.objects.get(id=classID)
@@ -39,11 +41,14 @@ def classentry_check(account_type):
                 raise Http404
             else:
                 if request.user.is_authenticated:
-                    if account_type == 'teacher' and classObj.teacher == request.user:
+                    type_account = request.user.account_type if type_account == None else type_account
+                    if type_account == 'teacher' and classObj.teacher == request.user:
+                        print('teacher')
                         return function(*args, **kwargs)
                     else:
                         classEntrolled = request.user.classenrollment_set.filter(class_obj=classObj, enrolled=True)
-                        if account_type == 'student' and classEntrolled:
+                        if type_account == 'student' and classEntrolled:
+                            print('student')
                             return function(*args, **kwargs)
                         else:
                             raise Http404

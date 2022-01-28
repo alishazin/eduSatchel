@@ -21,7 +21,7 @@
 <div class="parent-content">
     <div class="nav-bar-box">
         <div class="nav-bar" tabindex="0">
-            <div class="item selected">
+            <div class="item">
                 <div class="icon-box">
                     <i class="bi bi-card-list"></i>
                 </div>
@@ -47,7 +47,10 @@
 {% block messagespace %}
 {% endblock messagespace %}
 <script>
-    document.body.onload = onBaseLoad();
+    document.body.onload = () => {
+        onBaseLoad();
+        onLoad();
+    }
     var homeURL = "{% url 'home:home-page' %}";
 </script>
 {% endblock body %}
