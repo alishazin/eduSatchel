@@ -32,7 +32,7 @@
     transform: translateX(5%);
     height: 2px;
     border-radius: 5px;
-    background-color: var(--secondary-light-color);
+    background-color: var(--secondary-dark-color);
 }
 .parent > .header-container {
     height: fit-content;
@@ -47,7 +47,7 @@
 }
 .parent > .header-container > h1 {
     font-size: 28px;
-    color: white;
+    color: var(--quaternary-color);
     font-family: "Poppins", Arial, Helvetica, sans-serif;
     margin: 0;
 }
@@ -86,7 +86,7 @@
     width: 100%;
     z-index: 1;
     border-radius: 8px;
-    border: 2px solid var(--secondary-color);
+    border: 2px solid var(--secondary-dark-color);
     outline: none;
     background-color: transparent;
     padding-left: 15px;
@@ -100,10 +100,10 @@
     padding-right: 40px;
 }
 .parent > form > .field-parent > input:focus {
-    border-color: var(--tertiary-color);
+    border-color: var(--quaternary-color);
 }
 .parent > form > .field-parent > input:focus ~ label {
-    color: var(--tertiary-color);
+    color: var(--quaternary-color);
 }
 .parent > form > .field-parent > .error-div {
     width: 100%;
@@ -179,7 +179,7 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .parent > form > .button-container > p {
-    color: var(--secondary-lighter-color);
+    color: var(--secondary-color);
 }
 .parent > form > .button-container > p > a {
     color: var(--tertiary-color);
@@ -227,7 +227,7 @@ select:-webkit-autofill:focus {
         background-color: var(--primary-color) !important;
     }
     body > i {
-        color: var(--secondary-lighter-color) !important;
+        color: var(--secondary-color) !important;
     }
     .parent {
         box-shadow: none !important;

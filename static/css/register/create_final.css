@@ -12,7 +12,7 @@
     transform: translateX(5%);
     height: 2px;
     border-radius: 5px;
-    background-color: var(--secondary-light-color);
+    background-color: var(--secondary-dark-color);
 }
 .parent > .confirmation-container {
     height: fit-content;
@@ -32,14 +32,11 @@
 }
 .parent > .confirmation-container > p {
     font-size: 14px;
-    color: white;
+    color: var(--secondary-color);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-.parent > .confirmation-container > p > span {
-    color: var(--secondary-light-color);
 }
 .parent > form {
     display: flex;
@@ -114,12 +111,12 @@
     padding: 8px 12px;
     margin-bottom: 10px;
     cursor: pointer;
-    border: 1px solid var(--secondary-light-color);
+    border: 1px solid var(--secondary-dark-color);
     border-radius: 10px;
     transition: background-color 0.3s;
 }
 .parent > form > .profile-container > label > i {
-    color: var(--secondary-light-color);
+    color: var(--secondary-dark-color);
     font-size: 18px;
     margin-right: 10px;
     transition: color 0.3s;
@@ -131,7 +128,7 @@
     margin: 0;
 }
 .parent > form > .profile-container > label:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--secondary-dark-color);
 }
 .parent > form > .profile-container > label:hover > i {
     color: white;
@@ -140,7 +137,7 @@
     display: none;
 }
 .parent > form > .profile-container > .remove-butt {
-    color: var(--secondary-light-color);
+    color: var(--secondary-color);
     text-decoration: underline;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 12px;
@@ -172,7 +169,7 @@
     width: 100%;
     z-index: 1;
     border-radius: 8px;
-    border: 2px solid var(--secondary-color);
+    border: 2px solid var(--secondary-dark-color);
     outline: none;
     background-color: transparent;
     padding: 15px;
@@ -184,10 +181,10 @@
     overflow: auto;
 }
 .parent > form > .field-parent > textarea:focus {
-    border-color: var(--tertiary-color);
+    border-color: var(--quaternary-color);
 }
 .parent > form > .field-parent > textarea:focus ~ label {
-    color: var(--tertiary-color);
+    color: var(--quaternary-color);
 }
 .parent > form > .field-parent > .error-div {
     width: 100%;
@@ -223,7 +220,7 @@ form > button:hover {
         background-color: var(--primary-color) !important;
     }
     body > i {
-        color: var(--secondary-lighter-color) !important;
+        color: var(--secondary-color) !important;
     }
     .parent {
         box-shadow: none !important;
