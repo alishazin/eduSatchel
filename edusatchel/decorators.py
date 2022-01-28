@@ -43,12 +43,10 @@ def classentry_check(account_type=None):
                 if request.user.is_authenticated:
                     type_account = request.user.account_type if type_account == None else type_account
                     if type_account == 'teacher' and classObj.teacher == request.user:
-                        print('teacher')
                         return function(*args, **kwargs)
                     else:
                         classEntrolled = request.user.classenrollment_set.filter(class_obj=classObj, enrolled=True)
                         if type_account == 'student' and classEntrolled:
-                            print('student')
                             return function(*args, **kwargs)
                         else:
                             raise Http404

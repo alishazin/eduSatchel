@@ -43,7 +43,7 @@ body > .parent-content > .right-content > .class-id {
     align-items: center;
     flex-direction: column;
 }
-body > .parent-content > .right-content > .class-id > .header, body > .parent-content > .right-content > .teacher-details > .header { 
+body > .parent-content > .right-content > .class-id > .header, body > .parent-content > .right-content > .teacher-details > .header, body > .parent-content > .right-content > .class-desc > .header { 
     padding: 10px;
     padding-left: 15px;  
     width: 100%;
@@ -164,4 +164,31 @@ body > .parent-content > .right-content > .teacher-details > .extend-div > i {
 }
 body > .parent-content > .right-content > .teacher-details > .extend-div:hover > i {
     opacity: 0.8;
+}
+body > .parent-content > .right-content > .class-desc {
+    height: fit-content;
+    background-color: var(--secondary-color);
+    overflow: hidden;
+}
+body > .parent-content > .right-content > .class-desc > .header {
+    height: 47px;
+}
+body > .parent-content > .right-content > .class-desc > .sub-box {
+    height: fit-content;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+body > .parent-content > .right-content > .class-desc > .sub-box > .desc-box {
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    overflow: hidden;
+    border-radius: 10px;
 }
