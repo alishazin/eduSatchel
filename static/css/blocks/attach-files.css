@@ -1,3 +1,68 @@
-body > .parent-content > .main-content > .msg-div > .real-content > .content-box > form > .attach-box {
-    background-color: red;
+.attach-files-container {
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+.attach-files-container > .top-nav-bar {
+    height: 40px;
+    border-radius: 10px 10px 0 0;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: 2px 0 10px var(--shadow-light-color);
+}
+.attach-files-container > .top-nav-bar > .item {
+    width: fit-content;
+    height: 100%;
+    padding: 0 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+    font-family: "Lato", Arial, Helvetica, sans-serif;
+    color: rgb(77, 77, 77);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.attach-files-container > .top-nav-bar > .item.selected {
+    color: var(--tertiary-color);
+    cursor: auto;
+}
+.attach-files-container > .top-nav-bar > .item > i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+.attach-files-container > .top-nav-bar > .item > span {
+    font-weight: bold;
+}
+.attach-files-container > .separator {
+    width: 100%;
+    background-color: white;
+    height: 3px;
+    position: relative;
+    z-index: 1;
+}
+.attach-files-container > .separator > .inner {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    background-color: var(--tertiary-color);
+    transition: left 0.3s;
+}
+.attach-files-container > .page-box {
+    width: 100%;
+    height: calc(100% - 43px);
+}
+.attach-files-container > .page-box > div {
+    display: none;
+    width: 100%;
+    height: 100%;
 }

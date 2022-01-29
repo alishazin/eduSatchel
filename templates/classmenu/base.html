@@ -52,7 +52,9 @@
         onLoad();
         try {
             onLoadBlock();
-        } catch {}
+        } catch(err) {
+            console.log(err)
+        }
     }
     var homeURL = "{% url 'home:home-page' %}";
 </script>
