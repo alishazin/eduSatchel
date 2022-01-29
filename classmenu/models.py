@@ -9,6 +9,8 @@ def get_file_upload_location(self, filename):
 
 LOCATION_HINTS = (
     ('public', 'Public'),
+    ('assignment', 'Assignment'),
+    ('response', 'Response'),
 )
 
 # Create your models here.
