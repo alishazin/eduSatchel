@@ -19,7 +19,7 @@
 }
 .parent > .content-container > i {
     font-size: 135px;
-    color: var(--secondary-lighter-color);
+    color: var(--secondary-dark-color);
 }
 .parent > .content-container > h2 {
     font-size: 17px;
@@ -36,7 +36,7 @@
         background-color: var(--primary-color) !important;
     }
     body > i {
-        color: var(--secondary-lighter-color) !important;
+        color: var(--secondary-color) !important;
     }
     .parent {
         box-shadow: none !important;
