@@ -1,6 +1,7 @@
 function onLoad() {
     addSelectedToNavBar();
     addClickEventToCustomCheckBox();
+    addFocusEventToInput();
 }
 
 function addSelectedToNavBar() {
@@ -23,4 +24,18 @@ function addClickEventToCustomCheckBox() {
         }
         console.log(realhiddenCheckBox.checked);
     }
+}
+
+function addFocusEventToInput() {
+    inputs = [document.querySelector('.parent-content > .sub-container > form > .field-parent > textarea'), 
+        document.querySelector('.parent-content > .sub-container > form > .field-parent > input')]
+
+    inputs.forEach(input => {
+        input.onfocus = () => {
+            input.parentElement.children[0].style.color = 'var(--quaternary-color)';
+        }
+        input.onblur = () => {
+            input.parentElement.children[0].style.color = 'white';
+        }
+    })
 }

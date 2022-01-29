@@ -62,7 +62,7 @@ body > .nav-bar > .content-box {
     position: relative;
 }
 body > .nav-bar > .content-box.selected {
-    color: var(--tertiary-color);
+    color: var(--quaternary-color);
 }
 body > .nav-bar > .content-box:active {
     opacity: 0.8;

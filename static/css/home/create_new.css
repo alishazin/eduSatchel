@@ -49,7 +49,7 @@
     outline: none;
     font-size: 14px;
     background-color: transparent;
-    border: 2px solid var(--secondary-lighter-color);
+    border: 2px solid white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-radius: 8px;
     color: white;
@@ -60,8 +60,8 @@
 .parent-content > .sub-container > form > .field-parent:nth-of-type(2) > textarea {
     height: 150px;
 } 
-.parent-content > .sub-container > form > .field-parent > input:focus {
-    border-color: white;
+.parent-content > .sub-container > form > .field-parent > input:focus, .parent-content > .sub-container > form > .field-parent > textarea:focus {
+    border-color: var(--quaternary-color);
 }
 .parent-content > .sub-container > form > .field-parent > .error-div {
     margin-top: 8px;
@@ -90,6 +90,9 @@
     justify-content: center;
     align-items: center;
 }
+.parent-content > .sub-container > form > .checkbox-custom-container > .checkbox:active {
+    border-color: var(--quaternary-color);
+}
 .parent-content > .sub-container > form > .checkbox-custom-container > .checkbox > i {
     display: none;
     color: white;
@@ -115,17 +118,16 @@
     outline: none;
     cursor: pointer;
     border: none;
-    border: 1px solid var(--tertiary-color);
+    border: 2px solid var(--tertiary-color);
     color: var(--tertiary-color);
-    box-shadow: 0 0 6px var(--shadow-light-color);
     background-color: transparent;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.096) 50%, var(--tertiary-color) 50%);
+    background: linear-gradient(to right, transparent 50%, var(--tertiary-color) 50%);
     background-size: 300%;
     background-position-x: 0;
     transition: background-position-x 0.3s, color 0.3s, opacity 0.1s;
 }
 .parent-content > .sub-container > form > button:hover {
-    background-position-x: 100%;
+    background-position-x: 99%;
     color: white;
 }
 .parent-content > .sub-container > form > button:active {
@@ -134,7 +136,7 @@
 .parent-content > .sub-container > .separator {
     width: 4px;
     border-radius: 4px;
-    background-color: white;
+    background-color: var(--quaternary-color);
     height: calc(100% - 60px);
     transform: translateY(30px);
 }
@@ -150,11 +152,11 @@
     padding: 15px 0;
     padding-left: 0;
     padding-right: 12px;
-    background-color: white;
+    background-color: var(--quaternary-color);
     border-radius: 10px;
 }
 .parent-content > .sub-container > .more-details > .list-conatiner > ul > li {
-    color: var(--secondary-color);
+    color: rgb(119, 119, 119);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 16px;
     line-height: 22px;

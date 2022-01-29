@@ -126,7 +126,7 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: var(--secondary-light-color);
+    background-color: var(--secondary-dark-color);
 }
 .parent-content > .main-content > .create-new > .vertical-line {
     position: absolute;
@@ -134,7 +134,7 @@
     left: 80px;
     width: 2px;
     height: 100%;
-    background-color: var(--secondary-light-color);
+    background-color: var(--secondary-dark-color);
 }
 .parent-content > .main-content > .create-new > .icon-container {
     position: absolute;
@@ -143,7 +143,7 @@
     left: 55px;
     top: 55px;
     border-radius: 50%;
-    background-color: var(--secondary-light-color);
+    background-color: var(--secondary-dark-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -160,11 +160,11 @@
     transform: scale(1.2);
 }
 .parent-content > .main-content > .create-new > .icon-container:active {
-    background-color: var(--secondary-lighter-color);
+    background-color: var(--secondary-color);
 }
 .parent-content > .main-content > .create-new > .text-area {
     position: absolute;
-    color: var(--secondary-light-color);
+    color: white;
     font-size: 17px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     left: 120px;
