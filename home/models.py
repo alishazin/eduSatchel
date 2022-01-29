@@ -21,6 +21,11 @@ class Class(models.Model):
     def get_url(self):
         return f'/class/{self.id}/'
 
+    @property
+    def formatted_date(self):
+        from .backends import check_if_today_or_yesterday
+        return check_if_today_or_yesterday(self.date_started)
+
 class ClassEnrollment(models.Model):
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

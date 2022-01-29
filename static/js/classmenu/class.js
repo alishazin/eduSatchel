@@ -1,5 +1,6 @@
 
 var teacherDetailBox = {};
+var sendMessageBox = {};
 
 function onLoad() {
     navBarObj.selectItem(1);
@@ -23,18 +24,51 @@ function onLoad() {
             this._state = arg;
         },
         addCallbacks : function () {
-            this.extendButt.onclick = () => {
-                this.state = this.state === true ? false : true;
+            if (this.extendButt) {
+                this.extendButt.onclick = () => {
+                    this.state = this.state === true ? false : true;
+                }
             }
         }
     };
     teacherDetailBox.addCallbacks();
 
+    sendMessageBox = {
+        parent : document.querySelector('body > .parent-content > .main-content > .msg-div'),
+        overlay : document.querySelector('body > .parent-content > .main-content > .msg-div > .dummy-overlay'),
+        contentParent : document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content'),
+        closeButt : document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .top-bar > i'),
+        _state : false,
+        get state() {
+            return this._state
+        },
+        set state(arg) {
+            if (arg === true) {
+                this.parent.style.height = '400px';
+                this.overlay.style.display = 'none';
+                this.contentParent.style.display = 'flex';
+            } else if (arg === false) {
+                this.parent.style.height = '80px';
+                this.overlay.style.display = 'flex';
+                this.contentParent.style.display = 'none';
+            }
+        },
+        addCallbacks : function () {
+            this.overlay.onclick = () => {
+                this.state = true;
+            }
+            this.closeButt.onclick = () => {
+                this.state = false;
+            }
+        }
+    };
+    sendMessageBox.addCallbacks();
+
     addEventToCopyClassID();
     inputPlaceHolderConstructor(
-        document.querySelector('body > .parent-content > .main-content > .send-msg > input'),
-        document.querySelector('body > .parent-content > .main-content > .send-msg > label'),
-    );
+        document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > form > textarea'),
+        document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > form > label'),
+    )
 }
 
 function addEventToCopyClassID() {

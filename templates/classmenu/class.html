@@ -13,16 +13,33 @@
     <div class="item header">
         <div class="date-box">
             <i class="bi bi-info-circle"></i>
-            <div class="popup">Date Created</div>
-            <span>{{ classObj.date_started }}</span>
+            <div class="popup">Created On</div>
+            <span>{{ classObj.formatted_date }}</span>
         </div>
         <h1>{{ classObj.title }}</h1>
     </div>
-    <div class="item send-msg">
-        <input type="text">
-        <label>Send message to the class...</label>
-        <div class="button-box">
-            <i class="bi bi-send"></i>
+    <div class="item msg-div">
+        <div class="dummy-overlay">
+            <img src="{{ user.profile_pic_path }}">
+            <span>Send a message to the class..</span>
+        </div>
+        <div class="real-content">
+            <div class="top-bar">
+                <i class="bi bi-x"></i>
+            </div>
+            <div class="content-box">
+                <form>
+                    <label>Content..</label>
+                    <textarea name='content'></textarea>
+                    <div class="attach-box"></div>
+                    <div class="button-box">
+                        <button>
+                            <i class="bi bi-send"></i>
+                            <span>Send</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -45,9 +62,11 @@
         <div class="extra-box">
             <div class="bio-box">{{ classObj.teacher.bio }}</div>
         </div>
-        <div class="extend-div">
-            <i class="bi bi-chevron-compact-down"></i>
-        </div>
+        {% if classObj.teacher.bio %}
+            <div class="extend-div">
+                <i class="bi bi-chevron-compact-down"></i>
+            </div>
+        {% endif %}
     </div>
     <div class="item class-desc">
         <div class="header">Class Description</div>
