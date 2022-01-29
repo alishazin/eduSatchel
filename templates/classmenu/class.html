@@ -31,7 +31,9 @@
                 <form>
                     <label>Content..</label>
                     <textarea name='content'></textarea>
-                    <div class="attach-box"></div>
+                    <div class="attach-box">
+                        {% include 'blocks/attach-files.html' %}
+                    </div>
                     <div class="button-box">
                         <button>
                             <i class="bi bi-send"></i>

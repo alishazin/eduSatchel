@@ -50,6 +50,9 @@
     document.body.onload = () => {
         onBaseLoad();
         onLoad();
+        try {
+            onLoadBlock();
+        } catch {}
     }
     var homeURL = "{% url 'home:home-page' %}";
 </script>
