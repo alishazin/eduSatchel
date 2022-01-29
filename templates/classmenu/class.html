@@ -10,7 +10,14 @@
 
 {% block bodyextra %}
 <div class="main-content">
-    <div class="item header"></div>
+    <div class="item header">
+        <div class="date-box">
+            <i class="bi bi-info-circle"></i>
+            <div class="popup">Date Created</div>
+            <span>{{ classObj.date_started }}</span>
+        </div>
+        <h1>{{ classObj.title }}</h1>
+    </div>
     
 </div>
 <div class="right-content">
@@ -37,7 +44,7 @@
         </div>
     </div>
     <div class="item class-desc">
-        <div class="header">Description</div>
+        <div class="header">Class Description</div>
         <div class="sub-box">
             <div class="desc-box">{{ classObj.description }}</div>
         </div>
