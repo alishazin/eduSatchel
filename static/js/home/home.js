@@ -16,7 +16,8 @@ function cardPopupController() {
         popup.onblur = () => {
             popup.style.display = 'none';
         }
-        self.onclick = () => {
+        self.onclick = (event) => {
+            event.stopPropagation();
             popup.style.display = 'flex';
             popup.focus();
         }

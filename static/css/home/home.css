@@ -40,10 +40,35 @@
     height: 200px;
     border-radius: 10px;
     box-shadow: 2px -2px 10px rgb(253, 253, 253), -2px 2px 10px var(--shadow-light-color);
-    cursor: pointer;
     transition: box-shadow 0.3s, transform 0.3s;
     position: relative;
     overflow: hidden;
+}
+.parent-content > .main-content > .class-box > .redirect-butt {
+    cursor: pointer;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 20px;
+    top: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+    transition: transform 0.3s;
+}
+.parent-content > .main-content > .class-box > .redirect-butt > i {
+    font-size: 20px;
+    color: white;
+    transition: font-size 0.3s;
+}
+.parent-content > .main-content > .class-box > .redirect-butt:hover {
+    transform: scale(1.15);
+}
+.parent-content > .main-content > .class-box > .redirect-butt:hover > i {
+    font-size: 23px;
 }
 .parent-content > .main-content > .class-box:not(.create-new, .join-new) > .teacher-name {
     animation-name: on-load-translate-animation;

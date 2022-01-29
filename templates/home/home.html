@@ -47,7 +47,7 @@
     </div>
     {% if class_obj_array %}
         {% for class_obj in class_obj_array %}
-            <div class="class-box" onclick="location.href = '{{ class_obj.get_url }}'">
+            <div class="class-box">
                 <div class="title-container">
                     <p>{{ class_obj.title }}</p>
                     <div class="popup" tabindex='1'>{{ class_obj.title }}</div>
@@ -55,11 +55,14 @@
                 <div class="horizontal-line one"></div>
                 <div class="horizontal-line two"></div>
                 <span class="teacher-name">{{ class_obj.teacher.username }}</span>
+                <div class="redirect-butt" onclick="location.href = '{{ class_obj.get_url }}'">
+                    <i class="bi bi-chevron-double-right"></i>
+                </div>
             </div>
-        {% endfor %}
-    {% elif classenrollment_obj_array %}
-        {% for classenrollment_obj in classenrollment_obj_array %}
-            <div class="class-box" onclick="location.href = '{{ classenrollment_obj.class_obj.get_url }}'">
+            {% endfor %}
+            {% elif classenrollment_obj_array %}
+            {% for classenrollment_obj in classenrollment_obj_array %}
+            <div class="class-box">
                 <div class="title-container">
                     <p>{{ classenrollment_obj.class_obj.title }}</p>
                     <div class="popup" tabindex='1'>{{ classenrollment_obj.class_obj.title }}</div>
@@ -67,6 +70,9 @@
                 <div class="horizontal-line one"></div>
                 <div class="horizontal-line two"></div>
                 <span class="teacher-name">{{ classenrollment_obj.class_obj.teacher.username }}</span>
+                <div class="redirect-butt" onclick="location.href = '{{ classenrollment_obj.class_obj.get_url }}'">
+                    <i class="bi bi-chevron-double-right"></i>
+                </div>
             </div>
         {% endfor %}
     {% endif %}
