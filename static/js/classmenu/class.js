@@ -31,11 +31,25 @@ function onLoad() {
     teacherDetailBox.addCallbacks();
 
     addEventToCopyClassID();
+    inputPlaceHolderConstructor(
+        document.querySelector('body > .parent-content > .main-content > .send-msg > input'),
+        document.querySelector('body > .parent-content > .main-content > .send-msg > label'),
+    );
 }
 
 function addEventToCopyClassID() {
     const but = document.querySelector('body > .parent-content > .right-content > .class-id > .id-box > .icon-box');
     but.onclick = () => {
         navigator.clipboard.writeText(classIDGlobal);
+    }
+}
+
+function inputPlaceHolderConstructor(input, label) {
+    input.oninput = () => {
+        if (input.value.length > 0) {
+            label.style.opacity = '0';
+        } else {
+            label.style.opacity = '1';
+        }
     }
 }

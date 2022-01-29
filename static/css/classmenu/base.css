@@ -76,7 +76,7 @@ body > .parent-content > .nav-bar-box {
 }
 body > .parent-content > .nav-bar-box > .nav-bar {
     width: 90px;
-    border-radius: 10px;
+    border-radius: 0 10px 10px 0;
     height: 400px;
     background-color: var(--primary-color);
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.06), 2px -2px 10px rgba(0, 0, 0, 0.06);
