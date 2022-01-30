@@ -44,7 +44,7 @@ function onLoad() {
         },
         set state(arg) {
             if (arg === true) {
-                this.parent.style.height = '400px';
+                this.parent.style.height = '360px';
                 this.overlay.style.display = 'none';
                 this.contentParent.style.display = 'flex';
             } else if (arg === false) {

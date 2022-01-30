@@ -8,8 +8,11 @@ function onLoadBlock() {
         navBarItems : Array.from(document.querySelectorAll('.attach-files-container > .top-nav-bar > .item')),
         separatorInner : document.querySelector('.attach-files-container > .separator > .inner'),
         pageOne : document.querySelector('.attach-files-container > .page-box > .page-one'),
+        fileLabel : document.querySelector('.attach-files-container > .page-box > .page-one > .new-file > label'),
+        hiddenInputs: document.querySelector('.attach-files-container > .page-box > .page-one > .input-hidden-area'),
         pageTwo : document.querySelector('.attach-files-container > .page-box > .page-two'),
         _currentSelected : 1,
+        fileCount : 1,
         get currentSelected() {
             return this._currentSelected;
         },
@@ -31,6 +34,33 @@ function onLoadBlock() {
             }
             this._currentSelected = arg;
         },
+        onChangeFileFunction : function (input) {
+            this.fileCount++;
+    
+            // Visible Things
+            const fileDiv = document.createElement('div');
+            fileDiv.className = 'file-div';
+            const span = document.createElement('span');
+            span.innerText = input.files[0].name;
+            fileDiv.appendChild(span);
+            const closeButt = document.createElement('i');
+            closeButt.classList = 'bi bi-x';
+            fileDiv.appendChild(closeButt);
+            this.pageOne.appendChild(fileDiv);
+    
+            // Hidden Things
+            const newInput = document.createElement('input');
+            newInput.onchange = () => {
+                this.onChangeFileFunction(newInput);
+            };
+            newInput.type = 'file';
+            newInput.name = `file-${this.fileCount}`;
+            newInput.id = `file-${this.fileCount}-id`;
+    
+            this.fileLabel.htmlFor = `file-${this.fileCount}-id`;
+            this.hiddenInputs.appendChild(newInput);    
+
+        },
         addCallbacks : function () {
             this.navBarItems[0].onclick = () => {
                 this.currentSelected = 1;
@@ -38,11 +68,23 @@ function onLoadBlock() {
             this.navBarItems[1].onclick = () => {
                 this.currentSelected = 2;
             }
+            Array.from(this.hiddenInputs.children).forEach(input => {
+                input.onchange = () => {
+                    this.onChangeFileFunction(input);
+                };
+            })
+            this.pageOne.onwheel = (event) => {
+                event.preventDefault();
+                this.pageOne.scrollLeft += event.deltaY / 3;
+            }
+            this.pageTwo.onwheel = (event) => {
+                event.preventDefault();
+                this.pageTwo.scrollLeft += event.deltaY / 3;
+            }
         },
     }
     attachFileBlockObj.addCallbacks();
     const interval = setInterval(() => {
-        console.log(10)
         if (attachFileBlockObj.navBarItems[0].clientWidth !== 0) {
             attachFileBlockObj.currentSelected = 1;
             clearInterval(interval)
