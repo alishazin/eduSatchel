@@ -28,7 +28,8 @@
                 <i class="bi bi-x"></i>
             </div>
             <div class="content-box">
-                <form>
+                <form action="." method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <label>Content..</label>
                     <textarea name='content'></textarea>
                     <div class="attach-box">

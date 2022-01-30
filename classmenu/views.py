@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from edusatchel.decorators import classentry_check
@@ -12,3 +13,8 @@ class ClassMenuView(View):
         return render(request, 'classmenu/class.html', {
             'classObj' : Class.objects.get(id=classID),
         })
+
+    def post(self, request, classID):
+        print(request.POST)
+        print(request.FILES)
+        return HttpResponse('asdsadasd')

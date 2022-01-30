@@ -9,7 +9,7 @@ function onLoadBlock() {
         separatorInner : document.querySelector('.attach-files-container > .separator > .inner'),
         pageOne : document.querySelector('.attach-files-container > .page-box > .page-one'),
         fileLabel : document.querySelector('.attach-files-container > .page-box > .page-one > .new-file > label'),
-        hiddenInputs: document.querySelector('.attach-files-container > .page-box > .page-one > .input-hidden-area'),
+        hiddenInputs : document.querySelector('.attach-files-container > .page-box > .page-one > .input-hidden-area'),
         pageTwo : document.querySelector('.attach-files-container > .page-box > .page-two'),
         _currentSelected : 1,
         fileCount : 1,
@@ -40,11 +40,21 @@ function onLoadBlock() {
             // Visible Things
             const fileDiv = document.createElement('div');
             fileDiv.className = 'file-div';
+            const idDiv = document.createElement('div');
+            idDiv.className = 'hidden-id';
+            idDiv.innerText = `${this.fileCount - 1}`;
+            fileDiv.appendChild(idDiv);
             const span = document.createElement('span');
             span.innerText = input.files[0].name;
             fileDiv.appendChild(span);
             const closeButt = document.createElement('i');
             closeButt.classList = 'bi bi-x';
+            closeButt.onclick = () => {
+                const parent = closeButt.parentElement;
+                const idCount = parent.children[0].innerText;
+                parent.remove();
+                this.hiddenInputs.querySelector(`:scope > #file-${idCount}-id`).remove();
+            }
             fileDiv.appendChild(closeButt);
             this.pageOne.appendChild(fileDiv);
     

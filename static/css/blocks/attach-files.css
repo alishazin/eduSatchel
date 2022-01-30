@@ -122,6 +122,9 @@
     border: 1px solid black;
     color: rgb(92, 92, 92);
 }
+.attach-files-container > .page-box > .page-one > .file-div > .hidden-id {
+    display: none;
+}
 .attach-files-container > .page-box > .page-one > .file-div > span {
     margin-right: 5px;
     white-space: nowrap;
