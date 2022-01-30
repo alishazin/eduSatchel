@@ -11,8 +11,12 @@ function onLoadBlock() {
         fileLabel : document.querySelector('.attach-files-container > .page-box > .page-one > .new-file > label'),
         hiddenInputs : document.querySelector('.attach-files-container > .page-box > .page-one > .input-hidden-area'),
         pageTwo : document.querySelector('.attach-files-container > .page-box > .page-two'),
-        _currentSelected : 1,
+        urlInput : document.querySelector('.attach-files-container > .page-box > .page-two > .new-url > input'),
+        addUrlButt : document.querySelector('.attach-files-container > .page-box > .page-two > .new-url > .add-butt'),
+        addedUrls : {},
+        urlCount : 0,
         fileCount : 1,
+        _currentSelected : 1,
         get currentSelected() {
             return this._currentSelected;
         },
@@ -71,6 +75,37 @@ function onLoadBlock() {
             this.hiddenInputs.appendChild(newInput);    
 
         },
+        onClickAddUrl : function () {
+            const value = this.urlInput.value.trim()
+            if (value.length !== 0) {
+                this.urlCount++;
+    
+                // Visible Things
+                const urlDiv = document.createElement('div');
+                urlDiv.className = 'url-box';
+                const idDiv = document.createElement('div');
+                idDiv.className = 'hidden-id';
+                idDiv.innerText = `${this.urlCount}`;
+                urlDiv.appendChild(idDiv);
+                const span = document.createElement('span');
+                span.innerText = value;
+                urlDiv.appendChild(span);
+                const closeButt = document.createElement('i');
+                closeButt.classList = 'bi bi-x';
+                closeButt.onclick = () => {
+                    const parent = closeButt.parentElement;
+                    const idCount = parent.children[0].innerText;
+                    parent.remove();
+                    delete this.addedUrls[idCount];
+                }
+                urlDiv.appendChild(closeButt);
+                this.pageTwo.appendChild(urlDiv);
+    
+                // Hidden Things
+                this.addedUrls[this.urlCount] = value;
+            }
+            this.urlInput.value = '';
+        },
         addCallbacks : function () {
             this.navBarItems[0].onclick = () => {
                 this.currentSelected = 1;
@@ -90,6 +125,14 @@ function onLoadBlock() {
             this.pageTwo.onwheel = (event) => {
                 event.preventDefault();
                 this.pageTwo.scrollLeft += event.deltaY / 3;
+            }
+            this.addUrlButt.onclick = () => {
+                this.onClickAddUrl();
+            };
+            this.urlInput.onkeydown = event => {
+                if (event.keyCode == 13) {
+                    this.onClickAddUrl();
+                }
             }
         },
     }

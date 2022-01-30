@@ -66,8 +66,8 @@ function onLoad() {
 
     addEventToCopyClassID();
     inputPlaceHolderConstructor(
-        document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > form > textarea'),
-        document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > form > label'),
+        document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > .form > textarea'),
+        document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > .form > label'),
     )
 }
 
