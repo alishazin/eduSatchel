@@ -49,9 +49,9 @@
 <script>
     document.body.onload = () => {
         onBaseLoad();
-        onLoad();
+        errorPara = onLoad();
         try {
-            onLoadBlock();
+            onLoadBlock(errorPara);
         } catch(err) {
             console.log(err)
         }

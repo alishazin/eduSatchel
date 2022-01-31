@@ -38,6 +38,7 @@ function onLoad() {
         overlay : document.querySelector('body > .parent-content > .main-content > .msg-div > .dummy-overlay'),
         contentParent : document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content'),
         closeButt : document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .top-bar > i'),
+        submitButt : document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > .form > .button-box > button'),
         _state : false,
         get state() {
             return this._state
@@ -51,7 +52,11 @@ function onLoad() {
                 this.parent.style.height = '80px';
                 this.overlay.style.display = 'flex';
                 this.contentParent.style.display = 'none';
+                attachFileBlockObj.resetAll();
             }
+        },
+        validateForm : function () {
+            console.log(attachFileBlockObj.getData())
         },
         addCallbacks : function () {
             this.overlay.onclick = () => {
@@ -59,6 +64,9 @@ function onLoad() {
             }
             this.closeButt.onclick = () => {
                 this.state = false;
+            }
+            this.submitButt.onclick = () => {
+
             }
         }
     };
@@ -69,6 +77,8 @@ function onLoad() {
         document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > .form > textarea'),
         document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > .form > label'),
     )
+
+    return document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .top-bar > .error-para');
 }
 
 function addEventToCopyClassID() {

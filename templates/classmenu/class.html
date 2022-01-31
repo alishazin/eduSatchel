@@ -25,13 +25,13 @@
         </div>
         <div class="real-content">
             <div class="top-bar">
+                <p class="error-para"></p>
                 <i class="bi bi-x"></i>
             </div>
             <div class="content-box">
                 <div class="form">
-                    {% csrf_token %}
                     <label>Content..</label>
-                    <textarea name='content'></textarea>
+                    <textarea name='content' maxlength="300"></textarea>
                     <div class="attach-box">
                         {% include 'blocks/attach-files.html' %}
                     </div>

@@ -1,7 +1,7 @@
 
 var attachFileBlockObj = {};
 
-function onLoadBlock() {
+function onLoadBlock(errorDiv) {
     attachFileBlockObj = {
         parent : document.querySelector('.attach-files-container'),
         navBar : document.querySelector('.attach-files-container > .top-nav-bar'),
@@ -16,6 +16,7 @@ function onLoadBlock() {
         addedUrls : {},
         urlCount : 0,
         fileCount : 1,
+        errorMsgSpace : errorDiv,
         _currentSelected : 1,
         get currentSelected() {
             return this._currentSelected;
@@ -42,6 +43,7 @@ function onLoadBlock() {
             this.fileCount++;
     
             // Visible Things
+            console.log(10)
             const fileDiv = document.createElement('div');
             fileDiv.className = 'file-div';
             const idDiv = document.createElement('div');
@@ -75,9 +77,37 @@ function onLoadBlock() {
             this.hiddenInputs.appendChild(newInput);    
 
         },
+        resetAll : function () {
+            // Resetting Files
+            Array.from(document.querySelectorAll('.attach-files-container > .page-box > .page-one > .file-div')).forEach(div => {
+                div.remove();
+            })
+            Array.from(this.hiddenInputs.children).forEach(child => {
+                child.remove();
+            })
+            const newInput = document.createElement('input');
+            newInput.type = 'file';
+            newInput.name = 'file-1';
+            newInput.id = 'file-1-id';
+            newInput.onchange = () => {
+                this.onChangeFileFunction(newInput);
+            }
+            this.hiddenInputs.appendChild(newInput);
+            this.fileCount = 1;
+            this.fileLabel.htmlFor = 'file-1-id';
+
+            // Resetting Urls
+            Array.from(document.querySelectorAll('.attach-files-container > .page-box > .page-two > .url-box')).forEach(child => {
+                child.remove();
+            })
+            this.urlCount = 0;
+            this.addedUrls = {};
+
+            this.errorMsgSpace.innerText = '';
+        },
         onClickAddUrl : function () {
             const value = this.urlInput.value.trim()
-            if (value.length !== 0) {
+            if (value.length !== 0 && this.isValidUrl(value)) {
                 this.urlCount++;
     
                 // Visible Things
@@ -104,7 +134,41 @@ function onLoadBlock() {
                 // Hidden Things
                 this.addedUrls[this.urlCount] = value;
             }
+            else {
+                this.errorMsgSpace.innerText = 'Invalid URL';
+            }
             this.urlInput.value = '';
+        },
+        isValidUrl : function (string) {
+            let url;
+            try {
+              url = new URL(string);
+            } catch (_) {
+              return false;  
+            }
+            this.errorMsgSpace.innerText = '';
+            return true;
+        },
+        getData : function () {
+            this.errorMsgSpace.innerText = '';
+            let returnObj = {
+                files : {},
+                urls : {},
+            };
+            let fileCountLocal = 0;
+            let urlCountLocal = 0;
+            Array.from(this.hiddenInputs.children).forEach((input) => {
+                let data = input.files[0];
+                if (data) {
+                    fileCountLocal++;
+                    returnObj.files[fileCountLocal] = data;
+                }
+            })
+            for (let x in this.addedUrls) {
+                urlCountLocal++;
+                returnObj.urls[urlCountLocal] = this.addedUrls[x];
+            }
+            return returnObj;
         },
         addCallbacks : function () {
             this.navBarItems[0].onclick = () => {
