@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import File, MessagePublic
+from .models import File, MessagePublic, Url
 
 # Register your models here.
 
@@ -11,5 +11,10 @@ class MessagePublicAdmin(admin.ModelAdmin):
     list_display = ('id', 'content', 'class_obj', 'user') 
     readonly_fields = ('id',)
 
+class UrlAdmin(admin.ModelAdmin):
+    list_display = ('id', 'url') 
+    readonly_fields = ('id',)
+
 admin.site.register(File, FileAdmin)
 admin.site.register(MessagePublic, MessagePublicAdmin)
+admin.site.register(Url, UrlAdmin)

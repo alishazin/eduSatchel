@@ -23,11 +23,18 @@ class File(models.Model):
     def __str__(self):
         return f'<{self.location_hint}> of <{self.class_obj}>'
 
+class Url(models.Model):
+    url = models.TextField(blank=False, null=False)
+
+    def __str__(self):
+        return f'Url <{self.url}> with ID <{self.id}>'
+
 class MessagePublic(models.Model):
     content = models.CharField(max_length=300, blank=False, null=False)
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     files = models.ManyToManyField(File)
+    url = models.ManyToManyField(Url)
     # add() to add to files
     # set() to set new querysets of files
 
