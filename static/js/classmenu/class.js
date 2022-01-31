@@ -155,7 +155,9 @@ async function asyncFunctionForSendingMessage() {
         const response = await sendPostRequestForMessage();
         sendMessageBox.loadingState = false;
     } catch(error) {
-        console.log(error)
+        console.log(error);
+        sendMessageBox.errorDiv.innerText = error;
+        sendMessageBox.loadingState = false;
     }
 }
 
@@ -164,9 +166,12 @@ function sendPostRequestForMessage() {
         var req = new XMLHttpRequest();
         req.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                const response = this.responseText;
+                const response = JSON.parse(this.responseText);
                 console.log(response);
-                resolve();
+                if (response[0]) {
+                    resolve();
+                }
+                reject(response[1])
             }
         }
         

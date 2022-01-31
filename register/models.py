@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from base64 import b64encode
 
 import uuid
 
@@ -8,14 +7,8 @@ ACCOUNT_TYPES = (
     ('student','Student'),
     ('teacher', 'Teacher'),
 )
-def get_image_upload_location(self, filename):
-    format = ''
-    reversedStr = filename[::-1]
-    for i in range(len(reversedStr)):
-        if reversedStr[i] == '.':
-            format = reversedStr[0 : i]
-            break
-    return f"profile/{self.image_storage_id}/image.{format[::-1]}"
+def get_image_upload_location(self, filename):    
+    return f"profile/{self.image_storage_id}/image.{filename.split('.')[-1]}"
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, username, password, account_type):

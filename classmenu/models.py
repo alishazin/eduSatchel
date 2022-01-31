@@ -17,6 +17,7 @@ LOCATION_HINTS = (
 
 class File(models.Model):
     file = models.FileField(upload_to=get_file_upload_location, max_length=500)
+    format = models.CharField(max_length=100, blank=False, null=True)
     location_hint = models.CharField(max_length=10, choices=LOCATION_HINTS, blank=False, null=False)
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
 

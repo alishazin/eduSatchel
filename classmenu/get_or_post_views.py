@@ -5,6 +5,11 @@ from django.shortcuts import redirect, render
 
 from edusatchel.decorators import authentication_check, classentry_check
 
+from .backends import (
+    validate_urls_files,
+    insert_url_and_file_values,
+)
+
 import json
 
 class GetOnlyViewBase(View):
@@ -28,8 +33,24 @@ class PostOnlyViewBase(View):
 class SendPublicMessagePostOnlyView(PostOnlyViewBase):
     @classentry_check()
     def post_only(self, request, classID):
-        print(classID)
-        print(request.POST)
-        print(request.FILES)
-        print(request.user)
-        return HttpResponse("Success")
+        formPost = request.POST
+        formData = request.FILES
+
+        if 'content' in formPost.keys():
+            content = formPost['content'].strip()
+
+            if len(content) == 0:
+                return HttpResponse(json.dumps([False, 'Content should not be empty']))
+
+            if len(content) > 300:
+                return HttpResponse(json.dumps([False, 'Content should be less than 300 characters']))
+
+            validatedUrls = validate_urls_files(formPost, formData)   
+            if validatedUrls != True:
+                return HttpResponse(json.dumps([False, validatedUrls]))
+
+            urlObj, fileObj = insert_url_and_file_values(formPost, formData, classID, 'public')     
+            print(urlObj, fileObj)       
+            return HttpResponse(json.dumps([True]))
+
+        return HttpResponse(json.dumps([False, 'Something is wrong. Refresh the page !']))
