@@ -23,6 +23,9 @@
             <img src="{{ user.profile_pic_path }}">
             <span>Send a message to the class..</span>
         </div>
+        <div class="loading-overlay">
+            <div class="spinner"></div>
+        </div>
         <div class="real-content">
             <div class="top-bar">
                 <p class="error-para"></p>
@@ -80,5 +83,6 @@
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
+    var csrftoken = '{{ csrf_token }}'
 </script>
 {% endblock bodyextra %}

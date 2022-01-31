@@ -112,6 +112,21 @@ body > .parent-content > .main-content > .msg-div > .dummy-overlay > span {
     font-size: 15px;
     color: var(--text-color);
 }
+body > .parent-content > .main-content > .msg-div > .loading-overlay {
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center; 
+}
+body > .parent-content > .main-content > .msg-div > .loading-overlay > .spinner {
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid var(--primary-color);
+    width: 48px;
+    height: 48px;
+    animation: loading-spin 1.5s linear infinite;
+}
 body > .parent-content > .main-content > .msg-div > .real-content {
     display: none;
     height: 100%;
@@ -130,7 +145,7 @@ body > .parent-content > .main-content > .msg-div > .real-content > .top-bar {
 }
 body > .parent-content > .main-content > .msg-div > .real-content > .top-bar > .error-para {
     width: calc(100% - 30px);
-    font-size: 14px;
+    font-size: 12px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--tertiary-color);
 }

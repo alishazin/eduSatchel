@@ -40,6 +40,7 @@ function onLoadBlock(errorDiv) {
             this._currentSelected = arg;
         },
         onChangeFileFunction : function (input) {
+            this.errorMsgSpace.innerText = '';
             this.fileCount++;
     
             // Visible Things
@@ -104,6 +105,7 @@ function onLoadBlock(errorDiv) {
             this.addedUrls = {};
 
             this.errorMsgSpace.innerText = '';
+            this.urlInput.value = '';
         },
         onClickAddUrl : function () {
             const value = this.urlInput.value.trim()

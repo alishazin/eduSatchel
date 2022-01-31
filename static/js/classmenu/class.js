@@ -32,13 +32,28 @@ function onLoad() {
         }
     };
     teacherDetailBox.addCallbacks();
-
+    
     sendMessageBox = {
         parent : document.querySelector('body > .parent-content > .main-content > .msg-div'),
         overlay : document.querySelector('body > .parent-content > .main-content > .msg-div > .dummy-overlay'),
         contentParent : document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content'),
+        errorDiv : document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .top-bar > .error-para'),
         closeButt : document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .top-bar > i'),
         submitButt : document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > .form > .button-box > button'),
+        contentInput : document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > .form > textarea'),
+        loadingDiv : document.querySelector('body > .parent-content > .main-content > .msg-div > .loading-overlay'),
+        _loadingState : false,
+        get loadingState() {
+            return this._loadingState
+        },
+        set loadingState(arg) {
+            if (arg === true) {
+                this.loadingDiv.style.display = 'flex';
+            } else if (arg === false) {
+                this.loadingDiv.style.display = 'none';
+            }
+            this._loadingState = arg;
+        },
         _state : false,
         get state() {
             return this._state
@@ -54,9 +69,45 @@ function onLoad() {
                 this.contentParent.style.display = 'none';
                 attachFileBlockObj.resetAll();
             }
+            this._state = arg;
+        },
+        resetAll : function () {
+            this.contentInput.value = '';
+            document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > .form > label').style.opacity = '1';
+            attachFileBlockObj.resetAll();
         },
         validateForm : function () {
-            console.log(attachFileBlockObj.getData())
+            const content = this.contentInput.value.trim();
+            let errorText = ''
+            if (!content) {
+                errorText = 'Content should not be empty';
+            } else if (content.length > 300) {
+                errorText = 'Content should be less than 300 characters';
+            } else {
+                asyncFunctionForSendingMessage();
+            }
+            this.errorDiv.innerText = errorText;
+        },
+        getFormData : function () {
+            let fileCountLocal = 0;
+            let urlCountLocal = 0;
+            fileAndUrlData = attachFileBlockObj.getData() 
+
+            const formdata = new FormData();
+            formdata.append('content', this.contentInput.value.trim());
+
+            for (let x in fileAndUrlData.files) {
+                fileCountLocal++;
+                formdata.append(`file-${fileCountLocal}`, fileAndUrlData.files[x]);
+            }
+
+            for (let x in fileAndUrlData.urls) {
+                urlCountLocal++;
+                formdata.append(`url-${urlCountLocal}`, fileAndUrlData.urls[x]);
+            }
+
+            sendMessageBox.resetAll();
+            return formdata;
         },
         addCallbacks : function () {
             this.overlay.onclick = () => {
@@ -66,7 +117,7 @@ function onLoad() {
                 this.state = false;
             }
             this.submitButt.onclick = () => {
-
+                this.validateForm();
             }
         }
     };
@@ -78,7 +129,7 @@ function onLoad() {
         document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .content-box > .form > label'),
     )
 
-    return document.querySelector('body > .parent-content > .main-content > .msg-div > .real-content > .top-bar > .error-para');
+    return sendMessageBox.errorDiv;
 }
 
 function addEventToCopyClassID() {
@@ -96,4 +147,31 @@ function inputPlaceHolderConstructor(input, label) {
             label.style.opacity = '1';
         }
     }
+}
+
+async function asyncFunctionForSendingMessage() {
+    try {
+        sendMessageBox.loadingState = true;
+        const response = await sendPostRequestForMessage();
+        sendMessageBox.loadingState = false;
+    } catch(error) {
+        console.log(error)
+    }
+}
+
+function sendPostRequestForMessage() {
+    return new Promise((resolve, reject) => {
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const response = this.responseText;
+                console.log(response);
+                resolve();
+            }
+        }
+        
+        req.open('POST', `/class/${classIDGlobal}/send-message/`); 
+        req.setRequestHeader("X-CSRFToken", csrftoken); 
+        req.send(sendMessageBox.getFormData());
+    })
 }
