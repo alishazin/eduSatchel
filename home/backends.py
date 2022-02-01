@@ -119,6 +119,7 @@ def get_IST_from_UTC(timedate):
     return timedate + timedelta(hours=5, minutes=30)
 
 def check_if_today_or_yesterday(argumentDate):
+    argumentDate = get_IST_from_UTC(argumentDate)
     dateNow = datetime.datetime.now()
     if argumentDate.day == dateNow.day and argumentDate.month == dateNow.month and argumentDate.year == dateNow.year:
         return 'Today'

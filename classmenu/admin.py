@@ -8,8 +8,8 @@ class FileAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 
 class MessagePublicAdmin(admin.ModelAdmin):
-    list_display = ('id', 'content', 'class_obj', 'user') 
-    readonly_fields = ('id',)
+    list_display = ('id', 'content', 'class_obj', 'user', 'date') 
+    readonly_fields = ('id', 'date')
 
 class UrlAdmin(admin.ModelAdmin):
     list_display = ('id', 'url') 

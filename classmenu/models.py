@@ -36,8 +36,19 @@ class MessagePublic(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     files = models.ManyToManyField(File)
     urls = models.ManyToManyField(Url)
+    date = models.DateTimeField(auto_now_add=True)
     # add() to add to files
     # set() to set new querysets of files
 
     def __str__(self):
         return f'<{self.content}> from <{self.user}>'
+
+    @property
+    def formatted_date(self):
+        from home.backends import check_if_today_or_yesterday
+        return check_if_today_or_yesterday(self.date)
+
+    @property
+    def IST_datetime(self):
+        from home.backends import get_IST_from_UTC
+        return get_IST_from_UTC(self.date)

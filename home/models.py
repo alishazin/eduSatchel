@@ -10,7 +10,7 @@ class Class(models.Model):
     teacher = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=80, null=False, blank=False)
     description = models.CharField(max_length=300, null=False, blank=False)
-    date_started = models.DateField(auto_now_add=True)
+    date_started = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     # True means can enter, False means closed
 

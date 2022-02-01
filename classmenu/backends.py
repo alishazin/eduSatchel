@@ -28,7 +28,6 @@ def validate_urls_files(postData, formFiles):
         check_file = f'file-{fileCount}'
         if check_file in formFiles.keys():
             format = get_file_format_validate_length(formFiles[check_file]._name)
-            print(format)
             if format == False:
                 return 'Invalid File Format'
         else:
