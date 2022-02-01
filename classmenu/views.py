@@ -10,6 +10,8 @@ from home.models import Class
 class ClassMenuView(View):
     @classentry_check()
     def get(self, request, classID):
+        classObj = Class.objects.get(id=classID)
         return render(request, 'classmenu/class.html', {
-            'classObj' : Class.objects.get(id=classID),
+            'classObj' : classObj,
+            'msgObjects' : classObj.messagepublic_set.all(),
         })

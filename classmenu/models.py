@@ -34,8 +34,8 @@ class MessagePublic(models.Model):
     content = models.CharField(max_length=300, blank=False, null=False)
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    files = models.ManyToManyField(File)
-    urls = models.ManyToManyField(Url)
+    files = models.ManyToManyField(File, blank=True)
+    urls = models.ManyToManyField(Url, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     # add() to add to files
     # set() to set new querysets of files
@@ -52,3 +52,9 @@ class MessagePublic(models.Model):
     def IST_datetime(self):
         from home.backends import get_IST_from_UTC
         return get_IST_from_UTC(self.date)
+
+    @property
+    def time_only(self):
+        from home.backends import get_IST_from_UTC
+        ISTDate = get_IST_from_UTC(self.date)
+        return f'{ISTDate.hour}:{ISTDate.minute}'

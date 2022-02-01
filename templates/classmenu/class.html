@@ -1,7 +1,7 @@
 {% extends 'classmenu/base.html' %}
 {% load static %}
 
-{% block title %}Class{% endblock title %}
+{% block title %}{{ classObj.title }}{% endblock title %}
 
 {% block headextraextra %}
 <link rel='stylesheet' href="{% static 'css/classmenu/class.css' %}">
@@ -48,17 +48,30 @@
             </div>
         </div>
     </div>
-    <!-- <div class="item recieve-msg-small">
-        <div class="top-bar">
-            <img>
-            <span class="sender-name"></span>
-            <span class="date"></span>
-            <span class="time"></span>
-        </div>
-        <div class="content-box">
-            <p></p>
-        </div>
-    </div> -->
+    <div class="all-messages">
+        {% for msgObj in msgObjects %}
+            <div class="item recieve-msg-small">
+                <div class="top-bar">
+                    <img src="{{ msgObj.user.profile_pic_path }}">
+                    <div class="sender-name">
+                        {% if msgObj.user == classObj.teacher %}
+                            <i class="bi bi-person-fill"></i>
+                        {% endif %}
+                        <span>{{ msgObj.user.username }}</span>
+                    </div>
+                    {% if msgObj.formatted_date == 'Today' or msgObj.formatted_date == 'Yesterday' %}
+                        <div class="date" style="color: var(--tertiary-color)"><span>{{ msgObj.formatted_date }}</span></div>
+                        {% else %}
+                        <div class="date" style="color: rgb(71, 71, 71)"><span>{{ msgObj.formatted_date }}</span></div>
+                    {% endif %}
+                    <div class="time"><span>{{ msgObj.time_only }}</span></div>
+                </div>
+                <div class="content-box">
+                    <p>{{ msgObj.content }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 <div class="right-content" tabindex="0">
     <div class="item class-id">
