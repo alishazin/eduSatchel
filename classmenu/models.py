@@ -35,7 +35,7 @@ class MessagePublic(models.Model):
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     files = models.ManyToManyField(File)
-    url = models.ManyToManyField(Url)
+    urls = models.ManyToManyField(Url)
     # add() to add to files
     # set() to set new querysets of files
 

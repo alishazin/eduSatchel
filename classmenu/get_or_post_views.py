@@ -4,6 +4,7 @@ from django.views import View
 from django.shortcuts import redirect, render
 
 from edusatchel.decorators import authentication_check, classentry_check
+from home.models import Class
 
 from .backends import (
     validate_urls_files,
@@ -49,8 +50,14 @@ class SendPublicMessagePostOnlyView(PostOnlyViewBase):
             if validatedUrls != True:
                 return HttpResponse(json.dumps([False, validatedUrls]))
 
-            urlObj, fileObj = insert_url_and_file_values(formPost, formData, classID, 'public')     
-            print(urlObj, fileObj)       
+            classObj = Class.objects.get(id=classID)
+            urlObjs, fileObjs = insert_url_and_file_values(formPost, formData, classObj, 'public')           
+            msgObj = request.user.messagepublic_set.create(
+                content = content,
+                class_obj = classObj,
+            )
+            msgObj.files.set(fileObjs)
+            msgObj.urls.set(urlObjs)
             return HttpResponse(json.dumps([True]))
 
         return HttpResponse(json.dumps([False, 'Something is wrong. Refresh the page !']))
