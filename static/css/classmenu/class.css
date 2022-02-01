@@ -111,6 +111,9 @@ body > .parent-content > .main-content > .msg-div > .dummy-overlay > span {
     font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
     color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 body > .parent-content > .main-content > .msg-div > .loading-overlay {
     display: none;
@@ -229,6 +232,7 @@ body > .parent-content > .right-content {
     height: 100%;
     overflow: auto;
     padding-right: 10px;
+    outline: none;
 }
 body > .parent-content > .right-content > .item {
     border-radius: 10px;
@@ -397,4 +401,29 @@ body > .parent-content > .right-content > .class-desc > .sub-box > .desc-box {
     font-size: 17px;
     overflow: hidden;
     border-radius: 10px;
+}
+@media (max-width:900px) {
+    body > .back-box > .more-button {
+        display: block !important;
+    }
+    body > .parent-content {
+        position: relative !important;
+    }
+    body > .parent-content > .main-content {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        padding-right: 2px;
+    }
+    body > .parent-content > .right-content {
+        position: absolute;
+        right: -100%;
+        top: 0;
+        max-width: 350px;
+        background-color: white;
+        padding: 20px;
+        z-index: 2;
+        box-shadow: -2px 0 10px var(--shadow-light-color);
+        transition: right 0.5s;
+    }
 }

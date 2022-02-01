@@ -1,6 +1,7 @@
 
 var teacherDetailBox = {};
 var sendMessageBox = {};
+var moreButtonBox = {};
 
 function onLoad() {
     navBarObj.selectItem(1);
@@ -122,6 +123,41 @@ function onLoad() {
         }
     };
     sendMessageBox.addCallbacks();
+
+    moreButtonBox = {
+        button : document.querySelector('body > .back-box > .more-button'),
+        icon : document.querySelector('body > .back-box > .more-button > i'),
+        rightContent : document.querySelector('body > .parent-content > .right-content'),
+        _state : false,
+        get state() {
+            return this._state;
+        },
+        set state(arg) {
+            if (arg === true) {
+                this.rightContent.style.right = '0';
+                setTimeout(() => {
+                    this.rightContent.focus();
+                    this.icon.classList = 'bi bi-x';
+                }, 500)
+            } else if (arg === false) {
+                this.rightContent.style.right = '-100%';
+                setTimeout(() => {
+                    this.icon.classList = 'bi bi-three-dots';
+                }, 500)
+            }
+            this._state = arg;
+        },
+        addCallbacks : function () {
+            this.button.onclick = () => {
+                if (this.state === true) {
+                    this.state = false;
+                } else {
+                    this.state = true;
+                }
+            }
+        }
+    }
+    moreButtonBox.addCallbacks();
 
     addEventToCopyClassID();
     inputPlaceHolderConstructor(

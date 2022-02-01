@@ -13,8 +13,3 @@ class ClassMenuView(View):
         return render(request, 'classmenu/class.html', {
             'classObj' : Class.objects.get(id=classID),
         })
-
-    def post(self, request, classID):
-        print(request.POST)
-        print(request.FILES)
-        return HttpResponse('asdsadasd')
