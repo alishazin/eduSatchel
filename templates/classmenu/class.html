@@ -50,15 +50,17 @@
     </div>
     <div class="all-messages">
         {% for msgObj in msgObjects %}
-            <div class="item recieve-msg-small">
+            <div class="item recieve-msg">
                 <div class="top-bar">
                     <img src="{{ msgObj.user.profile_pic_path }}">
-                    <div class="sender-name">
-                        {% if msgObj.user == classObj.teacher %}
+                    {% if msgObj.user == classObj.teacher %}
+                        <div class="sender-name" style="color: white; background-color: var(--tertiary-color);">
                             <i class="bi bi-person-fill"></i>
-                        {% endif %}
-                        <span>{{ msgObj.user.username }}</span>
-                    </div>
+                    {% else %}
+                        <div class="sender-name">
+                    {% endif %}
+                            <span>{{ msgObj.user.username }}</span>
+                        </div>
                     {% if msgObj.formatted_date == 'Today' or msgObj.formatted_date == 'Yesterday' %}
                         <div class="date" style="color: var(--tertiary-color)"><span>{{ msgObj.formatted_date }}</span></div>
                         {% else %}
@@ -69,6 +71,23 @@
                 <div class="content-box">
                     <p>{{ msgObj.content }}</p>
                 </div>
+                {% if msgObj.urls.all %}
+                    <div class="url-msg-box">
+                        <div class="header-box">
+                            <span>URL's</span>
+                        </div>
+                        <div class="content-box">
+                            {% for urlObj in msgObj.urls.all %}
+                                <div class="url-container">
+                                    <span><a href="{{ urlObj.url }}" target="_blank">{{ urlObj.url }}</a></span>
+                                    <div class="icon-butt" onclick="copyText('{{ urlObj.url }}')">
+                                        <i class="bi bi-clipboard"></i>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

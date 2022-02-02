@@ -188,7 +188,7 @@ function inputPlaceHolderConstructor(input, label) {
 async function asyncFunctionForSendingMessage() {
     try {
         sendMessageBox.loadingState = true;
-        const response = await sendPostRequestForMessage();
+        await sendPostRequestForMessage();
         sendMessageBox.loadingState = false;
     } catch(error) {
         console.log(error);
@@ -215,4 +215,8 @@ function sendPostRequestForMessage() {
         req.setRequestHeader("X-CSRFToken", csrftoken); 
         req.send(sendMessageBox.getFormData());
     })
+}
+
+function copyText(url) {
+    navigator.clipboard.writeText(url)
 }

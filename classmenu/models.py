@@ -41,7 +41,7 @@ class MessagePublic(models.Model):
     # set() to set new querysets of files
 
     def __str__(self):
-        return f'<{self.content}> from <{self.user}>'
+        return f'<In {self.class_obj}> from <{self.user}>'
 
     @property
     def formatted_date(self):
@@ -55,6 +55,6 @@ class MessagePublic(models.Model):
 
     @property
     def time_only(self):
-        from home.backends import get_IST_from_UTC
+        from home.backends import get_IST_from_UTC, add_zero_to_left
         ISTDate = get_IST_from_UTC(self.date)
-        return f'{ISTDate.hour}:{ISTDate.minute}'
+        return f'{add_zero_to_left(ISTDate.hour)}:{add_zero_to_left(ISTDate.minute)}'

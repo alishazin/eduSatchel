@@ -128,7 +128,7 @@ def check_if_today_or_yesterday(argumentDate):
         if argumentDate.day == dateYesterday.day and argumentDate.month == dateYesterday.month and argumentDate.year == dateYesterday.year:
             return 'Yesterday'
 
-    return f'{argumentDate.day}/{argumentDate.month}/{argumentDate.year}'
+    return f'{add_zero_to_left(argumentDate.day)}/{add_zero_to_left(argumentDate.month)}/{argumentDate.year}'
 
 def get_file_format_from_content_type(contentType):
     length = len(contentType)
