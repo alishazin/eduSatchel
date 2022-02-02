@@ -21,9 +21,6 @@ class File(models.Model):
     location_hint = models.CharField(max_length=10, choices=LOCATION_HINTS, blank=False, null=False)
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f'<{self.location_hint}> of <{self.class_obj}>'
-
     @property
     def file_name(self):
         return str(self.file).split('/')[-1]
@@ -35,9 +32,6 @@ class File(models.Model):
 class Url(models.Model):
     url = models.TextField(blank=False, null=False)
 
-    def __str__(self):
-        return f'Url <{self.url}> with ID <{self.id}>'
-
 class MessagePublic(models.Model):
     content = models.CharField(max_length=300, blank=False, null=False)
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
@@ -47,9 +41,6 @@ class MessagePublic(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     # add() to add to files
     # set() to set new querysets of files
-
-    def __str__(self):
-        return f'<In {self.class_obj}> from <{self.user}>'
 
     @property
     def formatted_date(self):

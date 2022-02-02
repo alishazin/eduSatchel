@@ -30,12 +30,14 @@
                 </div>
                 <span>Class</span>
             </div>
-            <div class="item">
-                <div class="icon-box">
-                    <i class="bi bi-cloud-arrow-up"></i>
+            {% if request.user.account_type == 'teacher' %}
+                <div class="item">
+                    <div class="icon-box">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <span>Administration</span>
                 </div>
-                <span>Add Assignment</span>
-            </div>
+            {% endif %}
             <div class="last-item">
                 <i class="bi bi-arrow-right-circle"></i>
             </div>

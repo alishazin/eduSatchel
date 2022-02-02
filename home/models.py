@@ -14,9 +14,6 @@ class Class(models.Model):
     active = models.BooleanField(default=True)
     # True means can enter, False means closed
 
-    def __str__(self):
-        return f'<{self.title}> By <{self.teacher}>'
-
     @property
     def get_url(self):
         return f'/class/{self.id}/'
@@ -34,16 +31,9 @@ class ClassEnrollment(models.Model):
     # when teacher accepts it.
     # class will be shown up on home screen only if enrolled is True
 
-    def __str__(self):
-        return f'<{self.student}> In <{self.class_obj}>'
-
 class Notification(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     header = models.CharField(max_length=80, null=False, blank=False)
     body = models.TextField(null=False, blank=False)
     seen = models.BooleanField(default=False)
     time = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        # return f'<{self.header}> For <{self.user}>'
-        return f'{self.seen}'

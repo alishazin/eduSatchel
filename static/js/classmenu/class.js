@@ -188,8 +188,11 @@ function inputPlaceHolderConstructor(input, label) {
 async function asyncFunctionForSendingMessage() {
     try {
         sendMessageBox.loadingState = true;
-        await sendPostRequestForMessage();
+        const response = await sendPostRequestForMessage();
+        console.log(response)
         sendMessageBox.loadingState = false;
+        sendMessageBox.state = false;
+        addSingleMessageAfterSending(response);
     } catch(error) {
         console.log(error);
         sendMessageBox.errorDiv.innerText = error;
@@ -203,11 +206,10 @@ function sendPostRequestForMessage() {
         req.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 const response = JSON.parse(this.responseText);
-                console.log(response);
-                if (response[0]) {
-                    resolve();
+                if (response['success']) {
+                    resolve(response);
                 }
-                reject(response[1])
+                reject(response['error_message'])
             }
         }
         
@@ -225,4 +227,109 @@ function downloadFile(uri) {
     var link = document.createElement("a");
     link.href = uri;
     link.click();
+}
+
+function addSingleMessageAfterSending(response) {
+    let code = `
+    <div class="item recieve-msg">
+    <div class="top-bar">
+        <img src=${profileImageGlobal}>`
+
+    if (response['teacher']) {
+        code += `
+        <div class="sender-name" style="color: white; background-color: var(--tertiary-color);">
+        <i class="bi bi-person-fill"></i>`
+    } else {
+        code += `<div class="sender-name">`
+    }
+
+    code += `
+        <span>${replaceTags(usernameGlobal)}</span>
+    </div>
+    <div class="date" style="color: var(--tertiary-color)"><span>Today</span></div>
+    `
+
+    code += `<div class="time"><span>${response['time']}</span></div></div>`
+
+    code += `
+    <div class="content-box">
+        <p>${replaceTags(response.content)}</p>
+    </div>
+    `
+
+    if (response.urls.length > 0) {
+        code += `
+        <div class="url-msg-box">
+        <div class="header-box">
+            <span>URL's</span>
+        </div>
+        <div class="content-box">
+        `
+
+        for (let url of response.urls) {
+            code += `
+            <div class="url-container">
+                <span><a href="${url}" target="_blank">${replaceTags(url)}</a></span>
+                <div class="icon-butt" onclick="copyText('${url}')">
+                    <i class="bi bi-clipboard"></i>
+                </div>
+            </div>
+            `
+        }
+        code += `</div></div>`
+    }
+
+    if (response.files.length > 0) {
+        code += `
+        <div class="file-msg-box">
+        <div class="header-box">
+        <span>Files</span>
+        </div>
+        <div class="content-box">
+        `
+        
+        for (let file of response.files) {
+            code += `
+            <div class="file-container">
+            <div class="download-butt" onclick="downloadFile('${file[0]}')">
+            <i class="bi bi-download"></i>
+            </div>
+            <div class="format-parent">
+                    <div class="format-box">${replaceTags(file[2])}</div>
+                    </div>
+                    <div class="bottom-box"><span>${replaceTags(file[1])}</span></div>
+                    </div>
+                    `
+        }   
+        code += `</div></div></div>`  
+    }
+    // for adjacent messages within 4 seconds
+    Array.from(document.querySelectorAll('body > .parent-content > .main-content > .all-messages > .recieve-msg')).forEach((element) => {
+        element.style.animationName = 'none'
+    })
+
+    document.querySelector('body > .parent-content > .main-content > .all-messages').innerHTML += code;
+
+    latestMsgBox = document.querySelector('body > .parent-content > .main-content > .all-messages > .recieve-msg:last-of-type');
+    latestMsgBox.style.animationName = 'blink-new';
+    latestMsgBox.style.animationDuration = '2s';
+    latestMsgBox.style.animationIterationCount = '2';
+}
+
+function createElementWithAttributes(tag, paramsObj = {}) {
+    const documentElement = document.createElement(tag);
+    if (paramsObj['classList']) { documentElement.classList = paramsObj['classList']; } 
+    if (paramsObj['id']) { documentElement.id = paramsObj['id']; }
+    if (paramsObj['innerText']) { documentElement.innerText = paramsObj['innerText']; }
+    if (paramsObj['color']) { documentElement.style.color = paramsObj['color']; }
+    if (paramsObj['bg-color']) { documentElement.style.backgroundColor = paramsObj['bg-color']; }
+    if (paramsObj['onclick']) { documentElement.onclick = paramsObj['onclick']; }
+    if (paramsObj['src']) { documentElement.src = paramsObj['src']; }
+    if (paramsObj['href']) { documentElement.href = paramsObj['href']; }
+    if (paramsObj['target']) { documentElement.target = paramsObj['target']; }
+    return documentElement;
+}
+
+function replaceTags(text) {
+    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }

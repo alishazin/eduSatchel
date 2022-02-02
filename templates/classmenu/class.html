@@ -146,6 +146,8 @@
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
-    var csrftoken = '{{ csrf_token }}'
+    var csrftoken = '{{ csrf_token }}';
+    var profileImageGlobal = "{{ request.user.profile_pic_path }}"; 
+    var usernameGlobal = "{{ request.user.username }}"; 
 </script>
 {% endblock bodyextra %}

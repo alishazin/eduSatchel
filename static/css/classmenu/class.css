@@ -1,3 +1,14 @@
+@keyframes blink-new {
+    0% {
+        background-color: white;
+    }
+    50% {
+        background-color: rgba(168, 208, 230, 0.3);
+    }
+    100% {
+        background-color: white;
+    }
+}
 body > .parent-content {
     flex-direction: row !important;
     align-items: flex-start !important;
@@ -300,7 +311,6 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .content
     padding: 8px 10px;
     display: flex;
     justify-content: flex-start;
-    background-color: white;
     align-items: center;
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box:hover {
