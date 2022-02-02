@@ -220,3 +220,9 @@ function sendPostRequestForMessage() {
 function copyText(url) {
     navigator.clipboard.writeText(url)
 }
+
+function downloadFile(uri) {
+    var link = document.createElement("a");
+    link.href = uri;
+    link.click();
+}

@@ -316,16 +316,17 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .content
     word-wrap: break-word;
     overflow: hidden;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box, body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box {
     height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 10px;
+    padding: 15px;
+    border-top: 1px solid var(--secondary-color);
     padding-top: 0;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .header-box {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .header-box, body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .header-box {
     min-height: 50px;
     width: 100%;
     display: flex;
@@ -333,7 +334,7 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg
     align-items: center;
     padding-left: 10px;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .header-box > span {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .header-box > span, body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .header-box > span {
     padding: 5px 8px;
     border-radius: 8px;
     background-color: var(--secondary-color);
@@ -341,7 +342,7 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 13px;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .content-box {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .content-box, body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .content-box {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fill, 243px);
@@ -356,8 +357,6 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg
     justify-content: flex-start;
     align-items: center;
     overflow: hidden;
-    min-width: 243px;
-    max-width: 100%;
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .content-box > .url-container > span {
     width: calc(100% - 30px);
@@ -365,7 +364,6 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg
     color: var(--text-color);
     font-family: "Lato", Calibri, 'Trebuchet MS', sans-serif, monospace;
     height: 100%;
-    border: 1px solid var(--tertiary-color);
     border-right: none;
     border-radius: 10px 0 0 10px;
     white-space: nowrap;
@@ -373,16 +371,20 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg
     text-overflow: ellipsis;
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .content-box > .url-container > .icon-butt {
+    display: none;
     height: 100%;
     width: 30px;
     display: flex;
+    border-radius: 10px;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--tertiary-color);
     color: var(--tertiary-color);
     font-size: 16px;
     cursor: pointer;
     transition: color 0.3s, background-color 0.3s;
+}
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .content-box > .url-container > .icon-butt:active {
+    opacity: 0.5;
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .content-box > .url-container > .icon-butt:hover {
     color: white;
@@ -390,6 +392,69 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .content-box > .url-container > .icon-butt > i {
     transform: translateY(1px);
+}
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .content-box > .file-container {
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid var(--tertiary-color);
+    border-radius: 10px;
+    box-shadow: 2px -2px 6px white, -2px 2px 6px var(--shadow-light-color);
+}
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .content-box > .file-container > .download-butt {
+    border-radius: 6px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 5px;
+    color: var(--tertiary-color);
+    font-size: 18px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .content-box > .file-container > .download-butt:hover {
+    color: white;
+    background-color: var(--tertiary-color);
+}
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .content-box > .file-container > .format-parent {
+    min-height: 170px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .content-box > .file-container > .format-parent > .format-box {
+    max-width: 100%; 
+    background-color: var(--tertiary-color);
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .content-box > .file-container > .bottom-box {
+    min-height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 8px;
+    width: 100%;
+}
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .content-box > .file-container > .bottom-box > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    width: 100%;
+    color: var(--text-color);
 }
 body > .parent-content > .right-content {
     width: 100%;
@@ -608,5 +673,8 @@ body > .parent-content > .right-content > .class-desc > .sub-box > .desc-box {
     }
     body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .sender-name {
         max-width: 100%;
+    }
+    body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box > .content-box, body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box > .content-box {
+        grid-template-columns: 100%;
     }
 }

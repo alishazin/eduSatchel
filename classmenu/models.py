@@ -24,6 +24,14 @@ class File(models.Model):
     def __str__(self):
         return f'<{self.location_hint}> of <{self.class_obj}>'
 
+    @property
+    def file_name(self):
+        return str(self.file).split('/')[-1]
+        
+    @property
+    def file_location(self):
+        return f"/media/{self.file}"
+
 class Url(models.Model):
     url = models.TextField(blank=False, null=False)
 
