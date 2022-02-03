@@ -11,7 +11,7 @@ def after_creating_class(userObj, classObj):
     )
 
 def after_joining_class(userObj, classObj):
-    body = f"You have recieved a Join Request for the class '{classObj.title}' from '{userObj.username}'\n\nYou can accept or reject the request from the class menu"
+    body = f"You have recieved a Join Request for the class '{classObj.title}' from '{userObj.username}'\n\nYou can accept or reject the request from the class settings"
     classObj.teacher.notification_set.create(
         header="Join Request Recieved",
         body=body

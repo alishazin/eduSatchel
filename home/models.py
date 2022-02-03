@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from register.models import CustomUser
 
 import uuid
@@ -16,7 +17,11 @@ class Class(models.Model):
 
     @property
     def get_url(self):
-        return f'/class/{self.id}/'
+        return reverse('classmenu:class', kwargs={'classID' : self.id})
+
+    @property
+    def get_url_settings(self):
+        return reverse('classmenu:settings', kwargs={'classID' : self.id})
 
     @property
     def formatted_date(self):

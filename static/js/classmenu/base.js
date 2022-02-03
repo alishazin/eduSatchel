@@ -82,3 +82,7 @@ function addEventToBaseBackButton() {
         location.href = homeURL;
     }
 }
+
+function directToPage(url) {
+    location.href = url;
+} 

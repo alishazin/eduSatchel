@@ -24,18 +24,18 @@
 <div class="parent-content">
     <div class="nav-bar-box">
         <div class="nav-bar" tabindex="0">
-            <div class="item">
+            <div class="item" onclick="directToPage('{{ classObj.get_url }}')">
                 <div class="icon-box">
                     <i class="bi bi-collection"></i>
                 </div>
                 <span>Class</span>
             </div>
             {% if request.user.account_type == 'teacher' %}
-                <div class="item">
+                <div class="item" onclick="directToPage('{{ classObj.get_url_settings }}')">
                     <div class="icon-box">
-                        <i class="bi bi-person-fill"></i>
+                        <i class="bi bi-gear"></i>
                     </div>
-                    <span>Administration</span>
+                    <span>Settings</span>
                 </div>
             {% endif %}
             <div class="last-item">
@@ -57,9 +57,7 @@
         errorPara = onLoad();
         try {
             onLoadBlock(errorPara);
-        } catch(err) {
-            console.log(err)
-        }
+        } catch(err) {}
     }
     var homeURL = "{% url 'home:home-page' %}";
 </script>

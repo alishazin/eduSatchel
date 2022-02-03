@@ -15,3 +15,11 @@ class ClassMenuView(View):
             'classObj' : classObj,
             'msgObjects' : classObj.messagepublic_set.all(),
         })
+
+class ClassSettingsView(View):
+    @classentry_check()
+    def get(self, request, classID):
+        classObj = Class.objects.get(id=classID)
+        return render(request, 'classmenu/settings.html', {
+            'classObj' : classObj,
+        })
