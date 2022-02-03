@@ -9,8 +9,19 @@
 {% endblock headextraextra %}
 
 {% block bodyextra %}
-<p>asdasdsa</p>
+<div class="settings-content">
+    <div class="item block-request">
+        <span>Block Join Requests</span>
+        <div class="switch-container">
+            <div class="switch">
+                <div class="ball"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-    
+    var classIDGlobal = '{{ classObj.id }}';
+    var csrftoken = '{{ csrf_token }}';
+    var classActive = '{{ classObj.active }}';
 </script>
 {% endblock bodyextra %}

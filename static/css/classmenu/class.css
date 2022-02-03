@@ -54,6 +54,8 @@ body > .parent-content > .main-content > .header > .date-box {
     padding: 10px 12px;
     border-radius: 10px;
     border: 2px solid black;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
 }
 body > .parent-content > .main-content > .header > .date-box > .popup {
     display: none;
@@ -97,6 +99,8 @@ body > .parent-content > .main-content > .msg-div {
     padding: 0;
     overflow: hidden;
     transition: height 0.3s;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
 }
 body > .parent-content > .main-content > .msg-div > .dummy-overlay {
     width: 100%;
@@ -509,6 +513,8 @@ body > .parent-content > .right-content {
     padding-right: 10px;
     outline: none;
     padding-top: 10px;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
 }
 body > .parent-content > .right-content > .item {
     border-radius: 10px;

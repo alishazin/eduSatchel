@@ -1,5 +1,3 @@
-from unicodedata import name
-from django.http import HttpResponse
 from django.urls import path
 
 from .views import (
@@ -9,6 +7,7 @@ from .views import (
 
 from .get_or_post_views import (
     SendPublicMessagePostOnlyView,
+    BlockJoinRequestPostOnlyView,
 )
 
 app_name = 'classmenu'
@@ -16,5 +15,6 @@ app_name = 'classmenu'
 urlpatterns = [
     path('<classID>/', ClassMenuView.as_view(), name="class"),
     path('<classID>/send-message/', SendPublicMessagePostOnlyView.as_view()),
+    path('<classID>/block-join-request/', BlockJoinRequestPostOnlyView.as_view()),
     path('<classID>/settings/', ClassSettingsView.as_view(), name="settings"),
 ]

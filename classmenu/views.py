@@ -17,7 +17,7 @@ class ClassMenuView(View):
         })
 
 class ClassSettingsView(View):
-    @classentry_check()
+    @classentry_check(account_type='teacher')
     def get(self, request, classID):
         classObj = Class.objects.get(id=classID)
         return render(request, 'classmenu/settings.html', {

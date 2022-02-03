@@ -54,6 +54,8 @@
     flex-direction: column;
     height: 100%;
     overflow: auto;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
 }
 .parent-content > .left-content > .loading-box {
     display: flex;
@@ -224,6 +226,8 @@
     height: 100%;
     overflow: auto;
     display: none;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
 }
 .parent-content > .small-content > .small-item {
     min-height: 70px;

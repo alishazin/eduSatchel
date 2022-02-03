@@ -12,6 +12,8 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
 }
 .parent-content > .content-small > .icon-box {
     width: 80px;

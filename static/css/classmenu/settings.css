@@ -1,3 +1,80 @@
-p {
-    color: red;
+body > .parent-content {
+    padding: 10px !important;
+    padding-top: 20px !important;
+}
+.settings-content {
+    min-height: 300px;
+    width: 100%;
+    box-shadow: 2px 2px 10px white, -2px -2px 10px var(--shadow-color);
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+}
+.settings-content > .item {
+    width: 100%;
+    border-bottom: 2px solid var(--secondary-color);
+}
+.settings-content > .block-request {
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+.settings-content > .block-request > span {
+    width: calc(100% - 120px);
+    padding: 0 20px;
+    padding-right: 10px;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.settings-content > .block-request > .switch-container {
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.settings-content > .block-request > .switch-container > .switch {
+    position: relative;
+    height: 35px;
+    width: 55px;
+    border-radius: 20px;
+    background-color: rgb(233, 233, 233);
+    padding: 4px;
+    cursor: pointer;
+}
+.settings-content > .block-request > .switch-container > .switch > .ball {
+    position: absolute;
+    width: 27px;
+    height: calc(100% - 8px);
+    border-radius: 50%;
+    left: 5px;
+    background-color: white;
+    transition: background-color 0.3s, left 0.3s, opacity 0.3s;
+}
+.settings-content > .block-request > .switch-container > .switch.selected {
+    background-color: var(--tertiary-color);
+}
+.settings-content > .block-request > .switch-container > .switch.loading > .ball {
+    background-color: rgb(245, 245, 245);
+}
+.settings-content > .block-request > .switch-container > .switch.selected > .ball {
+    background-color: white;
+    left: calc(100% - 32px);
+}
+.settings-content > .block-request > .switch-container > .switch.loading.selected {
+    opacity: 0.8;
+}
+@media (max-width:400px) {
+    .settings-content > .block-request > span {
+        width: calc(100% - 80px);
+        font-size: 14px;
+    }
+    .settings-content > .block-request > .switch-container {
+        width: 80px;
+    }
 }

@@ -83,3 +83,23 @@ class SendPublicMessagePostOnlyView(PostOnlyViewBase):
             return HttpResponse(json.dumps(returnSuccessArray))
 
         return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Something is wrong. Refresh the page !'}))
+
+class BlockJoinRequestPostOnlyView(PostOnlyViewBase):
+    @classentry_check(account_type='teacher')
+    def post_only(self, request, classID):
+        form = request.POST
+        switchBool = {
+            'true' : False,
+            'false' : True,
+        }
+        if 'state' in form.keys():
+            block = form['state']
+
+            if block in ['true', 'false']:
+                classObj = Class.objects.get(id=classID)
+                classObj.active = switchBool[block]
+                classObj.save()
+                return HttpResponse("success")
+                
+        return HttpResponse("Something is wrong. Refresh the page !")
+        
