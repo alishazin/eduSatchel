@@ -5,6 +5,7 @@ var switchBool = {
 }
 
 var blockRequestObject = {};
+var classDescObjects = {};
 
 function onLoad() {
     navBarObj.selectItem(2);
@@ -79,4 +80,53 @@ function onLoad() {
         blockRequestObject._state = true;
         blockRequestObject.switch.classList = 'switch selected';
     }
+
+    classDescObjects = {
+        textarea : document.querySelector('.settings-content > .class-desc > textarea'),
+        errorDiv : document.querySelector('.settings-content > .class-desc > .error-div'),
+        button : document.querySelector('.settings-content > .class-desc > button'),
+        _butState : 'disabled',
+        get butState() {
+            return this._butState;
+        },
+        set butState(arg) {
+            if (arg === 'disabled') {
+                this.button.className = 'disabled';
+            } else if (arg === 'enabled') {
+                this.button.className = '';
+            }
+            this._butState = arg;
+        },
+        _errorState : 'off',
+        get errorState() {
+            return this._errorState;
+        },
+        set errorState(arg) {
+            if (arg === 'off') {
+                this.errorDiv.className = 'error-div';
+                this.errorDiv.innerText = '';
+            } else {
+                this.errorDiv.classList = 'error-div on';
+                this.errorDiv.innerText = arg;
+            }
+            this._errorState = arg;
+        },
+        asyncFuncForClassDesc : async function () {
+            console.log(232132)
+        },
+        addCallbacks : function () {
+            this.textarea.oninput = () => {
+                const value = this.textarea.value.trim();
+                if (value === initialClassDesc) {
+                    this.butState = 'disabled';
+                } else {
+                    this.butState = 'enabled';
+                }
+            }
+            this.button.onclick = () => {
+                if (this.butState === 'enabled') { this.asyncFuncForClassDesc() }
+            };
+        }
+    }
+    classDescObjects.addCallbacks();
 }

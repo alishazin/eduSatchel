@@ -18,10 +18,17 @@
             </div>
         </div>
     </div>
+    <div class="item class-desc">
+        <label>Class Description</label>
+        <textarea maxlength="300">{{ classObj.description }}</textarea>
+        <div class="error-div"></div>
+        <button class="disabled">Save</button>
+    </div>
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
     var csrftoken = '{{ csrf_token }}';
     var classActive = '{{ classObj.active }}';
+    var initialClassDesc = '{{ classObj.description }}';
 </script>
 {% endblock bodyextra %}

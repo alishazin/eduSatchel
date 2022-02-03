@@ -3,7 +3,7 @@ body > .parent-content {
     padding-top: 20px !important;
 }
 .settings-content {
-    min-height: 300px;
+    min-height: fit-content;
     width: 100%;
     box-shadow: 2px 2px 10px white, -2px -2px 10px var(--shadow-color);
     border: 2px solid var(--secondary-color);
@@ -11,7 +11,6 @@ body > .parent-content {
 }
 .settings-content > .item {
     width: 100%;
-    border-bottom: 2px solid var(--secondary-color);
 }
 .settings-content > .block-request {
     height: 60px;
@@ -19,6 +18,7 @@ body > .parent-content {
     justify-content: flex-start;
     align-items: center;
     overflow: hidden;
+    border-bottom: 2px solid #ddd;
 }
 .settings-content > .block-request > span {
     width: calc(100% - 120px);
@@ -68,6 +68,68 @@ body > .parent-content {
 }
 .settings-content > .block-request > .switch-container > .switch.loading.selected {
     opacity: 0.8;
+}
+.settings-content > .class-desc {
+    min-height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 20px;
+}
+.settings-content > .class-desc > label {
+    width: 100%;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 20px;
+}
+.settings-content > .class-desc > textarea {
+    width: 500px;
+    max-width: 100%;
+    border-radius: 10px;
+    min-height: 200px;
+    outline: none;
+    resize: none;
+    font-size: 16px;
+    font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--text-color);
+    padding: 10px 12px;
+    border: 2px solid #ddd;
+    line-height: 22px;
+    margin-bottom: 20px;
+}
+.settings-content > .class-desc > textarea:focus {
+    border-color: dodgerblue;
+}
+.settings-content > .class-desc > .error-div {
+    width: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+    color: red;
+}
+.settings-content > .class-desc > .error-div.on {
+    margin-bottom: 20px;
+}
+.settings-content > .class-desc > button {
+    padding: 8px 12px;
+    font-family: "Montserrat", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid var(--tertiary-color);
+    outline: none;
+    background-color: transparent;
+    color: var(--tertiary-color);
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s, opacity 0.3s;
+}
+.settings-content > .class-desc > button.disabled {
+    opacity: 0.5;
+    cursor: default;
 }
 @media (max-width:400px) {
     .settings-content > .block-request > span {
