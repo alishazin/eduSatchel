@@ -189,7 +189,6 @@ async function asyncFunctionForSendingMessage() {
     try {
         sendMessageBox.loadingState = true;
         const response = await sendPostRequestForMessage();
-        console.log(response)
         sendMessageBox.loadingState = false;
         sendMessageBox.state = false;
         addSingleMessageAfterSending(response);
@@ -305,8 +304,13 @@ function addSingleMessageAfterSending(response) {
     }
     // for adjacent messages within 4 seconds
     Array.from(document.querySelectorAll('body > .parent-content > .main-content > .all-messages > .recieve-msg')).forEach((element) => {
-        element.style.animationName = 'none'
+        element.style.animationName = 'none';
     })
+
+    emptyDiv = document.querySelector('body > .parent-content > .main-content > .all-messages > .empty-div');
+    if (emptyDiv) {
+        emptyDiv.remove();
+    }
 
     document.querySelector('body > .parent-content > .main-content > .all-messages').innerHTML += code;
 

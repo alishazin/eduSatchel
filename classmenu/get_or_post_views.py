@@ -79,7 +79,7 @@ class SendPublicMessagePostOnlyView(PostOnlyViewBase):
                 for obj in fileObjs:
                     tempList.append([obj.file_location, obj.file_name, obj.format])
                 returnSuccessArray['files'] = tempList
-            print(returnSuccessArray)
+
             return HttpResponse(json.dumps(returnSuccessArray))
 
         return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Something is wrong. Refresh the page !'}))

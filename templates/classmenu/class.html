@@ -49,67 +49,79 @@
         </div>
     </div>
     <div class="all-messages">
-        {% for msgObj in msgObjects %}
-            <div class="item recieve-msg">
-                <div class="top-bar">
-                    <img src="{{ msgObj.user.profile_pic_path }}">
-                    {% if msgObj.user == classObj.teacher %}
-                        <div class="sender-name" style="color: white; background-color: var(--tertiary-color);">
-                            <i class="bi bi-person-fill"></i>
-                    {% else %}
-                        <div class="sender-name">
-                    {% endif %}
-                            <span>{{ msgObj.user.username }}</span>
-                        </div>
-                    {% if msgObj.formatted_date == 'Today' or msgObj.formatted_date == 'Yesterday' %}
-                        <div class="date" style="color: var(--tertiary-color)"><span>{{ msgObj.formatted_date }}</span></div>
+        {% if msgObjects %}
+            {% for msgObj in msgObjects %}
+                <div class="item recieve-msg">
+                    <div class="top-bar">
+                        <img src="{{ msgObj.user.profile_pic_path }}">
+                        {% if msgObj.user == classObj.teacher %}
+                            <div class="sender-name" style="color: white; background-color: var(--tertiary-color);">
+                                <i class="bi bi-person-fill"></i>
                         {% else %}
-                        <div class="date" style="color: rgb(71, 71, 71)"><span>{{ msgObj.formatted_date }}</span></div>
-                    {% endif %}
-                    <div class="time"><span>{{ msgObj.time_only }}</span></div>
-                </div>
-                <div class="content-box">
-                    <p>{{ msgObj.content }}</p>
-                </div>
-                {% if msgObj.urls.all %}
-                    <div class="url-msg-box">
-                        <div class="header-box">
-                            <span>URL's</span>
-                        </div>
-                        <div class="content-box">
-                            {% for urlObj in msgObj.urls.all %}
-                                <div class="url-container">
-                                    <span><a href="{{ urlObj.url }}" target="_blank">{{ urlObj.url }}</a></span>
-                                    <div class="icon-butt" onclick="copyText('{{ urlObj.url }}')">
-                                        <i class="bi bi-clipboard"></i>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
+                            <div class="sender-name">
+                        {% endif %}
+                                <span>{{ msgObj.user.username }}</span>
+                            </div>
+                        {% if msgObj.formatted_date == 'Today' or msgObj.formatted_date == 'Yesterday' %}
+                            <div class="date" style="color: var(--tertiary-color)"><span>{{ msgObj.formatted_date }}</span></div>
+                            {% else %}
+                            <div class="date" style="color: rgb(71, 71, 71)"><span>{{ msgObj.formatted_date }}</span></div>
+                        {% endif %}
+                        <div class="time"><span>{{ msgObj.time_only }}</span></div>
                     </div>
-                    {% endif %}
-                    {% if msgObj.files.all %}
-                    <div class="file-msg-box">
-                        <div class="header-box">
-                            <span>Files</span>
-                        </div>
-                        <div class="content-box">
-                            {% for fileObj in msgObj.files.all %}
-                                <div class="file-container">
-                                    <div class="download-butt" onclick="downloadFile('{{ fileObj.file_location }}')">
-                                        <i class="bi bi-download"></i>
-                                    </div>
-                                    <div class="format-parent">
-                                        <div class="format-box">{{ fileObj.format }}</div>
-                                    </div>
-                                    <div class="bottom-box"><span>{{ fileObj.file_name }}</span></div>
-                                </div>
-                            {% endfor %}
-                        </div>
+                    <div class="content-box">
+                        <p>{{ msgObj.content }}</p>
                     </div>
-                {% endif %}
+                    {% if msgObj.urls.all %}
+                        <div class="url-msg-box">
+                            <div class="header-box">
+                                <span>URL's</span>
+                            </div>
+                            <div class="content-box">
+                                {% for urlObj in msgObj.urls.all %}
+                                    <div class="url-container">
+                                        <span><a href="{{ urlObj.url }}" target="_blank">{{ urlObj.url }}</a></span>
+                                        <div class="icon-butt" onclick="copyText('{{ urlObj.url }}')">
+                                            <i class="bi bi-clipboard"></i>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if msgObj.files.all %}
+                        <div class="file-msg-box">
+                            <div class="header-box">
+                                <span>Files</span>
+                            </div>
+                            <div class="content-box">
+                                {% for fileObj in msgObj.files.all %}
+                                    <div class="file-container">
+                                        <div class="download-butt" onclick="downloadFile('{{ fileObj.file_location }}')">
+                                            <i class="bi bi-download"></i>
+                                        </div>
+                                        <div class="format-parent">
+                                            <div class="format-box">{{ fileObj.format }}</div>
+                                        </div>
+                                        <div class="bottom-box"><span>{{ fileObj.file_name }}</span></div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+        <div class="item empty-div">
+            <div class="icon-box">
+                <i class="bi bi-chat-text"></i>
             </div>
-        {% endfor %}
+            <div class="text-box">
+                <h2>No Messages Yet!</h2>
+                <span>You can be the first one.</span>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 <div class="right-content" tabindex="0">
