@@ -8,6 +8,7 @@ from edusatchel.decorators import authentication_check, classentry_check
 from home.models import Class, ClassEnrollment
 from home.send_notifications import (
     after_declining_join_request,
+    after_accepting_join_request,
 )
 
 from .backends import (
@@ -150,6 +151,7 @@ class JoinResponseView(PostOnlyViewBase):
                             if response == 'accept':
                                 obj.enrolled = True
                                 obj.save()
+                                after_accepting_join_request(obj.student, classObj)
                             else:
                                 obj.delete()
                                 after_declining_join_request(obj.student, classObj)

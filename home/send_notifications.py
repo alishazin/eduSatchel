@@ -23,3 +23,10 @@ def after_declining_join_request(studentObj, classObj):
         header="Join Request Declined",
         body=body
     )
+
+def after_accepting_join_request(studentObj, classObj):
+    body = f"Your Join Request for the class '{classObj.title}' has been accepted.\n\nYou can now enter the class from the home page."
+    studentObj.notification_set.create(
+        header="Join Request Accepted",
+        body=body
+    )
