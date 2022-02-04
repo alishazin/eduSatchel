@@ -6,6 +6,9 @@ from django.utils.http import urlsafe_base64_decode
 
 from edusatchel.decorators import authentication_check, classentry_check
 from home.models import Class, ClassEnrollment
+from home.send_notifications import (
+    after_declining_join_request,
+)
 
 from .backends import (
     validate_urls_files,
@@ -136,7 +139,8 @@ class JoinResponseView(PostOnlyViewBase):
 
             if enrollmentID.isnumeric() and 'response' in form.keys() and form['response'] in ['accept', 'decline']:
                 response = form['response']
-                classEnrollmentObj = ClassEnrollment.objects.filter(class_obj=Class.objects.get(id=classID), enrolled=False)
+                classObj = Class.objects.get(id=classID)
+                classEnrollmentObj = ClassEnrollment.objects.filter(class_obj=classObj, enrolled=False)
 
                 if classEnrollmentObj:
                     valid = False
@@ -148,6 +152,7 @@ class JoinResponseView(PostOnlyViewBase):
                                 obj.save()
                             else:
                                 obj.delete()
+                                after_declining_join_request(obj.student, classObj)
                             break
 
                     if valid:

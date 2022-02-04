@@ -16,3 +16,10 @@ def after_joining_class(userObj, classObj):
         header="Join Request Recieved",
         body=body
     )
+
+def after_declining_join_request(studentObj, classObj):
+    body = f"We are sorry to let you know that your Join Request for the class '{classObj.title}' has been declined.\n\nYou can send Join Request again if you want."
+    studentObj.notification_set.create(
+        header="Join Request Declined",
+        body=body
+    )
