@@ -195,7 +195,10 @@ function onLoad() {
                     this.div.style.opacity = '0.6';
                     this.div.className = 'item loading';
                 } else if (arg === false) {
-                    console.log("removing It")
+                    this.div.children[0].style.backgroundPositionX = '0%';
+                    setTimeout(() => {
+                        this.div.remove();
+                    }, 400)
                 }
                 this._loadingState = arg;
             }
@@ -208,6 +211,7 @@ async function asyncFunctionJoinResponse(self, response, modelID) {
     if (allBusyJoinResponse[parent].loadingState === false) {
         try {
             allBusyJoinResponse[parent].loadingState = true;
+            await sendPostRequestJoinResponse(response, modelID);
             allBusyJoinResponse[parent].loadingState = false;
         } catch(errObj) {
             errObj.call();

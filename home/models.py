@@ -17,6 +17,9 @@ class Class(models.Model):
     active = models.BooleanField(default=True)
     # True means can enter, False means closed
 
+    def __str__(self):
+        return f'{self.id} <{self.title}>'
+
     @property
     def get_url(self):
         return reverse('classmenu:class', kwargs={'classID' : self.id})
@@ -44,7 +47,6 @@ class ClassEnrollment(models.Model):
 
     @property
     def encoded_id(self):
-        # to decode urlsafe_base64_decode('Mg').decode()
         return urlsafe_base64_encode(force_bytes(self.id))
 
 class Notification(models.Model):

@@ -9,6 +9,7 @@ class ClassAdmin(admin.ModelAdmin):
 
 class ClassEnrollmentAdmin(admin.ModelAdmin):
     list_display = ('class_obj', 'student', 'enrolled') 
+    readonly_fields = ('id',)
 
 class NotificationAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'header', 'time', 'seen') 

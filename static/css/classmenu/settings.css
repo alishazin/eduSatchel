@@ -200,7 +200,22 @@ body > .parent-content {
     overflow: auto;
     margin-bottom: 10px;
     transition: opacity 0.2s;
+    position: relative;
 }
+.join-req-content > .content-box > .item > .overlay {
+    position: absolute;
+    background-color: transparent;
+    background: linear-gradient(to right, white 50%, transparent 50%);
+    background-size: 200%;
+    background-position-x: 100%;
+    z-index: 1;
+    pointer-events: none;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: background-position-x 0.4s;
+}  
 .join-req-content > .content-box > .item > span {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
