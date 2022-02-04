@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from register.models import CustomUser
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 
 import uuid
 
@@ -39,6 +41,11 @@ class ClassEnrollment(models.Model):
     # enrolled will be False when sending join request, it will be made True
     # when teacher accepts it.
     # class will be shown up on home screen only if enrolled is True
+
+    @property
+    def encoded_id(self):
+        # to decode urlsafe_base64_decode('Mg').decode()
+        return urlsafe_base64_encode(force_bytes(self.id))
 
 class Notification(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

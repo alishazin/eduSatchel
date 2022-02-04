@@ -199,6 +199,7 @@ body > .parent-content {
     padding: 0 10px;
     overflow: auto;
     margin-bottom: 10px;
+    transition: opacity 0.2s;
 }
 .join-req-content > .content-box > .item > span {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -206,10 +207,10 @@ body > .parent-content {
     margin-right: 30px;
     height: 100%;
     width: calc(100% - 155px);
+    overflow: auto;
+    padding-bottom: 5px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-width: 80px;
+    transform: translateY(2px);
 }
 .join-req-content > .content-box > .item > .accept-button {
     width: 75px;
@@ -220,17 +221,14 @@ body > .parent-content {
     border-radius: 8px;
     border: 2px solid var(--tertiary-color);
     background-color: var(--tertiary-color);
-    cursor: pointer;
     position: relative;
     color: white;
-    cursor: pointer;
 }
 .join-req-content > .content-box > .item > .decline-button {
     width: 80px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     transform: translateY(1px);
-    cursor: pointer;
     border: 2px solid var(--tertiary-color);
     background-color: transparent;
     color: var(--tertiary-color);
@@ -239,8 +237,9 @@ body > .parent-content {
     font-size: 16px;
     border-radius: 8px;
 }
-.join-req-content > .content-box > .item > .accept-button:hover, .join-req-content > .content-box > .item > .decline-button:hover {
+.join-req-content > .content-box > .item:not(.loading) > .accept-button:hover, .join-req-content > .content-box > .item:not(.loading) > .decline-button:hover {
     opacity: 0.7;
+    cursor: pointer;
 }
 @media (max-width:400px) {
     .settings-content > .block-request > span {

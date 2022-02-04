@@ -31,8 +31,8 @@
         {% for cls_enrollments in classObj.get_join_requests %}
             <div class="item">
                 <span>{{ cls_enrollments.student.username }}</span>
-                <div class="accept-button">Accept</div>
-                <div class="decline-button">Decline</div>
+                <div class="accept-button" onclick="asyncFunctionJoinResponse(this, 'accept', '{{ cls_enrollments.encoded_id }}')">Accept</div>
+                <div class="decline-button" onclick="asyncFunctionJoinResponse(this, 'decline', '{{ cls_enrollments.encoded_id }}')">Decline</div>
             </div>
         {% endfor %}
     </div>

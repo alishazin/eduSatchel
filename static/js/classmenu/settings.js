@@ -4,6 +4,8 @@ var switchBool = {
     False : true,
 }
 
+var allBusyJoinResponse = {};
+
 var blockRequestObject = {};
 var classDescObject = {};
 
@@ -180,4 +182,63 @@ function onLoad() {
         }
     }
     classDescObject.addCallbacks();
+
+    Array.from(document.querySelectorAll('.join-req-content > .content-box > .item')).forEach(item => {
+        allBusyJoinResponse[item] = {
+            div : item,
+            _loadingState : false,
+            get loadingState() {
+                return this._loadingState;
+            },
+            set loadingState(arg) {
+                if (arg === true) {
+                    this.div.style.opacity = '0.6';
+                    this.div.className = 'item loading';
+                } else if (arg === false) {
+                    console.log("removing It")
+                }
+                this._loadingState = arg;
+            }
+        }
+    })
+}
+
+async function asyncFunctionJoinResponse(self, response, modelID) {
+    const parent = self.parentElement;
+    if (allBusyJoinResponse[parent].loadingState === false) {
+        try {
+            allBusyJoinResponse[parent].loadingState = true;
+            allBusyJoinResponse[parent].loadingState = false;
+        } catch(errObj) {
+            errObj.call();
+        } 
+    }
+}
+
+function sendPostRequestJoinResponse(response, modelID) {
+    return new Promise((resolve, reject) => {
+        const formdata = new FormData();
+        formdata.append('response', response)
+
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText === 'success') { resolve(); }
+                else { reject({name : 'validationError', call : () => { alert(this.responseText) }}) }
+            }
+        }
+
+        req.onerror = () => {
+            reject({
+                name : 'network',
+                call : () => {
+                    alert("No Active Network Connection")
+                }
+            });
+        }
+        
+        req.open('POST', `/class/${classIDGlobal}/join-response/${modelID}/`); 
+        req.setRequestHeader("X-CSRFToken", csrftoken); 
+        req.send(formdata);
+    })
 }
