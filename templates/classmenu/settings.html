@@ -28,14 +28,21 @@
 <div class="item join-req-content">
     <div class="header"><span>Recieved Join Requests</span></div>
     <div class="content-box">
-        {% for cls_enrollments in classObj.get_join_requests %}
-            <div class="item">
+        {% if classObj.get_join_requests %}
+            {% for cls_enrollments in classObj.get_join_requests %}
+            <div class="item" id="{{ cls_enrollments.encoded_id }}">
                 <div class="overlay"></div>
                 <span>{{ cls_enrollments.student.username }}</span>
                 <div class="accept-button" onclick="asyncFunctionJoinResponse(this, 'accept', '{{ cls_enrollments.encoded_id }}')">Accept</div>
                 <div class="decline-button" onclick="asyncFunctionJoinResponse(this, 'decline', '{{ cls_enrollments.encoded_id }}')">Decline</div>
             </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <div class="empty-div">
+                <i class="bi bi-binoculars"></i>
+                <span>No Pending Requests</span>
+            </div>
+        {% endif %}
     </div>
 </div>
 <script>

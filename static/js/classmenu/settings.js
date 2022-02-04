@@ -184,7 +184,7 @@ function onLoad() {
     classDescObject.addCallbacks();
 
     Array.from(document.querySelectorAll('.join-req-content > .content-box > .item')).forEach(item => {
-        allBusyJoinResponse[item] = {
+        allBusyJoinResponse[item.id] = {
             div : item,
             _loadingState : false,
             get loadingState() {
@@ -197,7 +197,16 @@ function onLoad() {
                 } else if (arg === false) {
                     this.div.children[0].style.backgroundPositionX = '0%';
                     setTimeout(() => {
+                        const parent = this.div.parentElement; 
                         this.div.remove();
+                        if (parent.children.length == 0) {
+                            parent.innerHTML += `
+                            <div class="empty-div">
+                                <i class="bi bi-binoculars"></i>
+                                <span>No Pending Requests</span>
+                            </div>
+                            `;
+                        }
                     }, 400)
                 }
                 this._loadingState = arg;
@@ -208,11 +217,11 @@ function onLoad() {
 
 async function asyncFunctionJoinResponse(self, response, modelID) {
     const parent = self.parentElement;
-    if (allBusyJoinResponse[parent].loadingState === false) {
+    if (allBusyJoinResponse[parent.id].loadingState === false) {
         try {
-            allBusyJoinResponse[parent].loadingState = true;
+            allBusyJoinResponse[parent.id].loadingState = true;
             await sendPostRequestJoinResponse(response, modelID);
-            allBusyJoinResponse[parent].loadingState = false;
+            allBusyJoinResponse[parent.id].loadingState = false;
         } catch(errObj) {
             errObj.call();
         } 
