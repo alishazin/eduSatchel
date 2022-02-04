@@ -108,8 +108,16 @@ class ChangeClassDescriptionView(PostOnlyViewBase):
     @classentry_check(account_type='teacher')
     def post_only(self, request, classID):
         form = request.POST
-        print(form)
-        import time
-        time.sleep(5)
-        return HttpResponse("sadasdas")
+        
+        if 'class_desc' in form.keys():
+            class_desc = form['class_desc']
+            if len(class_desc) > 5 and len(class_desc) <= 300:
+                classObj = Class.objects.get(id=classID)
+                classObj.description = class_desc
+                classObj.save()
+                return HttpResponse("success")
+
+            return HttpResponse("Description should be between 5 and 300 in length")
+
+        return HttpResponse("Something is wrong. Refresh the page !")
         
