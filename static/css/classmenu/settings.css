@@ -125,11 +125,41 @@ body > .parent-content {
     background-color: transparent;
     color: var(--tertiary-color);
     cursor: pointer;
+    position: relative;
     transition: color 0.3s, background-color 0.3s, opacity 0.3s;
+}
+.settings-content > .class-desc > button > .spinner {
+    border: 3px solid #00000033;
+    border-radius: 50%;
+    border-top: 3px solid white;
+    width: 24px;
+    height: 24px;
+    animation: loading-spin 1.5s linear infinite;
+    position: absolute;
+    left: calc(50% - 12px);
+    top: calc(50% - 12px);
+    display: none;
+}
+.settings-content > .class-desc > button > span {
+    display: block;
 }
 .settings-content > .class-desc > button.disabled {
     opacity: 0.5;
     cursor: default;
+}
+.settings-content > .class-desc > button.disabled > span {
+    display: block;
+}
+.settings-content > .class-desc > button.loading {
+    width: 50px;
+    height: 40px;
+    cursor: wait;
+}
+.settings-content > .class-desc > button.loading > .spinner {
+    display: block;
+}
+.settings-content > .class-desc > button.loading > span {
+    display: none;
 }
 @media (max-width:400px) {
     .settings-content > .block-request > span {

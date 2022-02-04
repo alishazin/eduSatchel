@@ -5,7 +5,7 @@ var switchBool = {
 }
 
 var blockRequestObject = {};
-var classDescObjects = {};
+var classDescObject = {};
 
 function onLoad() {
     navBarObj.selectItem(2);
@@ -81,7 +81,7 @@ function onLoad() {
         blockRequestObject.switch.classList = 'switch selected';
     }
 
-    classDescObjects = {
+    classDescObject = {
         textarea : document.querySelector('.settings-content > .class-desc > textarea'),
         errorDiv : document.querySelector('.settings-content > .class-desc > .error-div'),
         button : document.querySelector('.settings-content > .class-desc > button'),
@@ -92,8 +92,13 @@ function onLoad() {
         set butState(arg) {
             if (arg === 'disabled') {
                 this.button.className = 'disabled';
+                this.textarea.removeAttribute('readonly')
             } else if (arg === 'enabled') {
                 this.button.className = '';
+                this.textarea.removeAttribute('readonly')
+            } else if (arg === 'loading') {
+                this.button.className = 'loading';
+                this.textarea.setAttribute('readonly', '')
             }
             this._butState = arg;
         },
@@ -112,15 +117,61 @@ function onLoad() {
             this._errorState = arg;
         },
         asyncFuncForClassDesc : async function () {
-            console.log(232132)
+            try {
+                if (this.butState === 'enabled') {
+                    const value = this.textarea.value.trim();
+                    this.errorState = 'off';
+                    this.butState = 'loading';
+                    await this.sendPostRequestForClassDesc(value);
+                    initialClassDesc = value;
+                    this.butState = 'disabled';
+                }
+            } catch(errObj) {
+                if (errObj.name === 'network') {
+                    errObj.call();
+                    this.butState = 'enabled';
+                } else {
+                    this.errorState = errObj.text;
+                    this.butState = 'enabled';
+                }
+            }
+        },
+        sendPostRequestForClassDesc : function (value) {  
+            return new Promise((resolve, reject) => {
+                const formdata = new FormData();
+                formdata.append('class_desc', value)
+    
+                var req = new XMLHttpRequest();
+                req.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        if (this.responseText === 'success') { resolve(); }
+                        else { reject({name : 'validationError', text : this.responseText}) }
+                    }
+                }
+    
+                req.onerror = () => {
+                    reject({
+                        name : 'network',
+                        call : () => {
+                            alert("No Active Network Connection")
+                        }
+                    });
+                }
+                
+                req.open('POST', `/class/${classIDGlobal}/change-class-desc/`); 
+                req.setRequestHeader("X-CSRFToken", csrftoken); 
+                req.send(formdata);
+            })
         },
         addCallbacks : function () {
             this.textarea.oninput = () => {
-                const value = this.textarea.value.trim();
-                if (value === initialClassDesc) {
-                    this.butState = 'disabled';
-                } else {
-                    this.butState = 'enabled';
+                if (this.butState !== 'loading') {
+                    const value = this.textarea.value.trim();
+                    if (value === initialClassDesc) {
+                        this.butState = 'disabled';
+                    } else {
+                        this.butState = 'enabled';
+                    }
                 }
             }
             this.button.onclick = () => {
@@ -128,5 +179,5 @@ function onLoad() {
             };
         }
     }
-    classDescObjects.addCallbacks();
+    classDescObject.addCallbacks();
 }

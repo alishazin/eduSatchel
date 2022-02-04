@@ -103,3 +103,13 @@ class BlockJoinRequestPostOnlyView(PostOnlyViewBase):
                 
         return HttpResponse("Something is wrong. Refresh the page !")
         
+
+class ChangeClassDescriptionView(PostOnlyViewBase):
+    @classentry_check(account_type='teacher')
+    def post_only(self, request, classID):
+        form = request.POST
+        print(form)
+        import time
+        time.sleep(5)
+        return HttpResponse("sadasdas")
+        
