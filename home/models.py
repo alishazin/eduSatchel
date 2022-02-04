@@ -28,6 +28,10 @@ class Class(models.Model):
         from .backends import check_if_today_or_yesterday
         return check_if_today_or_yesterday(self.date_started)
 
+    @property
+    def get_join_requests(self):
+        return ClassEnrollment.objects.filter(class_obj=self, enrolled=False)
+
 class ClassEnrollment(models.Model):
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

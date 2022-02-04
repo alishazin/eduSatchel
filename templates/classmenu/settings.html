@@ -25,6 +25,18 @@
         <button class="disabled"><span>Save</span><div class="spinner"></div></button>
     </div>
 </div>
+<div class="item join-req-content">
+    <div class="header"><span>Recieved Join Requests</span></div>
+    <div class="content-box">
+        {% for cls_enrollments in classObj.get_join_requests %}
+            <div class="item">
+                <span>{{ cls_enrollments.student.username }}</span>
+                <div class="accept-button">Accept</div>
+                <div class="decline-button">Decline</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
     var csrftoken = '{{ csrf_token }}';
