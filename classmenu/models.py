@@ -60,7 +60,7 @@ class MessagePublic(models.Model):
 
 class Assignment(models.Model):
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
-    content = models.CharField(max_length=500, blank=False, null=False)
+    content = models.TextField(blank=False, null=False)
     date_added = models.DateTimeField(auto_now_add=True)
     date_due = models.DateTimeField(blank=True, null=True)
     total_marks = models.DecimalField(max_digits=6, decimal_places=2)

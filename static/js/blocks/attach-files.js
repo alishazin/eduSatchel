@@ -44,7 +44,6 @@ function onLoadBlock(errorDiv) {
             this.fileCount++;
     
             // Visible Things
-            console.log(10)
             const fileDiv = document.createElement('div');
             fileDiv.className = 'file-div';
             const idDiv = document.createElement('div');
@@ -208,5 +207,5 @@ function onLoadBlock(errorDiv) {
             attachFileBlockObj.currentSelected = 1;
             clearInterval(interval)
         }
-    }, 1000)
+    }, 100)
 }

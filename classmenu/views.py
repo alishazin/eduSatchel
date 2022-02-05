@@ -3,7 +3,9 @@ from django.shortcuts import render
 from django.views import View
 from edusatchel.decorators import classentry_check
 from home.models import Class
-# from home.views import AccountTypeView
+
+import json
+import datetime
 
 # Create your views here.
 
@@ -31,3 +33,12 @@ class AddAssignmentView(View):
         return render(request, 'classmenu/add_assignment.html', {
             'classObj' : classObj,
         })
+
+    @classentry_check(account_type='teacher')
+    def post(self, request, classID):
+        print(request.FILES)
+        print(request.POST)
+        print(request.POST['due-date'])
+        print(datetime.datetime.strptime(request.POST['due-date'], '%Y-%m-%d %H:%M'))
+        print(type(datetime.datetime.strptime(request.POST['due-date'], '%Y-%m-%d %H:%M')))
+        return HttpResponse(json.dumps(["asdasdasdasdsa"]))

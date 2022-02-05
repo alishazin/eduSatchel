@@ -9,8 +9,32 @@
 {% endblock headextraextra %}
 
 {% block bodyextra %}
-<p>Add Assignments</p>
+<div method="post" class="content-box">
+    {% csrf_token %}
+    <div class="error-div content-error-div"></div>
+    <label>Content</label>
+    <textarea name="content"></textarea>
+    <div class="error-div attach-file-error-div"></div>
+    <div class="attach-file-parent">
+        {% include 'blocks/attach-files.html' %}
+    </div>
+    <div class="error-div date-error-div"></div>
+    <div class="datetime-container">
+        <label for="due-date-id">Due Date And Time</label>
+        <input type="datetime-local" name="due-date" id="due-date-id">
+    </div>
+    <div class="error-div marks-error-div"></div>
+    <label>Total Marks</label>
+    <input type="number" name="total-marks" min="0" max="1000" step="0.01">
+    <ul>
+        <li>Total mark should be lesser than 1000.</li>
+        <li>Total mark should be a positive value.</li>
+        <li>Only two decimal places are allowed.</li>
+    </ul>
+    <button><span>Post</span><div class="spinner"></div></button>
+</div>
 <script>
-    
+    var classIDGlobal = '{{ classObj.id }}';
+    var csrftoken = '{{ csrf_token }}';
 </script>
 {% endblock bodyextra %}
