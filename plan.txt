@@ -10,7 +10,7 @@ CLASS ENTROLLMENT:-
 CLASS, USER(type=student)
 
 ASSIGNMENT:-
-id, title, date_added, date_due, total_marks, CLASS
+id, content, date_added, files, urls, date_due, total_marks, CLASS
 
 SUBMISSION:-
 id, submission_date, data(file), USER(type=student), ASSIGNMENT

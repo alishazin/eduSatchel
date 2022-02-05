@@ -27,4 +27,7 @@ class ClassSettingsView(View):
 class AddAssignmentView(View):
     @classentry_check(account_type='teacher')
     def get(self, request, classID):
-        return render(request, 'classmenu/add_assignment.html', {})
+        classObj = Class.objects.get(id=classID)
+        return render(request, 'classmenu/add_assignment.html', {
+            'classObj' : classObj,
+        })
