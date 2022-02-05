@@ -39,7 +39,7 @@ class Class(models.Model):
 
     @property
     def get_join_requests(self):
-        return ClassEnrollment.objects.filter(class_obj=self, enrolled=False)
+        return self.classenrollment_set.filter(enrolled=False)
 
 class ClassEnrollment(models.Model):
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
