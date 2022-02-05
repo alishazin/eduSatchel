@@ -77,7 +77,8 @@ function initializeFormObject() {
             this.errorDivController(false);
             // Content
             const contentValue = this.contentField.value.trim();
-            if (contentValue.length <= 5) {
+            // if (contentValue.length <= 5 ) {
+            if (contentValue.length <= 1 ) {
                 this.errorDivController('content', 'Content length should be greater than 5')
             } else {
                 const dateTimeNow = new Date();
@@ -128,9 +129,21 @@ function initializeFormObject() {
             return formdata;
         },
         asyncFuncForAssignment : async function () {
-            this.loadingState = true;
-            await this.sendPostRequestForAssignment();
-            this.loadingState = false;
+            try {
+                this.loadingState = true;
+                await this.sendPostRequestForAssignment();
+                this.loadingState = false;
+            } catch(errorObj) {
+                if (errorObj['type'] === 'network') {
+                    errorObj.call();
+                } else if (errorObj['type'] === 'backend' && errorObj['element'] === 'alert') {
+                    alert(errorObj['error_message'])
+                } else {
+                    this.errorDivController(errorObj['element'], errorObj['error_message'])
+                }
+                this.loadingState = false;
+                console.log(errorObj)
+            }
         },
         sendPostRequestForAssignment : function () {
             return new Promise((resolve, reject) => {
@@ -138,9 +151,22 @@ function initializeFormObject() {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
-                        console.log(response)
-                        resolve();
+                        if (response['success'] === true) {
+                            resolve();
+                        } else {
+                            response.type = 'backend';
+                            reject(response)
+                        }
                     }
+                }
+
+                req.onerror = () => {
+                    reject({
+                        type : 'network',
+                        call : () => {
+                            alert("No Active Network Connection")
+                        }
+                    });
                 }
                 
                 req.open('POST', `/class/${classIDGlobal}/add-assignment/`); 

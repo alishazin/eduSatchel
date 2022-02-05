@@ -4,6 +4,11 @@ from django.views import View
 from edusatchel.decorators import classentry_check
 from home.models import Class
 
+from .backends import (
+    validate_urls_files,
+    insert_url_and_file_values,
+)
+
 import json
 import datetime
 
@@ -36,9 +41,18 @@ class AddAssignmentView(View):
 
     @classentry_check(account_type='teacher')
     def post(self, request, classID):
-        print(request.FILES)
-        print(request.POST)
-        print(request.POST['due-date'])
-        print(datetime.datetime.strptime(request.POST['due-date'], '%Y-%m-%d %H:%M'))
-        print(type(datetime.datetime.strptime(request.POST['due-date'], '%Y-%m-%d %H:%M')))
-        return HttpResponse(json.dumps(["asdasdasdasdsa"]))
+        formPost = request.POST
+        formData = request.FILES
+
+        if 'content' in formPost.keys():
+            content = formPost['content'].strip()
+
+            if len(content) <= 5:
+                return HttpResponse(json.dumps({'success' : False, 'element' : 'content', 'error_message' : 'Content length should be greater than 5'}))
+
+            # validatedUrls = validate_urls_files(formPost, formData)   
+            # if validatedUrls != True:
+            #     return HttpResponse(json.dumps({'success' : False, 'error_message' : validatedUrls}))
+        # print(datetime.datetime.strptime(request.POST['due-date'], '%Y-%m-%d %H:%M'))
+
+        return HttpResponse(json.dumps({'success' : False, 'element' : 'alert', 'error_message' : 'Something is wrong. Refresh the page !'}))
