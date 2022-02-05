@@ -29,6 +29,10 @@ class Class(models.Model):
         return reverse('classmenu:settings', kwargs={'classID' : self.id})
 
     @property
+    def get_url_add_assignment(self):
+        return reverse('classmenu:add-assignment', kwargs={'classID' : self.id})
+
+    @property
     def formatted_date(self):
         from .backends import check_if_today_or_yesterday
         return check_if_today_or_yesterday(self.date_started)

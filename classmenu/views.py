@@ -23,3 +23,8 @@ class ClassSettingsView(View):
         return render(request, 'classmenu/settings.html', {
             'classObj' : classObj,
         })
+
+class AddAssignmentView(View):
+    @classentry_check(account_type='teacher')
+    def get(self, request, classID):
+        return render(request, 'classmenu/add_assignment.html', {})

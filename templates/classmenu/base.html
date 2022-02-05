@@ -31,6 +31,12 @@
                 <span>Class</span>
             </div>
             {% if request.user.account_type == 'teacher' %}
+                <div class="item" onclick="directToPage('{{ classObj.get_url_add_assignment }}')">
+                    <div class="icon-box">
+                        <i class="bi bi-journal-arrow-up"></i>
+                    </div>
+                    <span>Add Assignment</span>
+                </div>
                 <div class="item" onclick="directToPage('{{ classObj.get_url_settings }}')">
                     <div class="icon-box">
                         <i class="bi bi-gear"></i>

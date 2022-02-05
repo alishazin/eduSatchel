@@ -1,0 +1,16 @@
+{% extends 'classmenu/base.html' %}
+{% load static %}
+
+{% block title %}{{ classObj.title }}{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/classmenu/add_assignment.css' %}">
+<script src="{% static 'js/classmenu/add_assignment.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<p>Add Assignments</p>
+<script>
+    
+</script>
+{% endblock bodyextra %}

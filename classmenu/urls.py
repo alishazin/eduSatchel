@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     ClassMenuView,
     ClassSettingsView,
+    AddAssignmentView,
 )
 
 from .get_or_post_views import (
@@ -21,4 +22,5 @@ urlpatterns = [
     path('<classID>/change-class-desc/', ChangeClassDescriptionView.as_view()),
     path('<classID>/join-response/<enrId64>/', JoinResponseView.as_view()),
     path('<classID>/settings/', ClassSettingsView.as_view(), name="settings"),
+    path('<classID>/add-assignment/', AddAssignmentView.as_view(), name="add-assignment"),
 ]
