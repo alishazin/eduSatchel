@@ -77,10 +77,10 @@ function initializeFormObject() {
             this.errorDivController(false);
             // Content
             const contentValue = this.contentField.value.trim();
-            // if (contentValue.length <= 5 ) {
-            if (contentValue.length <= 1 ) {
-                this.errorDivController('content', 'Content length should be greater than 5')
+            if (contentValue.length <= 5 ) {
+                this.errorDivController('content', 'Content length should be greater than 5 characters')
             } else {
+                // Due Date
                 const dateTimeNow = new Date();
                 const dueDateInObj = new Date(this.dateTimeField.value);
                 
@@ -89,10 +89,13 @@ function initializeFormObject() {
                 } else if (dueDateInObj.getTime() <= dateTimeNow.getTime()) {
                     this.errorDivController('dueDate', 'Due date and time should be greater than the current datetime');
                 } else {
+                    // Total Marks
                     const numberTotalMark = Number(this.totalMarksField.value);
                     
                     if (numberTotalMark) {
-                        if (numberTotalMark > 1000) {
+                        if (numberTotalMark <= 0) {
+                            this.errorDivController('totalMarks', 'Invalid Total Marks');
+                        } else if (numberTotalMark > 1000) {
                             this.errorDivController('totalMarks', 'Invalid Total Marks');
                         } else if (numberTotalMark.countDecimals() > 2) {
                             this.errorDivController('totalMarks', 'Invalid Total Marks');
@@ -142,7 +145,6 @@ function initializeFormObject() {
                     this.errorDivController(errorObj['element'], errorObj['error_message'])
                 }
                 this.loadingState = false;
-                console.log(errorObj)
             }
         },
         sendPostRequestForAssignment : function () {
@@ -151,6 +153,7 @@ function initializeFormObject() {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
+                        console.log(response)
                         if (response['success'] === true) {
                             resolve();
                         } else {

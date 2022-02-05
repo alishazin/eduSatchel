@@ -11,6 +11,7 @@ from .backends import (
 
 import json
 import datetime
+import math
 
 # Create your views here.
 
@@ -44,15 +45,41 @@ class AddAssignmentView(View):
         formPost = request.POST
         formData = request.FILES
 
-        if 'content' in formPost.keys():
+        if 'content' in formPost.keys() and 'due-date' in formPost.keys() and 'total-marks' in formPost.keys():
             content = formPost['content'].strip()
 
             if len(content) <= 5:
-                return HttpResponse(json.dumps({'success' : False, 'element' : 'content', 'error_message' : 'Content length should be greater than 5'}))
+                return HttpResponse(json.dumps({'success' : False, 'element' : 'content', 'error_message' : 'Content length should be greater than 5 characters'}))
 
-            # validatedUrls = validate_urls_files(formPost, formData)   
-            # if validatedUrls != True:
-            #     return HttpResponse(json.dumps({'success' : False, 'error_message' : validatedUrls}))
-        # print(datetime.datetime.strptime(request.POST['due-date'], '%Y-%m-%d %H:%M'))
+            dueDate = request.POST['due-date']
+            try:
+                dueDateTimeObj = datetime.datetime.strptime(dueDate, '%Y-%m-%d %H:%M')
+            except:
+                return HttpResponse(json.dumps({'success' : False, 'element' : 'dueDate', 'error_message' : 'Due date is a required field'}))
+            else:
+                if dueDateTimeObj <= datetime.datetime.now():
+                    return HttpResponse(json.dumps({'success' : False, 'element' : 'dueDate', 'error_message' : 'Due date and time should be greater than the current datetime'}))
+
+            totalMarks = request.POST['total-marks']
+            try:
+                totalMarksFloat = float(totalMarks)
+                if math.isnan(totalMarksFloat):
+                    raise BaseException() 
+            except:
+                return HttpResponse(json.dumps({'success' : False, 'element' : 'totalMarks', 'error_message' : 'Total mark should be a number'}))
+            else:
+                if totalMarksFloat <= 0:
+                    return HttpResponse(json.dumps({'success' : False, 'element' : 'totalMarks', 'error_message' : 'Total mark should be a positive value.'}))
+                elif totalMarksFloat > 1000:
+                    return HttpResponse(json.dumps({'success' : False, 'element' : 'totalMarks', 'error_message' : 'Total mark should be lesser than 1000.'}))
+                totalMarksFloat = round(totalMarksFloat, 2)
+                print(totalMarksFloat)
+
+
+            validatedUrls = validate_urls_files(formPost, formData)   
+            if validatedUrls != True:
+                return HttpResponse(json.dumps({'success' : False, 'element' : 'attach', 'error_message' : validatedUrls}))
+
+            return HttpResponse(json.dumps({'success' : True}))
 
         return HttpResponse(json.dumps({'success' : False, 'element' : 'alert', 'error_message' : 'Something is wrong. Refresh the page !'}))
