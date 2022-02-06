@@ -143,6 +143,7 @@ function initializeFormObject() {
                 await this.sendPostRequestForAssignment();
                 this.loadingState = false;
                 this.resetAll();
+                location.href = classHomeURL;
             } catch(errorObj) {
                 if (errorObj['type'] === 'network') {
                     errorObj.call();
