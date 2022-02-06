@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views import View
 from edusatchel.decorators import classentry_check
 from home.models import Class
+from django.contrib import messages
 
 from .backends import (
     validate_urls_files,
@@ -74,7 +75,6 @@ class AddAssignmentView(View):
                 elif totalMarksFloat > 1000:
                     return HttpResponse(json.dumps({'success' : False, 'element' : 'totalMarks', 'error_message' : 'Total mark should be lesser than 1000.'}))
                 totalMarksFloat = round(totalMarksFloat, 2)
-                print(totalMarksFloat)
 
 
             validatedUrls = validate_urls_files(formPost, formData)   
@@ -91,6 +91,7 @@ class AddAssignmentView(View):
             assigObj.files.set(fileObjs)
             assigObj.urls.set(urlObjs)
 
+            messages.error(request, 'New assignment added successfully')
             return HttpResponse(json.dumps({'success' : True}))
 
         return HttpResponse(json.dumps({'success' : False, 'element' : 'alert', 'error_message' : 'Something is wrong. Refresh the page !'}))

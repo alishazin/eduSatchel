@@ -34,6 +34,27 @@ body > .parent-content > .main-content > .item, body > .parent-content > .main-c
     padding: 30px;
     margin-bottom: 20px;
 }
+body > .parent-content > .main-content > .message-box {
+    background-color: var(--green-light-color);
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+}
+body > .parent-content > .main-content > .message-box > i {
+    font-size: 20px;
+    width: 30px;
+    transform: translateY(1px);
+}
+body > .parent-content > .main-content > .message-box > span {
+    width: (100% - 30px);
+    font-size: 17px;
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 body > .parent-content > .main-content > .header {
     position: relative;
     background-color: var(--secondary-color);

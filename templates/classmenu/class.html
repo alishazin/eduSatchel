@@ -10,6 +10,14 @@
 
 {% block bodyextra %}
 <div class="main-content">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="message-box item">
+                <i class="bi bi-info-circle"></i>
+                <span>{{ msg }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="item header">
         <div class="date-box">
             <i class="bi bi-info-circle"></i>
