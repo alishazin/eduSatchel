@@ -32,6 +32,12 @@ class File(models.Model):
     def file_location(self):
         return f"/media/{self.file}"
 
+    @property
+    def availableIcon(self):
+        if self.format.lower() in ['aac', 'ai', 'bmp', 'cs', 'css', 'csv', 'doc', 'docx', 'exe', 'gif', 'heic', 'html', 'java', 'jpg', 'js', 'json', 'jsx', 'key', 'm4p', 'otf', 'pdf', 'php', 'png', 'ppt', 'pptx', 'psd', 'py', 'raw', 'rb', 'sass', 'scss', 'sh', 'svg', 'tiff', 'tsx', 'ttf', 'txt', 'wav', 'woff', 'xls', 'xlsx', 'xml', 'yml']:
+            return True
+        return False
+
 class Url(models.Model):
     url = models.TextField(blank=False, null=False)
 

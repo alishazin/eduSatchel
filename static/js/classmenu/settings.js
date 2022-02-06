@@ -10,7 +10,7 @@ var blockRequestObject = {};
 var classDescObject = {};
 
 function onLoad() {
-    navBarObj.selectItem(3);
+    navBarObj.selectItem(4);
 
     blockRequestObject = {
         switch : document.querySelector('.settings-content > .block-request > .switch-container > .switch'),

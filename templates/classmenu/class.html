@@ -72,7 +72,7 @@
                             </div>
                         {% if msgObj.formatted_date == 'Today' or msgObj.formatted_date == 'Yesterday' %}
                             <div class="date" style="color: var(--tertiary-color)"><span>{{ msgObj.formatted_date }}</span></div>
-                            {% else %}
+                        {% else %}
                             <div class="date" style="color: rgb(71, 71, 71)"><span>{{ msgObj.formatted_date }}</span></div>
                         {% endif %}
                         <div class="time"><span>{{ msgObj.time_only }}</span></div>
@@ -96,8 +96,8 @@
                                 {% endfor %}
                             </div>
                         </div>
-                        {% endif %}
-                        {% if msgObj.files.all %}
+                    {% endif %}
+                    {% if msgObj.files.all %}
                         <div class="file-msg-box">
                             <div class="header-box">
                                 <span>Files</span>
@@ -109,7 +109,13 @@
                                             <i class="bi bi-download"></i>
                                         </div>
                                         <div class="format-parent">
-                                            <div class="format-box">{{ fileObj.format }}</div>
+                                            {% if fileObj.availableIcon %}
+                                                <div class="format-box">
+                                                    <i class="bi bi-filetype-{{ fileObj.format }}" style="font-size: 25px"></i>
+                                                </div>
+                                            {% else %}
+                                                <div class="format-box" style="padding: 6px 10px;">{{ fileObj.format }}</div>
+                                            {% endif %}
                                         </div>
                                         <div class="bottom-box"><span>{{ fileObj.file_name }}</span></div>
                                     </div>
