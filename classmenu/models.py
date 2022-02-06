@@ -91,3 +91,17 @@ class Assignment(models.Model):
     def date_due_time_only(self):
         ISTDate = get_IST_from_UTC(self.date_due)
         return f'{add_zero_to_left(ISTDate.hour)}:{add_zero_to_left(ISTDate.minute)}'
+
+class Poll(models.Model):
+    title = models.TextField(blank=False, null=False)
+    class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+class PollOption(models.Model):
+    poll_obj = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    content = models.CharField(max_length=300, blank=False, null=False)
+
+class PolledDetail(models.Model):
+    poll_option_obj = models.ForeignKey(PollOption, on_delete=models.CASCADE)
+    student =  models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)

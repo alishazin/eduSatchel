@@ -24,6 +24,15 @@ id, content, file, CLASS, USER
 MESSAGE_PRIVATE:-
 Future maybe..
 
+POLL:-
+id, title, CLASS
+
+POLL OPTIONS:-
+id, POLL, content
+
+POLLED DETAIL:-
+id, POLL OPTION, USER(type=student)
+
 Things a teacher can do:-
 1. create class 
 2. provide assignment 
