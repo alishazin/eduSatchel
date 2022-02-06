@@ -73,6 +73,7 @@ class Assignment(models.Model):
 
     @property
     def formatted_date_due(self):
+        # We will change it to showing due by time, tomorrow etc..
         return check_if_today_or_yesterday(self.date_due)
 
     @property

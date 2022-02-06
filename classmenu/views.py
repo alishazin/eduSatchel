@@ -7,6 +7,7 @@ from home.models import Class
 from .backends import (
     validate_urls_files,
     insert_url_and_file_values,
+    convert_IST_to_UTC
 )
 
 import json
@@ -79,6 +80,16 @@ class AddAssignmentView(View):
             validatedUrls = validate_urls_files(formPost, formData)   
             if validatedUrls != True:
                 return HttpResponse(json.dumps({'success' : False, 'element' : 'attach', 'error_message' : validatedUrls}))
+
+            classObj = Class.objects.get(id=classID)
+            urlObjs, fileObjs = insert_url_and_file_values(formPost, formData, classObj, 'assignment')           
+            assigObj = classObj.assignment_set.create(
+                content = content,
+                date_due=convert_IST_to_UTC(dueDateTimeObj),
+                total_marks=totalMarksFloat,
+            )
+            assigObj.files.set(fileObjs)
+            assigObj.urls.set(urlObjs)
 
             return HttpResponse(json.dumps({'success' : True}))
 

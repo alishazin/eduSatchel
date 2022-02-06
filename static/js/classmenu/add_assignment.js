@@ -107,6 +107,12 @@ function initializeFormObject() {
             }
             
         },
+        resetAll : function () {
+            this.contentField.value = '';
+            this.dateTimeField.value = '';
+            this.totalMarksField.value = '';
+            attachFileBlockObj.resetAll();
+        },
         getFormData : function () {
             let fileCountLocal = 0;
             let urlCountLocal = 0;
@@ -136,6 +142,7 @@ function initializeFormObject() {
                 this.loadingState = true;
                 await this.sendPostRequestForAssignment();
                 this.loadingState = false;
+                this.resetAll();
             } catch(errorObj) {
                 if (errorObj['type'] === 'network') {
                     errorObj.call();

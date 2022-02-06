@@ -3,12 +3,12 @@ from django.core.validators import URLValidator
 from .models import (
     File,
     Url,
-    MessagePublic
 )
+
+from datetime import timedelta
 
 def validate_urls_files(postData, formFiles):
 
-    status = 'OK'
     validator = URLValidator()
     urlCount = 0
     while True:
@@ -44,7 +44,7 @@ def get_file_format_validate_length(filename):
         return False
 
 def insert_url_and_file_values(postData, fileData, classObj, location_hint):
-    # Addimg Url
+    
     addedUrls = []
     urlCount = 0
 
@@ -73,3 +73,6 @@ def insert_url_and_file_values(postData, fileData, classObj, location_hint):
             break
 
     return [addedUrls, addedFiles]
+
+def convert_IST_to_UTC(ISTDateTime):
+    return ISTDateTime - timedelta(hours=5, minutes=30)
