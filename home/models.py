@@ -29,6 +29,10 @@ class Class(models.Model):
         return reverse('classmenu:settings', kwargs={'classID' : self.id})
 
     @property
+    def get_url_add_poll(self):
+        return reverse('classmenu:add-polls', kwargs={'classID' : self.id})
+
+    @property
     def get_url_add_assignment(self):
         return reverse('classmenu:add-assignment', kwargs={'classID' : self.id})
 

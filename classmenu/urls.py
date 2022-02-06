@@ -4,6 +4,7 @@ from .views import (
     ClassMenuView,
     ClassSettingsView,
     AddAssignmentView,
+    AddPollView,
 )
 
 from .get_or_post_views import (
@@ -23,4 +24,5 @@ urlpatterns = [
     path('<classID>/join-response/<enrId64>/', JoinResponseView.as_view()),
     path('<classID>/settings/', ClassSettingsView.as_view(), name="settings"),
     path('<classID>/add-assignment/', AddAssignmentView.as_view(), name="add-assignment"),
+    path('<classID>/add-polls/', AddPollView.as_view(), name="add-polls"),
 ]

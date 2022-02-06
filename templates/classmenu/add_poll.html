@@ -1,0 +1,17 @@
+{% extends 'classmenu/base.html' %}
+{% load static %}
+
+{% block title %}{{ classObj.title }}: Settings{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/classmenu/add_poll.css' %}">
+<script src="{% static 'js/classmenu/add_poll.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<p>Add Poll</p>
+<script>
+    var classIDGlobal = '{{ classObj.id }}';
+    var csrftoken = '{{ csrf_token }}';
+</script>
+{% endblock bodyextra %}

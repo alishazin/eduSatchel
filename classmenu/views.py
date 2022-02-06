@@ -95,3 +95,11 @@ class AddAssignmentView(View):
             return HttpResponse(json.dumps({'success' : True}))
 
         return HttpResponse(json.dumps({'success' : False, 'element' : 'alert', 'error_message' : 'Something is wrong. Refresh the page !'}))
+
+class AddPollView(View):
+    @classentry_check(account_type='teacher')
+    def get(self, request, classID):
+        classObj = Class.objects.get(id=classID)
+        return render(request, 'classmenu/add_poll.html', {
+            'classObj' : classObj,
+        })
