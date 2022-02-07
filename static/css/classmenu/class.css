@@ -344,7 +344,7 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .content
     background-color: rgba(168, 208, 230, 0.2);
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box > p {
-    font-size: 15px;
+    font-size: 17px;
     color: var(--text-color);
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     margin: 0;
