@@ -24,5 +24,5 @@ urlpatterns = [
     path('<classID>/join-response/<enrId64>/', JoinResponseView.as_view()),
     path('<classID>/settings/', ClassSettingsView.as_view(), name="settings"),
     path('<classID>/add-assignment/', AddAssignmentView.as_view(), name="add-assignment"),
-    path('<classID>/add-polls/', AddPollView.as_view(), name="add-polls"),
+    path('<classID>/add-poll/', AddPollView.as_view(), name="add-poll"),
 ]

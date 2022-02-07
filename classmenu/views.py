@@ -103,3 +103,36 @@ class AddPollView(View):
         return render(request, 'classmenu/add_poll.html', {
             'classObj' : classObj,
         })
+
+    @classentry_check(account_type='teacher')
+    def post(self, request, classID):
+        formPost = request.POST
+        print(formPost)
+
+        if 'title' in formPost.keys() and 'option-1' in formPost.keys() and 'option-2' in formPost.keys() and 'option-3' in formPost.keys() and 'option-4' in formPost.keys() and 'option-5' in formPost.keys():
+            title = formPost['title'].strip()
+
+            if len(title) <= 5:
+                return HttpResponse(json.dumps({'success' : False, 'element' : 'title', 'error_message' : 'Title length should be greater than 5 characters'}))
+            
+            allOptions = [formPost['option-1'].strip(), formPost['option-2'].strip(), formPost['option-3'].strip(), formPost['option-4'].strip(), formPost['option-5'].strip()]
+            validOptions = []
+            for option in allOptions:
+                validOptions.append(option) if option else ''
+            
+            if len(validOptions) < 2:
+                return HttpResponse(json.dumps({'success' : False, 'element' : 'option', 'error_message' : 'Atlest two options are required'}))
+
+            classObj = Class.objects.get(id=classID)
+            pollObj = classObj.poll_set.create(
+                title=title,
+            )
+            for option in validOptions:
+                pollObj.polloption_set.create(
+                    content=option,
+                )
+
+            messages.error(request, 'New poll added successfully')
+            return HttpResponse(json.dumps({'success' : True}))
+
+        return HttpResponse(json.dumps({'success' : False, 'element' : 'alert', 'error_message' : 'Something is wrong. Refresh the page !'}))

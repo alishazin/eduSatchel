@@ -35,7 +35,6 @@ function onLoad() {
                     errorDivs[x].innerText = ''
                 }
             } else {
-                console.log( errorDivs[element])
                 errorDivs[element].style.display = 'block';
                 errorDivs[element].innerText = message;
             }
@@ -47,6 +46,11 @@ function onLoad() {
             this.optionThree.value = '';
             this.optionFour.value = '';
             this.optionFive.value = '';
+
+            const allFields = [this.titleField, this.optionOne, this.optionTwo, this.optionThree, this.optionFour, this.optionFive];
+            allFields.forEach(field => {
+                field.className = '';
+            })
         },
         validateForm : function () {
             this.errorDivController(false);
@@ -55,21 +59,81 @@ function onLoad() {
             const titleValue = this.titleField.value.trim();
             if (titleValue.length <= 5) {
                 this.errorDivController('title', 'Title length should be greater than 5 characters')
+            } else {
+                // Options
+                const optionOneValue = this.optionOne.value.trim();
+                const optionTwoValue = this.optionTwo.value.trim();
+                const optionThreeValue = this.optionThree.value.trim();
+                const optionFourValue = this.optionFour.value.trim();
+                const optionFiveValue = this.optionFive.value.trim();
+                
+                let boolArray = [];
+                [optionOneValue, optionTwoValue, optionThreeValue, optionFourValue, optionFiveValue].forEach(option => {if (option) { boolArray.push(true); }});
+    
+                if (boolArray.length < 2) {
+                    this.errorDivController('option', 'Atlest two options are required')
+                } else { this.asyncFuncForPoll() }
             }
             
-            // Options
-            const optionOneValue = this.optionOne.value.trim();
-            const optionTwoValue = this.optionTwo.value.trim();
-            const optionThreeValue = this.optionThree.value.trim();
-            const optionFourValue = this.optionFour.value.trim();
-            const optionFiveValue = this.optionFive.value.trim();
-            
-            let boolArray = [];
-            [optionOneValue, optionTwoValue, optionThreeValue, optionFourValue, optionFiveValue].forEach(option => {if (option) { boolArray.push(true); }});
+        },
+        asyncFuncForPoll : async function () {
+            try {
+                this.loadingState = true;
+                await this.sendPostRequestForAssignment();
+                this.loadingState = false;
+                this.resetAll();
+                location.href = classHomeURL;
+            } catch(errorObj) {
+                if (errorObj['type'] === 'network') {
+                    errorObj.call();
+                } else if (errorObj['type'] === 'backend' && errorObj['element'] === 'alert') {
+                    alert(errorObj['error_message'])
+                } else {
+                    this.errorDivController(errorObj['element'], errorObj['error_message'])
+                }
+                this.loadingState = false;
+            }
+        },
+        getFormData : function () {
+            const formdata = new FormData();
+            formdata.append('title', this.titleField.value.trim());
+            formdata.append('option-1', this.optionOne.value.trim());
+            formdata.append('option-2', this.optionTwo.value.trim());
+            formdata.append('option-3', this.optionThree.value.trim());
+            formdata.append('option-4', this.optionFour.value.trim());
+            formdata.append('option-5', this.optionFive.value.trim());
 
-            if (boolArray.length < 2) {
-                this.errorDivController('option', 'Atlest two options are required')
-            }
+            return formdata;
+        },
+        sendPostRequestForAssignment : function () {
+            return new Promise((resolve, reject) => {
+                var req = new XMLHttpRequest();
+                req.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const response = JSON.parse(this.responseText);
+                        console.log(response)
+                        if (response['success'] === true) {
+                            resolve();
+                        } else {
+                            response.type = 'backend';
+                            reject(response)
+                        }
+                    }
+                }
+
+                req.onerror = () => {
+                    reject({
+                        type : 'network',
+                        call : () => {
+                            alert("No Active Network Connection")
+                        }
+                    });
+                }
+                
+                req.open('POST', `/class/${classIDGlobal}/add-poll/`); 
+                req.setRequestHeader("X-CSRFToken", csrftoken); 
+                req.send(this.getFormData());
+            })
         },
         addCallbacks : function () {
             const allFields = [this.titleField, this.optionOne, this.optionTwo, this.optionThree, this.optionFour, this.optionFive];
