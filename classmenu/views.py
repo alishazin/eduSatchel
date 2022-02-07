@@ -4,6 +4,10 @@ from django.views import View
 from edusatchel.decorators import classentry_check
 from home.models import Class
 from django.contrib import messages
+from home.send_notifications import (
+    after_adding_asignment,
+    after_adding_poll,
+)
 
 from .backends import (
     validate_urls_files,
@@ -91,6 +95,7 @@ class AddAssignmentView(View):
             assigObj.files.set(fileObjs)
             assigObj.urls.set(urlObjs)
 
+            after_adding_asignment(classObj, assigObj)
             messages.error(request, 'New assignment added successfully')
             return HttpResponse(json.dumps({'success' : True}))
 
@@ -132,6 +137,7 @@ class AddPollView(View):
                     content=option,
                 )
 
+            after_adding_poll(classObj, pollObj)
             messages.error(request, 'New poll added successfully')
             return HttpResponse(json.dumps({'success' : True}))
 

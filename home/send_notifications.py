@@ -30,3 +30,19 @@ def after_accepting_join_request(studentObj, classObj):
         header="Join Request Accepted",
         body=body
     )
+
+def after_adding_asignment(classObj, assignmentObj):
+    body = f"A New Assignment is added in '{classObj.title}'.\n\nAssignment will be due on '{assignmentObj.formatted_date_due} {assignmentObj.date_due_time_only}'."
+    for enrollmentObj in classObj.get_enrolled_students():
+        enrollmentObj.student.notification_set.create(
+            header="New Assignment Added",
+            body=body
+        )
+
+def after_adding_poll(classObj, pollObj):
+    body = f"A New Poll is added in '{classObj.title}'.\n\nPoll Topic : {pollObj.title}"
+    for enrollmentObj in classObj.get_enrolled_students():
+        enrollmentObj.student.notification_set.create(
+            header="New Poll Added",
+            body=body
+        )

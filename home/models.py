@@ -45,6 +45,9 @@ class Class(models.Model):
     def get_join_requests(self):
         return self.classenrollment_set.filter(enrolled=False)
 
+    def get_enrolled_students(self):
+        return self.classenrollment_set.filter(enrolled=True)
+
 class ClassEnrollment(models.Model):
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

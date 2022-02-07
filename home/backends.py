@@ -127,6 +127,11 @@ def check_if_today_or_yesterday(argumentDate):
         dateYesterday = dateNow - timedelta(days = 1)
         if argumentDate.day == dateYesterday.day and argumentDate.month == dateYesterday.month and argumentDate.year == dateYesterday.year:
             return 'Yesterday'
+        else:
+            dateTomorrow = dateNow + timedelta(days = 1)
+            if argumentDate.day == dateTomorrow.day and argumentDate.month == dateTomorrow.month and argumentDate.year == dateTomorrow.year:
+                return 'Tomorrow'
+
 
     return f'{add_zero_to_left(argumentDate.day)}/{add_zero_to_left(argumentDate.month)}/{argumentDate.year}'
 
