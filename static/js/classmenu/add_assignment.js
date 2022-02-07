@@ -186,6 +186,7 @@ function initializeFormObject() {
             })
         },
         addCallbacks : function () {
+            const allFields = [this.contentField, this.dateTimeField, this.totalMarksField];
             setInterval((() => {
                 const dateTimeToday = new Date();
                 this.dateTimeField.min = `${dateTimeToday.getFullYear()}-${addZeroToLeftTime(dateTimeToday.getMonth() + 1)}-${addZeroToLeftTime(dateTimeToday.getDate())}T${addZeroToLeftTime(dateTimeToday.getHours())}:${addZeroToLeftTime(dateTimeToday.getMinutes())}`;
@@ -194,6 +195,13 @@ function initializeFormObject() {
             this.submitButton.onclick = () => {
                 this.validateForm();
             }
+
+            allFields.forEach(field => {
+                field.oninput = () => {
+                    if (field.value.trim()) { field.className = 'inputted'; } 
+                    else { field.className = ''; }
+                }
+            })
         }
     }
     formObject.addCallbacks();

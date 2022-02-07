@@ -9,7 +9,37 @@
 {% endblock headextraextra %}
 
 {% block bodyextra %}
-<p>Add Poll</p>
+<div class="content-box">
+    <div class="title-box">
+        <div class="error-div"></div>
+        <label>Title<span>*</span></label>
+        <textarea name="title"></textarea>
+    </div>
+    <div class="option-box">
+        <div class="error-div"></div>
+        <label>Option 1<span>*</span></label>
+        <input type="text" name="option-1">
+        <label>Option 2<span>*</span></label>
+        <input type="text" name="option-2">
+        <label>Option 3</label>
+        <input type="text" name="option-3">
+        <label>Option 4</label>
+        <input type="text" name="option-4">
+        <label>Option 5</label>
+        <input type="text" name="option-5">
+    </div>
+    <div class="instruction-box">
+        <ul>
+            <li>Title and two options are required fields</li>
+            <li>Option 3, 4 and 5 are optional</li>
+            <li>You cannot have more than 5 options</li>
+            <li>You wont be able to know the indivitual poll result of a student</li>
+            <li>You can see how many students have casted their vote</li>
+            <li>Students will also be able to see the result</li>
+        </ul>
+    </div>
+    <button><span>Post</span><div class="spinner"></div></button>
+</div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
     var csrftoken = '{{ csrf_token }}';
