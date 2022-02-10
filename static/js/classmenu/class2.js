@@ -4,6 +4,7 @@ var allMessagesDiv = {};
 function onLoadSecondFile() {
     allMessagesDiv = {
         parent : document.querySelector('body > .parent-content > .main-content > .all-messages'),
+        scrollContainer : document.querySelector('body > .parent-content > .main-content'),
         loadingDiv : document.querySelector('body > .parent-content > .main-content > .all-messages > .loading-div'),
         _state : 'normal',
         get state() {
@@ -33,11 +34,13 @@ function onLoadSecondFile() {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
-                        resolve(response);
+                        console.log(response['stepCount'])
+                        allMessagesDiv.stepCount = response['stepCount'];
+                        resolve(response['data']);
                     }
                 }
                 
-                req.open('GET', `/class/${classIDGlobal}/get-class-data/${this.stepCount}/`); 
+                req.open('GET', `/class/${classIDGlobal}/get-class-data/${this.stepCount}/`);
                 req.send();
             }) 
         },
@@ -48,7 +51,17 @@ function onLoadSecondFile() {
                 }
             }
         },
+        addCallbacks : function () {
+            this.scrollContainer.onscroll = () => {
+                if ((this.scrollContainer.scrollHeight - 3) <= (this.scrollContainer.scrollTop + this.scrollContainer.clientHeight)) {
+                    if (this.state === 'normal' && this.stepCount !== 0) {
+                        this.asyncFuncToRequestData();
+                    }
+                }
+            }
+        }
     }
+    allMessagesDiv.addCallbacks();
     allMessagesDiv.asyncFuncToRequestData();
 } 
 

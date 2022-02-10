@@ -86,7 +86,7 @@ function onLoad() {
 
 function addScrollEventToLeftContainer() {
     const leftContainer = document.querySelector('.parent-content > .left-content'); 
-    leftContainer.onscroll = (e) => {
+    leftContainer.onscroll = () => {
         if ((leftContainer.scrollHeight - 3) <= (leftContainer.scrollTop + leftContainer.clientHeight)) {
             if (allData.busy === false && allData.stepCount !== 0) {
                 startAsyncGetData();

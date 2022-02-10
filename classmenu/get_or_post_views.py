@@ -172,8 +172,10 @@ DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP = 25
 class ClassDataByStepView(GetOnlyViewBase):
     @classentry_check()
     def get_only(self, request, classID, stepCount):
-        # import time
-        # time.sleep(5)
+
+        if stepCount == 0:
+            return HttpResponse(json.dumps({'data' : [], 'stepCount' : 0, 'message' : 'StepCount cannot be Zero'}))
+
         classObj = Class.objects.get(id=classID)
         allDataList = sorted(chain(
             classObj.messagepublic_set.all(), 
@@ -181,9 +183,9 @@ class ClassDataByStepView(GetOnlyViewBase):
             classObj.assignment_set.all()
         ),key=attrgetter('date_added'), reverse=True)
 
+        slicedData = allDataList[DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * (stepCount - 1) : DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * stepCount]
         returnData = []
-        print(len(allDataList))
-        for dataObj in allDataList[DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * (stepCount - 1) : DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * stepCount]:
+        for dataObj in slicedData:
             if dataObj.type == 'messagePublic':
                 tempObj = {
                     'type' : dataObj.type,
@@ -215,4 +217,4 @@ class ClassDataByStepView(GetOnlyViewBase):
             if dataObj.type == 'poll':
                 returnData.append('Poll')
 
-        return HttpResponse(json.dumps(returnData))
+        return HttpResponse(json.dumps({'data' : returnData, 'stepCount' : stepCount + 1 if len(slicedData) == 25 else 0}))
