@@ -193,7 +193,7 @@ async function asyncFunctionForSendingMessage() {
         const response = await sendPostRequestForMessage();
         sendMessageBox.loadingState = false;
         sendMessageBox.state = false;
-        addMessageToList(response);
+        addMessageToList(response, true);
     } catch(error) {
         console.log(error);
         sendMessageBox.errorDiv.innerText = error;
@@ -208,6 +208,11 @@ function sendPostRequestForMessage() {
             if (this.readyState == 4 && this.status == 200) {
                 const response = JSON.parse(this.responseText);
                 if (response['success']) {
+                    if (allMessagesDiv.emptyDiv !== null) {
+                        allMessagesDiv.emptyDiv.remove();
+
+                        allMessagesDiv.emptyDiv = null;
+                    }
                     resolve(response);
                 }
                 reject(response['error_message'])

@@ -192,7 +192,7 @@ class ClassDataByStepView(GetOnlyViewBase):
                     'content' : dataObj.content,
                     'urls' : False,
                     'files' : False,
-                    'teacher' : True if request.user.account_type == 'teacher' else False,
+                    'teacher' : True if dataObj.user.account_type == 'teacher' else False,
                     'time' : dataObj.time_only,
                     'date' : dataObj.formatted_date,
                     'profilePath' : dataObj.user.profile_pic_path, 
@@ -217,4 +217,4 @@ class ClassDataByStepView(GetOnlyViewBase):
             if dataObj.type == 'poll':
                 returnData.append('Poll')
 
-        return HttpResponse(json.dumps({'data' : returnData, 'stepCount' : stepCount + 1 if len(slicedData) == 25 else 0}))
+        return HttpResponse(json.dumps({'data' : returnData, 'stepCount' : stepCount + 1 if len(slicedData) == 25 else 0, 'empty' : True if len(allDataList) == 0 else False}))

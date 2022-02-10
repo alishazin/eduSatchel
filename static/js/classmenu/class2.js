@@ -6,6 +6,7 @@ function onLoadSecondFile() {
         parent : document.querySelector('body > .parent-content > .main-content > .all-messages'),
         scrollContainer : document.querySelector('body > .parent-content > .main-content'),
         loadingDiv : document.querySelector('body > .parent-content > .main-content > .all-messages > .loading-div'),
+        emptyDiv : null,
         _state : 'normal',
         get state() {
             return this._state;
@@ -22,11 +23,16 @@ function onLoadSecondFile() {
         },
         stepCount : 1,
         asyncFuncToRequestData : async function () {
-            this.state = 'loading';
-            const responseArray = await this.sendGetRequest();
-            console.log(responseArray)
-            this.addDataToListMaster(responseArray);
-            this.state = 'normal';
+            try {
+                this.state = 'loading';
+                const responseArray = await this.sendGetRequest();
+                console.log(responseArray)
+                this.addDataToListMaster(responseArray);
+                this.state = 'normal';
+            } catch(errorObj) {
+                this.state = 'normal';
+                errorObj.call();
+            }
         },
         sendGetRequest : function () {
             return new Promise((resolve, reject) => {
@@ -34,15 +40,46 @@ function onLoadSecondFile() {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
-                        console.log(response['stepCount'])
                         allMessagesDiv.stepCount = response['stepCount'];
+                        if (response['empty']) {
+                            reject({
+                                type : 'empty',
+                                call : () => {
+                                    allMessagesDiv.raiseEmptyDiv();
+                                }
+                            })
+                        }
                         resolve(response['data']);
                     }
+                }
+
+                req.onerror = () => {
+                    reject({
+                        type : 'network',
+                        call : () => {
+                            alert("No Active Network Connection")
+                        }
+                    });
                 }
                 
                 req.open('GET', `/class/${classIDGlobal}/get-class-data/${this.stepCount}/`);
                 req.send();
             }) 
+        },
+        raiseEmptyDiv : function () {
+            const parent = createElementWithAttributes('div', {classList : 'item empty-div'})
+
+            const iconBox = createElementWithAttributes('div', {classList : 'icon-box'})
+            iconBox.appendChild(createElementWithAttributes('i', {classList : 'bi bi-chat-text'}))
+            parent.appendChild(iconBox)
+            
+            const textBox = createElementWithAttributes('div', {classList : 'text-box'})
+            textBox.appendChild(createElementWithAttributes('h2', {innerText : 'No Activities Yet!'}))
+            textBox.appendChild(createElementWithAttributes('span', {innerText : 'You can be the first one.'}))
+            parent.appendChild(textBox)
+            this.parent.appendChild(parent)
+
+            this.emptyDiv = parent;
         },
         addDataToListMaster : function (responseArray) {
             for (let obj of responseArray) {
@@ -65,7 +102,7 @@ function onLoadSecondFile() {
     allMessagesDiv.asyncFuncToRequestData();
 } 
 
-function addMessageToList(response) {
+function addMessageToList(response, beginning = false) {
     const listContainer = document.querySelector('body > .parent-content > .main-content > .all-messages')
 
     const parent = createElementWithAttributes('div', {classList : 'item recieve-msg'})
@@ -170,5 +207,13 @@ function addMessageToList(response) {
         parent.appendChild(fileMsgBox)
     }
 
-    listContainer.appendChild(parent)
+    if (beginning) {
+        listContainer.prepend(parent)
+
+        parent.style.animationName = 'blink-new';
+        parent.style.animationDuration = '2s';
+        parent.style.animationIterationCount = '3';
+    } else {
+        listContainer.append(parent)
+    }
 }
