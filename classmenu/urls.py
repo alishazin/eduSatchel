@@ -12,6 +12,7 @@ from .get_or_post_views import (
     BlockJoinRequestPostOnlyView,
     ChangeClassDescriptionView,
     JoinResponseView,
+    ClassDataByStepView,
 )
 
 app_name = 'classmenu'
@@ -25,4 +26,5 @@ urlpatterns = [
     path('<classID>/settings/', ClassSettingsView.as_view(), name="settings"),
     path('<classID>/add-assignment/', AddAssignmentView.as_view(), name="add-assignment"),
     path('<classID>/add-poll/', AddPollView.as_view(), name="add-poll"),
+    path('<classID>/get-class-data/<int:stepCount>/', ClassDataByStepView.as_view()),
 ]

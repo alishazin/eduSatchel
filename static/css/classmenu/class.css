@@ -279,6 +279,7 @@ body > .parent-content > .main-content > .all-messages > .loading-div {
     justify-content: center;
     align-items: center;
     z-index: 0;
+    pointer-events: none;
     transform: translateY(-120px);
     opacity: 0;
     transition: transform 0.3s, opacity 0.3s;

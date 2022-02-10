@@ -164,3 +164,37 @@ class JoinResponseView(PostOnlyViewBase):
                         return HttpResponse("success")
 
             return errorReturnValue
+
+class ClassDataByStepView(GetOnlyViewBase):
+    @classentry_check()
+    def get_only(self, request, classID, stepCount):
+        import time
+        time.sleep(5)
+        classObj = Class.objects.get(id=classID)
+        allMessages = classObj.messagepublic_set.all()
+        returnData = []
+        for msgObj in allMessages:
+            tempObj = {
+                'type' : 'publicMessage',
+                'content' : msgObj.content,
+                'urls' : False,
+                'files' : False,
+                'teacher' : True if request.user.account_type == 'teacher' else False,
+                'time' : msgObj.time_only,
+                'date' : msgObj.formatted_date,
+                'profilePath' : msgObj.user.profile_pic_path, 
+                'username' : msgObj.user.username,
+            }
+
+            if msgObj.urls:
+                tempObj['urls'] = []
+                for urlObj in msgObj.urls.all():
+                    tempObj['urls'].append(urlObj.url)
+
+            if msgObj.files:
+                tempObj['files'] = []
+                for fileObj in msgObj.files.all():
+                    tempObj['files'].append({'path' : fileObj.file_location, 'name' : fileObj.file_name, 'format' : fileObj.format, 'iconAvailable' : fileObj.availableIcon})
+
+            returnData.append(tempObj)
+        return HttpResponse(json.dumps(returnData))
