@@ -191,7 +191,7 @@ async function asyncFunctionForSendingMessage() {
         const response = await sendPostRequestForMessage();
         sendMessageBox.loadingState = false;
         sendMessageBox.state = false;
-        addSingleMessageAfterSending(response);
+        addMessageToList(response);
     } catch(error) {
         console.log(error);
         sendMessageBox.errorDiv.innerText = error;
@@ -228,96 +228,113 @@ function downloadFile(uri) {
     link.click();
 }
 
-function addSingleMessageAfterSending(response) {
-    let code = `
-    <div class="item recieve-msg">
-    <div class="top-bar">
-        <img src=${profileImageGlobal}>`
+function addMessageToList(response) {
+    console.log(response)
+    const listContainer = document.querySelector('body > .parent-content > .main-content > .all-messages')
 
+    const parent = createElementWithAttributes('div', {classList : 'item recieve-msg'})
+    
+    const topBar = createElementWithAttributes('div', {classList : 'top-bar'})
+    const profileImage = createElementWithAttributes('img', {src : response['profilePath']})
+    topBar.appendChild(profileImage)
+
+    let senderNameBox;
     if (response['teacher']) {
-        code += `
-        <div class="sender-name" style="color: white; background-color: var(--tertiary-color);">
-        <i class="bi bi-person-fill"></i>`
+        senderNameBox = createElementWithAttributes('div', {classList : 'sender-name', color : 'white', bg_color : 'var(--tertiary-color)'})
+        senderNameBox.appendChild(createElementWithAttributes('i', {classList : 'bi bi-person-fill'}))
     } else {
-        code += `<div class="sender-name">`
+        senderNameBox = createElementWithAttributes('div', {classList : 'sender-name'})
     }
+    senderNameBox.appendChild(createElementWithAttributes('span', {innerText : response['username']}))
+    topBar.appendChild(senderNameBox)
 
-    code += `
-        <span>${replaceTags(usernameGlobal)}</span>
-    </div>
-    <div class="date" style="color: var(--tertiary-color)"><span>Today</span></div>
-    `
-
-    code += `<div class="time"><span>${response['time']}</span></div></div>`
-
-    code += `
-    <div class="content-box">
-        <p>${replaceTags(response.content)}</p>
-    </div>
-    `
-
-    if (response.urls.length > 0) {
-        code += `
-        <div class="url-msg-box">
-        <div class="header-box">
-            <span>URL's</span>
-        </div>
-        <div class="content-box">
-        `
-
-        for (let url of response.urls) {
-            code += `
-            <div class="url-container">
-                <span><a href="${url}" target="_blank">${replaceTags(url)}</a></span>
-                <div class="icon-butt" onclick="copyText('${url}')">
-                    <i class="bi bi-clipboard"></i>
-                </div>
-            </div>
-            `
-        }
-        code += `</div></div>`
+    let dateDiv;
+    if (response['date'] == 'Today' || response['date'] == 'Yesterday') {
+        dateDiv = createElementWithAttributes('div', {classList : 'date', color : 'var(--tertiary-color)'})
+    } else {
+        dateDiv = createElementWithAttributes('div', {classList : 'date', color : 'rgb(71, 71, 71)'})
     }
+    dateDiv.appendChild(createElementWithAttributes('span', {innerText : response['date']}))
+    topBar.appendChild(dateDiv)
+    
+    const timeDiv = createElementWithAttributes('div', {classList : 'time'})
+    timeDiv.appendChild(createElementWithAttributes('span', {innerText : response['time']}))
+    topBar.appendChild(timeDiv)
+    
+    parent.appendChild(topBar)
+    
+    const contentBox = createElementWithAttributes('div', {classList : 'content-box'})
+    contentBox.appendChild(createElementWithAttributes('p', {innerText : response['content']}))
+    parent.appendChild(contentBox)
 
-    if (response.files.length > 0) {
-        code += `
-        <div class="file-msg-box">
-        <div class="header-box">
-        <span>Files</span>
-        </div>
-        <div class="content-box">
-        `
+    if (response['urls'].length > 0) {
+        const urlMessageBox = createElementWithAttributes('div', {classList : 'url-msg-box'})
+
+        const headerBox = createElementWithAttributes('div', {classList : 'header-box'})
+        headerBox.appendChild(createElementWithAttributes('span', {innerText : "URL's"}))
+        urlMessageBox.appendChild(headerBox)
         
-        for (let file of response.files) {
-            code += `
-            <div class="file-container">
-            <div class="download-butt" onclick="downloadFile('${file[0]}')">
-            <i class="bi bi-download"></i>
-            </div>
-            <div class="format-parent">
-                    <div class="format-box">${replaceTags(file[2])}</div>
-                    </div>
-                    <div class="bottom-box"><span>${replaceTags(file[1])}</span></div>
-                    </div>
-                    `
-        }   
-        code += `</div></div></div>`  
-    }
-    // for adjacent messages within 4 seconds
-    Array.from(document.querySelectorAll('body > .parent-content > .main-content > .all-messages > .recieve-msg')).forEach((element) => {
-        element.style.animationName = 'none';
-    })
-
-    emptyDiv = document.querySelector('body > .parent-content > .main-content > .all-messages > .empty-div');
-    if (emptyDiv) {
-        emptyDiv.remove();
+        const contentBox = createElementWithAttributes('div', {classList : 'content-box'})
+        for (let url of response['urls']) {
+            const urlContainer = createElementWithAttributes('div', {classList : 'url-container'})
+            const span = createElementWithAttributes('span');
+            span.appendChild(createElementWithAttributes('a', {href : url, target : '_blank', innerText : url}))
+            urlContainer.appendChild(span)
+            
+            const iconButt = createElementWithAttributes('div', {classList : 'icon-butt'})
+            iconButt.onclick = () => {
+                copyText(url)
+            }
+            iconButt.appendChild(createElementWithAttributes('i', {classList : 'bi bi-clipboard'}))
+            urlContainer.appendChild(iconButt)
+            
+            contentBox.appendChild(urlContainer)
+        }
+        
+        urlMessageBox.appendChild(contentBox)
+        parent.appendChild(urlMessageBox)
     }
 
-    document.querySelector('body > .parent-content > .main-content > .all-messages').innerHTML += code;
+    if (response['files'].length > 0) {
+        const fileMsgBox = createElementWithAttributes('div', {classList : 'file-msg-box'})
 
-    latestMsgBox = document.querySelector('body > .parent-content > .main-content > .all-messages > .recieve-msg:last-of-type');
-    latestMsgBox.style.animationName = 'blink-new';
-    latestMsgBox.style.animationDuration = '2s';
-    latestMsgBox.style.animationIterationCount = '2';
+        const headerBox = createElementWithAttributes('div', {classList : 'header-box'})
+        headerBox.appendChild(createElementWithAttributes('span', {innerText : "Files"}))
+        fileMsgBox.appendChild(headerBox)
+
+        const contentBox = createElementWithAttributes('div', {classList : 'content-box'})
+        for (let file of response['files']) {
+            const fileContainer = createElementWithAttributes('div', {classList : 'file-container'})
+            const downloadButt = createElementWithAttributes('div', {classList : 'download-butt'})
+            downloadButt.onclick = () => {
+                downloadFile(file['path'])
+            }
+            downloadButt.appendChild(createElementWithAttributes('i', {classList : 'bi bi-download'}))
+            fileContainer.appendChild(downloadButt)
+
+            const formatParent = createElementWithAttributes('div', {classList : 'format-parent'})
+            let formatBox;
+            if (file['iconAvailable']) {
+                formatBox = createElementWithAttributes('div', {classList : 'format-box'})
+                formatBox.appendChild(createElementWithAttributes('i', {classList : `bi bi-filetype-${file['format']}`, fontSize : '25px'}))
+            } else {
+                formatBox = createElementWithAttributes('div', {classList : 'format-box', padding : '6px 10px', innerText : file['format']})
+            }
+            formatParent.appendChild(formatBox)
+
+            const bottomBox = createElementWithAttributes('div', {classList : 'bottom-box'})
+            bottomBox.appendChild(createElementWithAttributes('span', {innerText : file['name']}))
+            
+            fileContainer.appendChild(formatParent)
+            fileContainer.appendChild(bottomBox)
+            contentBox.appendChild(fileContainer)
+        }
+        
+        fileMsgBox.appendChild(contentBox)
+        parent.appendChild(fileMsgBox)
+    }
+
+    listContainer.appendChild(parent)
 }
 
 function createElementWithAttributes(tag, paramsObj = {}) {
@@ -326,8 +343,10 @@ function createElementWithAttributes(tag, paramsObj = {}) {
     if (paramsObj['id']) { documentElement.id = paramsObj['id']; }
     if (paramsObj['innerText']) { documentElement.innerText = paramsObj['innerText']; }
     if (paramsObj['color']) { documentElement.style.color = paramsObj['color']; }
-    if (paramsObj['bg-color']) { documentElement.style.backgroundColor = paramsObj['bg-color']; }
+    if (paramsObj['bg_color']) { documentElement.style.backgroundColor = paramsObj['bg_color']; }
     if (paramsObj['onclick']) { documentElement.onclick = paramsObj['onclick']; }
+    if (paramsObj['fontSize']) { documentElement.style.fontSize = paramsObj['fontSize']; }
+    if (paramsObj['padding']) { documentElement.style.padding = paramsObj['padding']; }
     if (paramsObj['src']) { documentElement.src = paramsObj['src']; }
     if (paramsObj['href']) { documentElement.href = paramsObj['href']; }
     if (paramsObj['target']) { documentElement.target = paramsObj['target']; }

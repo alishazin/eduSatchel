@@ -71,6 +71,9 @@ class SendPublicMessagePostOnlyView(PostOnlyViewBase):
                 'files' : False,
                 'teacher' : True if request.user.account_type == 'teacher' else False,
                 'time' : msgObj.time_only,
+                'date' : msgObj.formatted_date,
+                'profilePath' : request.user.profile_pic_path, 
+                'username' : request.user.username,
             }
 
             if urlObjs is not None:
@@ -82,7 +85,7 @@ class SendPublicMessagePostOnlyView(PostOnlyViewBase):
             if fileObjs is not None:
                 tempList = []
                 for obj in fileObjs:
-                    tempList.append([obj.file_location, obj.file_name, obj.format])
+                    tempList.append({'path' : obj.file_location, 'name' : obj.file_name, 'format' : obj.format, 'iconAvailable' : obj.availableIcon})
                 returnSuccessArray['files'] = tempList
 
             return HttpResponse(json.dumps(returnSuccessArray))
