@@ -301,13 +301,13 @@ body > .parent-content > .main-content > .all-messages > .loading-div > .circle 
     width: 30px;
     height: 30px;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg {
+body > .parent-content > .main-content > .all-messages > .recieve-msg, body > .parent-content > .main-content > .all-messages > .assignment-box {
     border: 2px solid var(--secondary-color);
     height: fit-content;
     overflow: hidden;
     padding: 0;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar {
     min-height: 60px;
     border-bottom: 1px solid var(--secondary-color);
     transform: translateX(-1px);
@@ -316,6 +316,29 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar
     align-items: center;
     padding: 0 25px;
     padding-right: 10px;
+}
+body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .icon-box {
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: var(--tertiary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .icon-box > i {
+    font-size: 20px;
+    color: white;
+}
+body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .text-box {
+    color: var(--tertiary-color);
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > img {
     height: 40px;
@@ -336,6 +359,7 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .sender-name > i {
     margin-right: 5px;
+    color: black;
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .sender-name > span {
     font-family: "Lato", Arial, Helvetica, sans-serif;
@@ -344,7 +368,7 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .date {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .date {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -355,7 +379,7 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar
     font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
     padding-right: 5px;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .time {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .time, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .time {
     display: flex;
     padding-left: 5px;
     justify-content: flex-start;
@@ -366,17 +390,17 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar
     color: var(--text-color);
     font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box, body > .parent-content > .main-content > .all-messages > .assignment-box > .content-box {
     min-height: 70px;
     padding: 8px 10px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box:hover {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box:hover, body > .parent-content > .main-content > .all-messages > .assignment-box > .content-box:hover {
     background-color: rgba(168, 208, 230, 0.2);
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box > p {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box > p, body > .parent-content > .main-content > .all-messages > .assignment-box > .content-box > p {
     font-size: 17px;
     color: var(--text-color);
     font-family: "Roboto", Arial, Helvetica, sans-serif;
@@ -776,12 +800,12 @@ body > .parent-content > .right-content > .class-desc > .sub-box > .desc-box {
     body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > img {
         display: none;
     }
-}
-@media (max-width:300px) {
-    body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar {
+    body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar {
         padding: 0 8px;
     }
-    body > .parent-content > .main-content > .msg-div > .dummy-overlay > img, body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .time {
+}
+@media (max-width:300px) {
+    body > .parent-content > .main-content > .msg-div > .dummy-overlay > img, body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .time, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .time {
         display: none !important;
     }
     body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .sender-name {

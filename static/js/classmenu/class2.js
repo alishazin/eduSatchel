@@ -83,9 +83,8 @@ function onLoadSecondFile() {
         },
         addDataToListMaster : function (responseArray) {
             for (let obj of responseArray) {
-                if (obj['type'] === 'messagePublic') {
-                    addMessageToList(obj)
-                }
+                if (obj['type'] === 'messagePublic') { addMessageToList(obj) }
+                else if (obj['type'] === 'assignment') { addAssignmentToList(obj) }
             }
         },
         addCallbacks : function () {
@@ -113,7 +112,7 @@ function addMessageToList(response, beginning = false) {
 
     let senderNameBox;
     if (response['teacher']) {
-        senderNameBox = createElementWithAttributes('div', {classList : 'sender-name', color : 'white', bg_color : 'var(--tertiary-color)'})
+        senderNameBox = createElementWithAttributes('div', {classList : 'sender-name', color : 'black', bg_color : 'var(--quaternary-color)'})
         senderNameBox.appendChild(createElementWithAttributes('i', {classList : 'bi bi-person-fill'}))
     } else {
         senderNameBox = createElementWithAttributes('div', {classList : 'sender-name'})
@@ -216,4 +215,39 @@ function addMessageToList(response, beginning = false) {
     } else {
         listContainer.append(parent)
     }
+}
+
+function addAssignmentToList(response) {
+    const listContainer = document.querySelector('body > .parent-content > .main-content > .all-messages')
+    console.log(response)
+
+    const parent = createElementWithAttributes('div', {classList : 'item assignment-box'})
+
+    const topBar = createElementWithAttributes('div', {classList : 'top-bar'})
+
+    const iconBox = createElementWithAttributes('div', {classList : 'icon-box'})
+    iconBox.appendChild(createElementWithAttributes('i', {classList : 'bi bi-clipboard2-check'}))
+    topBar.appendChild(iconBox)
+    
+    topBar.appendChild(createElementWithAttributes('div', {classList : 'text-box', innerText : 'Assignment'}))
+    
+    let date; 
+    if (response['date'] == 'Today' || response['date'] == 'Yesterday') {
+        date = createElementWithAttributes('div', {classList : 'date', color : 'var(--tertiary-color)'})
+    }
+    date = createElementWithAttributes('div', {classList : 'date'})
+    date.appendChild(createElementWithAttributes('span', {innerText : response['date']}))
+    topBar.appendChild(date)
+    
+    const time = createElementWithAttributes('div', {classList : 'time'})
+    time.appendChild(createElementWithAttributes('span', {innerText : response['time']}))
+    topBar.appendChild(time)
+    
+    parent.appendChild(topBar)
+    
+    const contentBox = createElementWithAttributes('div', {classList : 'content-box'})
+    contentBox.appendChild(createElementWithAttributes('p', {innerText : response['content']}))
+    parent.appendChild(contentBox)
+
+    listContainer.appendChild(parent)
 }

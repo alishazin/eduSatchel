@@ -2,16 +2,11 @@
     box-sizing: border-box;
 }
 :root {
-    /* --primary-color: #022449; */
     --primary-color: #022449;
-    /* --secondary-color: #52ab98; */
     --secondary-color: #A8D0E6;
-    /* --secondary-light-color: #96FFFF; */
     --secondary-dark-color: #a7ffff;
     --secondary-light-color: white;
-    /* --secondary-lighter-color: #C8EFF9; */
     --secondary-lighter-color: white;
-    /* --tertiary-color: #F27D92; */
     --tertiary-color: #F76C6C;
     --quaternary-color: #F8E9A1;
     --text-color: #757575; 

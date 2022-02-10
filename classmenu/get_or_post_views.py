@@ -212,7 +212,7 @@ class ClassDataByStepView(GetOnlyViewBase):
                 returnData.append(tempObj)
 
             if dataObj.type == 'assignment':
-                returnData.append('Assignemnt')
+                returnData.append({'type' : dataObj.type, 'content' : dataObj.content, 'date' : dataObj.formatted_date_added, 'time': dataObj.date_added_time_only})
 
             if dataObj.type == 'poll':
                 returnData.append('Poll')
