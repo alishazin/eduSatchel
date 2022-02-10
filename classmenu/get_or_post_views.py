@@ -17,6 +17,8 @@ from .backends import (
 )
 
 import json
+from itertools import chain
+from operator import attrgetter
 
 class GetOnlyViewBase(View):
     @authentication_check()
@@ -165,36 +167,52 @@ class JoinResponseView(PostOnlyViewBase):
 
             return errorReturnValue
 
+DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP = 25
+
 class ClassDataByStepView(GetOnlyViewBase):
     @classentry_check()
     def get_only(self, request, classID, stepCount):
-        import time
-        time.sleep(5)
+        # import time
+        # time.sleep(5)
         classObj = Class.objects.get(id=classID)
-        allMessages = classObj.messagepublic_set.all()
+        allDataList = sorted(chain(
+            classObj.messagepublic_set.all(), 
+            classObj.poll_set.all(), 
+            classObj.assignment_set.all()
+        ),key=attrgetter('date_added'), reverse=True)
+
         returnData = []
-        for msgObj in allMessages:
-            tempObj = {
-                'type' : 'publicMessage',
-                'content' : msgObj.content,
-                'urls' : False,
-                'files' : False,
-                'teacher' : True if request.user.account_type == 'teacher' else False,
-                'time' : msgObj.time_only,
-                'date' : msgObj.formatted_date,
-                'profilePath' : msgObj.user.profile_pic_path, 
-                'username' : msgObj.user.username,
-            }
+        print(len(allDataList))
+        for dataObj in allDataList[DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * (stepCount - 1) : DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * stepCount]:
+            if dataObj.type == 'messagePublic':
+                tempObj = {
+                    'type' : dataObj.type,
+                    'content' : dataObj.content,
+                    'urls' : False,
+                    'files' : False,
+                    'teacher' : True if request.user.account_type == 'teacher' else False,
+                    'time' : dataObj.time_only,
+                    'date' : dataObj.formatted_date,
+                    'profilePath' : dataObj.user.profile_pic_path, 
+                    'username' : dataObj.user.username,
+                }
 
-            if msgObj.urls:
-                tempObj['urls'] = []
-                for urlObj in msgObj.urls.all():
-                    tempObj['urls'].append(urlObj.url)
+                if dataObj.urls:
+                    tempObj['urls'] = []
+                    for urlObj in dataObj.urls.all():
+                        tempObj['urls'].append(urlObj.url)
 
-            if msgObj.files:
-                tempObj['files'] = []
-                for fileObj in msgObj.files.all():
-                    tempObj['files'].append({'path' : fileObj.file_location, 'name' : fileObj.file_name, 'format' : fileObj.format, 'iconAvailable' : fileObj.availableIcon})
+                if dataObj.files:
+                    tempObj['files'] = []
+                    for fileObj in dataObj.files.all():
+                        tempObj['files'].append({'path' : fileObj.file_location, 'name' : fileObj.file_name, 'format' : fileObj.format, 'iconAvailable' : fileObj.availableIcon})
 
-            returnData.append(tempObj)
+                returnData.append(tempObj)
+
+            if dataObj.type == 'assignment':
+                returnData.append('Assignemnt')
+
+            if dataObj.type == 'poll':
+                returnData.append('Poll')
+
         return HttpResponse(json.dumps(returnData))

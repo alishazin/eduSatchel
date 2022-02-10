@@ -264,7 +264,7 @@ body > .parent-content > .main-content > .msg-div > .real-content > .content-box
 }
 body > .parent-content > .main-content > .all-messages {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     position: relative;

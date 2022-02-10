@@ -43,7 +43,7 @@ function onLoadSecondFile() {
         },
         addDataToListMaster : function (responseArray) {
             for (let obj of responseArray) {
-                if (obj['type'] === 'publicMessage') {
+                if (obj['type'] === 'messagePublic') {
                     addMessageToList(obj)
                 }
             }

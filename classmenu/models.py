@@ -47,22 +47,26 @@ class MessagePublic(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     files = models.ManyToManyField(File, blank=True)
     urls = models.ManyToManyField(Url, blank=True)
-    date = models.DateTimeField(auto_now_add=True)
+    date_added = models.DateTimeField(auto_now_add=True)
     # add() to add to files
     # set() to set new querysets of files
 
     @property
     def formatted_date(self):
-        return check_if_today_or_yesterday(self.date)
+        return check_if_today_or_yesterday(self.date_added)
 
     @property
     def IST_datetime(self):
-        return get_IST_from_UTC(self.date)
+        return get_IST_from_UTC(self.date_added)
 
     @property
     def time_only(self):
-        ISTDate = get_IST_from_UTC(self.date)
+        ISTDate = get_IST_from_UTC(self.date_added)
         return f'{add_zero_to_left(ISTDate.hour)}:{add_zero_to_left(ISTDate.minute)}'
+
+    @property
+    def type(self):
+        return 'messagePublic'
 
 class Assignment(models.Model):
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
@@ -92,10 +96,18 @@ class Assignment(models.Model):
         ISTDate = get_IST_from_UTC(self.date_due)
         return f'{add_zero_to_left(ISTDate.hour)}:{add_zero_to_left(ISTDate.minute)}'
 
+    @property
+    def type(self):
+        return 'assignment'
+
 class Poll(models.Model):
     title = models.TextField(blank=False, null=False)
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def type(self):
+        return 'poll'
 
 class PollOption(models.Model):
     poll_obj = models.ForeignKey(Poll, on_delete=models.CASCADE)
