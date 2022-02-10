@@ -27,7 +27,7 @@ class ClassMenuView(View):
         classObj = Class.objects.get(id=classID)
         return render(request, 'classmenu/class.html', {
             'classObj' : classObj,
-            'msgObjects' : classObj.messagepublic_set.all(),
+            # 'msgObjects' : classObj.messagepublic_set.all(),
         })
 
 class ClassSettingsView(View):

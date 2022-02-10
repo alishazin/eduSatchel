@@ -6,6 +6,7 @@
 {% block headextraextra %}
 <link rel='stylesheet' href="{% static 'css/classmenu/class.css' %}">
 <script src="{% static 'js/classmenu/class.js' %}"></script>
+<script src="{% static 'js/classmenu/class2.js' %}"></script>
 {% endblock headextraextra %}
 
 {% block bodyextra %}
@@ -58,84 +59,23 @@
     </div>
     <div class="all-messages">
         {% if msgObjects %}
-            {% for msgObj in msgObjects %}
-                <div class="item recieve-msg">
-                    <div class="top-bar">
-                        <img src="{{ msgObj.user.profile_pic_path }}">
-                        {% if msgObj.user == classObj.teacher %}
-                            <div class="sender-name" style="color: white; background-color: var(--tertiary-color);">
-                                <i class="bi bi-person-fill"></i>
-                        {% else %}
-                            <div class="sender-name">
-                        {% endif %}
-                                <span>{{ msgObj.user.username }}</span>
-                            </div>
-                        {% if msgObj.formatted_date == 'Today' or msgObj.formatted_date == 'Yesterday' %}
-                            <div class="date" style="color: var(--tertiary-color)"><span>{{ msgObj.formatted_date }}</span></div>
-                        {% else %}
-                            <div class="date" style="color: rgb(71, 71, 71)"><span>{{ msgObj.formatted_date }}</span></div>
-                        {% endif %}
-                        <div class="time"><span>{{ msgObj.time_only }}</span></div>
-                    </div>
-                    <div class="content-box">
-                        <p>{{ msgObj.content }}</p>
-                    </div>
-                    {% if msgObj.urls.all %}
-                        <div class="url-msg-box">
-                            <div class="header-box">
-                                <span>URL's</span>
-                            </div>
-                            <div class="content-box">
-                                {% for urlObj in msgObj.urls.all %}
-                                    <div class="url-container">
-                                        <span><a href="{{ urlObj.url }}" target="_blank">{{ urlObj.url }}</a></span>
-                                        <div class="icon-butt" onclick="copyText('{{ urlObj.url }}')">
-                                            <i class="bi bi-clipboard"></i>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                    {% if msgObj.files.all %}
-                        <div class="file-msg-box">
-                            <div class="header-box">
-                                <span>Files</span>
-                            </div>
-                            <div class="content-box">
-                                {% for fileObj in msgObj.files.all %}
-                                    <div class="file-container">
-                                        <div class="download-butt" onclick="downloadFile('{{ fileObj.file_location }}')">
-                                            <i class="bi bi-download"></i>
-                                        </div>
-                                        <div class="format-parent">
-                                            {% if fileObj.availableIcon %}
-                                                <div class="format-box">
-                                                    <i class="bi bi-filetype-{{ fileObj.format }}" style="font-size: 25px"></i>
-                                                </div>
-                                            {% else %}
-                                                <div class="format-box" style="padding: 6px 10px;">{{ fileObj.format }}</div>
-                                            {% endif %}
-                                        </div>
-                                        <div class="bottom-box"><span>{{ fileObj.file_name }}</span></div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-                </div>
-            {% endfor %}
+
         {% else %}
-        <div class="item empty-div">
-            <div class="icon-box">
-                <i class="bi bi-chat-text"></i>
-            </div>
-            <div class="text-box">
-                <h2>No Activities Yet!</h2>
-                <span>You can be the first one.</span>
+            <!-- <div class="item empty-div">
+                <div class="icon-box">
+                    <i class="bi bi-chat-text"></i>
+                </div>
+                <div class="text-box">
+                    <h2>No Activities Yet!</h2>
+                    <span>You can be the first one.</span>
+                </div>
+            </div> -->
+        {% endif %}
+        <div class="loading-div">
+            <div class="circle">
+                <div class="spinner"></div>
             </div>
         </div>
-        {% endif %}
     </div>
 </div>
 <div class="right-content" tabindex="0">
@@ -173,7 +113,5 @@
 <script>
     var classIDGlobal = '{{ classObj.id }}';
     var csrftoken = '{{ csrf_token }}';
-    var profileImageGlobal = "{{ request.user.profile_pic_path }}"; 
-    var usernameGlobal = "{{ request.user.username }}"; 
 </script>
 {% endblock bodyextra %}

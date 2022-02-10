@@ -6,6 +6,8 @@ var moreButtonBox = {};
 function onLoad() {
     navBarObj.selectItem(1);
 
+    onLoadSecondFile();
+
     teacherDetailBox = {
         parent : document.querySelector('body > .parent-content > .right-content > .teacher-details'),
         extendButt : document.querySelector('body > .parent-content > .right-content > .teacher-details > .extend-div'),
