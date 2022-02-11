@@ -52,23 +52,29 @@ body > .parent-content > .main-content > .all-messages > .poll-box > .content-bo
     transform: translateX(-1px) translateY(1.5px);
     transition: opacity 0.3s;
 }
-body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.before > .option > .left-box {
-    cursor: pointer;
-}
-body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.before > .option > .left-box:hover {
-    box-shadow: none;
-    background-color: var(--tertiary-color);
-}
-body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.before > .option > .left-box:hover > i {
-    opacity: 1;
-}
 body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option > .text-box {
     width: 100%;
     padding: 8px 12px;
     height: 100%;
     font-size: 15px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     color: var(--text-color);
     word-wrap: break-word;
     line-height: 25px;
+}
+
+/* Before Polling */
+
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.before > .option:hover {
+    background-color: rgba(255, 193, 189, 0.2);
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.before > .option {
+    cursor: pointer;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.before > .option:hover > .left-box {
+    box-shadow: none;
+    background-color: var(--tertiary-color);
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.before > .option:hover > .left-box > i {
+    opacity: 1;
 }
