@@ -1,3 +1,4 @@
+import re
 from django.db import models
 from home.models import Class
 from register.models import CustomUser
@@ -124,6 +125,13 @@ class Poll(models.Model):
     def encoded_id(self):
         return urlsafe_base64_encode(force_bytes(self.id))
 
+    @property
+    def total_votes(self):
+        total = 0
+        for pollOption in self.polloption_set.all():
+            total += len(pollOption.polleddetail_set.all())
+        return total
+
     def check_if_polled(self, userObj):
         for pollOption in self.polloption_set.all():
             for pollDetails in pollOption.polleddetail_set.all():
@@ -133,6 +141,7 @@ class Poll(models.Model):
 
     def get_option_results(self, userObj):
         numericalData = {}
+        selected = False
         for pollOption in self.polloption_set.all():
             numericalData[pollOption.encoded_id] = 0
             for pollDetails in pollOption.polleddetail_set.all():
@@ -143,7 +152,10 @@ class Poll(models.Model):
         total = sum(numericalData.values())
         percentageData = {}
         for option, numeric in numericalData.items():
-            percentageData[option] = round((numeric / total) * 100, 2)
+            try:
+                percentageData[option] = round((numeric / total) * 100, 2)
+            except ZeroDivisionError:
+                percentageData[option] = 0
 
         return {'selected' : selected, 'result' : percentageData}
 

@@ -259,6 +259,34 @@ function addAssignmentToList(response) {
 }
 
 function addPollToList(response) {
+    const currentPollObj = allPollObjects[response['id']] = {
+        div : null,
+        title : response['title'],
+        options : {},
+        _state : null,
+        get state() {
+            return this._state;
+        },
+        set state(arg) {
+            if (arg === 'voted') {
+                this.div.classList = 'option-box after';
+            } else if (arg === 'due') {
+                this.div.classList = 'option-box before';
+            }
+            this._state = arg;
+        },
+        addData : function (detailsObj) {
+            console.log(detailsObj)
+            for (let id in detailsObj['result']) {
+
+                this.options[id].percentageDiv.innerText = `${Number(detailsObj['result'][id]).toFixed()}`
+                this.options[id].parent.style.backgroundPositionX = `${100 - detailsObj['result'][id]}%`
+            }
+
+            if (detailsObj['selected']) { this.options[detailsObj['selected']].parent.classList = 'option selected' } 
+        }
+    }
+
     const listContainer = document.querySelector('body > .parent-content > .main-content > .all-messages')
 
     const parent = createElementWithAttributes('div', {classList : 'item poll-box'})
@@ -291,40 +319,39 @@ function addPollToList(response) {
     
     const optionBox = createElementWithAttributes('div', {classList : 'option-box'})
     optionBox.appendChild(createElementWithAttributes('div', {classList : 'id', innerText : response['id']}))
+    currentPollObj.div = optionBox
     for (let pollObj of response['options']) {
         const optionParent = createElementWithAttributes('div', {classList : 'option'})
         optionParent.appendChild(createElementWithAttributes('div', {classList : 'id', innerText : pollObj['id']}))
-
+        
         const leftBox = createElementWithAttributes('div', {classList : 'left-box'})
         leftBox.appendChild(createElementWithAttributes('i', {classList : 'bi bi-check2'}))
-        leftBox.appendChild(createElementWithAttributes('span'))
+        const span = createElementWithAttributes('span')
+        leftBox.appendChild(span)
         optionParent.appendChild(leftBox)
-
+        
         optionParent.appendChild(createElementWithAttributes('div', {classList : 'text-box', innerText : pollObj['content']}))
-
+        
+        currentPollObj.options[pollObj['id']] = {percentageDiv : span, parent : optionParent}
         optionBox.appendChild(optionParent)
     }
     contentBox.appendChild(optionBox)
 
     parent.appendChild(contentBox)
+    
+    const bottomBar = createElementWithAttributes('div', {classList : 'bottom-bar'})
+    bottomBar.appendChild(createElementWithAttributes('span', {innerText : `${response['total']} votes`}))
+
+    parent.appendChild(bottomBar)
 
     listContainer.appendChild(parent)
 
-    allPollObjects[response['id']] = {
-        div : optionBox,
-        title : response['title'],
-        _state : null,
-        get state() {
-            return this._state;
-        },
-        set state(arg) {
-            if (arg === 'voted') {
-                this.div.classList = 'option-box after';
-            } else if (arg === 'due') {
-                this.div.classList = 'option-box before';
-            }
-            this._state = arg;
-        }
+    if (response['optionDetails']) {
+        setTimeout(() => {
+            currentPollObj.addData(response['optionDetails'])
+            currentPollObj.state = 'voted';
+        }, 100)
+    } else {
+        currentPollObj.state = 'due';
     }
-    allPollObjects[response['id']].state = 'due';
 }

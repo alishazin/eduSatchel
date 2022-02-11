@@ -223,6 +223,7 @@ class ClassDataByStepView(GetOnlyViewBase):
                     'time': dataObj.date_added_time_only,
                     'options' : [],
                     'optionDetails' : False,
+                    'total' : dataObj.total_votes,
                 }
 
                 for optionObj in dataObj.polloption_set.all():
