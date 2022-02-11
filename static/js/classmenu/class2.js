@@ -234,8 +234,9 @@ function addAssignmentToList(response) {
     let date; 
     if (response['date'] == 'Today' || response['date'] == 'Yesterday') {
         date = createElementWithAttributes('div', {classList : 'date', color : 'var(--tertiary-color)'})
+    } else {
+        date = createElementWithAttributes('div', {classList : 'date'})
     }
-    date = createElementWithAttributes('div', {classList : 'date'})
     date.appendChild(createElementWithAttributes('span', {innerText : response['date']}))
     topBar.appendChild(date)
     
@@ -247,6 +248,9 @@ function addAssignmentToList(response) {
     
     const contentBox = createElementWithAttributes('div', {classList : 'content-box'})
     contentBox.appendChild(createElementWithAttributes('p', {innerText : response['content']}))
+    
+    contentBox.appendChild(createElementWithAttributes('i', {classList : 'bi bi-chevron-double-right'}))
+
     parent.appendChild(contentBox)
 
     listContainer.appendChild(parent)

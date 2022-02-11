@@ -340,6 +340,22 @@ body > .parent-content > .main-content > .all-messages > .assignment-box > .top-
     overflow: hidden;
     text-overflow: ellipsis;
 }
+body > .parent-content > .main-content > .all-messages > .assignment-box > .content-box > i {
+    position: absolute;
+    right: 30px;
+    opacity: 0;
+    bottom: calc(50% - 10px);
+    color: var(--tertiary-color);
+    font-size: 20px;
+    transition: right 0.2s, opacity 0.2s;
+}
+body > .parent-content > .main-content > .all-messages > .assignment-box > .content-box:hover {
+    background-color: rgba(255, 193, 189, 0.2);
+}
+body > .parent-content > .main-content > .all-messages > .assignment-box > .content-box:hover > i {
+    right: 20px;
+    opacity: 1;
+}
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > img {
     height: 40px;
     width: 40px;
@@ -397,7 +413,11 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .content
     justify-content: flex-start;
     align-items: center;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box:hover, body > .parent-content > .main-content > .all-messages > .assignment-box > .content-box:hover {
+body > .parent-content > .main-content > .all-messages > .assignment-box > .content-box {
+    position: relative;
+    cursor: pointer;
+}
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box:hover {
     background-color: rgba(168, 208, 230, 0.2);
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .content-box > p, body > .parent-content > .main-content > .all-messages > .assignment-box > .content-box > p {
@@ -406,7 +426,7 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .content
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     margin: 0;
     text-indent: 10px;
-    line-height: 22px;
+    line-height: 25px;
     word-wrap: break-word;
     overflow: hidden;
 }
