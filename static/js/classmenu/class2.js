@@ -272,6 +272,8 @@ function addPollToList(response) {
                 this.div.classList = 'option-box after';
             } else if (arg === 'due') {
                 this.div.classList = 'option-box before';
+            } else if (arg === 'loading') {
+                this.div.classList = 'option-box loading';
             }
             this._state = arg;
         },
@@ -284,7 +286,10 @@ function addPollToList(response) {
             }
 
             if (detailsObj['selected']) { this.options[detailsObj['selected']].parent.classList = 'option selected' } 
-        }
+        },
+        asyncFuncForPostRequest : async function () {
+            this.state = 'loading';
+        },
     }
 
     const listContainer = document.querySelector('body > .parent-content > .main-content > .all-messages')
@@ -322,6 +327,11 @@ function addPollToList(response) {
     currentPollObj.div = optionBox
     for (let pollObj of response['options']) {
         const optionParent = createElementWithAttributes('div', {classList : 'option'})
+        optionParent.onclick = () => {
+            if (currentPollObj.state === 'due') {
+                currentPollObj.asyncFuncForPostRequest()
+            }
+        }
         optionParent.appendChild(createElementWithAttributes('div', {classList : 'id', innerText : pollObj['id']}))
         
         const leftBox = createElementWithAttributes('div', {classList : 'left-box'})
