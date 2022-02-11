@@ -2,6 +2,9 @@ from django.db import models
 from home.models import Class
 from register.models import CustomUser
 
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+
 from home.backends import get_IST_from_UTC, add_zero_to_left
 from home.backends import check_if_today_or_yesterday
 
@@ -83,7 +86,6 @@ class Assignment(models.Model):
 
     @property
     def formatted_date_due(self):
-        # We will change it to showing due by time, tomorrow etc..
         return check_if_today_or_yesterday(self.date_due)
 
     @property
@@ -109,9 +111,49 @@ class Poll(models.Model):
     def type(self):
         return 'poll'
 
+    @property
+    def formatted_date_added(self):
+        return check_if_today_or_yesterday(self.date_added)
+
+    @property
+    def date_added_time_only(self):
+        ISTDate = get_IST_from_UTC(self.date_added)
+        return f'{add_zero_to_left(ISTDate.hour)}:{add_zero_to_left(ISTDate.minute)}'
+
+    @property
+    def encoded_id(self):
+        return urlsafe_base64_encode(force_bytes(self.id))
+
+    def check_if_polled(self, userObj):
+        for pollOption in self.polloption_set.all():
+            for pollDetails in pollOption.polleddetail_set.all():
+                if pollDetails.student == userObj:
+                    return True
+        return False
+
+    def get_option_results(self, userObj):
+        numericalData = {}
+        for pollOption in self.polloption_set.all():
+            numericalData[pollOption.encoded_id] = 0
+            for pollDetails in pollOption.polleddetail_set.all():
+                if pollDetails.student == userObj:
+                    selected = pollDetails.poll_option_obj.encoded_id 
+                numericalData[pollDetails.poll_option_obj.encoded_id] += 1 
+
+        total = sum(numericalData.values())
+        percentageData = {}
+        for option, numeric in numericalData.items():
+            percentageData[option] = round((numeric / total) * 100, 2)
+
+        return {'selected' : selected, 'result' : percentageData}
+
 class PollOption(models.Model):
     poll_obj = models.ForeignKey(Poll, on_delete=models.CASCADE)
     content = models.CharField(max_length=300, blank=False, null=False)
+
+    @property
+    def encoded_id(self):
+        return urlsafe_base64_encode(force_bytes(self.id))
 
 class PolledDetail(models.Model):
     poll_option_obj = models.ForeignKey(PollOption, on_delete=models.CASCADE)

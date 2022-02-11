@@ -42,7 +42,7 @@ body > .parent-content > .main-content > .all-messages > .poll-box > .content-bo
 body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option:last-of-type {
     margin-bottom: 0;
 }
-body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option > .id {
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option > .id, body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .id {
     display: none;
 }
 body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option > .left-box {

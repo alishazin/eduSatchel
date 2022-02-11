@@ -215,6 +215,22 @@ class ClassDataByStepView(GetOnlyViewBase):
                 returnData.append({'type' : dataObj.type, 'content' : dataObj.content, 'date' : dataObj.formatted_date_added, 'time': dataObj.date_added_time_only})
 
             if dataObj.type == 'poll':
-                returnData.append('Poll')
+                tempObj = {
+                    'type' : dataObj.type,
+                    'id' : dataObj.encoded_id,
+                    'title' : dataObj.title, 
+                    'date' : dataObj.formatted_date_added, 
+                    'time': dataObj.date_added_time_only,
+                    'options' : [],
+                    'optionDetails' : False,
+                }
+
+                for optionObj in dataObj.polloption_set.all():
+                    tempObj['options'].append({'id' : optionObj.encoded_id, 'content' : optionObj.content})
+
+                if request.user == classObj.teacher or dataObj.check_if_polled(request.user):
+                    tempObj['optionDetails'] = dataObj.get_option_results(request.user)
+
+                returnData.append(tempObj)
 
         return HttpResponse(json.dumps({'data' : returnData, 'stepCount' : stepCount + 1 if len(slicedData) == 25 else 0, 'empty' : True if len(allDataList) == 0 else False}))

@@ -1,6 +1,8 @@
 
 var allMessagesDiv = {};
 
+var allPollObjects = {};
+
 function onLoadSecondFile() {
     allMessagesDiv = {
         parent : document.querySelector('body > .parent-content > .main-content > .all-messages'),
@@ -85,6 +87,7 @@ function onLoadSecondFile() {
             for (let obj of responseArray) {
                 if (obj['type'] === 'messagePublic') { addMessageToList(obj) }
                 else if (obj['type'] === 'assignment') { addAssignmentToList(obj) }
+                else if (obj['type'] === 'poll') { addPollToList(obj) }
             }
         },
         addCallbacks : function () {
@@ -253,4 +256,75 @@ function addAssignmentToList(response) {
     parent.appendChild(contentBox)
 
     listContainer.appendChild(parent)
+}
+
+function addPollToList(response) {
+    const listContainer = document.querySelector('body > .parent-content > .main-content > .all-messages')
+
+    const parent = createElementWithAttributes('div', {classList : 'item poll-box'})
+
+    const topBar = createElementWithAttributes('div', {classList : 'top-bar'})
+
+    const iconBox = createElementWithAttributes('div', {classList : 'icon-box'})
+    iconBox.appendChild(createElementWithAttributes('i', {classList : 'bi bi-pie-chart'}))
+    topBar.appendChild(iconBox)
+    
+    topBar.appendChild(createElementWithAttributes('div', {classList : 'text-box', innerText : 'Poll'}))
+    
+    let date; 
+    if (response['date'] == 'Today' || response['date'] == 'Yesterday') {
+        date = createElementWithAttributes('div', {classList : 'date', color : 'var(--tertiary-color)'})
+    } else {
+        date = createElementWithAttributes('div', {classList : 'date'})
+    }
+    date.appendChild(createElementWithAttributes('span', {innerText : response['date']}))
+    topBar.appendChild(date)
+    
+    const time = createElementWithAttributes('div', {classList : 'time'})
+    time.appendChild(createElementWithAttributes('span', {innerText : response['time']}))
+    topBar.appendChild(time)
+    
+    parent.appendChild(topBar)
+
+    const contentBox = createElementWithAttributes('div', {classList : 'content-box'})
+    contentBox.appendChild(createElementWithAttributes('div', {classList : 'title-box', innerText : response['title']}))
+    
+    const optionBox = createElementWithAttributes('div', {classList : 'option-box'})
+    optionBox.appendChild(createElementWithAttributes('div', {classList : 'id', innerText : response['id']}))
+    for (let pollObj of response['options']) {
+        const optionParent = createElementWithAttributes('div', {classList : 'option'})
+        optionParent.appendChild(createElementWithAttributes('div', {classList : 'id', innerText : pollObj['id']}))
+
+        const leftBox = createElementWithAttributes('div', {classList : 'left-box'})
+        leftBox.appendChild(createElementWithAttributes('i', {classList : 'bi bi-check2'}))
+        leftBox.appendChild(createElementWithAttributes('span'))
+        optionParent.appendChild(leftBox)
+
+        optionParent.appendChild(createElementWithAttributes('div', {classList : 'text-box', innerText : pollObj['content']}))
+
+        optionBox.appendChild(optionParent)
+    }
+    contentBox.appendChild(optionBox)
+
+    parent.appendChild(contentBox)
+
+    listContainer.appendChild(parent)
+
+    allPollObjects[response['id']] = {
+        div : optionBox,
+        title : response['title'],
+        _state : null,
+        get state() {
+            return this._state;
+        },
+        set state(arg) {
+            if (arg === 'voted') {
+                this.div.classList = 'option-box after';
+            } else if (arg === 'due') {
+                this.div.classList = 'option-box before';
+            }
+            this._state = arg;
+        }
+    }
+    allPollObjects[response['id']].state = 'due';
 }
