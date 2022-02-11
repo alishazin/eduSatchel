@@ -1,0 +1,74 @@
+body > .parent-content > .main-content > .all-messages > .poll-box > .top-bar > .icon-box > i {
+    transform: translateX(-0.5px) translateY(0.5px);
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box {
+    padding: 10px;
+    width: 100%;
+    min-height: fit-content;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .title-box {
+    padding: 10px;
+    font-size: 17px;
+    line-height: 25px;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    word-wrap: break-word;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box {
+    padding: 10px;
+    width: 100%;
+    min-height: fit-content;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 2px solid #ddd;
+    border-radius: 30px;
+    min-height: 46px;
+    padding-left: 8px;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option:last-of-type {
+    margin-bottom: 0;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option > .id {
+    display: none;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option > .left-box {
+    min-width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 6px #ddd;
+    background-color: white;
+    transition: background-color 0.3s;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option > .left-box > i {
+    opacity: 0;
+    font-size: 20px;
+    color: white;
+    transform: translateX(-1px) translateY(1.5px);
+    transition: opacity 0.3s;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.before > .option > .left-box {
+    cursor: pointer;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.before > .option > .left-box:hover {
+    box-shadow: none;
+    background-color: var(--tertiary-color);
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.before > .option > .left-box:hover > i {
+    opacity: 1;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box > .option > .text-box {
+    width: 100%;
+    padding: 8px 12px;
+    height: 100%;
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--text-color);
+    word-wrap: break-word;
+    line-height: 25px;
+}

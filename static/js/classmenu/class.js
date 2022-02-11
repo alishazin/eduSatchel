@@ -210,7 +210,6 @@ function sendPostRequestForMessage() {
                 if (response['success']) {
                     if (allMessagesDiv.emptyDiv !== null) {
                         allMessagesDiv.emptyDiv.remove();
-
                         allMessagesDiv.emptyDiv = null;
                     }
                     resolve(response);

@@ -219,7 +219,6 @@ function addMessageToList(response, beginning = false) {
 
 function addAssignmentToList(response) {
     const listContainer = document.querySelector('body > .parent-content > .main-content > .all-messages')
-    console.log(response)
 
     const parent = createElementWithAttributes('div', {classList : 'item assignment-box'})
 

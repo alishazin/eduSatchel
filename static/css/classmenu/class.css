@@ -301,13 +301,13 @@ body > .parent-content > .main-content > .all-messages > .loading-div > .circle 
     width: 30px;
     height: 30px;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg, body > .parent-content > .main-content > .all-messages > .assignment-box {
+body > .parent-content > .main-content > .all-messages > .recieve-msg, body > .parent-content > .main-content > .all-messages > .assignment-box, body > .parent-content > .main-content > .all-messages > .poll-box {
     border: 2px solid var(--secondary-color);
     height: fit-content;
     overflow: hidden;
     padding: 0;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar, body > .parent-content > .main-content > .all-messages > .poll-box > .top-bar {
     min-height: 60px;
     border-bottom: 1px solid var(--secondary-color);
     transform: translateX(-1px);
@@ -317,7 +317,7 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar
     padding: 0 25px;
     padding-right: 10px;
 }
-body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .icon-box {
+body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .icon-box, body > .parent-content > .main-content > .all-messages > .poll-box > .top-bar > .icon-box {
     height: 40px;
     min-width: 40px;
     border-radius: 50%;
@@ -327,11 +327,11 @@ body > .parent-content > .main-content > .all-messages > .assignment-box > .top-
     justify-content: center;
     align-items: center;
 }
-body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .icon-box > i {
+body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .icon-box > i, body > .parent-content > .main-content > .all-messages > .poll-box > .top-bar > .icon-box > i {
     font-size: 20px;
     color: white;
 }
-body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .text-box {
+body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .text-box, body > .parent-content > .main-content > .all-messages > .poll-box > .top-bar > .text-box {
     color: var(--tertiary-color);
     font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
     font-size: 18px;
@@ -384,7 +384,7 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .date {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .poll-box > .top-bar > .date {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -395,7 +395,7 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar
     font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
     padding-right: 5px;
 }
-body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .time, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .time {
+body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .time, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .time, body > .parent-content > .main-content > .all-messages > .poll-box > .top-bar > .time {
     display: flex;
     padding-left: 5px;
     justify-content: flex-start;
@@ -429,6 +429,9 @@ body > .parent-content > .main-content > .all-messages > .recieve-msg > .content
     line-height: 25px;
     word-wrap: break-word;
     overflow: hidden;
+}
+body > .parent-content > .main-content > .all-messages > .assignment-box > .content-box > p {
+    color: black;
 }
 body > .parent-content > .main-content > .all-messages > .recieve-msg > .url-msg-box, body > .parent-content > .main-content > .all-messages > .recieve-msg > .file-msg-box {
     height: fit-content;
@@ -820,12 +823,12 @@ body > .parent-content > .right-content > .class-desc > .sub-box > .desc-box {
     body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > img {
         display: none;
     }
-    body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar {
+    body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar, body > .parent-content > .main-content > .all-messages > .poll-box > .top-bar {
         padding: 0 8px;
     }
 }
 @media (max-width:300px) {
-    body > .parent-content > .main-content > .msg-div > .dummy-overlay > img, body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .time, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .time {
+    body > .parent-content > .main-content > .msg-div > .dummy-overlay > img, body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .time, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .date, body > .parent-content > .main-content > .all-messages > .assignment-box > .top-bar > .time, body > .parent-content > .main-content > .all-messages > .poll-box > .top-bar > .date,  body > .parent-content > .main-content > .all-messages > .poll-box > .top-bar > .time {
         display: none !important;
     }
     body > .parent-content > .main-content > .all-messages > .recieve-msg > .top-bar > .sender-name {
