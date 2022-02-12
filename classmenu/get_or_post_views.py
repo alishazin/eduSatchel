@@ -235,3 +235,9 @@ class ClassDataByStepView(GetOnlyViewBase):
                 returnData.append(tempObj)
 
         return HttpResponse(json.dumps({'data' : returnData, 'stepCount' : stepCount + 1 if len(slicedData) == 25 else 0, 'empty' : True if len(allDataList) == 0 else False}))
+
+class PollCastedView(PostOnlyViewBase):
+    @classentry_check(account_type='student')
+    def post_only(self, request, classID):
+        print(request.POST)
+        return HttpResponse(json.dumps(['success']))

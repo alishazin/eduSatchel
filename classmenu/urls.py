@@ -13,6 +13,7 @@ from .get_or_post_views import (
     ChangeClassDescriptionView,
     JoinResponseView,
     ClassDataByStepView,
+    PollCastedView,
 )
 
 app_name = 'classmenu'
@@ -27,4 +28,5 @@ urlpatterns = [
     path('<classID>/add-assignment/', AddAssignmentView.as_view(), name="add-assignment"),
     path('<classID>/add-poll/', AddPollView.as_view(), name="add-poll"),
     path('<classID>/get-class-data/<int:stepCount>/', ClassDataByStepView.as_view()),
+    path('<classID>/poll-casted/', PollCastedView.as_view()),
 ]

@@ -278,7 +278,6 @@ function addPollToList(response) {
             this._state = arg;
         },
         addData : function (detailsObj) {
-            console.log(detailsObj)
             for (let id in detailsObj['result']) {
 
                 this.options[id].percentageDiv.innerText = `${Number(detailsObj['result'][id]).toFixed()}`
@@ -287,9 +286,32 @@ function addPollToList(response) {
 
             if (detailsObj['selected']) { this.options[detailsObj['selected']].parent.classList = 'option selected' } 
         },
-        asyncFuncForPostRequest : async function () {
+        asyncFuncForPostRequest : async function (id) {
             this.state = 'loading';
+            const response = await this.sendPostRequest(id)
+            this.state = 'voted';
         },
+        sendPostRequest : function (id) {
+            return new Promise((resolve, reject) => {
+                var req = new XMLHttpRequest();
+                req.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const response = JSON.parse(this.responseText);
+                        console.log(response)
+                        resolve()
+                    }
+                }
+                
+                req.open('POST', `/class/${classIDGlobal}/poll-casted/`); 
+                req.setRequestHeader("X-CSRFToken", csrftoken); 
+                req.send(this.getFormData(id));
+            })
+        },
+        getFormData : function (id) {
+            const formdata = new FormData()
+            formdata.append('id', id)
+            return formdata
+        }
     }
 
     const listContainer = document.querySelector('body > .parent-content > .main-content > .all-messages')
@@ -329,7 +351,7 @@ function addPollToList(response) {
         const optionParent = createElementWithAttributes('div', {classList : 'option'})
         optionParent.onclick = () => {
             if (currentPollObj.state === 'due') {
-                currentPollObj.asyncFuncForPostRequest()
+                currentPollObj.asyncFuncForPostRequest(pollObj['id'])
             }
         }
         optionParent.appendChild(createElementWithAttributes('div', {classList : 'id', innerText : pollObj['id']}))
