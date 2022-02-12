@@ -264,6 +264,7 @@ function addPollToList(response) {
         title : response['title'],
         options : {},
         totalDiv : null,
+        closed : response['closed'],
         _state : null,
         get state() {
             return this._state;
@@ -296,7 +297,8 @@ function addPollToList(response) {
                 this.state = 'voted';
             } catch(errMsg) {
                 alert(errMsg);
-                this.state = 'due';
+                if (this.closed) { this.state = 'voted'; }
+                else { this.state = 'due'; }  
             }
         },
         sendPostRequest : function (id) {
@@ -362,7 +364,7 @@ function addPollToList(response) {
     for (let pollObj of response['options']) {
         const optionParent = createElementWithAttributes('div', {classList : 'option'})
         optionParent.onclick = () => {
-            if (currentPollObj.state === 'due') {
+            if (currentPollObj.state === 'due' && !currentPollObj.closed) {
                 currentPollObj.asyncFuncForPostRequest(pollObj['id'])
             }
         }
@@ -384,7 +386,9 @@ function addPollToList(response) {
     parent.appendChild(contentBox)
     
     const bottomBar = createElementWithAttributes('div', {classList : 'bottom-bar'})
-    const bottomSpan = createElementWithAttributes('span', {innerText : `${response['total']} vote(s)`})
+    const bottomSpan = createElementWithAttributes('span', {classList : 'total', innerText : `${response['total']} vote(s)`})
+    if (response['closed']) { bottomBar.appendChild(createElementWithAttributes('span', {classList : 'state', innerText : 'closed', color : 'red'})) }
+    else { bottomBar.appendChild(createElementWithAttributes('span', {classList : 'state', innerText : 'open', color : 'var(--green-color)'})) }
     bottomBar.appendChild(bottomSpan)
     currentPollObj.totalDiv = bottomSpan;
 
@@ -392,7 +396,7 @@ function addPollToList(response) {
 
     listContainer.appendChild(parent)
 
-    if (response['optionDetails']) {
+    if (response['optionDetails'] || response['closed']) {
         setTimeout(() => {
             currentPollObj.addData(response['optionDetails'])
             currentPollObj.state = 'voted';

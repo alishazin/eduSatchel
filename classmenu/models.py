@@ -107,6 +107,7 @@ class Poll(models.Model):
     title = models.TextField(blank=False, null=False)
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
+    closed = models.BooleanField(default=False)
 
     @property
     def type(self):

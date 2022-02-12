@@ -13,7 +13,9 @@
     <button onclick="directToPage('{{ classObj.get_url_add_poll }}')">New Poll</button>
 </div>
 <div class="main-content">
-
+    {% for pollObj in classObj.poll_set.all %}
+        <p>{{ pollObj.title }}</p>
+    {% endfor %}
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';

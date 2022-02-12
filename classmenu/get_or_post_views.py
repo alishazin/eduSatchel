@@ -225,12 +225,13 @@ class ClassDataByStepView(GetOnlyViewBase):
                     'options' : [],
                     'optionDetails' : False,
                     'total' : dataObj.total_votes,
+                    'closed' : dataObj.closed,
                 }
 
                 for optionObj in dataObj.polloption_set.all():
                     tempObj['options'].append({'id' : optionObj.encoded_id, 'content' : optionObj.content})
 
-                if request.user == classObj.teacher or dataObj.check_if_polled(request.user):
+                if request.user == classObj.teacher or dataObj.check_if_polled(request.user) or dataObj.closed:
                     tempObj['optionDetails'] = dataObj.get_option_results(request.user)
 
                 returnData.append(tempObj)
@@ -259,6 +260,9 @@ class PollCastedView(PostOnlyViewBase):
 
             if pollObj.class_obj != classObj:
                 return generalError
+
+            if pollObj.closed:
+                return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Voting is closed'}))
 
             if pollObj.check_if_polled(request.user):
                 return HttpResponse(json.dumps({'success' : False, 'error_message' : 'You have already voted'}))
