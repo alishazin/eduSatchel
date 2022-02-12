@@ -5,6 +5,8 @@ from .views import (
     ClassSettingsView,
     AddAssignmentView,
     AddPollView,
+    AssignmentsView,
+    PollsView,
 )
 
 from .get_or_post_views import (
@@ -25,8 +27,10 @@ urlpatterns = [
     path('<classID>/change-class-desc/', ChangeClassDescriptionView.as_view()),
     path('<classID>/join-response/<enrId64>/', JoinResponseView.as_view()),
     path('<classID>/settings/', ClassSettingsView.as_view(), name="settings"),
-    path('<classID>/add-assignment/', AddAssignmentView.as_view(), name="add-assignment"),
-    path('<classID>/add-poll/', AddPollView.as_view(), name="add-poll"),
+    path('<classID>/assignments/', AssignmentsView.as_view(), name="assignments"),
+    path('<classID>/assignments/add-assignment/', AddAssignmentView.as_view(), name="add-assignment"),
+    path('<classID>/polls/', PollsView.as_view(), name="polls"),
+    path('<classID>/polls/add-poll/', AddPollView.as_view(), name="add-poll"),
     path('<classID>/get-class-data/<int:stepCount>/', ClassDataByStepView.as_view()),
     path('<classID>/poll-casted/', PollCastedView.as_view()),
 ]

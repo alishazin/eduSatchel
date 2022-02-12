@@ -1,0 +1,21 @@
+{% extends 'classmenu/base.html' %}
+{% load static %}
+
+{% block title %}{{ classObj.title }}: Add Assignment{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/classmenu/polls.css' %}">
+<script src="{% static 'js/classmenu/polls.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="top-bar">
+    <button onclick="directToPage('{{ classObj.get_url_add_poll }}')">New Poll</button>
+</div>
+<div class="main-content">
+
+</div>
+<script>
+    var classIDGlobal = '{{ classObj.id }}';
+</script>
+{% endblock bodyextra %}

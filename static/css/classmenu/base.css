@@ -68,7 +68,7 @@ body > .parent-content {
     max-width: 1510px;
     width: 100%;
     background-color: white;
-    border: 1.5px solid var(--primary-color);
+    border: 1px solid var(--primary-color);
     border-top: none;
     border-radius: 0 0 10px 10px;
     display: flex;
