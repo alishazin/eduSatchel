@@ -263,6 +263,7 @@ function addPollToList(response) {
         div : null,
         title : response['title'],
         options : {},
+        totalDiv : null,
         _state : null,
         get state() {
             return this._state;
@@ -287,9 +288,16 @@ function addPollToList(response) {
             if (detailsObj['selected']) { this.options[detailsObj['selected']].parent.classList = 'option selected' } 
         },
         asyncFuncForPostRequest : async function (id) {
-            this.state = 'loading';
-            const response = await this.sendPostRequest(id)
-            this.state = 'voted';
+            try {
+                this.state = 'loading';
+                const response = await this.sendPostRequest(id);
+                this.addData(response['optionDetails'])
+                this.totalDiv.innerText = `${response['total']} vote(s)`
+                this.state = 'voted';
+            } catch(errMsg) {
+                alert(errMsg);
+                this.state = 'due';
+            }
         },
         sendPostRequest : function (id) {
             return new Promise((resolve, reject) => {
@@ -298,7 +306,11 @@ function addPollToList(response) {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
                         console.log(response)
-                        resolve()
+                        if (response['success']) {
+                            resolve(response)
+                        } else {
+                            reject(response['error_message'])
+                        }
                     }
                 }
                 
@@ -372,7 +384,9 @@ function addPollToList(response) {
     parent.appendChild(contentBox)
     
     const bottomBar = createElementWithAttributes('div', {classList : 'bottom-bar'})
-    bottomBar.appendChild(createElementWithAttributes('span', {innerText : `${response['total']} votes`}))
+    const bottomSpan = createElementWithAttributes('span', {innerText : `${response['total']} vote(s)`})
+    bottomBar.appendChild(bottomSpan)
+    currentPollObj.totalDiv = bottomSpan;
 
     parent.appendChild(bottomBar)
 

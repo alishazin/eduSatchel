@@ -1,4 +1,5 @@
 
+from classmenu.models import PollOption
 from django.http import Http404, HttpResponse
 from django.views import View
 from django.shortcuts import redirect, render
@@ -239,5 +240,34 @@ class ClassDataByStepView(GetOnlyViewBase):
 class PollCastedView(PostOnlyViewBase):
     @classentry_check(account_type='student')
     def post_only(self, request, classID):
-        print(request.POST)
-        return HttpResponse(json.dumps(['success']))
+        data = request.POST
+        generalError = HttpResponse(json.dumps({'success' : False, 'error_message' : 'Something is wrong. Refresh the page !'}))
+        if 'id' in data.keys():
+            try:
+                id = urlsafe_base64_decode(data['id']).decode()
+            except:
+                return generalError
+
+            pollOptionObj = PollOption.objects.filter(id=id)
+            if not pollOptionObj:
+                return generalError
+
+            pollOptionObj = pollOptionObj[0]
+
+            classObj = Class.objects.get(id=classID)
+            pollObj = pollOptionObj.poll_obj
+
+            if pollObj.class_obj != classObj:
+                return generalError
+
+            if pollObj.check_if_polled(request.user):
+                return HttpResponse(json.dumps({'success' : False, 'error_message' : 'You have already voted'}))
+
+            pollOptionObj.polleddetail_set.create(
+                student=request.user,
+            )
+
+            return HttpResponse(json.dumps({'success' : True, 'optionDetails' : pollObj.get_option_results(request.user), 'total' : pollObj.total_votes}))
+
+        return generalError
+        
