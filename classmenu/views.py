@@ -149,11 +149,3 @@ class AssignmentsView(View):
         return render(request, 'classmenu/assignments.html', {
             'classObj' : classObj,
         })
-
-class PollsView(View):
-    @classentry_check(account_type='teacher')
-    def get(self, request, classID):
-        classObj = Class.objects.get(id=classID)
-        return render(request, 'classmenu/polls.html', {
-            'classObj' : classObj,
-        })
