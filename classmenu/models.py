@@ -55,8 +55,13 @@ class MessagePublic(models.Model):
     # add() to add to files
     # set() to set new querysets of files
 
+    # To prevent errors
     @property
     def formatted_date(self):
+        return check_if_today_or_yesterday(self.date_added)
+
+    @property
+    def formatted_date_added(self):
         return check_if_today_or_yesterday(self.date_added)
 
     @property

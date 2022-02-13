@@ -76,3 +76,15 @@ def insert_url_and_file_values(postData, fileData, classObj, location_hint):
 
 def convert_IST_to_UTC(ISTDateTime):
     return ISTDateTime - timedelta(hours=5, minutes=30)
+
+def addDateStamps(ObjList):
+    newList = []
+    latestDate = None
+    for obj in ObjList:
+        currDate = obj.formatted_date_added
+        if currDate != latestDate:
+            newList.append(obj.formatted_date_added)
+            latestDate = currDate
+        newList.append(obj)
+
+    return newList

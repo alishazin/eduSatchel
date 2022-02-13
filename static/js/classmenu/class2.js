@@ -83,6 +83,7 @@ function onLoadSecondFile() {
             this.emptyDiv = parent;
         },
         addDataToListMaster : function (response) {
+            console.log(response)
             for (let obj of response['data']) {
                 if (obj['type'] === 'messagePublic') { addMessageToList(obj) }
                 else if (obj['type'] === 'assignment') { addAssignmentToList(obj) }

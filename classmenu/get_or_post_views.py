@@ -16,6 +16,7 @@ from home.send_notifications import (
 from .backends import (
     validate_urls_files,
     insert_url_and_file_values,
+    addDateStamps,
 )
 
 import json
@@ -185,10 +186,12 @@ class ClassDataByStepView(GetOnlyViewBase):
             classObj.assignment_set.all()
         ),key=attrgetter('date_added'), reverse=True)
 
-        slicedData = allDataList[DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * (stepCount - 1) : DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * stepCount]
+        slicedData = addDateStamps(allDataList)[DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * (stepCount - 1) : DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP * stepCount]
         returnData = []
         for dataObj in slicedData:
-            if dataObj.type == 'messagePublic':
+            if isinstance(dataObj, str):
+                returnData.append({'type' : 'date', 'date' : dataObj})
+            elif dataObj.type == 'messagePublic':
                 tempObj = {
                     'type' : dataObj.type,
                     'content' : dataObj.content,
@@ -213,10 +216,10 @@ class ClassDataByStepView(GetOnlyViewBase):
 
                 returnData.append(tempObj)
 
-            if dataObj.type == 'assignment':
+            elif dataObj.type == 'assignment':
                 returnData.append({'type' : dataObj.type, 'content' : dataObj.content, 'date' : dataObj.formatted_date_added, 'time': dataObj.date_added_time_only})
 
-            if dataObj.type == 'poll':
+            elif dataObj.type == 'poll':
                 tempObj = {
                     'type' : dataObj.type,
                     'id' : dataObj.encoded_id,
