@@ -20,7 +20,7 @@ class AssignmentAdmin(admin.ModelAdmin):
     readonly_fields = ('id', 'date_added', 'date_due')
 
 class PollAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'class_obj') 
+    list_display = ('id', 'title', 'class_obj', 'closed') 
     readonly_fields = ('id', 'date_added')
 
 class PollOptionAdmin(admin.ModelAdmin):

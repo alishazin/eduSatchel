@@ -27,9 +27,8 @@ function onLoadSecondFile() {
         asyncFuncToRequestData : async function () {
             try {
                 this.state = 'loading';
-                const responseArray = await this.sendGetRequest();
-                console.log(responseArray)
-                this.addDataToListMaster(responseArray);
+                const response = await this.sendGetRequest();
+                this.addDataToListMaster(response);
                 this.state = 'normal';
             } catch(errorObj) {
                 this.state = 'normal';
@@ -51,7 +50,7 @@ function onLoadSecondFile() {
                                 }
                             })
                         }
-                        resolve(response['data']);
+                        resolve(response);
                     }
                 }
 
@@ -83,11 +82,11 @@ function onLoadSecondFile() {
 
             this.emptyDiv = parent;
         },
-        addDataToListMaster : function (responseArray) {
-            for (let obj of responseArray) {
+        addDataToListMaster : function (response) {
+            for (let obj of response['data']) {
                 if (obj['type'] === 'messagePublic') { addMessageToList(obj) }
                 else if (obj['type'] === 'assignment') { addAssignmentToList(obj) }
-                else if (obj['type'] === 'poll') { addPollToList(obj) }
+                else if (obj['type'] === 'poll') { addPollToList(obj, response['teacher']) }
             }
         },
         addCallbacks : function () {
@@ -258,12 +257,14 @@ function addAssignmentToList(response) {
     listContainer.appendChild(parent)
 }
 
-function addPollToList(response) {
+function addPollToList(response, isTeacher) {
     const currentPollObj = allPollObjects[response['id']] = {
         div : null,
         title : response['title'],
         options : {},
         totalDiv : null,
+        closeButt : null,
+        bottomBar : null,
         closed : response['closed'],
         _state : null,
         get state() {
@@ -272,10 +273,15 @@ function addPollToList(response) {
         set state(arg) {
             if (arg === 'voted') {
                 this.div.classList = 'option-box after';
+                if (this.closeButt) {this.closeButt.classList = '';}
             } else if (arg === 'due') {
                 this.div.classList = 'option-box before';
+                if (this.closeButt) {this.closeButt.classList = '';}
             } else if (arg === 'loading') {
                 this.div.classList = 'option-box loading';
+                if (this.closeButt) {this.closeButt.classList = '';}
+            } else if (arg === 'close-loading') {
+                this.closeButt.classList = 'loading';
             }
             this._state = arg;
         },
@@ -307,7 +313,6 @@ function addPollToList(response) {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
-                        console.log(response)
                         if (response['success']) {
                             resolve(response)
                         } else {
@@ -325,6 +330,9 @@ function addPollToList(response) {
             const formdata = new FormData()
             formdata.append('id', id)
             return formdata
+        },
+        replaceCloseButt : function () {
+            this.bottomBar.replaceChild(bottomBar.appendChild(createElementWithAttributes('span', {classList : 'state', innerText : 'closed', color : 'red'})), this.closeButt)
         }
     }
 
@@ -386,9 +394,26 @@ function addPollToList(response) {
     parent.appendChild(contentBox)
     
     const bottomBar = createElementWithAttributes('div', {classList : 'bottom-bar'})
+    currentPollObj.bottomBar = bottomBar;
     const bottomSpan = createElementWithAttributes('span', {classList : 'total', innerText : `${response['total']} vote(s)`})
-    if (response['closed']) { bottomBar.appendChild(createElementWithAttributes('span', {classList : 'state', innerText : 'closed', color : 'red'})) }
-    else { bottomBar.appendChild(createElementWithAttributes('span', {classList : 'state', innerText : 'open', color : 'var(--green-color)'})) }
+    if (response['closed']) { 
+        bottomBar.appendChild(createElementWithAttributes('span', {classList : 'state', innerText : 'closed', color : 'red'})) 
+    } else { 
+        if (isTeacher) {
+            const button = createElementWithAttributes('button');
+            button.appendChild(createElementWithAttributes('span', {innerText : 'Close Poll'}))
+            button.appendChild(createElementWithAttributes('div', {classList : 'spinner'}))
+            bottomBar.appendChild(button) 
+            currentPollObj.closeButt = button;
+            button.onclick = () => {
+                if (currentPollObj.state !== 'close-loading') {
+                    asyncFunctionForClosingPoll(currentPollObj, response['id'])
+                }
+            }
+        } else {
+            bottomBar.appendChild(createElementWithAttributes('span', {classList : 'state', innerText : 'open', color : 'var(--green-color)'})) 
+        }
+    }
     bottomBar.appendChild(bottomSpan)
     currentPollObj.totalDiv = bottomSpan;
 
@@ -404,4 +429,43 @@ function addPollToList(response) {
     } else {
         currentPollObj.state = 'due';
     }
+}
+
+async function asyncFunctionForClosingPoll(pollObj, id) {
+    if (confirm("Are you sure you want to close the poll") == true) {
+        try {
+            pollObj.state = 'close-loading';
+            const response = await sendPostRequestForClosingPoll(id);
+            pollObj.addData(response['optionDetails'])
+            pollObj.totalDiv.innerText = `${response['total']} vote(s)`
+            pollObj.replaceCloseButt();
+            pollObj.state = 'voted';
+        } catch(errMsg) {
+            alert(errMsg);
+            if (pollObj.closed) { pollObj.state = 'voted'; }
+            else { pollObj.state = 'due'; }  
+        }
+    } 
+}
+
+function sendPostRequestForClosingPoll(id) {
+    return new Promise((resolve, reject) => {
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                const response = JSON.parse(this.responseText);
+                if (response['success']) {
+                    resolve(response)
+                } else {
+                    reject(response['error_message'])
+                }
+            }
+        }
+        
+        req.open('POST', `/class/${classIDGlobal}/close-poll/`); 
+        const formdata = new FormData();
+        formdata.append('id', id)
+        req.setRequestHeader("X-CSRFToken", csrftoken); 
+        req.send(formdata);
+    })
 }

@@ -120,8 +120,8 @@ body > .parent-content > .nav-bar-box > .nav-bar > .item {
 body > .parent-content > .nav-bar-box > .nav-bar > .item.selected, body > .parent-content > .nav-bar-box > .nav-bar > .item:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
-body > .parent-content > .nav-bar-box > .nav-bar > .item.selected > .icon-box > i {
-    color: var(--quaternary-color);
+body > .parent-content > .nav-bar-box > .nav-bar > .item.selected > .icon-box > i, body > .parent-content > .nav-bar-box > .nav-bar > .item.selected > span {
+    color: var(--quaternary-color) !important;
 }
 body > .parent-content > .nav-bar-box > .nav-bar > .item > .icon-box {
     min-width: 65px;

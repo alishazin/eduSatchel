@@ -1,5 +1,5 @@
 
-from classmenu.models import PollOption
+from classmenu.models import Poll, PollOption
 from django.http import Http404, HttpResponse
 from django.views import View
 from django.shortcuts import redirect, render
@@ -236,7 +236,7 @@ class ClassDataByStepView(GetOnlyViewBase):
 
                 returnData.append(tempObj)
 
-        return HttpResponse(json.dumps({'data' : returnData, 'stepCount' : stepCount + 1 if len(slicedData) == 25 else 0, 'empty' : True if len(allDataList) == 0 else False}))
+        return HttpResponse(json.dumps({'data' : returnData, 'stepCount' : stepCount + 1 if len(slicedData) == 25 else 0, 'empty' : True if len(allDataList) == 0 else False, 'teacher' : True if request.user.account_type == 'teacher' else False}))
 
 class PollCastedView(PostOnlyViewBase):
     @classentry_check(account_type='student')
@@ -249,11 +249,10 @@ class PollCastedView(PostOnlyViewBase):
             except:
                 return generalError
 
-            pollOptionObj = PollOption.objects.filter(id=id)
-            if not pollOptionObj:
+            try:
+                pollOptionObj = PollOption.objects.get(id=id)
+            except:
                 return generalError
-
-            pollOptionObj = pollOptionObj[0]
 
             classObj = Class.objects.get(id=classID)
             pollObj = pollOptionObj.poll_obj
@@ -275,3 +274,32 @@ class PollCastedView(PostOnlyViewBase):
 
         return generalError
         
+class ClosePollView(PostOnlyViewBase):
+    @classentry_check(account_type='teacher')
+    def post_only(self, request, classID):
+        data = request.POST
+        generalError = HttpResponse(json.dumps({'success' : False, 'error_message' : 'Something is wrong. Refresh the page !'}))
+        classObj = Class.objects.get(id=classID)
+        if 'id' in data.keys():
+            try:
+                id = urlsafe_base64_decode(data['id']).decode()
+            except:
+                return generalError
+
+            try:
+                pollObj = Poll.objects.get(id=id)
+            except:
+                return generalError
+
+            if pollObj.class_obj != classObj:
+                return generalError
+
+            if pollObj.closed:
+                return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Voting is already closed'}))
+
+            pollObj.closed = True
+            pollObj.save()
+
+            return HttpResponse(json.dumps({'success' : True, 'optionDetails' : pollObj.get_option_results(request.user), 'total' : pollObj.total_votes}))
+        
+        return generalError

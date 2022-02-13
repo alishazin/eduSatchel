@@ -101,6 +101,40 @@ body > .parent-content > .main-content > .all-messages > .poll-box > .bottom-bar
     color: var(--text-color);
     margin-left: auto;
 }
+body > .parent-content > .main-content > .all-messages > .poll-box > .bottom-bar > button {
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--tertiary-color);
+    background-color: transparent;
+    min-width: 38px;
+    min-height: 29px;
+    border-radius: 10px;
+    border: 1px solid var(--tertiary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .bottom-bar > button > .spinner {
+    border: 3px solid #00000033;
+    border-radius: 50%;
+    border-top: 3px solid white;
+    width: 18px;
+    height: 18px;
+    animation: loading-spin 1.5s linear infinite;
+    display: none;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .bottom-bar > button:not(.loading):hover {
+    cursor: pointer;
+    color: white;
+    background-color: var(--tertiary-color);
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .bottom-bar > button.loading > span {
+    display: none;
+}
+body > .parent-content > .main-content > .all-messages > .poll-box > .bottom-bar > button.loading > .spinner {
+    display: block;
+}
 
 /* Loading */ 
 
