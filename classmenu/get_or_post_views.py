@@ -10,6 +10,7 @@ from home.models import Class, ClassEnrollment
 from home.send_notifications import (
     after_declining_join_request,
     after_accepting_join_request,
+    after_closing_poll,
 )
 
 from .backends import (
@@ -299,6 +300,8 @@ class ClosePollView(PostOnlyViewBase):
 
             pollObj.closed = True
             pollObj.save()
+
+            after_closing_poll(classObj, pollObj)
 
             return HttpResponse(json.dumps({'success' : True, 'optionDetails' : pollObj.get_option_results(request.user), 'total' : pollObj.total_votes}))
         

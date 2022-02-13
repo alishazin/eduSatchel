@@ -46,3 +46,11 @@ def after_adding_poll(classObj, pollObj):
             header="New Poll Added",
             body=body
         )
+
+def after_closing_poll(classObj, pollObj):
+    body = f"The Poll regarding the topic '{pollObj.title}' in '{classObj.title}' is closed.\n\nThis means that no more students would be able to cast their vote.\n\nYou can see the result of the poll in class page"
+    for enrollmentObj in classObj.get_enrolled_students():
+        enrollmentObj.student.notification_set.create(
+            header="Poll Closed",
+            body=body
+        )
