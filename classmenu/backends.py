@@ -82,7 +82,7 @@ def addDateStamps(ObjList):
     latestDate = None
     for obj in ObjList:
         currDate = obj.formatted_date_added
-        if currDate != latestDate:
+        if currDate != latestDate and currDate != 'Today':
             newList.append(obj.formatted_date_added)
             latestDate = currDate
         newList.append(obj)
