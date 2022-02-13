@@ -172,3 +172,22 @@ body > .parent-content > .main-content > .all-messages > .poll-box > .content-bo
 body > .parent-content > .main-content > .all-messages > .poll-box > .content-box > .option-box.after > .option.selected > .left-box {
     background-color: var(--tertiary-color);
 }
+
+/* Date Stamp Divs */
+
+body > .parent-content > .main-content > .all-messages > .datestamp-box {
+    width: 100%;
+    min-height: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body > .parent-content > .main-content > .all-messages > .datestamp-box > .content {
+    padding: 6px 10px;
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 14px;
+    font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(232, 246, 255);
+}

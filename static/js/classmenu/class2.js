@@ -88,6 +88,7 @@ function onLoadSecondFile() {
                 if (obj['type'] === 'messagePublic') { addMessageToList(obj) }
                 else if (obj['type'] === 'assignment') { addAssignmentToList(obj) }
                 else if (obj['type'] === 'poll') { addPollToList(obj, response['teacher']) }
+                else if (obj['type'] === 'date') { addDateStampToList(obj) }
             }
         },
         addCallbacks : function () {
@@ -430,6 +431,14 @@ function addPollToList(response, isTeacher) {
     } else {
         currentPollObj.state = 'due';
     }
+}
+
+function addDateStampToList(obj) {
+    const listContainer = document.querySelector('body > .parent-content > .main-content > .all-messages')
+
+    const parent = createElementWithAttributes('div', {classList : 'datestamp-box'})
+    parent.appendChild(createElementWithAttributes('div', {classList : 'content', innerText : obj['date']}))
+    listContainer.appendChild(parent)
 }
 
 async function asyncFunctionForClosingPoll(pollObj, id) {
