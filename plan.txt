@@ -57,4 +57,9 @@ Things a student can do:-
 All Apps
 1. register (signup, login, changepassword, forgotpassword, logout)
 2. home (home page(create class for teacher, join class for student, all classes created for teacger, all classes entrolled for students), profile page)
-3. class (option to go back to home page, yet to be added...)
+3. class 
+4. assignment (submit, correction of assignments)
+
+Onclick assignment box in class page
+teacher are directed to correction page, the same page when clicked on assignment in assignmnet page,
+whereas students are redirected to a page for submission or may due details (if not done yet!)

@@ -217,7 +217,8 @@ class ClassDataByStepView(GetOnlyViewBase):
                 returnData.append(tempObj)
 
             elif dataObj.type == 'assignment':
-                returnData.append({'type' : dataObj.type, 'content' : dataObj.content, 'date' : dataObj.formatted_date_added, 'time': dataObj.date_added_time_only})
+                url = dataObj.get_correction_url() if request.user.isTeacher else dataObj.get_submit_url()
+                returnData.append({'type' : dataObj.type, 'content' : dataObj.content, 'date' : dataObj.formatted_date_added, 'time': dataObj.date_added_time_only, 'onclick_url' : url})
 
             elif dataObj.type == 'poll':
                 tempObj = {

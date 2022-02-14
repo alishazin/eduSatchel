@@ -1,7 +1,7 @@
-import re
 from django.db import models
 from home.models import Class
 from register.models import CustomUser
+from django.urls import reverse
 
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -105,8 +105,18 @@ class Assignment(models.Model):
         return f'{add_zero_to_left(ISTDate.hour)}:{add_zero_to_left(ISTDate.minute)}'
 
     @property
+    def encoded_id(self):
+        return urlsafe_base64_encode(force_bytes(self.id))
+
+    @property
     def type(self):
         return 'assignment'
+
+    def get_submit_url(self):
+        return reverse('assignment:submit-assignment', kwargs={'assignmentID' : self.encoded_id})
+
+    def get_correction_url(self):
+        return reverse('assignment:correct-assignment', kwargs={'assignmentID' : self.encoded_id})
 
 class Poll(models.Model):
     title = models.TextField(blank=False, null=False)

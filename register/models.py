@@ -77,3 +77,9 @@ class CustomUser(AbstractBaseUser):
     @property
     def profile_pic_path(self):
         return f'/media/{self.profile_pic}'
+
+    @property
+    def isTeacher(self):
+        if self.account_type == 'teacher':
+            return True
+        return False

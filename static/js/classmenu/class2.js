@@ -225,6 +225,9 @@ function addAssignmentToList(response) {
     const listContainer = document.querySelector('body > .parent-content > .main-content > .all-messages')
 
     const parent = createElementWithAttributes('div', {classList : 'item assignment-box'})
+    parent.onclick = () => {
+        location.href = response['onclick_url']
+    }
 
     const topBar = createElementWithAttributes('div', {classList : 'top-bar'})
 
