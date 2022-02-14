@@ -24,4 +24,5 @@ urlpatterns = [
     path('register/', include('register.urls', namespace='register')),
     path('home/', include('home.urls', namespace='home')),
     path('class/', include('classmenu.urls', namespace='classmenu')),
+    path('assignment/', include('assignment.urls', namespace='assignment')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

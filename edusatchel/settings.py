@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'register',
     'home',
     'classmenu',
+    'assignment',
 ]
 
 MIDDLEWARE = [
