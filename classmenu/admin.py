@@ -16,7 +16,7 @@ class UrlAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 
 class AssignmentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'class_obj', 'date_added', 'date_due') 
+    list_display = ('id', 'class_obj', 'content', 'date_added', 'date_due') 
     readonly_fields = ('id', 'date_added', 'date_due')
 
 class PollAdmin(admin.ModelAdmin):

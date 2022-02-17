@@ -4,8 +4,8 @@
 {% block title %}Submit Assignment{% endblock title %}
 
 {% block headextraextra %}
-<link rel='stylesheet' href="{% static 'css/classmenu/add_assignment.css' %}">
-<script src="{% static 'js/classmenu/add_assignment.js' %}"></script>
+<link rel='stylesheet' href="{% static 'css/assignment/submit.css' %}">
+<script src="{% static 'js/assignment/submit.js' %}"></script>
 {% endblock headextraextra %}
 
 {% block bodyextra %}
@@ -14,7 +14,5 @@
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
-    var csrftoken = '{{ csrf_token }}';
-    var classHomeURL = "{{ classObj.get_url }}";
 </script>
 {% endblock bodyextra %}
