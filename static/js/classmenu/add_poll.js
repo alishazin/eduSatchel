@@ -138,7 +138,9 @@ function onLoad() {
         addCallbacks : function () {
             const allFields = [this.titleField, this.optionOne, this.optionTwo, this.optionThree, this.optionFour, this.optionFive];
             this.submitButton.onclick = () => {
-                this.validateForm();
+                if (this.loadingState === false) {
+                    this.validateForm();
+                }
             }
 
             allFields.forEach(field => {

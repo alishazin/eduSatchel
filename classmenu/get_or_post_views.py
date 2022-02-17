@@ -2,7 +2,6 @@
 from classmenu.models import Poll, PollOption
 from django.http import Http404, HttpResponse
 from django.views import View
-from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 
 from edusatchel.decorators import authentication_check, classentry_check

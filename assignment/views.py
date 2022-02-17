@@ -1,8 +1,15 @@
+from classmenu.models import Assignment
 from home.models import Class
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
+from django.contrib import messages
+from django.utils.http import urlsafe_base64_decode
 from edusatchel.decorators import classentry_check, assignmententry_check
+
+from classmenu.backends import validate_urls_files, insert_url_and_file_values
+
+import json
 
 # Create your views here.
 
@@ -11,8 +18,48 @@ class SubmitAssignmentView(View):
     @assignmententry_check
     def get(self, request, classID, assignmentID):
         return render(request, 'assignment/submit.html', {
-            'classID' : Class.objects.get(id=classID),
+            'classObj' : Class.objects.get(id=classID),
+            'assignmentID' : assignmentID,
         })
+
+    @classentry_check(account_type='student')
+    @assignmententry_check
+    def post(self, request, classID, assignmentID):
+        formPost = request.POST
+        formData = request.FILES
+        valid = False
+
+        if 'message' in formPost.keys():
+            message = formPost['message']
+            if message: 
+                if len(message) > 5:
+                    valid = True
+                else:
+                    return HttpResponse(json.dumps({'success' : False, 'element' : 'message', 'error_message' : 'Message length should be greater than 5 characters'}))
+
+        if 'file-1' in formData or 'url-1' in formPost:
+            valid = True
+
+        if valid:
+            validatedUrls = validate_urls_files(formPost, formData)   
+            if validatedUrls != True:
+                return HttpResponse(json.dumps({'success' : False, 'element' : 'attach', 'error_message' : validatedUrls}))
+
+            assignmentObj = Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode())
+            urlObjs, fileObjs = insert_url_and_file_values(formPost, formData, assignmentObj.class_obj, 'response')     
+            if message:       
+                submissionObj = assignmentObj.submission_set.create(message=message, student=request.user)
+            else:
+                submissionObj = assignmentObj.submission_set.create(student=request.user)
+            submissionObj.files.set(fileObjs)
+            submissionObj.urls.set(urlObjs)
+
+            # after_adding_asignment(classObj, assigObj)
+            messages.error(request, 'Assignment submitted sucessfully')
+
+            return HttpResponse(json.dumps({'success' : True}))
+
+        return HttpResponse(json.dumps({'success' : False, 'element' : 'message', 'error_message' : 'No content to submit'}))
 
 class CorrectAssignmentView(View):
     @classentry_check(account_type='teacher')

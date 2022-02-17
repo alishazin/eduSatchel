@@ -193,7 +193,9 @@ function initializeFormObject() {
             })(), 60 * 1000);
 
             this.submitButton.onclick = () => {
-                this.validateForm();
+                if (this.loadingState === false) {
+                    this.validateForm();
+                }
             }
 
             allFields.forEach(field => {

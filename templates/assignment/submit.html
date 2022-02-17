@@ -22,5 +22,8 @@
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
+    var csrftoken = '{{ csrf_token }}';
+    var classHomeURL = "{{ classObj.get_url }}";
+    var assignmentID = "{{ assignmentID }}";
 </script>
 {% endblock bodyextra %}
