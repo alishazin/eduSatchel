@@ -1,0 +1,16 @@
+body > .parent-content {
+    overflow: auto !important;
+}
+.content-box {
+    width: 800px;
+    max-width: 100%;
+    min-height: fit-content;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 20px;
+    border: 2px solid #ddd;
+    border-radius: 0 0 10px 10px;
+    border-top: none;
+}

@@ -1,0 +1,20 @@
+{% extends 'classmenu/base.html' %}
+{% load static %}
+
+{% block title %}Submit Assignment{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/classmenu/add_assignment.css' %}">
+<script src="{% static 'js/classmenu/add_assignment.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="content-box">
+    <p>Submit</p>
+</div>
+<script>
+    var classIDGlobal = '{{ classObj.id }}';
+    var csrftoken = '{{ csrf_token }}';
+    var classHomeURL = "{{ classObj.get_url }}";
+</script>
+{% endblock bodyextra %}
