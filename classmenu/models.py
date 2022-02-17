@@ -113,10 +113,10 @@ class Assignment(models.Model):
         return 'assignment'
 
     def get_submit_url(self):
-        return reverse('assignment:submit-assignment', kwargs={'assignmentID' : self.encoded_id})
+        return reverse('assignment:submit-assignment', kwargs={'classID' : self.class_obj.id, 'assignmentID' : self.encoded_id})
 
     def get_correction_url(self):
-        return reverse('assignment:correct-assignment', kwargs={'assignmentID' : self.encoded_id})
+        return reverse('assignment:correct-assignment', kwargs={'classID' : self.class_obj.id, 'assignmentID' : self.encoded_id})
 
 class Poll(models.Model):
     title = models.TextField(blank=False, null=False)

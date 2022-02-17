@@ -1,6 +1,8 @@
+from classmenu.models import Assignment
 from django.http import Http404
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.utils.http import urlsafe_base64_decode
 from django.urls import reverse
 from home.models import Class
 
@@ -57,3 +59,24 @@ def classentry_check(account_type=None):
         return wrapper
 
     return authentication_decorator
+
+def assignmententry_check(function):
+
+    def wrapper(*args, **kwargs):
+        request = args[1]
+        assignmentID = kwargs['assignmentID']
+        classID = kwargs['classID']
+        # You should make sure than classID is correct. We dont verify it here.
+        # You can call classentry_check() before it
+        classObj = Class.objects.get(id=classID)
+        try:
+            decodedID = urlsafe_base64_decode(assignmentID).decode()
+            assignmentObj = Assignment.objects.get(id=decodedID)
+        except:
+            raise Http404
+        else:
+            if assignmentObj.class_obj == classObj:
+                return function(*args, **kwargs)
+            raise Http404
+
+    return wrapper

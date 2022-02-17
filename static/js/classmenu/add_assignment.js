@@ -180,7 +180,7 @@ function initializeFormObject() {
                     });
                 }
                 
-                req.open('POST', `/class/${classIDGlobal}/add-assignment/`); 
+                req.open('POST', `/class/${classIDGlobal}/assignments/add-assignment/`); 
                 req.setRequestHeader("X-CSRFToken", csrftoken); 
                 req.send(this.getFormData());
             })

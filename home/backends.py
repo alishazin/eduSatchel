@@ -104,7 +104,7 @@ def get_list_for_notification_obj(notification_objects):
     returnList = []
     for obj in notification_objects:
         ISTdatetime = get_IST_from_UTC(obj.time)
-        returnList.append([obj.header, obj.body, check_if_today_or_yesterday(ISTdatetime), f'{add_zero_to_left(ISTdatetime.hour)}:{add_zero_to_left(ISTdatetime.minute)}', obj.seen])
+        returnList.append([obj.header, obj.body, check_if_today_or_yesterday(obj.time), f'{add_zero_to_left(ISTdatetime.hour)}:{add_zero_to_left(ISTdatetime.minute)}', obj.seen])
         if obj.seen == False:
             obj.seen = True
             obj.save()

@@ -130,7 +130,7 @@ function onLoad() {
                     });
                 }
                 
-                req.open('POST', `/class/${classIDGlobal}/add-poll/`); 
+                req.open('POST', `/class/${classIDGlobal}/polls/add-poll/`); 
                 req.setRequestHeader("X-CSRFToken", csrftoken); 
                 req.send(this.getFormData());
             })
