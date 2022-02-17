@@ -1,16 +1,97 @@
-body > .parent-content {
-    overflow: auto !important;
-}
 .content-box {
+    overflow: auto !important;
     width: 800px;
     max-width: 100%;
-    min-height: fit-content;
+    min-height: 100%;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
     padding: 25px 20px;
     border: 2px solid #ddd;
-    border-radius: 0 0 10px 10px;
+    border-bottom: none;
     border-top: none;
+}
+.content-box > .error-div {
+    margin: 10px 0;
+    width: 100%;
+    font-size: 12px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: red;
+    display: none;
+}
+.content-box > .attach-file-parent {
+    width: 100%;
+    height: 130px;
+    border-radius: 10px;
+    border: 2px solid var(--secondary-color);
+    margin-bottom: 25px;
+}
+.content-box > label {
+    width: 100%;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+.content-box > textarea {
+    width: 100%;
+    border-radius: 10px;
+    resize: none;
+    padding: 15px;
+    font-size: 16px;
+    outline: none;
+    border: 2px solid #ddd;
+    font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
+    min-height: 100px;
+    margin-bottom: 20px;
+}
+.content-box > textarea:focus {
+    border-color: dodgerblue !important;
+}
+.content-box > textarea.inputted {
+    border-color: var(--secondary-color);
+}
+.content-box > button {
+    position: relative;
+    min-height: 35px;
+    width: 80px;
+    border-radius: 10px;
+    background-color: transparent;
+    outline: none;
+    border: 1px solid var(--tertiary-color);
+    margin: 20px 0;
+    color: var(--tertiary-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.content-box > button > .spinner {
+    border: 3px solid #00000033;
+    border-radius: 50%;
+    border-top: 3px solid white;
+    width: 24px;
+    min-height: 24px;
+    animation: loading-spin 1.5s linear infinite;
+    position: absolute;
+    left: calc(50% - 12px);
+    top: calc(50% - 12px);
+    display: none;
+}
+.content-box > button.loading > .spinner {
+    display: block;
+}
+.content-box > button.loading > span {
+    display: none;
+}
+.content-box > button:not(.loading):hover {
+    background-color: var(--tertiary-color);
+    color: white;
+    cursor: pointer;
+}
+@media (max-width:800px) {
+    .content-box {
+        padding: 20px 10px;
+        border: none;
+    }
 }

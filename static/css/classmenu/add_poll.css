@@ -1,24 +1,21 @@
-body > .parent-content {
-    overflow: auto !important;
-}
 .content-box {
+    overflow: auto !important;
     width: 800px;
     max-width: 100%;
-    min-height: fit-content;
+    min-height: 100%;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
     padding: 25px 20px;
     border: 2px solid #ddd;
-    border-radius: 0 0 10px 10px;
+    border-bottom: none;
     border-top: none;
-    margin-bottom: 20px;
 }
 .content-box > .title-box, .content-box > .option-box, .content-box > .instruction-box {
     margin-bottom: 20px;
     width: 100%;
-    height: fit-content;
+    min-height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -84,7 +81,7 @@ body > .parent-content {
 }
 .content-box > button {
     position: relative;
-    height: 35px;
+    min-height: 35px;
     width: 60px;
     border-radius: 10px;
     background-color: transparent;
@@ -101,7 +98,7 @@ body > .parent-content {
     border-radius: 50%;
     border-top: 3px solid white;
     width: 24px;
-    height: 24px;
+    min-height: 24px;
     animation: loading-spin 1.5s linear infinite;
     position: absolute;
     left: calc(50% - 12px);
