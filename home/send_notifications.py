@@ -54,3 +54,10 @@ def after_closing_poll(classObj, pollObj):
             header="Poll Closed",
             body=body
         )
+
+def after_submitting_assignment(classObj, studentObj):
+    body = f"You have recieved a submission from '{studentObj.username}' in class '{classObj.title}'.\n\nYou can correct the submission from assignment menu of that particular class"
+    classObj.teacher.notification_set.create(
+        header="Submission Recieved",
+        body=body
+    )

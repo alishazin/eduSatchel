@@ -5,7 +5,14 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib import messages
 from django.utils.http import urlsafe_base64_decode
-from edusatchel.decorators import classentry_check, assignmententry_check
+from edusatchel.decorators import (
+    classentry_check, 
+    assignmententry_check
+)
+
+from home.send_notifications import (
+    after_submitting_assignment,
+)
 
 from classmenu.backends import validate_urls_files, insert_url_and_file_values
 
@@ -54,7 +61,7 @@ class SubmitAssignmentView(View):
             submissionObj.files.set(fileObjs)
             submissionObj.urls.set(urlObjs)
 
-            # after_adding_asignment(classObj, assigObj)
+            after_submitting_assignment(assignmentObj.class_obj, request.user)
             messages.error(request, 'Assignment submitted sucessfully')
 
             return HttpResponse(json.dumps({'success' : True}))
