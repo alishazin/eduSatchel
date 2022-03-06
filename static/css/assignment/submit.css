@@ -1,16 +1,18 @@
-.content-box {
+.content-parent {
     overflow: auto !important;
     width: 800px;
-    max-width: 100%;
     min-height: 100%;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: center;
     padding: 25px 20px;
     border: 2px solid #ddd;
     border-bottom: none;
     border-top: none;
+}
+.content-box {
+    display: flex;
+    display: none;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-end;
 }
 .content-box > .error-div {
     margin: 10px 0;
@@ -30,6 +32,7 @@
 .content-box > label {
     width: 100%;
     font-size: 16px;
+    display: block;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin-bottom: 15px;
     color: var(--text-color);
@@ -54,7 +57,7 @@
 }
 .content-box > button {
     position: relative;
-    min-height: 35px;
+    height: 35px;
     width: 80px;
     border-radius: 10px;
     background-color: transparent;
@@ -71,7 +74,7 @@
     border-radius: 50%;
     border-top: 3px solid white;
     width: 24px;
-    min-height: 24px;
+    height: 24px;
     animation: loading-spin 1.5s linear infinite;
     position: absolute;
     left: calc(50% - 12px);

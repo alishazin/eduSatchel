@@ -9,16 +9,21 @@
 {% endblock headextraextra %}
 
 {% block bodyextra %}
-<div class="content-box">
-    <div class="error-div attach-file-error-div"></div>
-    <label>Attach Files/Urls</label>
-    <div class="attach-file-parent">
-        {% include 'blocks/attach-files.html' %}
+<div class="content-parent">
+    <div class="assignment-box">
+        <div class="content">{{ assignmentObj.content }}</div>
     </div>
-    <div class="error-div message-error-div"></div>
-    <label>Message</label>
-    <textarea name="message"></textarea>
-    <button><span>Submit</span><div class="spinner"></div></button>
+    <div class="content-box">
+        <div class="error-div attach-file-error-div"></div>
+        <label>Attach Files/Urls</label>
+        <div class="attach-file-parent">
+            {% include 'blocks/attach-files.html' %}
+        </div>
+        <div class="error-div message-error-div"></div>
+        <label>Message</label>
+        <textarea name="message"></textarea>
+        <button><span>Submit</span><div class="spinner"></div></button>
+    </div>
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';

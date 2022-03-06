@@ -27,6 +27,7 @@ class SubmitAssignmentView(View):
         return render(request, 'assignment/submit.html', {
             'classObj' : Class.objects.get(id=classID),
             'assignmentID' : assignmentID,
+            'assignmentObj' : Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode()),
         })
 
     @classentry_check(account_type='student')
