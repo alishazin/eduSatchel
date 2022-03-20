@@ -9,7 +9,7 @@
     border-top: none;
 }
 .content-parent > .box {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 .content-parent > .box > .header {
     font-size: 14px;
@@ -27,7 +27,7 @@
     font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
     font-size: 18px;    
 }
-.content-parent > .file-area > .all-files {
+.content-parent > .file-area > .all-files, .content-parent > .url-area > .all-urls {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fill, 243px);
@@ -97,6 +97,61 @@
     font-size: 16px;
     width: 100%;
     color: var(--text-color);
+}
+.content-parent > .url-area > .all-urls > .url-container {
+    background-color: white;
+    min-height: 25px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+.content-parent > .url-area > .all-urls > .url-container > span {
+    width: calc(100% - 30px);
+    padding: 5px 8px;
+    color: var(--text-color);
+    font-family: "Lato", Calibri, 'Trebuchet MS', sans-serif, monospace;
+    height: 100%;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.content-parent > .url-area > .all-urls > .url-container > span {
+    width: calc(100% - 30px);
+    padding: 5px 8px;
+    color: var(--text-color);
+    font-family: "Lato", Calibri, 'Trebuchet MS', sans-serif, monospace;
+    height: 100%;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.content-parent > .url-area > .all-urls > .url-container > .icon-butt {
+    display: none;
+    height: 100%;
+    width: 30px;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    color: var(--tertiary-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s;
+}
+.content-parent > .url-area > .all-urls > .url-container > .icon-butt:active {
+    opacity: 0.5;
+}
+.content-parent > .url-area > .all-urls > .url-container > .icon-butt:hover {
+    color: white;
+    background-color: var(--tertiary-color);
+}
+.content-parent > .url-area > .all-urls > .url-container > .icon-butt > i {
+    transform: translateY(1px);
 }
 /* .content-box {
     display: flex;

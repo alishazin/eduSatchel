@@ -46,6 +46,18 @@
         <div class="url-area box">
             <div class="header">Urls</div>
             <div class="separator"></div>
+            <div class="all-urls">
+                {% for obj in assignmentObj.urls.all %}
+                    <div class="url-container">
+                        <span>
+                            <a href="{{ obj.url }}" target="_blank">{{ obj.url }}</a>
+                        </span>
+                        <div class="icon-butt" onclick="copyText('{{ obj.url }}')">
+                            <i class="bi bi-clipboard"></i>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     {% endif %}
     <!-- <div class="content-box">

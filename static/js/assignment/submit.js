@@ -152,3 +152,7 @@ function downloadFile(uri) {
     link.href = uri;
     link.click();
 }
+
+function copyText(url) {
+    navigator.clipboard.writeText(url)
+}
