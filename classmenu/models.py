@@ -87,6 +87,12 @@ class Assignment(models.Model):
     urls = models.ManyToManyField(Url, blank=True)
 
     @property
+    def is_corrected(self):
+        if len(self.submission_set.all()) == 0:
+            return False
+        return True
+
+    @property
     def formatted_date_added(self):
         return check_if_today_or_yesterday(self.date_added)
 

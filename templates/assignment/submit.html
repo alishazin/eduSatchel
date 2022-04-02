@@ -42,6 +42,7 @@
             </div>
         </div>
     {% endif %}
+
     {% if assignmentObj.urls.all.count %}
         <div class="url-area box">
             <div class="header">Urls</div>
@@ -60,17 +61,21 @@
             </div>
         </div>
     {% endif %}
-    <!-- <div class="content-box">
-        <div class="error-div attach-file-error-div"></div>
-        <label>Attach Files/Urls</label>
-        <div class="attach-file-parent">
-            {% include 'blocks/attach-files.html' %}
-        </div>
-        <div class="error-div message-error-div"></div>
-        <label>Message</label>
-        <textarea name="message"></textarea>
-        <button><span>Submit</span><div class="spinner"></div></button>
-    </div> -->
+
+    {% if assignmentObj.is_corrected %}
+    {% else %}
+        <!-- <div class="content-box">
+            <div class="error-div attach-file-error-div"></div>
+            <label>Attach Files/Urls</label>
+            <div class="attach-file-parent">
+                {% include 'blocks/attach-files.html' %}
+            </div>
+            <div class="error-div message-error-div"></div>
+            <label>Message</label>
+            <textarea name="message"></textarea>
+            <button><span>Submit</span><div class="spinner"></div></button>
+        </div> -->
+    {% endif %}
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
