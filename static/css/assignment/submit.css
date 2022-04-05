@@ -153,6 +153,13 @@
 .content-parent > .url-area > .all-urls > .url-container > .icon-butt > i {
     transform: translateY(1px);
 }
+.content-parent > .not-corrected-parent {
+    width: 100%;
+    background-color: var(--secondary-color);
+    height: 60px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px var(--shadow-light-color);
+}
 /* .content-box {
     display: flex;
     display: none;

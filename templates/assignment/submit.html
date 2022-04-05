@@ -64,6 +64,9 @@
 
     {% if assignmentObj.is_corrected %}
     {% else %}
+        <div class="not-corrected-parent">
+            {{ assignmentObj.date_due_countdown }}
+        </div>
         <!-- <div class="content-box">
             <div class="error-div attach-file-error-div"></div>
             <label>Attach Files/Urls</label>

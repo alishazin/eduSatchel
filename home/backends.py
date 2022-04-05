@@ -115,6 +115,25 @@ def add_zero_to_left(value):
         return f'0{value}'
     return value
 
+def get_date_min_remaining_dates(dateFuture, convertToIST = False):
+    if convertToIST:
+        dateFuture = get_IST_from_UTC(dateFuture)
+
+    remaining = (dateFuture.replace(tzinfo=None) - datetime.datetime.now().replace(tzinfo=None))
+    remainingSeconds = remaining.seconds
+
+    returnString = ''
+    if remaining.days > 0:
+        returnString += f'{remaining.days} d ' 
+    remainingHours =  remainingSeconds // 3600
+    if remainingHours > 0:
+        returnString += f'{remainingHours} h ' 
+        remainingSeconds = remainingSeconds - (remainingHours * 3600)
+    remainingMins =  remainingSeconds // 60
+    if remainingMins > 0:
+        returnString += f'{remainingMins} m' 
+    return returnString
+
 def get_IST_from_UTC(timedate):
     return timedate + timedelta(hours=5, minutes=30)
 
