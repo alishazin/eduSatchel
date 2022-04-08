@@ -124,14 +124,14 @@ def get_date_min_remaining_dates(dateFuture, convertToIST = False):
 
     returnString = ''
     if remaining.days > 0:
-        returnString += f'{remaining.days} d ' 
+        returnString += f'{remaining.days} days ' 
     remainingHours =  remainingSeconds // 3600
     if remainingHours > 0:
-        returnString += f'{remainingHours} h ' 
+        returnString += f'{remainingHours} hrs ' 
         remainingSeconds = remainingSeconds - (remainingHours * 3600)
     remainingMins =  remainingSeconds // 60
-    if remainingMins > 0:
-        returnString += f'{remainingMins} m' 
+    if remainingMins > 0 and remaining.days == 0:
+        returnString += f'{remainingMins} mins' 
     return returnString
 
 def get_IST_from_UTC(timedate):

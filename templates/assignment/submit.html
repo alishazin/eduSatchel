@@ -65,7 +65,8 @@
     {% if assignmentObj.is_corrected %}
     {% else %}
         <div class="not-corrected-parent">
-            {{ assignmentObj.date_due_countdown }}
+            <div class="time-left"><span>{{ assignmentObj.date_due_countdown }} left</span></div>
+            <div class="total-marks">Out of <span>{{ assignmentObj.formatted_total_marks }}</span></div>
         </div>
         <!-- <div class="content-box">
             <div class="error-div attach-file-error-div"></div>

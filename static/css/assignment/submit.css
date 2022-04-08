@@ -159,6 +159,40 @@
     height: 60px;
     border-radius: 10px;
     box-shadow: 0 0 8px var(--shadow-light-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    padding-right: 0;
+}
+.content-parent > .not-corrected-parent > .time-left {
+    width: calc(100% - 150px);
+    height: 100%;
+    background-color: white;
+    box-shadow: inset 2px 2px 6px var(--shadow-light-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.content-parent > .not-corrected-parent > .time-left > span {
+    width: 100%;
+    padding-left: 10px;
+    font-size: 16px;
+    font-family: "Lato", Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.content-parent > .not-corrected-parent > .total-marks {
+    width: 150px;
+    text-align: center;
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.content-parent > .not-corrected-parent > .total-marks > span {
+    font-size: 16px;
+    color: var(--quaternary-color);
 }
 /* .content-box {
     display: flex;
