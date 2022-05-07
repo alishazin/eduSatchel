@@ -115,6 +115,12 @@ def add_zero_to_left(value):
         return f'0{value}'
     return value
 
+def check_if_past_date(dateToCheck, convertToIST = False):
+    if convertToIST:
+        dateToCheck = get_IST_from_UTC(dateToCheck)
+
+    return dateToCheck.replace(tzinfo=None) < datetime.datetime.now().replace(tzinfo=None)
+
 def get_date_min_remaining_dates(dateFuture, convertToIST = False):
     if convertToIST:
         dateFuture = get_IST_from_UTC(dateFuture)

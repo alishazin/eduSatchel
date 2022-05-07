@@ -6,11 +6,15 @@ from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 
-from home.backends import get_IST_from_UTC, add_zero_to_left, get_date_min_remaining_dates
-from home.backends import check_if_today_or_yesterday
+from home.backends import (
+    get_IST_from_UTC, 
+    add_zero_to_left, 
+    get_date_min_remaining_dates, 
+    check_if_past_date, 
+    check_if_today_or_yesterday
+)
 
 import uuid
-import datetime
 
 def get_file_upload_location(self, filename):
     return f"files/{self.class_obj.id}/{self.location_hint}/{uuid.uuid4()}/{filename}"
@@ -97,6 +101,10 @@ class Assignment(models.Model):
     @property
     def date_due_countdown(self):
         return get_date_min_remaining_dates(self.date_due, convertToIST = True)
+
+    @property
+    def is_missing(self):
+        return check_if_past_date(self.date_due, convertToIST = True)
 
     @property
     def is_corrected(self):
