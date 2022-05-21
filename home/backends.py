@@ -121,17 +121,22 @@ def check_if_past_date(dateToCheck, convertToIST = False):
 
     return dateToCheck.replace(tzinfo=None) < datetime.datetime.now().replace(tzinfo=None)
 
-def get_date_min_remaining_dates(dateFuture, convertToIST = False):
+def get_date_min_remaining_dates(dateFuture, convertToIST = False, reverse = False):
     if convertToIST:
         dateFuture = get_IST_from_UTC(dateFuture)
 
-    remaining = (dateFuture.replace(tzinfo=None) - datetime.datetime.now().replace(tzinfo=None))
+    if reverse:
+        remaining = (datetime.datetime.now().replace(tzinfo=None) - dateFuture.replace(tzinfo=None))
+    else:
+        remaining = (dateFuture.replace(tzinfo=None) - datetime.datetime.now().replace(tzinfo=None))
+        
     remainingSeconds = remaining.seconds
 
     returnString = ''
     if remaining.days > 0:
         returnString += f'{remaining.days} days ' 
     remainingHours =  remainingSeconds // 3600
+    print(remainingHours)
     if remainingHours > 0:
         returnString += f'{remainingHours} hrs ' 
         remainingSeconds = remainingSeconds - (remainingHours * 3600)

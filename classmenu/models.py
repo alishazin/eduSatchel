@@ -94,13 +94,16 @@ class Assignment(models.Model):
     @property
     def formatted_total_marks(self):
         if float(self.total_marks) == int(self.total_marks):
-            print(1293812738)
             return int(self.total_marks)
         return self.total_marks
 
     @property
     def date_due_countdown(self):
         return get_date_min_remaining_dates(self.date_due, convertToIST = True)
+    
+    @property
+    def date_due_countdown_missing(self):
+        return get_date_min_remaining_dates(self.date_due, convertToIST = True, reverse = True)
 
     @property
     def is_missing(self):

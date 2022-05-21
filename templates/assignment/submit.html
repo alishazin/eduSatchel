@@ -10,6 +10,7 @@
 
 {% block bodyextra %}
 <div class="content-parent">
+    <h2 class="section-headers">Assignment Details</h2>
     <div class="content-area box">
         <div class="header">Content</div>
         <div class="separator"></div>
@@ -64,25 +65,26 @@
 
     {% if assignmentObj.is_corrected %}
     {% else %}
+    <div class="not-corrected-parent">
         {% if assignmentObj.is_missing %}
-            <div>Missing</div>
+            <div class="time-left"><span><span style="color:red;">(missing)</span> {{ assignmentObj.date_due_countdown_missing }} late</span></div>
         {% else %}
-            <div class="not-corrected-parent">
-                <div class="time-left"><span>{{ assignmentObj.date_due_countdown }} left</span></div>
-                <div class="total-marks">Out of <span>{{ assignmentObj.formatted_total_marks }}</span></div>
-            </div>
-            <!-- <div class="content-box">
-                <div class="error-div attach-file-error-div"></div>
-                <label>Attach Files/Urls</label>
-                <div class="attach-file-parent">
-                    {% include 'blocks/attach-files.html' %}
-                </div>
-                <div class="error-div message-error-div"></div>
-                <label>Message</label>
-                <textarea name="message"></textarea>
-                <button><span>Submit</span><div class="spinner"></div></button>
-            </div> -->
+            <div class="time-left"><span>{{ assignmentObj.date_due_countdown }} left</span></div>
         {% endif %}
+            <div class="total-marks">Out of <span>{{ assignmentObj.formatted_total_marks }}</span></div>
+        </div>
+        <h2 class="section-headers">Submission Details</h2>
+        <div class="content-box">
+            <label>Private Message</label>
+            <textarea name="message"></textarea>
+            <div class="error-div attach-file-error-div"></div>
+            <label>Attach Files/Urls</label>
+            <div class="attach-file-parent">
+                {% include 'blocks/attach-files.html' %}
+            </div>
+            <div class="error-div message-error-div"></div>
+            <button><span>Submit</span><div class="spinner"></div></button>
+        </div>
     {% endif %}
 </div>
 <script>
