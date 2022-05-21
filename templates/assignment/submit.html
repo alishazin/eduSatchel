@@ -63,9 +63,75 @@
         </div>
     {% endif %}
 
-    {% if assignmentObj.is_corrected %}
+    {% if assignmentObj.is_submitted %}
+        <div class="not-corrected-parent">
+            <div class="time-left"><span><span style="color: #00ff00;">Submitted</span></div>
+            <div class="total-marks">Out of <span>{{ assignmentObj.formatted_total_marks }}</span></div>
+        </div>
+        <h2 class="section-headers">Submission Details</h2>
+        <div class="content-area box">
+            <div class="header">Private Message</div>
+            <div class="separator"></div>
+            <div class="text">{{ assignmentObj.get_submission_obj.message }}</div>
+        </div>
+        {% if assignmentObj.get_submission_obj.files.all.count %}
+            <div class="file-area box">
+                <div class="header">Files</div>
+                <div class="separator"></div>
+                <div class="all-files">
+                    {% for obj in assignmentObj.get_submission_obj.files.all %}
+                        <div class="file-container">
+                            <div class="download-butt" onclick="downloadFile('{{ obj.file_location }}')">
+                                <i class="bi bi-download"></i>
+                            </div>
+                            <div class="format-parent">
+                                <div class="format-box">
+                                    {% if obj.availableIcon %}
+                                        <i class="bi bi-filetype-{{ obj.format }}" style="font-size: 25px;"></i>
+                                    {% else %}
+                                        {{ obj.format }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="bottom-box">
+                                <span>{{ obj.file_name }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if assignmentObj.get_submission_obj.urls.all.count %}
+            <div class="url-area box">
+                <div class="header">Urls</div>
+                <div class="separator"></div>
+                <div class="all-urls">
+                    {% for obj in assignmentObj.get_submission_obj.urls.all %}
+                        <div class="url-container">
+                            <span>
+                                <a href="{{ obj.url }}" target="_blank">{{ obj.url }}</a>
+                            </span>
+                            <div class="icon-butt" onclick="copyText('{{ obj.url }}')">
+                                <i class="bi bi-clipboard"></i>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <div class="content-box delete-submission">
+            <p>Before You Delete Submission:</p>
+            <ul>
+                <li>You can't reverse this change</li>
+                <li>You can add new submission later</li>
+                <li>Date and time of the new submission will be independent of the removed submission</li>
+                <li>Due date of this assignment :&nbsp; {{ assignmentObj.get_ist_date_due }}</li>
+            </ul>
+            <button><span>Delete</span><div class="spinner"></div></button>
+        </div>
     {% else %}
-    <div class="not-corrected-parent">
+        <div class="not-corrected-parent">
         {% if assignmentObj.is_missing %}
             <div class="time-left"><span><span style="color:red;">(missing)</span> {{ assignmentObj.date_due_countdown_missing }} late</span></div>
         {% else %}

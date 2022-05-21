@@ -16,7 +16,7 @@
     border: 2px solid black;
     margin: auto;
     margin-top: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     width: fit-content;
     border-radius: 10px;
     background-color: var(--quaternary-color);
@@ -217,6 +217,23 @@
     align-items: flex-end;
     padding: 10px 0;
     padding-top: 0;
+}
+.content-box.delete-submission {
+    align-items: flex-start;
+}
+.content-box.delete-submission > p {
+    color: var(--text-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+}
+.content-box.delete-submission > ul {
+    margin: 0;
+}
+.content-box.delete-submission > ul > li {
+    color: var(--text-color);
+    font-size: 12px;
+    padding-bottom: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .content-box > .error-div {
     margin: 10px 0;

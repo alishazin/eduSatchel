@@ -141,9 +141,16 @@ function initializeFormObject() {
                     this.validateForm();
                 }
             }
+        },
+        addCallbacksAfterSubmission : function () {
+            console.log(123);
         }
     }
-    formObject.addCallbacks()
+    try {
+        formObject.addCallbacks()
+    } catch(err) {
+        formObject.addCallbacksAfterSubmission()
+    }
 
 }
 

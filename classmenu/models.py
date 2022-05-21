@@ -92,6 +92,10 @@ class Assignment(models.Model):
     urls = models.ManyToManyField(Url, blank=True)
 
     @property
+    def get_ist_date_due(self):
+        return get_IST_from_UTC(self.date_due)
+
+    @property
     def formatted_total_marks(self):
         if float(self.total_marks) == int(self.total_marks):
             return int(self.total_marks)
@@ -110,10 +114,14 @@ class Assignment(models.Model):
         return check_if_past_date(self.date_due, convertToIST = True)
 
     @property
-    def is_corrected(self):
+    def is_submitted(self):
         if len(self.submission_set.all()) == 0:
             return False
         return True
+
+    @property
+    def get_submission_obj(self):
+        return self.submission_set.all()[0]
 
     @property
     def formatted_date_added(self):
