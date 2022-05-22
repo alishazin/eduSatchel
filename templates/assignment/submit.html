@@ -1,5 +1,6 @@
 {% extends 'classmenu/base.html' %}
 {% load static %}
+{% load assignment_extras %}
 
 {% block title %}Submit Assignment{% endblock title %}
 
@@ -63,7 +64,7 @@
         </div>
     {% endif %}
 
-    {% if assignmentObj.is_submitted %}
+    {% if assignmentObj|is_assignment_submitted_filter:request.user %}
         <div class="not-corrected-parent">
             <div class="time-left"><span><span style="color: #00ff00;">Submitted</span></div>
             <div class="total-marks">Out of <span>{{ assignmentObj.formatted_total_marks }}</span></div>
@@ -74,12 +75,12 @@
             <div class="separator"></div>
             <div class="text">{{ assignmentObj.get_submission_obj.message }}</div>
         </div>
-        {% if assignmentObj.get_submission_obj.files.all.count %}
+        {% if assignmentObj|check_submitted_files:request.user %}
             <div class="file-area box">
                 <div class="header">Files</div>
                 <div class="separator"></div>
                 <div class="all-files">
-                    {% for obj in assignmentObj.get_submission_obj.files.all %}
+                    {% for obj in assignmentObj|get_submitted_files:request.user %}
                         <div class="file-container">
                             <div class="download-butt" onclick="downloadFile('{{ obj.file_location }}')">
                                 <i class="bi bi-download"></i>
@@ -102,12 +103,12 @@
             </div>
         {% endif %}
 
-        {% if assignmentObj.get_submission_obj.urls.all.count %}
+        {% if assignmentObj|check_submitted_urls:request.user %}
             <div class="url-area box">
                 <div class="header">Urls</div>
                 <div class="separator"></div>
                 <div class="all-urls">
-                    {% for obj in assignmentObj.get_submission_obj.urls.all %}
+                    {% for obj in assignmentObj|get_submitted_urls:request.user %}
                         <div class="url-container">
                             <span>
                                 <a href="{{ obj.url }}" target="_blank">{{ obj.url }}</a>
@@ -126,7 +127,7 @@
                 <li>You can't reverse this change</li>
                 <li>You can add new submission later</li>
                 <li>Date and time of the new submission will be independent of the removed submission</li>
-                <li>Due date of this assignment :&nbsp; {{ assignmentObj.get_ist_date_due }}</li>
+                <li>Due date of this assignment : {{ assignmentObj.get_ist_date_due }}</li>
             </ul>
             <button><span>Delete</span><div class="spinner"></div></button>
         </div>

@@ -114,16 +114,6 @@ class Assignment(models.Model):
         return check_if_past_date(self.date_due, convertToIST = True)
 
     @property
-    def is_submitted(self):
-        if len(self.submission_set.all()) == 0:
-            return False
-        return True
-
-    @property
-    def get_submission_obj(self):
-        return self.submission_set.all()[0]
-
-    @property
     def formatted_date_added(self):
         return check_if_today_or_yesterday(self.date_added)
 

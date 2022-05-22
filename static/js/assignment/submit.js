@@ -143,7 +143,61 @@ function initializeFormObject() {
             }
         },
         addCallbacksAfterSubmission : function () {
-            console.log(123);
+            this.submitButton.onclick = () => {
+                if (this.loadingState === false) {
+                    if (confirm('Are you sure about deleting ?')) {
+                        this.asyncFuncforDeleting();
+                    }
+                }
+            }
+        },
+        asyncFuncforDeleting : async function () {
+            try {
+                this.loadingState = true;
+                await this.sendPostRequestForDeleting();
+                this.loadingState = false;
+                location.href = classHomeURL;
+            } catch(errorObj) {
+                if (errorObj['type'] === 'network') {
+                    errorObj.call();
+                } else if (errorObj['type'] === 'backend' && errorObj['element'] === 'alert') {
+                    alert(errorObj['error_message'])
+                } else {
+                    this.errorDivController(errorObj['element'], errorObj['error_message'])
+                }
+                this.loadingState = false;
+            }
+        },
+        sendPostRequestForDeleting : function () {
+            return new Promise((resolve, reject) => {
+                var req = new XMLHttpRequest();
+                req.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const response = JSON.parse(this.responseText);
+                        console.log(response)
+                        if (response['success'] === true) {
+                            resolve();
+                        } else {
+                            response.type = 'backend';
+                            reject(response)
+                        }
+                    }
+                }
+
+                req.onerror = () => {
+                    reject({
+                        type : 'network',
+                        call : () => {
+                            alert("No Active Network Connection")
+                        }
+                    });
+                }
+                
+                console.log(`/assignment/${classIDGlobal}/${assignmentID}/delete/`);
+                req.open('POST', `/assignment/${classIDGlobal}/${assignmentID}/delete/`); 
+                req.setRequestHeader("X-CSRFToken", csrftoken); 
+                req.send();
+            })
         }
     }
     try {
