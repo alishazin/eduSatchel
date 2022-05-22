@@ -54,7 +54,7 @@ class SubmitAssignmentView(View):
                 return HttpResponse(json.dumps({'success' : False, 'element' : 'attach', 'error_message' : validatedUrls}))
 
             assignmentObj = Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode())
-            if len(assignmentObj.submission_set.all()) > 0:
+            if len(assignmentObj.submission_set.filter(student=request.user)) > 0:
                 return HttpResponse(json.dumps({'success' : False, 'element' : 'message', 'error_message' : 'Already Submitted'}))
                 
             urlObjs, fileObjs = insert_url_and_file_values(formPost, formData, assignmentObj.class_obj, 'response')     
