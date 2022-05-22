@@ -1,6 +1,11 @@
 
+from classmenu.models import Assignment
 from django.http import Http404, HttpResponse
 from django.views import View
+from django.utils.http import urlsafe_base64_decode
+from django.contrib import messages
+
+import json
 
 from edusatchel.decorators import (
     authentication_check,
@@ -30,5 +35,12 @@ class DeleteAssignmentPostOnlyView(PostOnlyViewBase):
     @classentry_check(account_type='student')
     @assignmententry_check
     def post_only(self, request, classID, assignmentID):
-        print(21312321)
-        return HttpResponse('asdas')
+        assignmentObj = Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode())
+        submissionObject = assignmentObj.submission_set.filter(student=request.user)
+
+        if submissionObject:
+            submissionObject.delete()
+            messages.error(request, 'Assignment submission deleted successfully')
+            return HttpResponse(json.dumps({'success' : True}))
+
+        return HttpResponse(json.dumps({'success' : False, 'element' : 'message', 'error_message' : 'Not submitted yet!'}))

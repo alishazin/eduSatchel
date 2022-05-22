@@ -83,7 +83,6 @@ function initializeFormObject() {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
-                        console.log(response)
                         if (response['success'] === true) {
                             resolve();
                         } else {
@@ -174,7 +173,6 @@ function initializeFormObject() {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
-                        console.log(response)
                         if (response['success'] === true) {
                             resolve();
                         } else {
@@ -193,7 +191,6 @@ function initializeFormObject() {
                     });
                 }
                 
-                console.log(`/assignment/${classIDGlobal}/${assignmentID}/delete/`);
                 req.open('POST', `/assignment/${classIDGlobal}/${assignmentID}/delete/`); 
                 req.setRequestHeader("X-CSRFToken", csrftoken); 
                 req.send();
