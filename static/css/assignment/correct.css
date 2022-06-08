@@ -43,7 +43,7 @@
     font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
     font-size: 18px;    
 }
-.content-parent > .assignment-details > .file-area > .all-files, .content-parent > .url-area > .all-urls {
+.content-parent > .assignment-details > .file-area > .all-files, .content-parent > .assignment-details > .url-area > .all-urls {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fill, 243px);
