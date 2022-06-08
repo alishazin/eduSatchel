@@ -1,0 +1,108 @@
+{% extends 'classmenu/base.html' %}
+{% load static %}
+
+{% block title %}Correct Assignment{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/assignment/correct.css' %}">
+<script src="{% static 'js/assignment/correct.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="content-parent">
+    <div class="assignment-details">
+        <h2 class="section-headers">Assignment Details</h2>
+        <div class="content-area box">
+            <div class="header">Content</div>
+            <div class="separator"></div>
+            <div class="text">{{ assignmentObj.content }}</div>
+        </div>
+        {% if assignmentObj.files.all.count %}
+            <div class="file-area box">
+                <div class="header">Files</div>
+                <div class="separator"></div>
+                <div class="all-files">
+                    {% for obj in assignmentObj.files.all %}
+                        <div class="file-container">
+                            <div class="download-butt" onclick="downloadFile('{{ obj.file_location }}')">
+                                <i class="bi bi-download"></i>
+                            </div>
+                            <div class="format-parent">
+                                <div class="format-box">
+                                    {% if obj.availableIcon %}
+                                        <i class="bi bi-filetype-{{ obj.format }}" style="font-size: 25px;"></i>
+                                    {% else %}
+                                        {{ obj.format }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="bottom-box">
+                                <span>{{ obj.file_name }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if assignmentObj.urls.all.count %}
+            <div class="url-area box">
+                <div class="header">Urls</div>
+                <div class="separator"></div>
+                <div class="all-urls">
+                    {% for obj in assignmentObj.urls.all %}
+                        <div class="url-container">
+                            <span>
+                                <a href="{{ obj.url }}" target="_blank">{{ obj.url }}</a>
+                            </span>
+                            <div class="icon-butt" onclick="copyText('{{ obj.url }}')">
+                                <i class="bi bi-clipboard"></i>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <div class="content-area box">
+            <div class="header">Date Added</div>
+            <div class="separator"></div>
+            <div class="text" style="font-size: 16px;">{{ assignmentObj.date_added }}</div>
+        </div>
+        <div class="content-area box">
+            <div class="header">Due Date</div>
+            <div class="separator"></div>
+            <div class="text" style="font-size: 16px;">{{ assignmentObj.date_due }}</div>
+        </div>
+        <div class="content-area box">
+            <div class="header">Total Marks</div>
+            <div class="separator"></div>
+            <div class="text" style="font-size: 16px;">{{ assignmentObj.formatted_total_marks }}</div>
+        </div>
+    </div>
+    <h2 class="section-headers">Submissions Recieved</h2>
+    <div class="recieved-submission-parent">
+        <div class="top-long-box">
+            <div class="text">{{ assignmentObj.get_total_submission_number }} Submission(s)</div>
+            <div class="filter-by-box">
+                <div class="slider"></div>
+                <div class="text selected" id="text1">Corrected</div>
+                <div class="text" id="text2">Not Corrected</div>
+            </div>
+        </div>
+        <div class="submission-list">
+            {% for submissionObj in assignmentObj.submission_set.all %}
+                <div class="list-item">
+                    <div class="name">{{ submissionObj.student.username|capfirst }}</div>
+                    <i class="bi bi-chevron-double-right"></i>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script>
+    var classIDGlobal = '{{ classObj.id }}';
+    var csrftoken = '{{ csrf_token }}';
+    var classHomeURL = "{{ classObj.get_url }}";
+    var assignmentID = "{{ assignmentID }}";
+</script>
+{% endblock bodyextra %}

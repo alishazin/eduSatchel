@@ -92,6 +92,10 @@ class Assignment(models.Model):
     urls = models.ManyToManyField(Url, blank=True)
 
     @property
+    def get_total_submission_number(self):
+        return len(self.submission_set.all())
+
+    @property
     def get_ist_date_due(self):
         return get_IST_from_UTC(self.date_due)
 

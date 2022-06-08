@@ -76,4 +76,8 @@ class CorrectAssignmentView(View):
     @classentry_check(account_type='teacher')
     @assignmententry_check
     def get(self, request, classID, assignmentID):
-        return HttpResponse('Correct')
+        return render(request, 'assignment/correct.html', {
+            'classObj' : Class.objects.get(id=classID),
+            'assignmentID' : assignmentID,
+            'assignmentObj' : Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode()),
+        })
