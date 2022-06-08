@@ -70,11 +70,13 @@
             <div class="total-marks">Out of <span>{{ assignmentObj.formatted_total_marks }}</span></div>
         </div>
         <h2 class="section-headers">Submission Details</h2>
-        <div class="content-area box">
-            <div class="header">Private Message</div>
-            <div class="separator"></div>
-            <div class="text">{{ assignmentObj|get_submission_message:request.user }}</div>
-        </div>
+        {% if assignmentObj|check_submission_message:request.user %}
+            <div class="content-area box">
+                <div class="header">Private Message</div>
+                <div class="separator"></div>
+                <div class="text">{{ assignmentObj|get_submission_message:request.user }}</div>
+            </div>
+        {% endif %}
         {% if assignmentObj|check_submitted_files:request.user %}
             <div class="file-area box">
                 <div class="header">Files</div>
