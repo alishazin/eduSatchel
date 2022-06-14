@@ -94,13 +94,16 @@
                 <div class="name">Name</div>
                 <div class="on-time">On Time</div>
             </div>
-            {% for submissionObj in assignmentObj.submission_set.all %}
+            <div class="loading-div">
+                <div class="loader"></div>
+            </div>
+            <!-- {% for submissionObj in assignmentObj.submission_set.all %}
                 <div class="list-item">
                     <div class="name">{{ submissionObj.student.username|capfirst }}</div>
                     <div class="on-time"><i class="bi bi-check-circle-fill"></i></div>
                     <div class="hover-icon"><i class="bi bi-chevron-double-right"></i></div>
                 </div>
-            {% endfor %}
+            {% endfor %} -->
         </div>
     </div>
 </div>

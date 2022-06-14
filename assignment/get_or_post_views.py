@@ -44,3 +44,9 @@ class DeleteAssignmentPostOnlyView(PostOnlyViewBase):
             return HttpResponse(json.dumps({'success' : True}))
 
         return HttpResponse(json.dumps({'success' : False, 'element' : 'message', 'error_message' : 'Not submitted yet!'}))
+
+class AllSubmissionsGetOnlyView(GetOnlyViewBase):
+    @classentry_check(account_type='teacher')
+    def get_only(self, request, classID, assignmentID):
+        return HttpResponse(json.dumps({'success' : True}))
+    
