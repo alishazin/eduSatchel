@@ -8,6 +8,8 @@ function onLoad() {
         loadingDiv : document.querySelector('.content-parent > .recieved-submission-parent > .submission-list > .loading-div'),
         correctedButton : document.querySelector('.content-parent > .recieved-submission-parent > .top-long-box > .filter-by-box > #text1'),
         notCorrectedButton : document.querySelector('.content-parent > .recieved-submission-parent > .top-long-box > .filter-by-box > #text2'),
+        totalSubmissionTextDiv : document.querySelector('.content-parent > .recieved-submission-parent > .top-long-box > .text'),
+        emptySubmissionDiv : document.querySelector('.content-parent > .recieved-submission-parent > .submission-list > .empty-submission'),
         sliderOfButton : document.querySelector('.content-parent > .recieved-submission-parent > .top-long-box > .filter-by-box > .slider'),
         _loadingState : true,
         get loadingState() {
@@ -94,7 +96,14 @@ function onLoad() {
         },
     }
 
-    submissionListManager.addCallbacks();
-    submissionListManager.asyncFuncForSubmission();
+    submissionListManager.totalSubmissionTextDiv.innerText = `${totalSubmissions} Submission(s)`
+
+    if (totalSubmissions != 0) {
+        submissionListManager.addCallbacks();
+        submissionListManager.asyncFuncForSubmission();
+    } else {
+        submissionListManager.loadingState = false;
+        submissionListManager.emptySubmissionDiv.style.display = 'flex';
+    }
 }
 

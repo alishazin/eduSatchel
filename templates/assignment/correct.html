@@ -82,7 +82,7 @@
     <h2 class="section-headers">Submissions Recieved</h2>
     <div class="recieved-submission-parent">
         <div class="top-long-box">
-            <div class="text">{{ assignmentObj.get_total_submission_number }} Submission(s)</div>
+            <div class="text"></div>
             <div class="filter-by-box">
                 <div class="slider"></div>
                 <div class="text selected" id="text1">Corrected</div>
@@ -96,6 +96,10 @@
             </div>
             <div class="loading-div">
                 <div class="loader"></div>
+            </div>
+            <div class="empty-submission">
+                <i class="bi bi-emoji-expressionless"></i>
+                <span>No Submissions Yet!</span>
             </div>
             <!-- {% for submissionObj in assignmentObj.submission_set.all %}
                 <div class="list-item">
@@ -112,5 +116,6 @@
     var csrftoken = '{{ csrf_token }}';
     var classHomeURL = "{{ classObj.get_url }}";
     var assignmentID = "{{ assignmentID }}";
+    var totalSubmissions = Number("{{ assignmentObj.get_total_submission_number }}");
 </script>
 {% endblock bodyextra %}

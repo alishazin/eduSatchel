@@ -48,5 +48,6 @@ class DeleteAssignmentPostOnlyView(PostOnlyViewBase):
 class AllSubmissionsGetOnlyView(GetOnlyViewBase):
     @classentry_check(account_type='teacher')
     def get_only(self, request, classID, assignmentID):
+        
         return HttpResponse(json.dumps({'success' : True}))
     
