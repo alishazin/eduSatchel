@@ -29,6 +29,9 @@ def check_submission_message(assignmentObj, userObj):
 def get_submission_message(assignmentObj, userObj):
     return assignmentObj.submission_set.get(student=userObj).message
 
+def get_submission_date(assignmentObj, userObj):
+    return assignmentObj.submission_set.get(student=userObj).date_added
+
 register.filter('is_assignment_submitted_filter', is_assignment_submitted_filter)
 register.filter('check_submitted_files', check_submitted_files)
 register.filter('get_submitted_files', get_submitted_files)
@@ -36,3 +39,4 @@ register.filter('check_submitted_urls', check_submitted_urls)
 register.filter('get_submitted_urls', get_submitted_urls)
 register.filter('check_submission_message', check_submission_message)
 register.filter('get_submission_message', get_submission_message)
+register.filter('get_submission_date', get_submission_date)

@@ -11,6 +11,7 @@ function onLoad() {
         totalSubmissionTextDiv : document.querySelector('.content-parent > .recieved-submission-parent > .top-long-box > .text'),
         emptySubmissionDiv : document.querySelector('.content-parent > .recieved-submission-parent > .submission-list > .empty-submission'),
         sliderOfButton : document.querySelector('.content-parent > .recieved-submission-parent > .top-long-box > .filter-by-box > .slider'),
+        submissionListDiv : document.querySelector('.content-parent > .recieved-submission-parent > .submission-list'),
         _loadingState : true,
         get loadingState() {
             return this._loadingState;
@@ -41,27 +42,73 @@ function onLoad() {
             }
             this._sliderState = arg;
         },
-        addCallbacks : function () {
+        _listItemState : 'corrected',
+        get listItemState() {
+            return this._listItemState;
+        },
+        set listItemState(arg) {
+            this.clearListItems();
+            if (arg === 'corrected') {key = arg;} 
+            else if (arg === 'notcorrected') {key = 'not-corrected';}
+
+            if (this.submissionDataObject[key].length == 0) {
+                this.emptySubmissionDiv.style.display = 'flex';
+            } else {
+                for (let x of this.submissionDataObject[key]) {
+                    const listItem = createElementWithAttributes('div', {classList : 'list-item'})
+    
+                    const name = createElementWithAttributes('div', {classList : 'name', innerText : x[0]})
+    
+                    const onTime = createElementWithAttributes('div', {classList : 'on-time'})
+                    if (x[1]) { onTime.appendChild(createElementWithAttributes('i', {classList : 'bi bi-check-circle-fill', color : 'var(--green-color)'})) }
+                    else { onTime.appendChild(createElementWithAttributes('i', {classList : 'bi bi-x-circle-fill', color : 'var(--tertiary-color)'})) }
+                    
+                    const hoverIcon = createElementWithAttributes('div', {classList : 'hover-icon'})
+                    hoverIcon.appendChild(createElementWithAttributes('i', {classList : 'bi bi-chevron-double-right'}))
+    
+                    listItem.appendChild(name)
+                    listItem.appendChild(onTime)
+                    listItem.appendChild(hoverIcon)
+
+                    listItem.onclick = () => {
+                        location.href = `${currentHref}/${x[2]}/`
+                    }
+                    
+                    this.submissionListDiv.appendChild(listItem)
+                }
+            }
+            this._listItemState = arg;
+        },
+        submissionDataObject : null,
+        clearListItems : function () {
+            Array.from(document.querySelectorAll('.content-parent > .recieved-submission-parent > .submission-list > .list-item')).forEach(element => {
+                element.remove();
+            })
+            this.emptySubmissionDiv.style.display = 'none'
+        },
+        addCallbacks : function (empty) {
             this.correctedButton.onclick = () => {
                 if (this.loadingState === false && this.sliderState === 'notcorrected') {
                     this.sliderState = 'corrected';
+                    if (!empty) { this.listItemState = 'corrected'; }
                 }
             }
             this.notCorrectedButton.onclick = () => {
                 if (this.loadingState === false && this.sliderState === 'corrected') {
                     this.sliderState = 'notcorrected';
+                    if (!empty) { this.listItemState = 'notcorrected'; }
                 }
             }
         },
         asyncFuncForSubmission : async function () {
             try {
                 this.loadingState = true;
-                await this.sendGetRequestForSubmission();
+                this.submissionDataObject = await this.sendGetRequestForSubmission();
+                this.listItemState = 'notcorrected';
+                this.sliderState = 'notcorrected';
                 this.loadingState = false;
             } catch(errorObj) {
-                if (errorObj['type'] === 'network') {
-                    errorObj.call();
-                }
+                errorObj.call();
                 this.loadingState = false;
             }
         },
@@ -72,17 +119,12 @@ function onLoad() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
                         console.log(response)
-                        if (response['submissionAvailable'] === true) {
-                            resolve();
-                        } else {
-                            reject(response)
-                        }
+                        resolve(response);
                     }
                 }
 
                 req.onerror = () => {
                     reject({
-                        type : 'network',
                         call : () => {
                             alert("No Active Network Connection")
                         }
@@ -102,8 +144,24 @@ function onLoad() {
         submissionListManager.addCallbacks();
         submissionListManager.asyncFuncForSubmission();
     } else {
+        submissionListManager.addCallbacks(true);
         submissionListManager.loadingState = false;
         submissionListManager.emptySubmissionDiv.style.display = 'flex';
     }
 }
 
+function createElementWithAttributes(tag, paramsObj = {}) {
+    const documentElement = document.createElement(tag);
+    if (paramsObj['classList']) { documentElement.classList = paramsObj['classList']; } 
+    if (paramsObj['id']) { documentElement.id = paramsObj['id']; }
+    if (paramsObj['innerText']) { documentElement.innerText = paramsObj['innerText']; }
+    if (paramsObj['color']) { documentElement.style.color = paramsObj['color']; }
+    if (paramsObj['bg_color']) { documentElement.style.backgroundColor = paramsObj['bg_color']; }
+    if (paramsObj['onclick']) { documentElement.onclick = paramsObj['onclick']; }
+    if (paramsObj['fontSize']) { documentElement.style.fontSize = paramsObj['fontSize']; }
+    if (paramsObj['padding']) { documentElement.style.padding = paramsObj['padding']; }
+    if (paramsObj['src']) { documentElement.src = paramsObj['src']; }
+    if (paramsObj['href']) { documentElement.href = paramsObj['href']; }
+    if (paramsObj['target']) { documentElement.target = paramsObj['target']; }
+    return documentElement;
+}

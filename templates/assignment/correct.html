@@ -99,15 +99,8 @@
             </div>
             <div class="empty-submission">
                 <i class="bi bi-emoji-expressionless"></i>
-                <span>No Submissions Yet!</span>
+                <span>No Submissions Yet! Try Changing Filters</span>
             </div>
-            <!-- {% for submissionObj in assignmentObj.submission_set.all %}
-                <div class="list-item">
-                    <div class="name">{{ submissionObj.student.username|capfirst }}</div>
-                    <div class="on-time"><i class="bi bi-check-circle-fill"></i></div>
-                    <div class="hover-icon"><i class="bi bi-chevron-double-right"></i></div>
-                </div>
-            {% endfor %} -->
         </div>
     </div>
 </div>
@@ -117,5 +110,6 @@
     var classHomeURL = "{{ classObj.get_url }}";
     var assignmentID = "{{ assignmentID }}";
     var totalSubmissions = Number("{{ assignmentObj.get_total_submission_number }}");
+    var currentHref = `/assignment/${classIDGlobal}/${assignmentID}/correct`;
 </script>
 {% endblock bodyextra %}

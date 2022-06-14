@@ -77,6 +77,11 @@
                 <div class="text">{{ assignmentObj|get_submission_message:request.user }}</div>
             </div>
         {% endif %}
+        <div class="content-area box">
+            <div class="header">Submission Date</div>
+            <div class="separator"></div>
+            <div class="text">{{ assignmentObj|get_submission_date:request.user }}</div>
+        </div>
         {% if assignmentObj|check_submitted_files:request.user %}
             <div class="file-area box">
                 <div class="header">Files</div>

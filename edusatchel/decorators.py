@@ -1,3 +1,4 @@
+from assignment.models import Submission
 from classmenu.models import Assignment
 from django.http import Http404
 from django.contrib import messages
@@ -76,6 +77,27 @@ def assignmententry_check(function):
             raise Http404
         else:
             if assignmentObj.class_obj == classObj:
+                return function(*args, **kwargs)
+            raise Http404
+
+    return wrapper
+
+def submissionentry_check(function):
+
+    def wrapper(*args, **kwargs):
+        request = args[1]
+        submissionID = kwargs['submissionID']
+        assignmentID = kwargs['assignmentID']
+        # You should make sure than assignmentID is correct. We dont verify it here.
+        # You can call assignmententry_check() before it
+        assignmentObj = Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode())
+        try:
+            decodedID = urlsafe_base64_decode(submissionID).decode()
+            submissionObj = Submission.objects.get(id=decodedID)
+        except:
+            raise Http404
+        else:
+            if submissionObj.assignment_obj == assignmentObj:
                 return function(*args, **kwargs)
             raise Http404
 
