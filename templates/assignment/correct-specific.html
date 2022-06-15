@@ -1,28 +1,35 @@
 {% extends 'classmenu/base.html' %}
 {% load static %}
 
-{% block title %}Submissions{% endblock title %}
+{% block title %}Correct Submission{% endblock title %}
 
 {% block headextraextra %}
-<link rel='stylesheet' href="{% static 'css/assignment/correct.css' %}">
-<script src="{% static 'js/assignment/correct.js' %}"></script>
+<link rel='stylesheet' href="{% static 'css/assignment/correct-specific.css' %}">
+<script src="{% static 'js/assignment/correct-specific.js' %}"></script>
 {% endblock headextraextra %}
 
 {% block bodyextra %}
 <div class="content-parent">
-    <div class="assignment-details">
-        <h2 class="section-headers">Assignment Details</h2>
+    <div class="submission-details">
+        <h2 class="section-headers">Submission Details</h2>
         <div class="content-area box">
-            <div class="header">Content</div>
+            <div class="header">Student Name</div>
             <div class="separator"></div>
-            <div class="text">{{ assignmentObj.content }}</div>
+            <div class="text">{{ submissionObj.student.username|capfirst }}</div>
         </div>
-        {% if assignmentObj.files.all.count %}
+        {% if submissionObj.message %}
+            <div class="content-area box">
+                <div class="header">Private Message</div>
+                <div class="separator"></div>
+                <div class="text">{{ submissionObj.message }}</div>
+            </div>
+        {% endif %}
+        {% if submissionObj.files.all.count %}
             <div class="file-area box">
                 <div class="header">Files</div>
                 <div class="separator"></div>
                 <div class="all-files">
-                    {% for obj in assignmentObj.files.all %}
+                    {% for obj in submissionObj.files.all %}
                         <div class="file-container">
                             <div class="download-butt" onclick="downloadFile('{{ obj.file_location }}')">
                                 <i class="bi bi-download"></i>
@@ -45,12 +52,12 @@
             </div>
         {% endif %}
 
-        {% if assignmentObj.urls.all.count %}
+        {% if submissionObj.urls.all.count %}
             <div class="url-area box">
                 <div class="header">Urls</div>
                 <div class="separator"></div>
                 <div class="all-urls">
-                    {% for obj in assignmentObj.urls.all %}
+                    {% for obj in submissionObj.urls.all %}
                         <div class="url-container">
                             <span>
                                 <a href="{{ obj.url }}" target="_blank">{{ obj.url }}</a>
@@ -64,11 +71,11 @@
             </div>
         {% endif %}
         <div class="content-area box">
-            <div class="header">Date Added</div>
+            <div class="header">Submission Date</div>
             <div class="separator"></div>
-            <div class="text" style="font-size: 16px;">{{ assignmentObj.date_added }}</div>
+            <div class="text">{{ submissionObj.date_added }}</div>
         </div>
-        <div class="content-area box">
+        <!-- <div class="content-area box">
             <div class="header">Due Date</div>
             <div class="separator"></div>
             <div class="text" style="font-size: 16px;">{{ assignmentObj.date_due }}</div>
@@ -77,9 +84,9 @@
             <div class="header">Total Marks</div>
             <div class="separator"></div>
             <div class="text" style="font-size: 16px;">{{ assignmentObj.formatted_total_marks }}</div>
-        </div>
+        </div> -->
     </div>
-    <h2 class="section-headers">Submissions Recieved</h2>
+    <!-- <h2 class="section-headers">Submissions Recieved</h2>
     <div class="recieved-submission-parent">
         <div class="top-long-box">
             <div class="text"></div>
@@ -102,14 +109,12 @@
                 <span>No Submissions Yet! Try Changing Filters</span>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
     var csrftoken = '{{ csrf_token }}';
     var classHomeURL = "{{ classObj.get_url }}";
-    var assignmentID = "{{ assignmentID }}";
-    var totalSubmissions = Number("{{ assignmentObj.get_total_submission_number }}");
-    var currentHref = `/assignment/${classIDGlobal}/${assignmentID}/correct`;
+    var submissionID = "{{ submissionID }}";
 </script>
 {% endblock bodyextra %}

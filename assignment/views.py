@@ -1,3 +1,4 @@
+from assignment.models import Submission
 from classmenu.models import Assignment
 from home.models import Class
 from django.http import HttpResponse
@@ -88,4 +89,8 @@ class CorrectSpecificAssignmentView(View):
     @assignmententry_check
     @submissionentry_check
     def get(self, request, classID, assignmentID, submissionID):
-        return HttpResponse(f'{submissionID}')
+        return render(request, 'assignment/correct-specific.html', {
+            'classObj' : Class.objects.get(id=classID),
+            'submissionID' : submissionID,
+            'submissionObj' : Submission.objects.get(id=urlsafe_base64_decode(submissionID).decode()),
+        })

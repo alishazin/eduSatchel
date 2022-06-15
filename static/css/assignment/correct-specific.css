@@ -1,0 +1,171 @@
+.content-parent {
+    overflow: auto !important;
+    width: 800px;
+    max-width: 100%;
+    min-height: 100%;
+    padding: 10px 0;
+    border: 2px solid #ddd;
+    border-bottom: none;
+    border-top: none;
+}
+.content-parent > .submission-details {
+    padding: 0 20px;
+}
+.content-parent  h2.section-headers {
+    color: black;
+    font-size: 15px;
+    font-family: "Lato", Arial, Helvetica, sans-serif;
+    padding: 8px 10px;
+    border: 2px solid black;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: fit-content;
+    border-radius: 10px;
+    background-color: var(--quaternary-color);
+}
+.content-parent > .submission-details > .box {
+    margin-bottom: 30px;
+}
+.content-parent > .submission-details > .box > .header {
+    font-size: 14px;
+    color: #adadad;
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 2px;
+}
+.content-parent > .submission-details > .box > .separator {
+    width: 100%;
+    height: 1px;
+    background-color: #adadad;
+    margin-bottom: 10px;
+}
+.content-parent > .submission-details > .box > .text {
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;    
+}
+.content-parent > .submission-details > .file-area > .all-files, .content-parent > .submission-details > .url-area > .all-urls {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, 243px);
+    width: 100%;
+    min-height: 25px;
+    height: fit-content;
+}
+.content-parent > .submission-details > .file-area > .all-files > .file-container {
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid var(--tertiary-color);
+    border-radius: 10px;
+    box-shadow: 2px -2px 6px white, -2px 2px 6px var(--shadow-light-color);
+}
+.content-parent > .submission-details > .file-area > .all-files > .file-container > .download-butt {
+    border-radius: 6px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 5px;
+    color: var(--tertiary-color);
+    font-size: 18px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+.content-parent > .submission-details > .file-area > .all-files > .file-container > .download-butt:hover {
+    color: white;
+    background-color: var(--tertiary-color);
+}
+.content-parent > .submission-details > .file-area > .all-files > .file-container > .format-parent {
+    min-height: 170px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.content-parent > .submission-details > .file-area > .all-files > .file-container > .format-parent > .format-box {
+    max-width: 100%; 
+    background-color: var(--tertiary-color);
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+.content-parent > .submission-details > .file-area > .all-files > .file-container > .bottom-box {
+    min-height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 8px;
+    width: 100%;
+}
+.content-parent > .submission-details > .file-area > .all-files > .file-container > .bottom-box > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    width: 100%;
+    color: var(--text-color);
+}
+.content-parent > .submission-details > .url-area > .all-urls > .url-container {
+    background-color: white;
+    min-height: 25px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+.content-parent > .submission-details > .url-area > .all-urls > .url-container > span {
+    width: calc(100% - 30px);
+    padding: 5px 8px;
+    color: var(--text-color);
+    font-family: "Lato", Calibri, 'Trebuchet MS', sans-serif, monospace;
+    height: 100%;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.content-parent > .submission-details > .url-area > .all-urls > .url-container > span {
+    width: calc(100% - 30px);
+    padding: 5px 8px;
+    color: var(--text-color);
+    font-family: "Lato", Calibri, 'Trebuchet MS', sans-serif, monospace;
+    height: 100%;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.content-parent > .submission-details > .url-area > .all-urls > .url-container > .icon-butt {
+    display: none;
+    height: 100%;
+    width: 30px;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    color: var(--tertiary-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s;
+}
+.content-parent > .submission-details > .url-area > .all-urls > .url-container > .icon-butt:active {
+    opacity: 0.5;
+}
+.content-parent > .submission-details > .url-area > .all-urls > .url-container > .icon-butt:hover {
+    color: white;
+    background-color: var(--tertiary-color);
+}
+.content-parent > .submission-details > .url-area > .all-urls > .url-container > .icon-butt > i {
+    transform: translateY(1px);
+}
