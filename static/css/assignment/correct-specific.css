@@ -8,7 +8,7 @@
     border-bottom: none;
     border-top: none;
 }
-.content-parent > .submission-details {
+.content-parent > .submission-details, .content-parent > .correct-submission {
     padding: 0 20px;
 }
 .content-parent  h2.section-headers {
@@ -24,22 +24,22 @@
     border-radius: 10px;
     background-color: var(--quaternary-color);
 }
-.content-parent > .submission-details > .box {
+.content-parent > .submission-details > .box, .content-parent > .correct-submission > .box {
     margin-bottom: 30px;
 }
-.content-parent > .submission-details > .box > .header {
+.content-parent > .submission-details > .box > .header, .content-parent > .correct-submission > .box > .header {
     font-size: 14px;
     color: #adadad;
     font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
     margin-bottom: 2px;
 }
-.content-parent > .submission-details > .box > .separator {
+.content-parent > .submission-details > .box > .separator, .content-parent > .correct-submission > .box > .separator {
     width: 100%;
     height: 1px;
     background-color: #adadad;
     margin-bottom: 10px;
 }
-.content-parent > .submission-details > .box > .text {
+.content-parent > .submission-details > .box > .text, .content-parent > .correct-submission > .box > .text {
     font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
     font-size: 18px;    
 }
@@ -168,4 +168,100 @@
 }
 .content-parent > .submission-details > .url-area > .all-urls > .url-container > .icon-butt > i {
     transform: translateY(1px);
+}
+.content-parent > .correct-submission > p {
+    color: var(--text-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+}
+.content-parent > .correct-submission > ul {
+    margin: 0;
+    margin-bottom: 20px;
+}
+.content-parent > .correct-submission > ul > li {
+    color: var(--text-color);
+    font-size: 12px;
+    padding-bottom: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.content-parent > .correct-submission > .error-div {
+    margin: 10px 0;
+    width: 100%;
+    font-size: 12px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: red;
+}
+.content-parent > .correct-submission > textarea {
+    width: 100%;
+    border-radius: 10px;
+    resize: none;
+    padding: 15px;
+    font-size: 16px;
+    outline: none;
+    border: 2px solid #ddd;
+    font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
+    min-height: 100px;
+    margin-bottom: 20px;
+}
+.content-parent > .correct-submission > label {
+    width: 100%;
+    font-size: 16px;
+    display: block;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+.content-parent > .correct-submission > textarea:focus, .content-parent > .correct-submission > input[type="number"]:focus {
+    border-color: dodgerblue !important;
+}
+.content-parent > .correct-submission > textarea.inputted, .content-parent > .correct-submission > input[type="number"].inputted {
+    border-color: var(--secondary-color);
+}
+.content-parent > .correct-submission > input[type="number"] {
+    width: 100%;    
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--text-color);
+    border: 2px solid #ddd;
+    outline: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.content-parent button {
+    position: relative;
+    min-height: 35px;
+    width: 75px;
+    border-radius: 10px;
+    background-color: transparent;
+    outline: none;
+    border: 1px solid var(--tertiary-color);
+    margin: 30px 0;
+    margin-bottom: 20px;
+    color: var(--tertiary-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.content-parent button > .spinner {
+    border: 3px solid #00000033;
+    border-radius: 50%;
+    border-top: 3px solid white;
+    width: 24px;
+    min-height: 24px;
+    animation: loading-spin 1.5s linear infinite;
+    position: absolute;
+    left: calc(50% - 12px);
+    top: calc(50% - 12px);
+    display: none;
+}
+.content-parent button.loading > .spinner {
+    display: block;
+}
+.content-parent button.loading > span {
+    display: none;
+}
+.content-parent button:not(.loading):hover {
+    background-color: var(--tertiary-color);
+    color: white;
+    cursor: pointer;
 }

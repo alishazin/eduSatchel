@@ -86,3 +86,9 @@ function addEventToBaseBackButton() {
 function directToPage(url) {
     location.href = url;
 } 
+
+function downloadFile(uri) {
+    var link = document.createElement("a");
+    link.href = uri;
+    link.click();
+}

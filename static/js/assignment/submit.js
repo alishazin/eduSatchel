@@ -205,12 +205,6 @@ function initializeFormObject() {
 
 }
 
-function downloadFile(uri) {
-    var link = document.createElement("a");
-    link.href = uri;
-    link.click();
-}
-
 function copyText(url) {
     navigator.clipboard.writeText(url)
 }

@@ -75,41 +75,21 @@
             <div class="separator"></div>
             <div class="text">{{ submissionObj.date_added }}</div>
         </div>
-        <!-- <div class="content-area box">
-            <div class="header">Due Date</div>
-            <div class="separator"></div>
-            <div class="text" style="font-size: 16px;">{{ assignmentObj.date_due }}</div>
-        </div>
+    </div>
+    <h2 class="section-headers">Review The Submission</h2>
+    <div class="correct-submission">
         <div class="content-area box">
             <div class="header">Total Marks</div>
             <div class="separator"></div>
-            <div class="text" style="font-size: 16px;">{{ assignmentObj.formatted_total_marks }}</div>
-        </div> -->
+            <div class="text">{{ submissionObj.assignment_obj.formatted_total_marks }}</div>
+        </div>
+        <div class="error-div"></div>
+        <label>Message</label>
+        <textarea name="content"></textarea>
+        <label>Rewarding Marks</label>
+        <input type="number" name="total-marks" min="0" max="1000" step="0.01">
+        <button><span>Submit</span><div class="spinner"></div></button>
     </div>
-    <!-- <h2 class="section-headers">Submissions Recieved</h2>
-    <div class="recieved-submission-parent">
-        <div class="top-long-box">
-            <div class="text"></div>
-            <div class="filter-by-box">
-                <div class="slider"></div>
-                <div class="text selected" id="text1">Corrected</div>
-                <div class="text" id="text2">Not Corrected</div>
-            </div>
-        </div>
-        <div class="submission-list">
-            <div class="header">
-                <div class="name">Name</div>
-                <div class="on-time">On Time</div>
-            </div>
-            <div class="loading-div">
-                <div class="loader"></div>
-            </div>
-            <div class="empty-submission">
-                <i class="bi bi-emoji-expressionless"></i>
-                <span>No Submissions Yet! Try Changing Filters</span>
-            </div>
-        </div>
-    </div> -->
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
