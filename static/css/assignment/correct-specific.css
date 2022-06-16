@@ -210,7 +210,7 @@
 .content-parent > .correct-submission > ul > li:last-of-type, .content-parent > .correction-details > ul > li:last-of-type {
     margin: 0;
 }
-.content-parent > .correct-submission > .error-div {
+.content-parent > .correct-submission > .error-div, .content-parent > .correction-details > .error-div {
     margin: 10px 0;
     width: 100%;
     font-size: 12px;

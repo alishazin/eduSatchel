@@ -44,3 +44,7 @@ class Correction(models.Model):
         if float(self.given_marks) == int(self.given_marks):
             return int(self.given_marks)
         return self.given_marks
+
+    @property
+    def encoded_id(self):
+        return urlsafe_base64_encode(force_bytes(self.id))

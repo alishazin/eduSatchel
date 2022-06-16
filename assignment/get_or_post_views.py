@@ -1,5 +1,5 @@
 
-from assignment.models import Submission
+from assignment.models import Correction, Submission
 from classmenu.models import Assignment
 from django.http import Http404, HttpResponse
 from django.views import View
@@ -89,7 +89,7 @@ class AddCorrectionPostOnlyView(PostOnlyViewBase):
                 except:
                     return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Rewarding mark should be a number'}))
                 else:
-                    if marksFloat <= 0:
+                    if marksFloat < 0:
                         return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Rewarding mark should be a positive value.'}))
                     elif marksFloat > assignmentObj.total_marks:
                         return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Rewarding mark should be less than total marks.'}))
@@ -104,3 +104,16 @@ class AddCorrectionPostOnlyView(PostOnlyViewBase):
                 return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Already corrected.'}))
         else:
             return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Not enough formdata!'}))
+
+class DeleteCorrectionPostOnlyView(PostOnlyViewBase):
+    @classentry_check(account_type='teacher')
+    @assignmententry_check
+    @submissionentry_check
+    def post_only(self, request, classID, assignmentID, submissionID, correctionID):
+        submissionObj = Submission.objects.get(id=urlsafe_base64_decode(submissionID).decode())
+        correctionObj = Correction.objects.get(id=urlsafe_base64_decode(correctionID).decode())
+        if len(submissionObj.correction_set.all()) != 0:
+            correctionObj.delete()
+            return HttpResponse(json.dumps({'success' : True}))
+        else:
+            return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Nothing to delete'}))

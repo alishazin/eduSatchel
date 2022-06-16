@@ -89,7 +89,7 @@
             {% if submissionObj.is_submitted_on_time %}
                 <div class="text">On Time</div>
             {% else %}
-                <div class="text">Not On Time</div>
+                <div class="text">Late</div>
             {% endif %}
         </div>
 
@@ -120,6 +120,7 @@
                 <li>You can add a review later.</li>
                 <li>The details of new review will be independent of this review.</li>
             </ul>
+            <div class="error-div"></div>
             <button><span>Delete</span><div class="spinner"></div></button>
         </div>
         {% else %}
@@ -150,6 +151,7 @@
     var submissionID = "{{ submissionID }}";
     var assignmentID = "{{ submissionObj.assignment_obj.encoded_id }}";
     var totalMarkFromBackend = Number("{{ submissionObj.assignment_obj.total_marks }}");
+    var correctionID = "{{ correctionObj.encoded_id }}";
     var isSubmissionCorrected = "{{ isSubmissionCorrected }}";
 </script>
 {% endblock bodyextra %}

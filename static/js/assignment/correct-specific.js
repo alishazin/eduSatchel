@@ -12,6 +12,8 @@ var buttonObject = {};
 
 var addReviewObject = {};
 
+var deleteReviewObject = {};
+
 function onLoad() {
     navBarObj.selectItem(1);
 
@@ -66,7 +68,6 @@ function onLoad() {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
-                        console.log(response)
                         if (response['success'] === true) {
                             resolve();
                         } else {
@@ -95,7 +96,7 @@ function onLoad() {
 
             const numberGivenMark = Number(this.markField.value);
                     
-            if (numberGivenMark <= 0) {
+            if (numberGivenMark < 0) {
                 this.errorDiv.innerText = 'Invalid Total Marks';
             } else if (numberGivenMark > totalMarkFromBackend) {
                 this.errorDiv.innerText = 'Invalid Total Marks';
@@ -121,13 +122,67 @@ function onLoad() {
         }
     };
 
+    deleteReviewObject = {
+        errorDiv : document.querySelector('.content-parent > .correction-details > .error-div'),
+        addCallbacks : function () {
+            buttonObject.self.onclick = () => {
+                if (buttonObject.state === 'normal') {
+                    this.asyncFuncForDeletion();
+                }
+            }
+        },
+        asyncFuncForDeletion : async function () {
+            try {
+                this.errorDiv.innerText = ''
+                buttonObject.state = 'loading'
+                await this.sendPostRequestForDeletion()
+                buttonObject.state = 'normal'
+                location.href = location.href;
+            } catch(errorObj) {
+                if (errorObj.type === 'backend') {
+                    this.errorDiv.innerText = errorObj.error_message
+                } else if (errorObj.type === 'network') {
+                    errorObj.call();
+                }
+            }
+        },
+        sendPostRequestForDeletion : function () {
+            return new Promise((resolve, reject) => {
+                var req = new XMLHttpRequest();
+                req.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const response = JSON.parse(this.responseText);
+                        console.log(response)
+                        if (response['success'] === true) {
+                            resolve();
+                        } else {
+                            response.type = 'backend';
+                            reject(response)
+                        }
+                    }
+                }
+
+                req.onerror = () => {
+                    reject({
+                        type : 'network',
+                        call : () => {
+                            alert("No Active Network Connection")
+                        }
+                    });
+                }
+
+                req.open('POST', `/assignment/${classIDGlobal}/${assignmentID}/correct/${submissionID}/${correctionID}/delete/`); 
+                req.setRequestHeader("X-CSRFToken", csrftoken); 
+                req.send();
+            })
+        }
+    }
     
     if (isSubmissionCorrected === 'True') {
-        
+        deleteReviewObject.addCallbacks();
     } else {
         addReviewObject.addCallbacks();
     }
 }
 
-// send notification if corrected to student
 // Correction details in submission page for students
