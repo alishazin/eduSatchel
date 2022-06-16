@@ -175,14 +175,17 @@
     font-size: 14px;
 }
 .content-parent > .correct-submission > ul {
-    margin: 0;
+    width: 100%;    
+    font-size: 16px;
+    color: var(--text-color);
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
     margin-bottom: 20px;
 }
 .content-parent > .correct-submission > ul > li {
-    color: var(--text-color);
-    font-size: 12px;
-    padding-bottom: 5px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 10px;
+}
+.content-parent > .correct-submission > ul > li:last-of-type {
+    margin: 0;
 }
 .content-parent > .correct-submission > .error-div {
     margin: 10px 0;

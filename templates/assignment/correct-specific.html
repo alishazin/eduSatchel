@@ -86,8 +86,12 @@
         <div class="error-div"></div>
         <label>Message</label>
         <textarea name="content"></textarea>
-        <label>Rewarding Marks</label>
+        <label>Rewarding Marks <span style="color:red;">*</span></label>
         <input type="number" name="total-marks" min="0" max="1000" step="0.01">
+        <ul>
+            <li>Rewarding mark should be less than the total marks.</li>
+            <li>Only two decimal places are allowed.</li>
+        </ul>
         <button><span>Submit</span><div class="spinner"></div></button>
     </div>
 </div>
@@ -96,5 +100,6 @@
     var csrftoken = '{{ csrf_token }}';
     var classHomeURL = "{{ classObj.get_url }}";
     var submissionID = "{{ submissionID }}";
+    var totalMarkFromBackend = Number("{{ submissionObj.assignment_obj.total_marks }}");
 </script>
 {% endblock bodyextra %}

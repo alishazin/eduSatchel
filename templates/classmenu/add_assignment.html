@@ -11,7 +11,7 @@
 {% block bodyextra %}
 <div class="content-box">
     <div class="error-div content-error-div"></div>
-    <label>Content</label>
+    <label>Content <span style="color:red;">*</span></label>
     <textarea name="content"></textarea>
     <div class="error-div attach-file-error-div"></div>
     <label>Attach Files/Urls</label>
@@ -20,11 +20,11 @@
     </div>
     <div class="error-div date-error-div"></div>
     <div class="datetime-container">
-        <label for="due-date-id">Due Date And Time</label>
+        <label for="due-date-id">Due Date And Time <span style="color:red;">*</span></label>
         <input type="datetime-local" name="due-date" id="due-date-id">
     </div>
     <div class="error-div marks-error-div"></div>
-    <label>Total Marks</label>
+    <label>Total Marks <span style="color:red;">*</span></label>
     <input type="number" name="total-marks" min="0" max="1000" step="0.01">
     <ul>
         <li>Total mark should be lesser than 1000.</li>
