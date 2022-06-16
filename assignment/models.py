@@ -38,3 +38,9 @@ class Correction(models.Model):
     message = models.TextField(null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
     given_marks = models.DecimalField(max_digits=6, decimal_places=2)
+
+    @property
+    def formatted_given_marks(self):
+        if float(self.given_marks) == int(self.given_marks):
+            return int(self.given_marks)
+        return self.given_marks

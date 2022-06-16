@@ -89,8 +89,18 @@ class CorrectSpecificAssignmentView(View):
     @assignmententry_check
     @submissionentry_check
     def get(self, request, classID, assignmentID, submissionID):
+        submissionObj = Submission.objects.get(id=urlsafe_base64_decode(submissionID).decode())
+        try:
+            correctionObj = submissionObj.correction_set.all()[0]
+            isSubmissionCorrected = True
+        except:
+            correctionObj = None
+            isSubmissionCorrected = False
+            
         return render(request, 'assignment/correct-specific.html', {
             'classObj' : Class.objects.get(id=classID),
             'submissionID' : submissionID,
-            'submissionObj' : Submission.objects.get(id=urlsafe_base64_decode(submissionID).decode()),
+            'submissionObj' : submissionObj,
+            'correctionObj' : correctionObj,
+            'isSubmissionCorrected' : isSubmissionCorrected
         })

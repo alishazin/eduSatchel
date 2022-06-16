@@ -83,25 +83,65 @@
             <div class="separator"></div>
             <div class="text">{{ submissionObj.date_added }}</div>
         </div>
-    </div>
-    <h2 class="section-headers">Review The Submission</h2>
-    <div class="correct-submission">
         <div class="content-area box">
-            <div class="header">Total Marks</div>
+            <div class="header">Punctuality</div>
             <div class="separator"></div>
-            <div class="text">{{ submissionObj.assignment_obj.formatted_total_marks }}</div>
+            {% if submissionObj.is_submitted_on_time %}
+                <div class="text">On Time</div>
+            {% else %}
+                <div class="text">Not On Time</div>
+            {% endif %}
         </div>
-        <div class="error-div"></div>
-        <label>Message</label>
-        <textarea name="content"></textarea>
-        <label>Rewarding Marks <span style="color:red;">*</span></label>
-        <input type="number" name="total-marks" min="0" max="1000" step="0.01">
-        <ul>
-            <li>Rewarding mark should be less than the total marks.</li>
-            <li>Only two decimal places are allowed.</li>
-        </ul>
-        <button><span>Submit</span><div class="spinner"></div></button>
+
     </div>
+    {% if isSubmissionCorrected %}
+        <h2 class="section-headers">Review Details</h2>
+        <div class="correction-details">
+            {% if submissionObj.message %}
+                <div class="content-area box">
+                    <div class="header">Message</div>
+                    <div class="separator"></div>
+                    <div class="text">{{ correctionObj.message }}</div>
+                </div>
+            {% endif %}
+            <div class="content-area box">
+                <div class="header">Reviewed Date</div>
+                <div class="separator"></div>
+                <div class="text">{{ correctionObj.date_added }}</div>
+            </div>
+            <div class="content-area box">
+                <div class="header">Marks Rewarded</div>
+                <div class="separator"></div>
+                <div class="text"><span style="color:var(--tertiary-color); font-size:30px;">{{ correctionObj.formatted_given_marks }}</span>/{{ submissionObj.assignment_obj.formatted_total_marks }}</div>
+            </div>
+            <p>Before You Delete Review:</p>
+            <ul>
+                <li>You cannot reverse this deletion.</li>
+                <li>You can add a review later.</li>
+                <li>The details of new review will be independent of this review.</li>
+            </ul>
+            <button><span>Delete</span><div class="spinner"></div></button>
+        </div>
+        {% else %}
+        <h2 class="section-headers">Review The Submission</h2>
+        <div class="correct-submission">
+            <div class="content-area box">
+                <div class="header">Total Marks</div>
+                <div class="separator"></div>
+                <div class="text">{{ submissionObj.assignment_obj.formatted_total_marks }}</div>
+            </div>
+            <div class="error-div"></div>
+            <label>Message</label>
+            <textarea name="content"></textarea>
+            <label>Rewarding Marks <span style="color:red;">*</span></label>
+            <input type="number" name="total-marks" min="0" max="1000" step="0.01">
+            <ul>
+                <li>Rewarding mark should be less than the total marks.</li>
+                <li>Only two decimal places are allowed.</li>
+            </ul>
+            <button><span>Submit</span><div class="spinner"></div></button>
+        </div>
+        {% endif %}
 </div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
@@ -110,5 +150,6 @@
     var submissionID = "{{ submissionID }}";
     var assignmentID = "{{ submissionObj.assignment_obj.encoded_id }}";
     var totalMarkFromBackend = Number("{{ submissionObj.assignment_obj.total_marks }}");
+    var isSubmissionCorrected = "{{ isSubmissionCorrected }}";
 </script>
 {% endblock bodyextra %}

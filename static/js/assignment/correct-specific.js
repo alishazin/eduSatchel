@@ -108,7 +108,6 @@ function onLoad() {
         addCallbacks : function () {
             [this.messageField, this.markField].forEach(field => {
                 field.oninput = () => {
-                    console.log()
                     if (field.value.trim()) { field.className = 'inputted'; } 
                     else { field.className = ''; }
                 }
@@ -122,5 +121,13 @@ function onLoad() {
         }
     };
 
-    addReviewObject.addCallbacks();
+    
+    if (isSubmissionCorrected === 'True') {
+        
+    } else {
+        addReviewObject.addCallbacks();
+    }
 }
+
+// send notification if corrected to student
+// Correction details in submission page for students
