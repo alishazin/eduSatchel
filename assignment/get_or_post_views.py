@@ -9,6 +9,10 @@ from django.contrib import messages
 import json
 import math
 
+from home.send_notifications import (
+    after_correcting_submission,
+)
+
 from edusatchel.decorators import (
     authentication_check,
     classentry_check, 
@@ -91,7 +95,8 @@ class AddCorrectionPostOnlyView(PostOnlyViewBase):
                         return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Rewarding mark should be less than total marks.'}))
                     marksFloat = round(marksFloat, 2)
 
-                submissionObj.correction_set.create(message = str(formData['message']).strip(), given_marks = marksFloat)
+                correctionObj = submissionObj.correction_set.create(message = str(formData['message']).strip(), given_marks = marksFloat)
+                after_correcting_submission(assignmentObj.class_obj, assignmentObj, correctionObj)
                 messages.error(request, 'Submission reviewed sucessfully')
                 return HttpResponse(json.dumps({'success' : True}))
         
