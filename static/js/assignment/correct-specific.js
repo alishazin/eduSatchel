@@ -37,12 +37,27 @@ function onLoad() {
         messageField : document.querySelector('.content-parent > .correct-submission > textarea'),
         markField : document.querySelector('.content-parent > .correct-submission > input[type="number"]'), 
         errorDiv : document.querySelector('.content-parent > .correct-submission > .error-div'),
+        getFormData : function () {
+            const formdata = new FormData()
+            formdata.append('message', this.messageField.value.trim())
+            formdata.append('marks', this.markField.value.trim())
+            return formdata;
+        },
         asyncFuncForCorrection : async function () {
-            if (this.validateForm()) {
-                this.errorDiv.innerText = ''
-                buttonObject.state = 'loading'
-                await this.sendPostRequestForCorrection()
-                buttonObject.state = 'normal'
+            try {
+                if (this.validateForm()) {
+                    this.errorDiv.innerText = ''
+                    buttonObject.state = 'loading'
+                    await this.sendPostRequestForCorrection()
+                    buttonObject.state = 'normal'
+                    location.href = location.href;
+                }
+            } catch(errorObj) {
+                if (errorObj.type === 'backend') {
+                    this.errorDiv.innerText = errorObj.error_message
+                } else if (errorObj.type === 'network') {
+                    errorObj.call();
+                }
             }
         },
         sendPostRequestForCorrection : function () {
@@ -52,12 +67,12 @@ function onLoad() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
                         console.log(response)
-                        // if (response['success'] === true) {
-                        //     resolve();
-                        // } else {
-                        //     response.type = 'backend';
-                        //     reject(response)
-                        // }
+                        if (response['success'] === true) {
+                            resolve();
+                        } else {
+                            response.type = 'backend';
+                            reject(response)
+                        }
                     }
                 }
 
@@ -70,7 +85,7 @@ function onLoad() {
                     });
                 }
                 
-                req.open('POST', `/class/${classIDGlobal}/${assignmentID}/correct/${submissionID}/add-correction/`); 
+                req.open('POST', `/assignment/${classIDGlobal}/${assignmentID}/correct/${submissionID}/add-correction/`); 
                 req.setRequestHeader("X-CSRFToken", csrftoken); 
                 req.send(this.getFormData());
             })

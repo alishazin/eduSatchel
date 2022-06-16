@@ -1,4 +1,5 @@
 
+from assignment.models import Submission
 from classmenu.models import Assignment
 from django.http import Http404, HttpResponse
 from django.views import View
@@ -6,11 +7,13 @@ from django.utils.http import urlsafe_base64_decode
 from django.contrib import messages
 
 import json
+import math
 
 from edusatchel.decorators import (
     authentication_check,
     classentry_check, 
-    assignmententry_check
+    assignmententry_check,
+    submissionentry_check
 )
 
 class GetOnlyViewBase(View):
@@ -62,7 +65,37 @@ class AllSubmissionsGetOnlyView(GetOnlyViewBase):
         print(responseDict)
         return HttpResponse(json.dumps(responseDict))
     
-    # {
-    #     'corrected' : [name, ontime],
-    #     'notcorrected' : [name, ontime],
-    # }
+class AddCorrectionPostOnlyView(PostOnlyViewBase):
+    @classentry_check(account_type='teacher')
+    @assignmententry_check
+    @submissionentry_check
+    def post_only(self, request, classID, assignmentID, submissionID):
+        assignmentObj = Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode())
+        submissionObj = Submission.objects.get(id=urlsafe_base64_decode(submissionID).decode())
+
+        formData =  request.POST
+
+        if 'message' in formData.keys() and 'marks' in formData.keys():
+            if len(submissionObj.correction_set.all()) == 0:
+                marks = formData['marks']
+                try:
+                    marksFloat = float(marks)
+                    if math.isnan(marksFloat):
+                        raise BaseException() 
+                except:
+                    return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Rewarding mark should be a number'}))
+                else:
+                    if marksFloat <= 0:
+                        return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Rewarding mark should be a positive value.'}))
+                    elif marksFloat > assignmentObj.total_marks:
+                        return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Rewarding mark should be less than total marks.'}))
+                    marksFloat = round(marksFloat, 2)
+
+                submissionObj.correction_set.create(message = str(formData['message']).strip(), given_marks = marksFloat)
+                messages.error(request, 'Submission reviewed sucessfully')
+                return HttpResponse(json.dumps({'success' : True}))
+        
+            else:
+                return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Already corrected.'}))
+        else:
+            return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Not enough formdata!'}))

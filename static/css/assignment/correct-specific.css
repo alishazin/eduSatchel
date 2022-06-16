@@ -8,6 +8,29 @@
     border-bottom: none;
     border-top: none;
 }
+.content-parent > .message-box {
+    background-color: var(--green-light-color);
+    padding: 20px;
+    display: flex;
+    border-radius: 15px;
+    margin: 5px;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+}
+.content-parent > .message-box > i {
+    font-size: 20px;
+    width: 30px;
+    transform: translateY(1px);
+}
+.content-parent > .message-box > span {
+    width: (100% - 30px);
+    font-size: 17px;
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .content-parent > .submission-details, .content-parent > .correct-submission {
     padding: 0 20px;
 }

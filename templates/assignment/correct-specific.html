@@ -10,6 +10,14 @@
 
 {% block bodyextra %}
 <div class="content-parent">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="message-box item">
+                <i class="bi bi-info-circle"></i>
+                <span>{{ msg }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="submission-details">
         <h2 class="section-headers">Submission Details</h2>
         <div class="content-area box">
@@ -100,6 +108,7 @@
     var csrftoken = '{{ csrf_token }}';
     var classHomeURL = "{{ classObj.get_url }}";
     var submissionID = "{{ submissionID }}";
+    var assignmentID = "{{ submissionObj.assignment_obj.encoded_id }}";
     var totalMarkFromBackend = Number("{{ submissionObj.assignment_obj.total_marks }}");
 </script>
 {% endblock bodyextra %}
