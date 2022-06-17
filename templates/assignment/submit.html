@@ -63,6 +63,11 @@
             </div>
         </div>
     {% endif %}
+    <div class="content-area box">
+        <div class="header">Due Date</div>
+        <div class="separator"></div>
+        <div class="text" style="font-size: 16px;">{{ assignmentObj.get_ist_date_due }}</div>
+    </div>
 
     {% if assignmentObj|is_assignment_submitted_filter:request.user %}
         <div class="not-corrected-parent">
@@ -81,6 +86,15 @@
             <div class="header">Submission Date</div>
             <div class="separator"></div>
             <div class="text">{{ assignmentObj|get_submission_date:request.user }}</div>
+        </div>
+        <div class="content-area box">
+            <div class="header">Punctuality</div>
+            <div class="separator"></div>
+            {% if submissionObj.is_submitted_on_time %}
+                <div class="text" style="color:var(--green-color);">{{ submissionObj.date_due_countdown_missing }} Early</div>
+            {% else %}
+                <div class="text" style="color:var(--tertiary-color);">{{ submissionObj.date_due_countdown }} Late</div>
+            {% endif %}
         </div>
         {% if assignmentObj|check_submitted_files:request.user %}
             <div class="file-area box">

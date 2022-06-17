@@ -26,10 +26,17 @@ class SubmitAssignmentView(View):
     @classentry_check(account_type='student')
     @assignmententry_check
     def get(self, request, classID, assignmentID):
+        assignmentObj = Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode())
+        try:
+            submissionObj = assignmentObj.submission_set.get(student=request.user)
+        except:
+            submissionObj = None
+
         return render(request, 'assignment/submit.html', {
             'classObj' : Class.objects.get(id=classID),
             'assignmentID' : assignmentID,
-            'assignmentObj' : Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode()),
+            'assignmentObj' : assignmentObj,
+            'submissionObj' : submissionObj
         })
 
     @classentry_check(account_type='student')

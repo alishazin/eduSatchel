@@ -29,8 +29,6 @@ class Submission(models.Model):
 
     @property
     def is_submitted_on_time(self):
-        print(self.date_added)
-        print(self.assignment_obj.date_due)
         if self.date_added <= self.assignment_obj.date_due:
             return True
         return False
