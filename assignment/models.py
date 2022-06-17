@@ -5,6 +5,8 @@ from classmenu.models import Assignment, File, Url
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 
+from home.backends import get_date_min_remaining_dates, get_IST_from_UTC
+
 # Create your models here.
 
 class Submission(models.Model):
@@ -33,6 +35,18 @@ class Submission(models.Model):
             return True
         return False
 
+    @property
+    def get_ist_date_added(self):
+        return get_IST_from_UTC(self.date_added)
+
+    @property
+    def date_due_countdown(self):
+        return get_date_min_remaining_dates(self.date_added, convertToIST = True, reverse = False, dateToCompare = self.assignment_obj.date_due)
+    
+    @property
+    def date_due_countdown_missing(self):
+        return get_date_min_remaining_dates(self.date_added, convertToIST = True, reverse = True, dateToCompare = self.assignment_obj.date_due)
+
 class Correction(models.Model):
     submission_obj = models.ForeignKey(Submission, on_delete=models.CASCADE)
     message = models.TextField(null=True, blank=True)
@@ -48,3 +62,7 @@ class Correction(models.Model):
     @property
     def encoded_id(self):
         return urlsafe_base64_encode(force_bytes(self.id))
+
+    @property
+    def get_ist_date_added(self):
+        return get_IST_from_UTC(self.date_added)

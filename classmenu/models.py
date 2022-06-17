@@ -100,6 +100,10 @@ class Assignment(models.Model):
         return get_IST_from_UTC(self.date_due)
 
     @property
+    def get_ist_date_added(self):
+        return get_IST_from_UTC(self.date_added)
+
+    @property
     def formatted_total_marks(self):
         if float(self.total_marks) == int(self.total_marks):
             return int(self.total_marks)

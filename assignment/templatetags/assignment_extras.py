@@ -30,7 +30,7 @@ def get_submission_message(assignmentObj, userObj):
     return assignmentObj.submission_set.get(student=userObj).message
 
 def get_submission_date(assignmentObj, userObj):
-    return assignmentObj.submission_set.get(student=userObj).date_added
+    return assignmentObj.submission_set.get(student=userObj).get_ist_date_added
 
 register.filter('is_assignment_submitted_filter', is_assignment_submitted_filter)
 register.filter('check_submitted_files', check_submitted_files)
