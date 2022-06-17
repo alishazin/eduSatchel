@@ -141,11 +141,11 @@
         </div>
     {% else %}
         <div class="not-corrected-parent">
-        {% if assignmentObj.is_missing %}
-            <div class="time-left"><span><span style="color:red;">(missing)</span> {{ assignmentObj.date_due_countdown_missing }} late</span></div>
-        {% else %}
-            <div class="time-left"><span>{{ assignmentObj.date_due_countdown }} left</span></div>
-        {% endif %}
+            {% if assignmentObj.is_missing %}
+                <div class="time-left"><span><span style="color:red;">(missing)</span> {{ assignmentObj.date_due_countdown_missing }} late</span></div>
+            {% else %}
+                <div class="time-left"><span>{{ assignmentObj.date_due_countdown }} left</span></div>
+            {% endif %}
             <div class="total-marks">Out of <span>{{ assignmentObj.formatted_total_marks }}</span></div>
         </div>
         <h2 class="section-headers">Submission Details</h2>
