@@ -126,4 +126,8 @@ class CorrectMoreDetailsAssignmentView(View):
     @classentry_check(account_type='teacher')
     @assignmententry_check
     def get(self, request, classID, assignmentID):
-        return HttpResponse('asdasd')
+        return render(request, 'assignment/more-details.html', {
+            'classObj' : Class.objects.get(id=classID),
+            'assignmentID' : assignmentID,
+            'assignmentObj' : Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode()),
+        })

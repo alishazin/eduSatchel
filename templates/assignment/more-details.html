@@ -1,0 +1,20 @@
+{% extends 'classmenu/base.html' %}
+{% load static %}
+
+{% block title %}More Details{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/assignment/more-details.css' %}">
+<script src="{% static 'js/assignment/more-details.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+
+<script>
+    var classIDGlobal = '{{ classObj.id }}';
+    var csrftoken = '{{ csrf_token }}';
+    var classHomeURL = "{{ classObj.get_url }}";
+    var assignmentID = "{{ assignmentID }}";
+    var totalSubmissions = Number("{{ assignmentObj.get_total_submission_number }}");
+</script>
+{% endblock bodyextra %}
