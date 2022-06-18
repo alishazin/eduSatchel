@@ -1,3 +1,4 @@
+from django.urls import reverse
 from assignment.models import Submission
 from classmenu.models import Assignment
 from home.models import Class
@@ -91,10 +92,13 @@ class CorrectAssignmentView(View):
     @classentry_check(account_type='teacher')
     @assignmententry_check
     def get(self, request, classID, assignmentID):
+        classObj = Class.objects.get(id=classID)
+        assignmentObj = Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode())
         return render(request, 'assignment/correct.html', {
-            'classObj' : Class.objects.get(id=classID),
+            'classObj' : classObj,
             'assignmentID' : assignmentID,
-            'assignmentObj' : Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode()),
+            'assignmentObj' : assignmentObj,
+            'more_details_page_url' : reverse('assignment:more-submission-details', kwargs={'classID' : classObj.id, 'assignmentID' : assignmentObj.encoded_id}),
         })
 
 class CorrectSpecificAssignmentView(View):
@@ -117,3 +121,9 @@ class CorrectSpecificAssignmentView(View):
             'correctionObj' : correctionObj,
             'isSubmissionCorrected' : isSubmissionCorrected
         })
+
+class CorrectMoreDetailsAssignmentView(View):
+    @classentry_check(account_type='teacher')
+    @assignmententry_check
+    def get(self, request, classID, assignmentID):
+        return HttpResponse('asdasd')
