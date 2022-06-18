@@ -32,11 +32,17 @@ class SubmitAssignmentView(View):
         except:
             submissionObj = None
 
+        try:
+            correctionObj = submissionObj.correction_set.all()[0]
+        except:
+            correctionObj = None
+
         return render(request, 'assignment/submit.html', {
             'classObj' : Class.objects.get(id=classID),
             'assignmentID' : assignmentID,
             'assignmentObj' : assignmentObj,
-            'submissionObj' : submissionObj
+            'submissionObj' : submissionObj,
+            'correctionObj' : correctionObj
         })
 
     @classentry_check(account_type='student')

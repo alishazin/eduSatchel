@@ -20,10 +20,10 @@
     {% endif %}
     <div class="submission-details">
         <h2 class="section-headers">Submission Details</h2>
-        <div class="content-area box">
-            <div class="header">Student Name</div>
-            <div class="separator"></div>
-            <div class="text">{{ submissionObj.student.username|capfirst }}</div>
+        <div class="student-detail-parent">
+            <span class="header">Student Name</span>
+            <img src="{{ submissionObj.student.profile_pic_path }}">
+            <span class="text">{{ submissionObj.student.username }}</span>
         </div>
         {% if submissionObj.message %}
             <div class="content-area box">
@@ -81,7 +81,7 @@
         <div class="content-area box">
             <div class="header">Submission Date</div>
             <div class="separator"></div>
-            <div class="text">{{ submissionObj.get_ist_date_added }}</div>
+            <div class="text" style="font-size: 16px;">{{ submissionObj.get_ist_date_added }}</div>
         </div>
         <div class="content-area box">
             <div class="header">Punctuality</div>
@@ -107,7 +107,7 @@
             <div class="content-area box">
                 <div class="header">Reviewed Date</div>
                 <div class="separator"></div>
-                <div class="text">{{ correctionObj.get_ist_date_added }}</div>
+                <div class="text" style="font-size: 16px;">{{ correctionObj.get_ist_date_added }}</div>
             </div>
             <div class="content-area box">
                 <div class="header">Marks Rewarded</div>

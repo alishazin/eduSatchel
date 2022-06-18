@@ -70,10 +70,34 @@
     </div>
 
     {% if assignmentObj|is_assignment_submitted_filter:request.user %}
-        <div class="not-corrected-parent">
-            <div class="time-left"><span><span style="color: #00ff00;">Submitted</span></div>
-            <div class="total-marks">Out of <span>{{ assignmentObj.formatted_total_marks }}</span></div>
-        </div>
+        {% if correctionObj %}
+            <div class="not-corrected-parent">
+                <div class="time-left"><span><span style="color: #00ff00;">Reviewed</span></div>
+                <div class="total-marks"><span style="font-size:20px;">{{ correctionObj.formatted_given_marks }}</span>/{{ submissionObj.assignment_obj.formatted_total_marks }}</div>
+            </div>
+            {% if correctionObj.message %}
+                <div class="reply-from-teacher">
+                    <div class="header">Message From Teacher</div>
+                    <div class="top-area">
+                        <img src="{{ classObj.teacher.profile_pic_path }}">
+                        <span class="name">{{ classObj.teacher.username }}</span>
+                    </div>
+                    <div class="bottom-area">
+                        <div class="msg">{{ correctionObj.message }}</div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="content-area box" style="margin-top:30px;">
+                <div class="header">Date of Review</div>
+                <div class="separator"></div>
+                <div class="text">{{ correctionObj.get_ist_date_added }}</div>
+            </div>
+        {% else %}
+            <div class="not-corrected-parent">
+                <div class="time-left"><span><span style="color: #00ff00;">Submitted</span></div>
+                <div class="total-marks">Out of <span>{{ assignmentObj.formatted_total_marks }}</span></div>
+            </div>
+        {% endif %}
         <h2 class="section-headers">Submission Details</h2>
         {% if assignmentObj|check_submission_message:request.user %}
             <div class="content-area box">
@@ -85,7 +109,7 @@
         <div class="content-area box">
             <div class="header">Submission Date</div>
             <div class="separator"></div>
-            <div class="text">{{ assignmentObj|get_submission_date:request.user }}</div>
+            <div class="text" style="font-size: 16px;">{{ assignmentObj|get_submission_date:request.user }}</div>
         </div>
         <div class="content-area box">
             <div class="header">Punctuality</div>
