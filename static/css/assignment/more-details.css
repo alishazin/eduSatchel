@@ -60,3 +60,68 @@
     margin: 10px auto;
     color: var(--text-color);
 }
+.content-parent > .bottom-area > .carousel-parent {
+    width: 300px;
+    border-top: 2px solid var(--tertiary-color);
+    border-bottom: 2px solid var(--tertiary-color);
+    height: 40px;
+    margin: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.content-parent > .bottom-area > .carousel-parent > .arrow {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid var(--tertiary-color);
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    z-index: 1;
+    box-shadow: 0 0 4px var(--shadow-light-color);
+}
+.content-parent > .bottom-area > .carousel-parent > .arrow > i {
+    color: var(--tertiary-color);
+    font-size: 22px;
+}
+.content-parent > .bottom-area > .carousel-parent > .arrow.left {
+    left: 5px;
+}
+.content-parent > .bottom-area > .carousel-parent > .arrow.right {
+    right: 5px;
+}
+.content-parent > .bottom-area > .carousel-parent > .carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 765px;
+    height: 100%;
+    position: relative;
+}
+.content-parent > .bottom-area > .carousel-parent > .carousel > .item.selected {
+    color: var(--text-color);
+    font-size: 14px;
+}
+.content-parent > .bottom-area > .carousel-parent > .carousel > .item {
+    position: absolute;
+    color: rgba(0, 0, 0, 0.25);
+    top: calc(50% - 9px);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+    width: fit-content;
+}
+.content-parent > .bottom-area > .carousel-parent > .carousel > #one {
+    left: 125px;
+}
+.content-parent > .bottom-area > .carousel-parent > .carousel > #two {
+    left: 240px;
+}
+.content-parent > .bottom-area > .carousel-parent > .carousel > #three {
+    left: 420px;
+}
+.content-parent > .bottom-area > .carousel-parent > .carousel > #four {
+    left: 600px;
+}
