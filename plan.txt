@@ -63,3 +63,8 @@ All Apps
 Onclick assignment box in class page
 teacher are directed to correction page, the same page when clicked on assignment in assignmnet page,
 whereas students are redirected to a page for submission or may due details (if not done yet!)
+
+no of students no of submissions no of corrected
+SI.no name submitted date corrected date ontime marks 
+
+sort by: name, submission date, corrected date, marks

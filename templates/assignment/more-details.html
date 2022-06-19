@@ -9,7 +9,32 @@
 {% endblock headextraextra %}
 
 {% block bodyextra %}
-
+<div class="content-parent">
+    <div class="top-area">
+        <div class="text-parent">
+            <div class="text-left">Total Students</div>
+            <div class="text-right">999</div>
+        </div>
+        <div class="text-parent">
+            <div class="text-left">Total Submissions</div>
+            <div class="text-right">{{ assignmentObj.get_total_submission_number }}</div>
+        </div>
+        <div class="text-parent">
+            <div class="text-left">Total Corrections</div>
+            <div class="text-right">{{ assignmentObj.get_total_correction_number }}</div>
+        </div>
+    </div>
+    <div class="bottom-area">
+        <span>Sort By</span>
+        <div class="carousel-selector">
+            
+            <div class="item">Name</div>
+            <div class="item">Submission Date</div>
+            <div class="item">Correction Date</div>
+            <div class="item">Mark</div>
+        </div>
+    </div>
+</div>
 <script>
     var classIDGlobal = '{{ classObj.id }}';
     var csrftoken = '{{ csrf_token }}';

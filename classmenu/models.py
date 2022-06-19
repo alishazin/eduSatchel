@@ -96,6 +96,14 @@ class Assignment(models.Model):
         return len(self.submission_set.all())
 
     @property
+    def get_total_correction_number(self):
+        count = 0
+        for submissionObj in self.submission_set.all():
+            if submissionObj.is_corrected:
+                count += 1
+        return count
+
+    @property
     def get_ist_date_due(self):
         return get_IST_from_UTC(self.date_due)
 

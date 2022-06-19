@@ -49,6 +49,10 @@ class Class(models.Model):
     def get_join_requests(self):
         return self.classenrollment_set.filter(enrolled=False)
 
+    @property
+    def total_enrolled_students(self):
+        return len(self.classenrollment_set.filter(enrolled=True))
+
     def get_enrolled_students(self):
         return self.classenrollment_set.filter(enrolled=True)
 
