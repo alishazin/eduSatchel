@@ -67,7 +67,7 @@
 }
 .content-parent > .bottom-area > .carousel-container > .carousel-parent {
     width: 100%;
-    border-top: 2px solid var(--tertiary-color);
+    /* border-top: 2px solid var(--tertiary-color); */
     border-bottom: 2px solid var(--tertiary-color);
     height: 40px;
     margin: auto;
