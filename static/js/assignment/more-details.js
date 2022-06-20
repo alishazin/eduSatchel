@@ -6,23 +6,23 @@ function onLoad() {
 
     carouselObject = {
         parent : {
-            div : document.querySelector('.content-parent > .bottom-area > .carousel-container > .carousel-parent'),
+            div : document.querySelector('.content-parent > .bottom-area > .sort-by-container > .carousel-container > .carousel-parent'),
             pos : 0,
         },
-        self : document.querySelector('.content-parent > .bottom-area > .carousel-container > .carousel-parent > .carousel'),
-        arrowLeft : document.querySelector('.content-parent > .bottom-area > .carousel-container > .arrow.left'),
-        arrowRight : document.querySelector('.content-parent > .bottom-area > .carousel-container > .arrow.right'),
-        itemOne : document.querySelector('.content-parent > .bottom-area > .carousel-container > .carousel-parent > .carousel > .item#one'),
-        itemTwo : document.querySelector('.content-parent > .bottom-area > .carousel-container > .carousel-parent > .carousel > .item#two'),
-        itemThree : document.querySelector('.content-parent > .bottom-area > .carousel-container > .carousel-parent > .carousel > .item#three'),
-        itemFour : document.querySelector('.content-parent > .bottom-area > .carousel-container > .carousel-parent > .carousel > .item#four'),
+        self : document.querySelector('.content-parent > .bottom-area > .sort-by-container > .carousel-container > .carousel-parent > .carousel'),
+        arrowLeft : document.querySelector('.content-parent > .bottom-area > .sort-by-container > .carousel-container > .arrow.left'),
+        arrowRight : document.querySelector('.content-parent > .bottom-area > .sort-by-container > .carousel-container > .arrow.right'),
+        itemOne : document.querySelector('.content-parent > .bottom-area > .sort-by-container > .carousel-container > .carousel-parent > .carousel > .item#one'),
+        itemTwo : document.querySelector('.content-parent > .bottom-area > .sort-by-container > .carousel-container > .carousel-parent > .carousel > .item#two'),
+        itemThree : document.querySelector('.content-parent > .bottom-area > .sort-by-container > .carousel-container > .carousel-parent > .carousel > .item#three'),
+        itemFour : document.querySelector('.content-parent > .bottom-area > .sort-by-container > .carousel-container > .carousel-parent > .carousel > .item#four'),
         _selected : null,
         get selected() {
             return this._selected;
         },
         set selected(arg) {
             (async function () {
-                const allItems = [[carouselObject.itemOne, 1, 0], [carouselObject.itemTwo, 2, 143], [carouselObject.itemThree, 3, 320], [carouselObject.itemFour, 4, 469]]
+                const allItems = [[carouselObject.itemOne, 1, 0], [carouselObject.itemTwo, 2, 140], [carouselObject.itemThree, 3, 330], [carouselObject.itemFour, 4, 469]]
                 for (let x of allItems) {
                     if (x[1] === arg) {
                         x[0].classList = 'item selected';
@@ -39,20 +39,6 @@ function onLoad() {
             })();
         },
         loadingState : false,
-        // _buttonDisabledState : false,
-        // get buttonDisabledState() {
-        //     return this._loadingState;
-        // },
-        // set buttonDisabledState(arg) {
-        //     if (arg === true) {
-        //         this.arrowLeft.classList = 'arrow left loading';
-        //         this.arrowRight.classList = 'arrow right loading';
-        //     } else if (arg === false) {
-        //         this.arrowLeft.classList = 'arrow left';
-        //         this.arrowRight.classList = 'arrow right';
-        //     }
-        //     this._loadingState = arg;
-        // },
         animateScroll : function (element, scrollTo) {
             return new Promise((resolve) => {
                 let gap = (scrollTo - this.parent.pos) / 35;
@@ -66,6 +52,8 @@ function onLoad() {
     
                     element.scrollLeft = this.parent.pos;
                     if (count == 35) {
+                        this.parent.pos = scrollTo;
+                        element.scrollLeft = scrollTo;
                         clearInterval(intervalObj);
                         resolve();
                         // order does not matter
