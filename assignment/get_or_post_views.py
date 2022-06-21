@@ -54,6 +54,7 @@ class DeleteAssignmentPostOnlyView(PostOnlyViewBase):
 
 class AllSubmissionsGetOnlyView(GetOnlyViewBase):
     @classentry_check(account_type='teacher')
+    @assignmententry_check
     def get_only(self, request, classID, assignmentID):
         assignmentObj = Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode())
         responseDict = {
@@ -66,7 +67,6 @@ class AllSubmissionsGetOnlyView(GetOnlyViewBase):
             else:
                 responseDict['not-corrected'].append([submissionObj.student.username.capitalize(), submissionObj.is_submitted_on_time, submissionObj.encoded_id])
 
-        print(responseDict)
         return HttpResponse(json.dumps(responseDict))
     
 class AddCorrectionPostOnlyView(PostOnlyViewBase):
@@ -117,3 +117,9 @@ class DeleteCorrectionPostOnlyView(PostOnlyViewBase):
             return HttpResponse(json.dumps({'success' : True}))
         else:
             return HttpResponse(json.dumps({'success' : False, 'error_message' : 'Nothing to delete'}))
+
+class GetMoreDataGetOnlyView(GetOnlyViewBase):
+    @classentry_check(account_type='teacher')
+    @assignmententry_check
+    def get_only(self, request, classID, assignmentID):
+        return HttpResponse(json.dumps({'success' : True}))

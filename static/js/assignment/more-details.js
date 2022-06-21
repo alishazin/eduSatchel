@@ -91,7 +91,6 @@ function onLoad() {
             },
             set loadingState(arg) {
                 if (arg === true) {
-                    console.log(this.div)
                     this.div.style.display = 'block'
                     setTimeout(() => {
                         this.div.classList = 'loading-parent loading'
@@ -104,9 +103,45 @@ function onLoad() {
                 }
                 this._loadingState = arg;
             } 
+        },
+        asyncFuncForData : async function () {
+            this.loadingObj.loadingState = true;
+            setTimeout(() => {
+                carouselObject.loadingState = true;
+                this.sendGetRequestForData();
+                this.loadingObj.loadingState = false;
+                carouselObject.loadingState = false;
+            }, 360)
+
+        },
+        sendGetRequestForData : function () {
+            return new Promise((resolve, reject) => {
+                var req = new XMLHttpRequest();
+                req.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const response = JSON.parse(this.responseText);
+                        console.log(response)
+                        resolve(response);
+                    }
+                }
+
+                req.onerror = () => {
+                    reject({
+                        call : () => {
+                            alert("No Active Network Connection")
+                        }
+                    });
+                }
+                
+                req.open('GET', `/assignment/${classIDGlobal}/${assignmentID}/correct/more-details/get-data/`); 
+                req.setRequestHeader("X-CSRFToken", csrftoken); 
+                req.send();
+            })
         }
     }
 
     carouselObject.addCallbacks();
     carouselObject.selected = 1;
+
+    tableObject.asyncFuncForData();
 }
