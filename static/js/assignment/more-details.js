@@ -1,6 +1,8 @@
 
 var carouselObject = {};
 
+var tableObject = {};
+
 function onLoad() {
     navBarObj.selectItem(1);
 
@@ -76,6 +78,32 @@ function onLoad() {
                     this.arrowLeft.classList = 'arrow left'
                 }
             }
+        }
+    }
+
+    tableObject = {
+        table : document.querySelector('.content-parent > .bottom-area > .table-container > .table'),
+        loadingObj : {
+            div : document.querySelector('.content-parent > .bottom-area > .table-container > .table > .loading-parent'),
+            _loadingState : false,
+            get loadingState() {
+                return this._loadingState;
+            },
+            set loadingState(arg) {
+                if (arg === true) {
+                    console.log(this.div)
+                    this.div.style.display = 'block'
+                    setTimeout(() => {
+                        this.div.classList = 'loading-parent loading'
+                    }, 100)
+                } else if (arg === false) {
+                    this.div.classList = 'loading-parent'
+                    setTimeout(() => {
+                        this.div.style.display = 'none'
+                    }, 500)
+                }
+                this._loadingState = arg;
+            } 
         }
     }
 

@@ -166,9 +166,10 @@
     width: 100%;
     /* height: fit-content; */
     border-radius: 10px 10px 0 0;
-    overflow: hidden;
+    overflow: auto;
     box-shadow: 0 0 10px var(--shadow-light-color);
     border-bottom: 2px solid var(--secondary-color);
+    position: relative;
 }
 .content-parent > .bottom-area > .table-container > .table > .header-area {
     width: 100%;
@@ -181,6 +182,8 @@
     font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
     padding: 0 15px;
+    position: sticky;
+    top: 0;
 }
 .content-parent > .bottom-area > .table-container > .table > .header-area > div:not(.bool) {
     width: calc(100% / 4.5);
@@ -218,4 +221,27 @@
 }
 .content-parent > .bottom-area > .table-container > .table > .table-item:hover > div.bool > i {
     color: var(--secondary-color) !important;
+}
+.content-parent > .bottom-area > .table-container > .table > .loading-parent {
+    width: 100%;
+    height: 80px;
+    /* background-color: red; */
+    overflow: hidden;
+    position: relative;
+    display: none;
+}
+.content-parent > .bottom-area > .table-container > .table > .loading-parent > .spinner {
+    border: 3px solid #00000033;
+    border-radius: 50%;
+    border-top: 3px solid white;
+    width: 24px;
+    height: 24px;
+    animation: loading-spin 1.5s linear infinite;
+    position: absolute;
+    left: calc(50% - 12px);
+    top: -24px;
+    transition: top 0.5s;
+}
+.content-parent > .bottom-area > .table-container > .table > .loading-parent.loading > .spinner {
+    top: calc(50% - 12px);
 }
