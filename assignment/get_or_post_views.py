@@ -5,9 +5,14 @@ from django.http import Http404, HttpResponse
 from django.views import View
 from django.utils.http import urlsafe_base64_decode
 from django.contrib import messages
+from .templatetags.assignment_extras import (
+    is_assignment_submitted_filter
+)
+from .backends import convert_date_to_string_for_more_details_data
 
 import json
 import math
+from home.models import Class
 
 from home.send_notifications import (
     after_correcting_submission,
@@ -122,4 +127,40 @@ class GetMoreDataGetOnlyView(GetOnlyViewBase):
     @classentry_check(account_type='teacher')
     @assignmententry_check
     def get_only(self, request, classID, assignmentID):
-        return HttpResponse(json.dumps({'success' : True}))
+        classObj = Class.objects.get(id=classID)
+        assignmentObj = Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode())
+        returnList = []
+
+        for enrollmentObj in classObj.get_enrolled_students():
+            studentObj = enrollmentObj.student
+            studentName = studentObj.username
+
+            try:
+                submissionObj = assignmentObj.submission_set.get(student=studentObj)
+            except:
+                submitted = False
+                submissionDate = ''
+                corrected = ''
+                correctionDate = ''
+                onTime = ''
+                mark = ''
+
+            else:
+                submitted = True
+                submissionDate = convert_date_to_string_for_more_details_data(submissionObj.get_ist_date_added)
+                try:
+                    correctionObj = submissionObj.correction_set.all()[0]
+                except:
+                    corrected = False
+                    correctionDate = ''
+                    onTime = submissionObj.is_submitted_on_time
+                    mark = ''
+                else:
+                    corrected = True
+                    correctionDate = convert_date_to_string_for_more_details_data(correctionObj.get_ist_date_added)
+                    onTime = submissionObj.is_submitted_on_time
+                    mark = correctionObj.formatted_given_marks
+
+            
+            returnList.append([studentName, submitted, submissionDate, corrected, correctionDate, onTime, mark])
+        return HttpResponse(json.dumps(returnList))
