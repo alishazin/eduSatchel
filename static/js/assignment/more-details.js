@@ -112,7 +112,7 @@ function onLoad() {
             this.loadingObj.loadingState = false;
             carouselObject.loadingState = false;
 
-            this.reArrangeListItems(4);
+            this.reArrangeListItems(3);
         },
         sendGetRequestForData : function () {
             return new Promise((resolve, reject) => {
@@ -143,6 +143,22 @@ function onLoad() {
             sortedList = this.getSortedList(sortBy)
             console.log(sortedList)
         },
+        conertArrayToDate : function (dateArray) {
+            if (dateArray === []) { return '' }
+            else {
+                const dateObj = new Date(
+                    Number(dateArray[2]),
+                    Number(dateArray[1]),
+                    Number(dateArray[0]),
+                    Number(dateArray[3]),
+                    Number(dateArray[4]),
+                )
+
+                console.log(dateObj)
+                return dateObj;
+
+            }
+        },
         getSortedList : function (sortBy) {
             returnList = this.allData.slice();
             if (sortBy === 1) {
@@ -152,6 +168,32 @@ function onLoad() {
                     j = i - 1
 
                     while (j >= 0 && key[0] < returnList[j][0]) {
+                        returnList[j + 1] = returnList[j]
+                        j -= 1
+                    }
+
+                    returnList[j + 1] = key
+                }
+            } else if (sortBy === 2) {
+                // Sort by Submission Date
+                for (let i = 0; i < returnList.length; i++) {
+                    key = returnList[i]
+                    j = i - 1
+
+                    while (j >= 0 && this.conertArrayToDate(key[2]) < this.conertArrayToDate(returnList[j][2])) {
+                        returnList[j + 1] = returnList[j]
+                        j -= 1
+                    }
+
+                    returnList[j + 1] = key
+                }
+            } else if (sortBy === 3) {
+                // Sort by Correction Date
+                for (let i = 0; i < returnList.length; i++) {
+                    key = returnList[i]
+                    j = i - 1
+
+                    while (j >= 0 && this.conertArrayToDate(key[4]) < this.conertArrayToDate(returnList[j][4])) {
                         returnList[j + 1] = returnList[j]
                         j -= 1
                     }
