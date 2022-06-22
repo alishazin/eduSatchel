@@ -85,6 +85,7 @@ function onLoad() {
         table : document.querySelector('.content-parent > .bottom-area > .table-container > .table'),
         loadingObj : {
             div : document.querySelector('.content-parent > .bottom-area > .table-container > .table > .loading-parent'),
+            allData : [],
             _loadingState : false,
             get loadingState() {
                 return this._loadingState;
@@ -106,13 +107,12 @@ function onLoad() {
         },
         asyncFuncForData : async function () {
             this.loadingObj.loadingState = true;
-            setTimeout(() => {
-                carouselObject.loadingState = true;
-                this.sendGetRequestForData();
-                this.loadingObj.loadingState = false;
-                carouselObject.loadingState = false;
-            }, 360)
+            carouselObject.loadingState = true;
+            this.allData = await this.sendGetRequestForData();
+            this.loadingObj.loadingState = false;
+            carouselObject.loadingState = false;
 
+            this.reArrangeListItems(4);
         },
         sendGetRequestForData : function () {
             return new Promise((resolve, reject) => {
@@ -137,11 +137,55 @@ function onLoad() {
                 req.setRequestHeader("X-CSRFToken", csrftoken); 
                 req.send();
             })
+        },
+        reArrangeListItems : function (sortBy) {
+            this.removeAllListItem()
+            sortedList = this.getSortedList(sortBy)
+            console.log(sortedList)
+        },
+        getSortedList : function (sortBy) {
+            returnList = this.allData.slice();
+            if (sortBy === 1) {
+                // Sort By Name
+                for (let i = 0; i < returnList.length; i++) {
+                    key = returnList[i]
+                    j = i - 1
+
+                    while (j >= 0 && key[0] < returnList[j][0]) {
+                        returnList[j + 1] = returnList[j]
+                        j -= 1
+                    }
+
+                    returnList[j + 1] = key
+                }
+            } else if (sortBy === 4) {
+                // Sort By Mark
+                for (let i = 0; i < returnList.length; i++) {
+                    key = returnList[i]
+                    j = i - 1
+
+                    while (j >= 0 && key[6] > returnList[j][6]) {
+                        returnList[j + 1] = returnList[j]
+                        j -= 1
+                    }
+
+                    returnList[j + 1] = key
+                }
+            }
+
+            return returnList;
+        },
+        removeAllListItem : function () {
+            Array.from(document.querySelectorAll('.content-parent > .bottom-area > .table-container > .table > .table-item')).forEach((e) => {
+                e.remove()
+            })
         }
     }
 
     carouselObject.addCallbacks();
     carouselObject.selected = 1;
 
-    tableObject.asyncFuncForData();
+    setTimeout(() => {
+        tableObject.asyncFuncForData();
+    }, 360)
 }

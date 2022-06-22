@@ -43,7 +43,7 @@ class PostOnlyViewBase(View):
     def post(self, request, *args, **kwargs):
         return self.post_only(request, *args, **kwargs)
 
-class DeleteAssignmentPostOnlyView(PostOnlyViewBase):
+class DeleteSubmissionPostOnlyView(PostOnlyViewBase):
     @classentry_check(account_type='student')
     @assignmententry_check
     def post_only(self, request, classID, assignmentID):
@@ -51,6 +51,13 @@ class DeleteAssignmentPostOnlyView(PostOnlyViewBase):
         submissionObject = assignmentObj.submission_set.filter(student=request.user)
 
         if submissionObject:
+            try:
+                correctionObj = submissionObject.correction_set.all()[0]
+            except:
+                pass
+            else:
+                correctionObj.delete()
+                
             submissionObject.delete()
             messages.error(request, 'Assignment submission deleted successfully')
             return HttpResponse(json.dumps({'success' : True}))
@@ -137,6 +144,7 @@ class GetMoreDataGetOnlyView(GetOnlyViewBase):
 
             try:
                 submissionObj = assignmentObj.submission_set.get(student=studentObj)
+                print(submissionObj)
             except:
                 submitted = False
                 submissionDate = ''
@@ -163,4 +171,5 @@ class GetMoreDataGetOnlyView(GetOnlyViewBase):
 
             
             returnList.append([studentName, submitted, submissionDate, corrected, correctionDate, onTime, mark])
+        print(returnList)
         return HttpResponse(json.dumps(returnList))
