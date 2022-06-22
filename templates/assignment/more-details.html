@@ -10,6 +10,7 @@
 
 {% block bodyextra %}
 <div class="content-parent">
+    <div class="popup-div">Not Submitted Yet!</div>
     <div class="top-area">
         <div class="text-parent">
             <div class="text-left">Total Students</div>
@@ -54,7 +55,7 @@
                 <div class="loading-parent">
                     <div class="spinner"></div>
                 </div>
-                <div class="table-item">
+                <!-- <div class="table-item">
                     <div class="name">Ali Shazin</div>
                     <div class="submitted bool"><i class="bi bi-check-circle" style="color: var(--green-color);"></i></div>
                     <div class="sub-date">17/06/22 08:55 AM</div>
@@ -62,16 +63,7 @@
                     <div class="cor-date">17/06/22 08:55 AM</div>
                     <div class="ontime bool"><i class="bi bi-check-circle" style="color: var(--green-color);"></i></div>
                     <div class="mark bool">10</div>
-                </div>
-                <div class="table-item">
-                    <div class="name">Ali Shazin</div>
-                    <div class="submitted bool"><i class="bi bi-check-circle" style="color: var(--green-color);"></i></div>
-                    <div class="sub-date">17/06/22 08:55 AM</div>
-                    <div class="corrected bool"><i class="bi bi-check-circle" style="color: var(--green-color);"></i></div>
-                    <div class="cor-date">17/06/22 08:55 AM</div>
-                    <div class="ontime bool"><i class="bi bi-check-circle" style="color: var(--green-color);"></i></div>
-                    <div class="mark bool">10</div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -82,5 +74,6 @@
     var classHomeURL = "{{ classObj.get_url }}";
     var assignmentID = "{{ assignmentID }}";
     var totalSubmissions = Number("{{ assignmentObj.get_total_submission_number }}");
+    var currentHref = `/assignment/${classIDGlobal}/${assignmentID}/correct`;
 </script>
 {% endblock bodyextra %}

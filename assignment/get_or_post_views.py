@@ -134,6 +134,8 @@ class GetMoreDataGetOnlyView(GetOnlyViewBase):
     @classentry_check(account_type='teacher')
     @assignmententry_check
     def get_only(self, request, classID, assignmentID):
+        # import time
+        # time.sleep(2)
         classObj = Class.objects.get(id=classID)
         assignmentObj = Assignment.objects.get(id=urlsafe_base64_decode(assignmentID).decode())
         returnList = []
@@ -144,7 +146,6 @@ class GetMoreDataGetOnlyView(GetOnlyViewBase):
 
             try:
                 submissionObj = assignmentObj.submission_set.get(student=studentObj)
-                print(submissionObj)
             except:
                 submitted = False
                 submissionDate = []
@@ -152,6 +153,7 @@ class GetMoreDataGetOnlyView(GetOnlyViewBase):
                 correctionDate = []
                 onTime = ''
                 mark = ''
+                correctionID = ''
 
             else:
                 submitted = True
@@ -163,13 +165,14 @@ class GetMoreDataGetOnlyView(GetOnlyViewBase):
                     correctionDate = []
                     onTime = submissionObj.is_submitted_on_time
                     mark = ''
+                    correctionID = submissionObj.encoded_id
                 else:
                     corrected = True
                     correctionDate = convert_date_to_array_for_more_details_data(correctionObj.get_ist_date_added)
                     onTime = submissionObj.is_submitted_on_time
                     mark = correctionObj.formatted_given_marks
-
+                    correctionID = submissionObj.encoded_id
             
-            returnList.append([studentName, submitted, submissionDate, corrected, correctionDate, onTime, mark])
+            returnList.append([studentName, submitted, submissionDate, corrected, correctionDate, onTime, mark, correctionID])
         print(returnList)
         return HttpResponse(json.dumps(returnList))

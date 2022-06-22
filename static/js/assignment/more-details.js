@@ -31,6 +31,8 @@ function onLoad() {
                         carouselObject.loadingState = true;
                         await carouselObject.animateScroll(carouselObject.parent.div, x[2])
                         carouselObject.loadingState = false;
+
+                        await tableObject.reArrangeListItems(arg);
                     } else {
                         x[0].classList = 'item';
                     }
@@ -93,14 +95,10 @@ function onLoad() {
             set loadingState(arg) {
                 if (arg === true) {
                     this.div.style.display = 'block'
-                    setTimeout(() => {
-                        this.div.classList = 'loading-parent loading'
-                    }, 100)
+                    this.div.classList = 'loading-parent loading'
                 } else if (arg === false) {
                     this.div.classList = 'loading-parent'
-                    setTimeout(() => {
-                        this.div.style.display = 'none'
-                    }, 500)
+                    this.div.style.display = 'none'
                 }
                 this._loadingState = arg;
             } 
@@ -112,7 +110,7 @@ function onLoad() {
             this.loadingObj.loadingState = false;
             carouselObject.loadingState = false;
 
-            this.reArrangeListItems(3);
+            carouselObject.selected = 1;
         },
         sendGetRequestForData : function () {
             return new Promise((resolve, reject) => {
@@ -120,8 +118,8 @@ function onLoad() {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
-                        console.log(response)
                         resolve(response);
+                        console.log(response)
                     }
                 }
 
@@ -139,12 +137,76 @@ function onLoad() {
             })
         },
         reArrangeListItems : function (sortBy) {
-            this.removeAllListItem()
-            sortedList = this.getSortedList(sortBy)
-            console.log(sortedList)
+            return new Promise((resolve, reject) => {
+                this.removeAllListItem()
+                sortedList = this.getSortedList(sortBy)
+    
+                for (let x of sortedList) {
+                    const tableItem = createElementWithAttributes('div', {classList : 'table-item'})
+    
+                    const name = createElementWithAttributes('div', {classList : 'name', innerText : x[0]})
+                    tableItem.appendChild(name)
+                    
+                    const submitted = createElementWithAttributes('div', {classList : 'submitted bool'})
+                    if (x[1]) { submitted.appendChild(createElementWithAttributes('i', {classList : 'bi bi-check-circle', color : 'var(--green-color)'})) }
+                    else { submitted.appendChild(createElementWithAttributes('i', {classList : 'bi bi-x-circle', color : 'var(--tertiary-color)'})) }
+                    tableItem.appendChild(submitted)
+    
+                    const subDate = createElementWithAttributes('div', {classList : 'sub-date', innerText : this.convertArrayToString(x[2])})
+                    tableItem.appendChild(subDate)
+                    
+                    const corrected = createElementWithAttributes('div', {classList : 'corrected bool'})
+                    if (x[3]) { corrected.appendChild(createElementWithAttributes('i', {classList : 'bi bi-check-circle', color : 'var(--green-color)'})) }
+                    else { corrected.appendChild(createElementWithAttributes('i', {classList : 'bi bi-x-circle', color : 'var(--tertiary-color)'})) }
+                    tableItem.appendChild(corrected)
+    
+                    const corDate = createElementWithAttributes('div', {classList : 'cor-date', innerText : this.convertArrayToString(x[4])})
+                    tableItem.appendChild(corDate)
+    
+                    const onTime = createElementWithAttributes('div', {classList : 'ontime bool'})
+                    if (x[5]) { onTime.appendChild(createElementWithAttributes('i', {classList : 'bi bi-check-circle', color : 'var(--green-color)'})) }
+                    else { onTime.appendChild(createElementWithAttributes('i', {classList : 'bi bi-x-circle', color : 'var(--tertiary-color)'})) }
+                    tableItem.appendChild(onTime)
+    
+                    const mark = createElementWithAttributes('div', {classList : 'mark bool', innerText : x[6]})
+                    tableItem.appendChild(mark)
+
+                    if (x[7] != '') {
+                        tableItem.classList = 'table-item redirect'
+                        tableItem.onclick = () => {
+                            location.href = `${currentHref}/${x[7]}/`
+                        }
+                    } else {
+                        tableItem.onclick = () => {
+                            document.querySelector('.content-parent > .popup-div').classList = 'popup-div show'
+                            setTimeout(() => {
+                                document.querySelector('.content-parent > .popup-div').classList = 'popup-div'
+                            }, 1800)
+                        }
+                    }
+                    
+                    this.table.appendChild(tableItem)
+                }
+                
+                resolve()
+            })
+        },
+        convertArrayToString : function (dateArray) {
+            if (dateArray.length === 0) { return '' }
+            else {
+                if (dateArray[3] > 12) {
+                    var hour = dateArray[3] - 12
+                    var meridian = 'PM'
+                } else {
+                    var hour = dateArray[3]
+                    var meridian = 'AM'
+                }
+
+                return `${dateArray[0]}/${dateArray[1]}/${String(dateArray[2]).slice(2)} ${hour}:${dateArray[4]} ${meridian}`;
+            }
         },
         conertArrayToDate : function (dateArray) {
-            if (dateArray === []) { return '' }
+            if (dateArray.length === 0) { return '' }
             else {
                 const dateObj = new Date(
                     Number(dateArray[2]),
@@ -154,9 +216,7 @@ function onLoad() {
                     Number(dateArray[4]),
                 )
 
-                console.log(dateObj)
                 return dateObj;
-
             }
         },
         getSortedList : function (sortBy) {
@@ -180,7 +240,7 @@ function onLoad() {
                     key = returnList[i]
                     j = i - 1
 
-                    while (j >= 0 && this.conertArrayToDate(key[2]) < this.conertArrayToDate(returnList[j][2])) {
+                    while (j >= 0 && this.conertArrayToDate(key[2]) > this.conertArrayToDate(returnList[j][2])) {
                         returnList[j + 1] = returnList[j]
                         j -= 1
                     }
@@ -193,7 +253,7 @@ function onLoad() {
                     key = returnList[i]
                     j = i - 1
 
-                    while (j >= 0 && this.conertArrayToDate(key[4]) < this.conertArrayToDate(returnList[j][4])) {
+                    while (j >= 0 && this.conertArrayToDate(key[4]) > this.conertArrayToDate(returnList[j][4])) {
                         returnList[j + 1] = returnList[j]
                         j -= 1
                     }
@@ -225,9 +285,21 @@ function onLoad() {
     }
 
     carouselObject.addCallbacks();
-    carouselObject.selected = 1;
+    tableObject.asyncFuncForData();
+}
 
-    setTimeout(() => {
-        tableObject.asyncFuncForData();
-    }, 360)
+function createElementWithAttributes(tag, paramsObj = {}) {
+    const documentElement = document.createElement(tag);
+    if (paramsObj['classList']) { documentElement.classList = paramsObj['classList']; } 
+    if (paramsObj['id']) { documentElement.id = paramsObj['id']; }
+    if (paramsObj['innerText']) { documentElement.innerText = paramsObj['innerText']; }
+    if (paramsObj['color']) { documentElement.style.color = paramsObj['color']; }
+    if (paramsObj['bg_color']) { documentElement.style.backgroundColor = paramsObj['bg_color']; }
+    if (paramsObj['onclick']) { documentElement.onclick = paramsObj['onclick']; }
+    if (paramsObj['fontSize']) { documentElement.style.fontSize = paramsObj['fontSize']; }
+    if (paramsObj['padding']) { documentElement.style.padding = paramsObj['padding']; }
+    if (paramsObj['src']) { documentElement.src = paramsObj['src']; }
+    if (paramsObj['href']) { documentElement.href = paramsObj['href']; }
+    if (paramsObj['target']) { documentElement.target = paramsObj['target']; }
+    return documentElement;
 }
