@@ -274,3 +274,29 @@
 .content-parent > .bottom-area > .table-container > .table > .loading-parent.loading > .spinner {
     top: calc(50% - 12px);
 }
+.content-parent > .bottom-area > .table-container > .rw-notice {
+    padding-bottom: 10px;
+    font-size: 12px;
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--tertiary-color);
+    display: none;
+}
+@media (max-width:950px) {
+    .content-parent > .bottom-area > .table-container > .table > .table-item > .sub-date, .content-parent > .bottom-area > .table-container > .table > .table-item > .cor-date, .content-parent > .bottom-area > .table-container > .table > .header-area > .sub-date, .content-parent > .bottom-area > .table-container > .table > .header-area > .cor-date {
+        display: none;
+    }
+    .content-parent > .bottom-area > .table-container > .table > .table-item > div, .content-parent > .bottom-area > .table-container > .table > .header-area > div {
+        width: calc(100% / 5) !important;
+    }
+    .content-parent > .bottom-area > .table-container > .rw-notice {
+        display: block;
+    }
+}
+@media (max-width:550px) {
+    .content-parent > .bottom-area > .table-container > .table > .table-item > .submitted, .content-parent > .bottom-area > .table-container > .table > .table-item > .corrected, .content-parent > .bottom-area > .table-container > .table > .header-area > .submitted, .content-parent > .bottom-area > .table-container > .table > .header-area > .corrected {
+        display: none;
+    }
+    .content-parent > .bottom-area > .table-container > .table > .table-item > div, .content-parent > .bottom-area > .table-container > .table > .header-area > div {
+        width: calc(100% / 3) !important;
+    }
+}
