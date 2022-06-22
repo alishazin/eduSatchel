@@ -47,6 +47,16 @@ class HomePageView(AccountTypeView):
             'notifications' : get_number_of_unseen_notification(request),
         })
 
+class ToDoPageView(AccountTypeView):
+    def teacher_get(self, request):
+        return render(request, 'home/todo_teacher.html', {
+            'notifications' : get_number_of_unseen_notification(request),
+        })
+
+    def student_get(self, request):
+        return render(request, 'home/todo_student.html', {
+            'notifications' : get_number_of_unseen_notification(request),
+        })
 
 class ProfilePageView(View):
     @authentication_check()

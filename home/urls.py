@@ -7,6 +7,7 @@ from .views import (
     JoinNewClassView,
     NotificationsPageView,
     SettingsPageView,
+    ToDoPageView,
 )
 from .get_or_post_views import (
     NotificationGetOnlyView,
@@ -21,6 +22,7 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='home-page'),
     path('create-new/', CreateNewClassView.as_view(), name='create-class'),
     path('join-new/', JoinNewClassView.as_view(), name='join-class'),
+    path('todo/', ToDoPageView.as_view(), name='todo-page'),
     path('profile/', ProfilePageView.as_view(), name='profile-page'),
     path('notifications/', NotificationsPageView.as_view(), name='notifications-page'),
     path('settings/', SettingsPageView.as_view(), name='settings-page'),

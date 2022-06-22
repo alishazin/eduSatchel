@@ -6,6 +6,9 @@ function addClickToNavBarContentBox() {
     document.querySelector('body > .nav-bar > #home-box').onclick = () => {
         location.href = homeURL;
     }
+    document.querySelector('body > .nav-bar > #todo-box').onclick = () => {
+        location.href = todoURL;
+    }
     document.querySelector('body > .nav-bar > #profile-box').onclick = () => {
         location.href = profileURL;
     }
