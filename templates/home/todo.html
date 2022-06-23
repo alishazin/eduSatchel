@@ -21,36 +21,69 @@
     </div>
 </div>
 {% if allData %}
-    <div class="notice-container">
-        <div class="timeline-part">
-            <div class="icon-box">
-                <i class="bi bi-exclamation"></i>
-            </div>
-            <div class="line"></div>
-        </div>
-        <div class="content-part">
-            <div class="content">Sorted by date of submission</div>
-        </div>
-    </div>
-    {% for studentName, assignmentTitle, classTitle, correctionUrl, assignmentUrl in allData %}
-        <div class="details-container">
+    {% if request.user.isTeacher %}
+        <div class="notice-container">
             <div class="timeline-part">
-                <div class="icon-box" onclick="openURL('{{ correctionUrl }}')">
-                    <i id="normal" class="bi bi-journals"></i>
-                    <i id="hover" class="bi bi-chevron-double-right"></i>
+                <div class="icon-box">
+                    <i class="bi bi-exclamation"></i>
                 </div>
                 <div class="line"></div>
             </div>
             <div class="content-part">
-                <div class="content">
-                    <div class="top-area">In {{ classTitle }}</div>
-                    <div class="bottom-area">
-                        Review the submission from the student <span>{{ studentName }}</span> for the assignment <span class="link" onclick="openURL('{{ assignmentUrl }}')">{{ assignmentTitle }}</span><br>
+                <div class="content">Sorted by date of submission</div>
+            </div>
+        </div>
+        {% for studentName, assignmentTitle, classTitle, correctionUrl, assignmentUrl in allData %}
+            <div class="details-container">
+                <div class="timeline-part">
+                    <div class="icon-box" onclick="openURL('{{ correctionUrl }}')">
+                        <i id="normal" class="bi bi-journals"></i>
+                        <i id="hover" class="bi bi-chevron-double-right"></i>
+                    </div>
+                    <div class="line"></div>
+                </div>
+                <div class="content-part">
+                    <div class="content">
+                        <div class="top-area">In {{ classTitle }}</div>
+                        <div class="bottom-area">
+                            Review the submission from the student <span>{{ studentName }}</span> for the assignment <span class="link" onclick="openURL('{{ assignmentUrl }}')">{{ assignmentTitle }}</span><br>
+                        </div>
                     </div>
                 </div>
             </div>
+        {% endfor %}
+    {% else %}
+        <div class="notice-container">
+            <div class="timeline-part">
+                <div class="icon-box">
+                    <i class="bi bi-exclamation"></i>
+                </div>
+                <div class="line"></div>
+            </div>
+            <div class="content-part">
+                <div class="content">Sorted by due date of assignments</div>
+            </div>
         </div>
-    {% endfor %}
+        {% for classTitle, assignmentContent, assignmentDueDate, submitUrl in allData %}
+            <div class="details-container">
+                <div class="timeline-part">
+                    <div class="icon-box" onclick="openURL('{{ submitUrl }}')">
+                        <i id="normal" class="bi bi-journals"></i>
+                        <i id="hover" class="bi bi-chevron-double-right"></i>
+                    </div>
+                    <div class="line"></div>
+                </div>
+                <div class="content-part">
+                    <div class="content">
+                        <div class="top-area">In {{ classTitle }}</div>
+                        <div class="bottom-area">
+                            Submit the assignment <span>{{ assignmentContent }}</span> with the due date <span>{{ assignmentDueDate }}</span><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% else %}
     <div class="completed-container">
         <div class="timeline-part">

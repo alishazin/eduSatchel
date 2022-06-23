@@ -83,3 +83,7 @@ class CustomUser(AbstractBaseUser):
         if self.account_type == 'teacher':
             return True
         return False
+
+    def get_classes_enrolled(self):
+        if not self.isTeacher:
+            return [i.class_obj for i in self.classenrollment_set.filter(enrolled=True)]

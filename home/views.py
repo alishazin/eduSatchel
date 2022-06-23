@@ -56,7 +56,14 @@ class ToDoPageView(View):
             allSubmissions = Submission.objects.filter(assignment_obj__in=list(Assignment.objects.filter(class_obj__in=list(request.user.class_set.all())))).order_by('date_added')
             for i in allSubmissions:
                 if not i.is_corrected:
-                    returnList.append([i.student.username, i.assignment_obj.content, i.assignment_obj.class_obj.title, i.get_correct_url, i.assignment_obj.get_correction_url])
+                    returnList.append([i.student.username, i.assignment_obj.content, i.assignment_obj.class_obj.title, i.get_correct_url, i.assignment_obj.get_correction_url()])
+        else:
+            allAssignments = Assignment.objects.filter(class_obj__in=list(request.user.get_classes_enrolled())).order_by('date_due')
+            for i in allAssignments:
+                if not i.is_submitted(request.user):
+                    returnList.append([i.class_obj.title, i.content, i.get_ist_date_due, i.get_submit_url()])
+
+            print(returnList)
 
         return render(request, 'home/todo.html', {
             'notifications' : get_number_of_unseen_notification(request),
