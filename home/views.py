@@ -6,7 +6,6 @@ from django.views import View
 from classmenu.models import Assignment
 from edusatchel.decorators import authentication_check
 from assignment.models import Submission
-from .backends import addClassStamps
 
 
 from .send_notifications import (
@@ -52,13 +51,16 @@ class HomePageView(AccountTypeView):
 
 class ToDoPageView(View):
     def get(self, request):
-        # returnList = []
-        # allSubmissions = Submission.objects.filter(assignment_obj__in=list(Assignment.objects.filter(class_obj__in=list(request.user.class_set.all())))).order_by('date_added')
-        # for i in allSubmissions:
-        #     if not i.is_corrected:
-        #         returnList.append(i)
+        returnList = []
+        if request.user.isTeacher:
+            allSubmissions = Submission.objects.filter(assignment_obj__in=list(Assignment.objects.filter(class_obj__in=list(request.user.class_set.all())))).order_by('date_added')
+            for i in allSubmissions:
+                if not i.is_corrected:
+                    returnList.append([i.student.username, i.assignment_obj.content, i.assignment_obj.class_obj.title, i.get_correct_url, i.assignment_obj.get_correction_url])
+
         return render(request, 'home/todo.html', {
             'notifications' : get_number_of_unseen_notification(request),
+            'allData' : returnList,
         })
 
 class ProfilePageView(View):

@@ -196,3 +196,9 @@
 .parent-content > .details-container > .content-part > .content > .bottom-area > span {
     color: var(--primary-color);
 }
+.parent-content > .details-container > .content-part > .content > .bottom-area > span.link {
+    cursor: pointer;
+}
+.parent-content > .details-container > .content-part > .content > .bottom-area > span.link:hover {
+    color: var(--tertiary-color);
+}

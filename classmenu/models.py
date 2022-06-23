@@ -92,6 +92,10 @@ class Assignment(models.Model):
     urls = models.ManyToManyField(Url, blank=True)
 
     @property
+    def get_correction_url(self):
+        return reverse('assignment:correct-assignment', kwargs={'classID' : self.class_obj.id, 'assignmentID' : self.encoded_id})
+
+    @property
     def get_total_submission_number(self):
         return len(self.submission_set.all())
 

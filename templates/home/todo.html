@@ -20,48 +20,52 @@
         <div class="content">To Do List..</div>
     </div>
 </div>
-<div class="notice-container">
-    <div class="timeline-part">
-        <div class="icon-box">
-            <i class="bi bi-exclamation"></i>
+{% if allData %}
+    <div class="notice-container">
+        <div class="timeline-part">
+            <div class="icon-box">
+                <i class="bi bi-exclamation"></i>
+            </div>
+            <div class="line"></div>
         </div>
-        <div class="line"></div>
-    </div>
-    <div class="content-part">
-        <div class="content">Sorted by date of submission</div>
-    </div>
-</div>
-<div class="completed-container">
-    <div class="timeline-part">
-        <div class="icon-box">
-            <i class="bi bi-check-all"></i>
-        </div>
-        <div class="line"></div>
-    </div>
-    <div class="content-part">
-        <div class="content">
-            You have completed all the work..
+        <div class="content-part">
+            <div class="content">Sorted by date of submission</div>
         </div>
     </div>
-</div>
-<div class="details-container">
-    <div class="timeline-part">
-        <div class="icon-box">
-            <i id="normal" class="bi bi-journals"></i>
-            <i id="hover" class="bi bi-chevron-double-right"></i>
-            <!-- need to add animation in JS -->
+    {% for studentName, assignmentTitle, classTitle, correctionUrl, assignmentUrl in allData %}
+        <div class="details-container">
+            <div class="timeline-part">
+                <div class="icon-box" onclick="openURL('{{ correctionUrl }}')">
+                    <i id="normal" class="bi bi-journals"></i>
+                    <i id="hover" class="bi bi-chevron-double-right"></i>
+                </div>
+                <div class="line"></div>
+            </div>
+            <div class="content-part">
+                <div class="content">
+                    <div class="top-area">In {{ classTitle }}</div>
+                    <div class="bottom-area">
+                        Review the submission from the student <span>{{ studentName }}</span> for the assignment <span class="link" onclick="openURL('{{ assignmentUrl }}')">{{ assignmentTitle }}</span><br>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="line"></div>
-    </div>
-    <div class="content-part">
-        <div class="content">
-            <div class="top-area">In CS Class</div>
-            <div class="bottom-area">
-                Review the submission from the student <span>alishazin</span><br>
+    {% endfor %}
+{% else %}
+    <div class="completed-container">
+        <div class="timeline-part">
+            <div class="icon-box">
+                <i class="bi bi-check-all"></i>
+            </div>
+            <div class="line"></div>
+        </div>
+        <div class="content-part">
+            <div class="content">
+                You have completed all the work..
             </div>
         </div>
     </div>
-</div>
+{% endif %}
 <div class="end-container">
     <div class="timeline-part">
         <div class="icon-box">
@@ -71,9 +75,6 @@
     <div class="content-part"></div>
 </div>
 <script>
-    var isTeacher = '{{ request.user.isTeacher }}';
-    if (isTeacher === 'True') {isTeacher = true}
-    else {isTeacher = false}
     document.body.onload = onLoad();
 </script>
 {% endblock bodyextra %}

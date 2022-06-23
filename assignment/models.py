@@ -1,6 +1,7 @@
 from register.models import CustomUser
 from django.db import models
 from classmenu.models import Assignment, File, Url
+from django.urls import reverse
 
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -16,6 +17,10 @@ class Submission(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     files = models.ManyToManyField(File, blank=True)
     urls = models.ManyToManyField(Url, blank=True)
+
+    @property
+    def get_correct_url(self):
+        return reverse('assignment:correct-specific-assignment', kwargs={'classID' : self.assignment_obj.class_obj.id, 'assignmentID' : self.assignment_obj.encoded_id, 'submissionID' : self.encoded_id})
 
     @property
     def encoded_id(self):
