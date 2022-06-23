@@ -174,5 +174,4 @@ class GetMoreDataGetOnlyView(GetOnlyViewBase):
                     correctionID = submissionObj.encoded_id
             
             returnList.append([studentName, submitted, submissionDate, corrected, correctionDate, onTime, mark, correctionID])
-        print(returnList)
         return HttpResponse(json.dumps(returnList))

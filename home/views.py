@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views import View
 from edusatchel.decorators import authentication_check
+from assignment.models import Correction
 
 
 from .send_notifications import (
@@ -49,6 +50,7 @@ class HomePageView(AccountTypeView):
 
 class ToDoPageView(AccountTypeView):
     def teacher_get(self, request):
+        # Correction.objects.filter()
         return render(request, 'home/todo_teacher.html', {
             'notifications' : get_number_of_unseen_notification(request),
         })

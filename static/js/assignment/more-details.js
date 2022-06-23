@@ -85,6 +85,7 @@ function onLoad() {
 
     tableObject = {
         table : document.querySelector('.content-parent > .bottom-area > .table-container > .table'),
+        emptyDiv : document.querySelector('.content-parent > .bottom-area > .table-container > .table > .empty-div'),
         loadingObj : {
             div : document.querySelector('.content-parent > .bottom-area > .table-container > .table > .loading-parent'),
             allData : [],
@@ -104,13 +105,21 @@ function onLoad() {
             } 
         },
         asyncFuncForData : async function () {
-            this.loadingObj.loadingState = true;
-            carouselObject.loadingState = true;
-            this.allData = await this.sendGetRequestForData();
-            this.loadingObj.loadingState = false;
-            carouselObject.loadingState = false;
-
-            carouselObject.selected = 1;
+            try {
+                this.loadingObj.loadingState = true;
+                carouselObject.loadingState = true;
+                this.allData = await this.sendGetRequestForData();
+                this.loadingObj.loadingState = false;
+                carouselObject.loadingState = false;
+                
+                if (this.allData.length === 0) {
+                    this.emptyDiv.style.display = 'flex'
+                } else {
+                    carouselObject.selected = 1;
+                }
+            } catch(err) {
+                err.call()
+            }
         },
         sendGetRequestForData : function () {
             return new Promise((resolve, reject) => {
@@ -119,7 +128,6 @@ function onLoad() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
                         resolve(response);
-                        console.log(response)
                     }
                 }
 
