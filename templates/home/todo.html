@@ -1,0 +1,79 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}To Do{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/home/todo.css' %}">
+<script src="{% static 'js/home/todo.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="header-container">
+    <div class="timeline-part">
+        <div class="icon-box">
+            <i class="bi bi-ui-checks"></i>
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="content-part">
+        <div class="content">To Do List..</div>
+    </div>
+</div>
+<div class="notice-container">
+    <div class="timeline-part">
+        <div class="icon-box">
+            <i class="bi bi-exclamation"></i>
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="content-part">
+        <div class="content">Sorted by date of submission</div>
+    </div>
+</div>
+<div class="completed-container">
+    <div class="timeline-part">
+        <div class="icon-box">
+            <i class="bi bi-check-all"></i>
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="content-part">
+        <div class="content">
+            You have completed all the work..
+        </div>
+    </div>
+</div>
+<div class="details-container">
+    <div class="timeline-part">
+        <div class="icon-box">
+            <i id="normal" class="bi bi-journals"></i>
+            <i id="hover" class="bi bi-chevron-double-right"></i>
+            <!-- need to add animation in JS -->
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="content-part">
+        <div class="content">
+            <div class="top-area">In CS Class</div>
+            <div class="bottom-area">
+                Review the submission from the student <span>alishazin</span><br>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="end-container">
+    <div class="timeline-part">
+        <div class="icon-box">
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="content-part"></div>
+</div>
+<script>
+    var isTeacher = '{{ request.user.isTeacher }}';
+    if (isTeacher === 'True') {isTeacher = true}
+    else {isTeacher = false}
+    document.body.onload = onLoad();
+</script>
+{% endblock bodyextra %}

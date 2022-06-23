@@ -50,21 +50,14 @@ class HomePageView(AccountTypeView):
             'notifications' : get_number_of_unseen_notification(request),
         })
 
-class ToDoPageView(AccountTypeView):
-    def teacher_get(self, request):
-        returnList = []
-        allSubmissions = Submission.objects.filter(assignment_obj__in=list(Assignment.objects.filter(class_obj__in=list(request.user.class_set.all())))).order_by('date_added')
-        for i in allSubmissions:
-            if not i.is_corrected:
-                returnList.append(i)
-
-        return render(request, 'home/todo_teacher.html', {
-            'notifications' : get_number_of_unseen_notification(request),
-            'allData' : addClassStamps(returnList),
-        })
-
-    def student_get(self, request):
-        return render(request, 'home/todo_student.html', {
+class ToDoPageView(View):
+    def get(self, request):
+        # returnList = []
+        # allSubmissions = Submission.objects.filter(assignment_obj__in=list(Assignment.objects.filter(class_obj__in=list(request.user.class_set.all())))).order_by('date_added')
+        # for i in allSubmissions:
+        #     if not i.is_corrected:
+        #         returnList.append(i)
+        return render(request, 'home/todo.html', {
             'notifications' : get_number_of_unseen_notification(request),
         })
 

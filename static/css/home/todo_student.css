@@ -1,7 +1,0 @@
-.parent-content {
-    display: flex !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    flex-direction: column !important;
-    overflow: auto !important;
-}
