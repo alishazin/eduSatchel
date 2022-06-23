@@ -179,3 +179,15 @@ def get_file_format_from_content_type(contentType):
     for i in range(length):
         if contentType[i] == '/':
             return contentType[i + 1: length]
+
+def addClassStamps(ObjList):
+    newList = []
+    latestClass = None
+    for obj in ObjList:
+        currClass = obj.assignment_obj.class_obj
+        if currClass != latestClass:
+            newList.append({'type' : 'classStamp', 'classTitle' : obj.assignment_obj.class_obj.title})
+            latestClass = currClass
+        newList.append(obj)
+
+    return newList

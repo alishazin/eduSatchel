@@ -10,6 +10,9 @@
 
 {% block bodyextra %}
 <p>teacher ToDo</p>
+{% for obj in allData %}
+    <p>{{ obj }}</p>
+{% endfor %}
 <script>
     document.body.onload = onLoad();
 </script>
