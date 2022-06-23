@@ -13,13 +13,11 @@
     justify-content: flex-start;
     align-items: center;
     min-height: fit-content;
-    /* background-color: black; */
 }
 .parent-content > .details-container > .timeline-part, .parent-content > .header-container > .timeline-part, .parent-content > .notice-container > .timeline-part, .parent-content > .end-container > .timeline-part, .parent-content > .completed-container > .timeline-part {
     position: relative;
     min-width: 100px;
     height: 100%;
-    /* background-color: red; */
 }
 .parent-content > .completed-container > .timeline-part > .icon-box {
     position: absolute;
@@ -94,9 +92,12 @@
 }
 .parent-content > .details-container > .timeline-part > .icon-box > i#normal {
     display: block;
+    transition: opacity 0.2s;
 }
 .parent-content > .details-container > .timeline-part > .icon-box > i#hover {
     display: none;
+    transform: translateX(-5px);
+    transition: opacity 0.2s, transform 0.2s;
 }
 .parent-content > .notice-container > .timeline-part > .icon-box {
     cursor: default;
@@ -142,7 +143,6 @@
     width: calc(100% - 100px);
     min-height: 80px;
     height: fit-content;
-    /* background-color: blue; */
     display: flex;
     justify-content: flex-start;
     align-items: center;
