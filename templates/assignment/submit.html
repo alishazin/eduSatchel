@@ -80,7 +80,7 @@
                     <div class="header">Message From Teacher</div>
                     <div class="top-area">
                         <img src="{{ classObj.teacher.profile_pic_path }}">
-                        <span class="name">{{ classObj.teacher.username }}</span>
+                        <span class="name">{{ classObj.teacher.username|capfirst }}</span>
                     </div>
                     <div class="bottom-area">
                         <div class="msg">{{ correctionObj.message }}</div>

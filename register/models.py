@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
 
 import uuid
 
@@ -73,6 +75,10 @@ class CustomUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+    @property
+    def encoded_id(self):
+        return urlsafe_base64_encode(force_bytes(self.id))
 
     @property
     def profile_pic_path(self):

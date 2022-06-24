@@ -5,9 +5,9 @@ var switchBool = {
 }
 
 var allBusyJoinResponse = {};
-
 var blockRequestObject = {};
 var classDescObject = {};
+var allStudentsObject = {};
 
 function onLoad() {
     navBarObj.selectItem(4);
@@ -213,6 +213,61 @@ function onLoad() {
             }
         }
     })
+
+    allStudentsObject = {
+        contentArea : document.querySelector('.all-students > .bottom-area > .content-box'),
+        searchBarInput : document.querySelector('.all-students > .bottom-area > .search-bar-box > input[type="text"]'),
+        searchIcon : document.querySelector('.all-students > .bottom-area > .search-bar-box > i'),
+        searchCrossIcon : document.querySelector('.all-students > .bottom-area > .search-bar-box > i#right'),
+        loadingDiv : document.querySelector('.all-students > .bottom-area > .content-box > .loading-parent'),
+        _contentLoadingState : false,
+        get contentLoadingState () {
+            return this._contentLoadingState;
+        },
+        set contentLoadingState(arg) {
+            if (arg === true) {
+                this.contentArea.style.display = 'block'
+                this.loadingDiv.style.display = 'block'
+                setTimeout(() => {
+                    this.loadingDiv.classList = 'loading-parent loading'
+                }, 10)
+            } else if (arg === false) {
+                this.loadingDiv.classList = 'loading-parent'
+                setTimeout(() => {
+                    this.loadingDiv.style.display = 'none'
+                    this.contentArea.style.display = 'grid'
+                }, 510)
+            }
+            this._contentLoadingState = arg;
+        },
+        addCallbacks : function () {
+            this.searchBarInput.onfocus = () => {
+                this.searchBarInput.classList = 'active'
+                this.searchIcon.classList = 'bi bi-search active'
+                this.searchCrossIcon.classList = 'bi bi-x active'
+            }
+            this.searchBarInput.onblur = () => {
+                if (this.searchBarInput.value.trim().length > 0) {
+                    this.searchBarInput.classList = 'active'
+                    this.searchIcon.classList = 'bi bi-search active'
+                    this.searchCrossIcon.classList = 'bi bi-x active'
+                } else {
+                    this.searchBarInput.classList = ''
+                    this.searchIcon.classList = 'bi bi-search'
+                    this.searchCrossIcon.classList = 'bi bi-x'
+                }
+            }
+            
+            this.searchCrossIcon.onclick = () => {
+                this.searchBarInput.value = ''
+                this.searchBarInput.classList = ''
+                this.searchIcon.classList = 'bi bi-search'
+                this.searchCrossIcon.classList = 'bi bi-x'
+            }
+        },
+    }
+
+    allStudentsObject.addCallbacks()
 }
 
 async function asyncFunctionJoinResponse(self, response, modelID) {

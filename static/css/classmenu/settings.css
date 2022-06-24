@@ -2,6 +2,10 @@ body > .parent-content {
     padding: 10px !important;
     padding-top: 20px !important;
     overflow: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
 }
 .settings-content {
     min-height: fit-content;
@@ -280,6 +284,178 @@ body > .parent-content {
 .join-req-content > .content-box > .item:not(.loading) > .accept-button:hover, .join-req-content > .content-box > .item:not(.loading) > .decline-button:hover {
     opacity: 0.7;
     cursor: pointer;
+}
+.all-students {
+    min-height: fit-content;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 20px;
+    border: 2px solid var(--secondary-color);
+    margin-top: 20px;
+}
+.all-students > .top-area {
+    background-color: var(--secondary-color);
+    min-height: 60px;
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+    padding: 20px;
+}
+.all-students > .bottom-area {
+    min-height: fit-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.all-students > .bottom-area > .search-bar-box {
+    min-height: 50px;
+    width: 100%;
+    padding: 10px;
+    position: relative;
+}
+.all-students > .bottom-area > .search-bar-box > i#left {
+    position: absolute;
+    left: 22px;
+    font-size: 16px;
+    top: calc(50% - 8px);
+    color: #d7d7d7;
+    transition: color 0.2s;
+}
+.all-students > .bottom-area > .search-bar-box > i#left.active {
+    color: var(--text-color);
+}
+.all-students > .bottom-area > .search-bar-box > i#right {
+    position: absolute;
+    right: 22px;
+    font-size: 25px;
+    transform: translateX(2px) translateY(-4px);
+    top: calc(50% - 8px);
+    color: var(--text-color);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.all-students > .bottom-area > .search-bar-box > i#right.active {
+    opacity: 1;
+}
+.all-students > .bottom-area > .search-bar-box > i#right:hover {
+    opacity: 0.6;
+}
+.all-students > .bottom-area > .search-bar-box > input[type="text"] {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    padding: 8px 40px;
+    outline: none;
+    border: 2px solid #d7d7d7;
+    color: var(--text-color);
+    font-size: 16px;
+    font-family: sans-serif;
+    transition: border-color 0.2s;
+}
+.all-students > .bottom-area > .search-bar-box > input[type="text"].active {
+    border-color: var(--text-color);
+}
+.all-students > .bottom-area > .content-box {
+    height: fit-content;
+    /* height: 300px; */
+    width: 100%;
+    padding: 10px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, 270px);
+}
+.all-students > .bottom-area > .content-box > .loading-parent {
+    height: 80px;
+    overflow: hidden;
+    position: relative;
+    display: none;
+}
+.all-students > .bottom-area > .content-box > .loading-parent > .spinner {
+    border: 3px solid #00000033;
+    border-radius: 50%;
+    border-top: 3px solid white;
+    width: 24px;
+    height: 24px;
+    animation: loading-spin 1.5s linear infinite;
+    position: absolute;
+    left: calc(50% - 12px);
+    top: -24px;
+    transition: top 0.5s;
+}
+.all-students > .bottom-area > .content-box > .loading-parent.loading > .spinner {
+    top: calc(50% - 12px);
+}
+.all-students > .bottom-area > .content-box > .student-item {
+    border: 1px solid #adadad;
+    border-radius: 10px;
+    height: 70px;
+    width: 270px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+.all-students > .bottom-area > .content-box > .student-item > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.all-students > .bottom-area > .content-box > .student-item > .name {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    padding-left: 10px;
+}
+.all-students > .bottom-area > .content-box > .student-item > button {
+    width: 80px;
+    position: relative;
+    min-height: 35px;
+    border-radius: 10px;
+    background-color: transparent;
+    outline: none;
+    border: 1px solid var(--tertiary-color);
+    margin: 10px 0;
+    color: var(--tertiary-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.all-students > .bottom-area > .content-box > .student-item > button > .spinner {
+    border: 3px solid #00000033;
+    border-radius: 50%;
+    border-top: 3px solid white;
+    width: 24px;
+    min-height: 24px;
+    animation: loading-spin 1.5s linear infinite;
+    position: absolute;
+    left: calc(50% - 12px);
+    top: calc(50% - 12px);
+    display: none;
+}
+.all-students > .bottom-area > .content-box > .student-item > button.loading > .spinner {
+    display: block;
+}
+.all-students > .bottom-area > .content-box > .student-item > button.loading > span {
+    display: none;
+}
+.all-students > .bottom-area > .content-box > .student-item > button:not(.loading):hover {
+    background-color: var(--tertiary-color);
+    cursor: pointer;
+    color: white;
 }
 @media (max-width:400px) {
     .settings-content > .block-request > span {
