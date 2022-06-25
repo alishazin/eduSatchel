@@ -288,7 +288,6 @@ function onLoad() {
                 const studentItem = createElementWithAttributes('div', {classList : 'student-item'})
 
                 studentItem.appendChild(createElementWithAttributes('img', {src : x[2]}))
-                studentItem.appendChild(createElementWithAttributes('div', {classList : 'id', innerText : x[0]}))
                 studentItem.appendChild(createElementWithAttributes('span', {classList : 'name', innerText : x[1]}))
 
                 const button = createElementWithAttributes('button')
@@ -302,9 +301,8 @@ function onLoad() {
                             this.buttonLoading = true
                             const confirmation = window.confirm(`Are you sure about removing '${x[1]}' from the class '${classTitle}' ?\n1. All the submissions and messages of ${x[1]} will be removed.\n2. Options polled by ${x[1]} will remain.\n3. ${x[1]} can send join request in the future.\n4. This change is irreversible`)
                             if (confirmation) {
-                                console.log(`remove ${x[0]}`)
                                 button.classList = 'loading'
-                                await this.sendPostRequestRemove()
+                                await this.sendPostRequestRemove(x[0])
                                 button.classList = ''
                                 this.buttonLoading = false
                                 this.removeAllStudentItems()
@@ -312,6 +310,8 @@ function onLoad() {
                                     alert(`'${x[1]}' removed successfully`)
                                 }, 10)
                                 this.asyncFunc()
+                            } else {
+                                this.buttonLoading = false
                             }
                         }
                     } catch(err) {

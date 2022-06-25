@@ -11,6 +11,7 @@ from home.send_notifications import (
     after_accepting_join_request,
     after_closing_poll,
 )
+from register.models import CustomUser
 
 from .backends import (
     validate_urls_files,
@@ -313,14 +314,35 @@ class ClosePollView(PostOnlyViewBase):
 class AllStudentsView(GetOnlyViewBase):
     @classentry_check(account_type='teacher')
     def get_only(self, request, classID):
-        import time
-        time.sleep(3)
         classObj = Class.objects.get(id=classID)
         return HttpResponse(json.dumps({'data' : [[i.student.encoded_id, i.student.username, i.student.profile_pic_path] for i in classObj.get_enrolled_students()]}))
 
 class RemoveStudentView(PostOnlyViewBase):
     @classentry_check(account_type='teacher')
     def post_only(self, request, classID):
-        import time
-        time.sleep(3)
-        return HttpResponse('sadasd')
+        if 'studentID' in request.POST.keys():
+            classObj = Class.objects.get(id=classID)
+            studentEncodedID = request.POST['studentID']
+            try:
+                studentID = urlsafe_base64_decode(studentEncodedID).decode()
+                userObj = CustomUser.objects.get(id=studentID)
+                print(userObj)
+                # checking if student
+                if userObj.isTeacher:
+                    return HttpResponse(json.dumps({'success' : False}))
+                
+                # deleting all submissions (correction deleted by cascade)
+                for i in userObj.submission_set.all():
+                    i.delete()
+
+                # deleting all messages
+                for i in userObj.messagepublic_set.all():
+                    i.delete()
+
+                userObj.classenrollment_set.filter(class_obj=classObj)[0].delete()
+            except:
+                return HttpResponse(json.dumps({'success' : False}))
+            else:
+                return HttpResponse(json.dumps({'success' : True}))
+
+        return HttpResponse(json.dumps({'success' : False}))
