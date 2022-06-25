@@ -1,6 +1,6 @@
 
 from classmenu.models import Poll, PollOption
-from django.http import Http404, HttpRequest, HttpResponse
+from django.http import Http404, HttpResponse
 from django.views import View
 from django.utils.http import urlsafe_base64_decode
 
@@ -313,9 +313,14 @@ class ClosePollView(PostOnlyViewBase):
 class AllStudentsView(GetOnlyViewBase):
     @classentry_check(account_type='teacher')
     def get_only(self, request, classID):
+        import time
+        time.sleep(3)
         classObj = Class.objects.get(id=classID)
         return HttpResponse(json.dumps({'data' : [[i.student.encoded_id, i.student.username, i.student.profile_pic_path] for i in classObj.get_enrolled_students()]}))
 
-# {% for enrollmentObj in classObj.get_enrolled_students %}
-# <p>{{ enrollmentObj.student.encoded_id }}, {{ enrollmentObj.student.username }}, {{ enrollmentObj.student.profile_pic_path }}</p>
-# {% endfor %}
+class RemoveStudentView(PostOnlyViewBase):
+    @classentry_check(account_type='teacher')
+    def post_only(self, request, classID):
+        import time
+        time.sleep(3)
+        return HttpResponse('sadasd')

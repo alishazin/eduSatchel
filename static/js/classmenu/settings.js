@@ -221,6 +221,7 @@ function onLoad() {
         searchCrossIcon : document.querySelector('.all-students > .bottom-area > .search-bar-box > i#right'),
         loadingDiv : document.querySelector('.all-students > .bottom-area > .content-box > .loading-parent'),
         allData : null,
+        buttonLoading : false,
         _contentLoadingState : false,
         get contentLoadingState () {
             return this._contentLoadingState;
@@ -242,13 +243,16 @@ function onLoad() {
             this._contentLoadingState = arg;
         },
         asyncFunc : async function () {
-            this.contentLoadingState = true
-            const response = await this.sendGetRequest()
-            this.allData = response;
-            this.contentLoadingState = false
-
-            this.removeAllStudentItems()
-            this.addStudentItems(this.allData)
+            try {
+                this.contentLoadingState = true
+                const response = await this.sendGetRequest()
+                this.allData = response;
+                this.contentLoadingState = false
+    
+                this.addStudentItems(this.allData)
+            } catch(err) {
+                err.call()
+            }
         },
         sendGetRequest : function () {
             return new Promise((resolve, reject) => {
@@ -291,9 +295,59 @@ function onLoad() {
                 button.appendChild(createElementWithAttributes('span', {innerText : 'Remove'}))
                 button.appendChild(createElementWithAttributes('div', {classList : 'spinner'}))
                 studentItem.appendChild(button)
+
+                button.onclick = async () => {
+                    try {
+                        if (!this.buttonLoading) {
+                            this.buttonLoading = true
+                            const confirmation = window.confirm(`Are you sure about removing '${x[1]}' from the class '${classTitle}' ?\n1. All the submissions and messages of ${x[1]} will be removed.\n2. Options polled by ${x[1]} will remain.\n3. ${x[1]} can send join request in the future.\n4. This change is irreversible`)
+                            if (confirmation) {
+                                console.log(`remove ${x[0]}`)
+                                button.classList = 'loading'
+                                await this.sendPostRequestRemove()
+                                button.classList = ''
+                                this.buttonLoading = false
+                                this.removeAllStudentItems()
+                                setTimeout(() => {
+                                    alert(`'${x[1]}' removed successfully`)
+                                }, 10)
+                                this.asyncFunc()
+                            }
+                        }
+                    } catch(err) {
+                        err.call()
+                    }
+                }
                 
                 this.contentArea.appendChild(studentItem)
             }
+        },
+        sendPostRequestRemove : function (studentID) {
+            return new Promise((resolve, reject) => {
+                const formdata = new FormData();
+                formdata.append('studentID', studentID)
+        
+                var req = new XMLHttpRequest();
+                req.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText)
+                        resolve()
+                    }
+                }
+        
+                req.onerror = () => {
+                    reject({
+                        name : 'network',
+                        call : () => {
+                            alert("No Active Network Connection")
+                        }
+                    });
+                }
+                
+                req.open('POST', `/class/${classIDGlobal}/settings/remove-student/`); 
+                req.setRequestHeader("X-CSRFToken", csrftoken); 
+                req.send(formdata);
+            })
         },
         addCallbacks : function () {
             this.searchBarInput.onfocus = () => {

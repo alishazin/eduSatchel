@@ -16,6 +16,7 @@ from .get_or_post_views import (
     PollCastedView,
     ClosePollView,
     AllStudentsView,
+    RemoveStudentView
 )
 
 app_name = 'classmenu'
@@ -28,6 +29,7 @@ urlpatterns = [
     path('<classID>/join-response/<enrId64>/', JoinResponseView.as_view()),
     path('<classID>/settings/', ClassSettingsView.as_view(), name="settings"),
     path('<classID>/settings/all-students/', AllStudentsView.as_view()),
+    path('<classID>/settings/remove-student/', RemoveStudentView.as_view()),
     path('<classID>/assignments/add-assignment/', AddAssignmentView.as_view(), name="add-assignment"),
     path('<classID>/polls/add-poll/', AddPollView.as_view(), name="add-poll"),
     path('<classID>/get-class-data/<int:stepCount>/', ClassDataByStepView.as_view()),
