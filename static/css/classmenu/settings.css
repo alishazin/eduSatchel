@@ -411,6 +411,9 @@ body > .parent-content {
     height: 40px;
     border-radius: 50%;
 }
+.all-students > .bottom-area > .content-box > .student-item > .id {
+    display: none;
+}
 .all-students > .bottom-area > .content-box > .student-item > .name {
     width: 150px;
     white-space: nowrap;

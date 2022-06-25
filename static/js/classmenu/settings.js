@@ -220,6 +220,7 @@ function onLoad() {
         searchIcon : document.querySelector('.all-students > .bottom-area > .search-bar-box > i'),
         searchCrossIcon : document.querySelector('.all-students > .bottom-area > .search-bar-box > i#right'),
         loadingDiv : document.querySelector('.all-students > .bottom-area > .content-box > .loading-parent'),
+        allData : null,
         _contentLoadingState : false,
         get contentLoadingState () {
             return this._contentLoadingState;
@@ -239,6 +240,60 @@ function onLoad() {
                 }, 510)
             }
             this._contentLoadingState = arg;
+        },
+        asyncFunc : async function () {
+            this.contentLoadingState = true
+            const response = await this.sendGetRequest()
+            this.allData = response;
+            this.contentLoadingState = false
+
+            this.removeAllStudentItems()
+            this.addStudentItems(this.allData)
+        },
+        sendGetRequest : function () {
+            return new Promise((resolve, reject) => {
+                var req = new XMLHttpRequest();
+                req.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const response = JSON.parse(this.responseText);
+                        console.log(response)
+                        resolve(response.data);
+                    }
+                }
+
+                req.onerror = () => {
+                    reject({
+                        call : () => {
+                            alert("No Active Network Connection")
+                        }
+                    });
+                }
+                
+                req.open('GET', `/class/${classIDGlobal}/settings/all-students/`); 
+                req.setRequestHeader("X-CSRFToken", csrftoken); 
+                req.send();
+            })
+        },
+        removeAllStudentItems : function () {
+            Array.from(document.querySelectorAll('.all-students > .bottom-area > .content-box > .student-item')).forEach((e) => {
+                e.remove()
+            })
+        },
+        addStudentItems : function (data) {
+            for (let x of data) {
+                const studentItem = createElementWithAttributes('div', {classList : 'student-item'})
+
+                studentItem.appendChild(createElementWithAttributes('img', {src : x[2]}))
+                studentItem.appendChild(createElementWithAttributes('div', {classList : 'id', innerText : x[0]}))
+                studentItem.appendChild(createElementWithAttributes('span', {classList : 'name', innerText : x[1]}))
+
+                const button = createElementWithAttributes('button')
+                button.appendChild(createElementWithAttributes('span', {innerText : 'Remove'}))
+                button.appendChild(createElementWithAttributes('div', {classList : 'spinner'}))
+                studentItem.appendChild(button)
+                
+                this.contentArea.appendChild(studentItem)
+            }
         },
         addCallbacks : function () {
             this.searchBarInput.onfocus = () => {
@@ -263,11 +318,31 @@ function onLoad() {
                 this.searchBarInput.classList = ''
                 this.searchIcon.classList = 'bi bi-search'
                 this.searchCrossIcon.classList = 'bi bi-x'
+                this.removeAllStudentItems()
+                this.addStudentItems(this.allData)
+            }
+
+            this.searchBarInput.oninput = () => {
+                const value = this.searchBarInput.value.trim();
+                if (value.length > 0) {
+                    let searchResult = []
+                    for (let x of this.allData) {
+                        if (searchIfMatch(x[1], value)) {
+                            searchResult.push(x)
+                        }
+                    }
+                    this.removeAllStudentItems()
+                    this.addStudentItems(searchResult)
+                } else {
+                    this.removeAllStudentItems()
+                    this.addStudentItems(this.allData)
+                }
             }
         },
     }
 
     allStudentsObject.addCallbacks()
+    allStudentsObject.asyncFunc()
 }
 
 async function asyncFunctionJoinResponse(self, response, modelID) {
@@ -309,4 +384,20 @@ function sendPostRequestJoinResponse(response, modelID) {
         req.setRequestHeader("X-CSRFToken", csrftoken); 
         req.send(formdata);
     })
+}
+
+function searchIfMatch(string, toSearch) {
+    const length = toSearch.length
+    let result = null
+    let i = 0
+    while (i < length) {
+        if (toSearch[i] === string[i]) {
+            result = true
+        } else {
+            result = false
+            break
+        }
+        i++
+    }
+    return result
 }

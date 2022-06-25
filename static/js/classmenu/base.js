@@ -92,3 +92,19 @@ function downloadFile(uri) {
     link.href = uri;
     link.click();
 }
+
+function createElementWithAttributes(tag, paramsObj = {}) {
+    const documentElement = document.createElement(tag);
+    if (paramsObj['classList']) { documentElement.classList = paramsObj['classList']; } 
+    if (paramsObj['id']) { documentElement.id = paramsObj['id']; }
+    if (paramsObj['innerText']) { documentElement.innerText = paramsObj['innerText']; }
+    if (paramsObj['color']) { documentElement.style.color = paramsObj['color']; }
+    if (paramsObj['bg_color']) { documentElement.style.backgroundColor = paramsObj['bg_color']; }
+    if (paramsObj['onclick']) { documentElement.onclick = paramsObj['onclick']; }
+    if (paramsObj['fontSize']) { documentElement.style.fontSize = paramsObj['fontSize']; }
+    if (paramsObj['padding']) { documentElement.style.padding = paramsObj['padding']; }
+    if (paramsObj['src']) { documentElement.src = paramsObj['src']; }
+    if (paramsObj['href']) { documentElement.href = paramsObj['href']; }
+    if (paramsObj['target']) { documentElement.target = paramsObj['target']; }
+    return documentElement;
+}
