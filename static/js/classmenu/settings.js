@@ -318,6 +318,7 @@ function onLoad() {
                 this.searchBarInput.classList = ''
                 this.searchIcon.classList = 'bi bi-search'
                 this.searchCrossIcon.classList = 'bi bi-x'
+                this.searchBarInput.focus()
                 this.removeAllStudentItems()
                 this.addStudentItems(this.allData)
             }
