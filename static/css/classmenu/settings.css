@@ -376,6 +376,25 @@ body > .parent-content {
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fill, 270px);
 }
+.all-students > .bottom-area > .content-box > .empty-parent {
+    height: 150px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    display: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.all-students > .bottom-area > .content-box > .empty-parent > i {
+    font-size: 50px;
+    color: #adadad;
+}
+.all-students > .bottom-area > .content-box > .empty-parent > span {
+    font-size: 15px;
+    color: #adadad;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 .all-students > .bottom-area > .content-box > .loading-parent {
     height: 80px;
     overflow: hidden;

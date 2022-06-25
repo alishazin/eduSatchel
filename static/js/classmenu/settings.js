@@ -220,6 +220,7 @@ function onLoad() {
         searchIcon : document.querySelector('.all-students > .bottom-area > .search-bar-box > i'),
         searchCrossIcon : document.querySelector('.all-students > .bottom-area > .search-bar-box > i#right'),
         loadingDiv : document.querySelector('.all-students > .bottom-area > .content-box > .loading-parent'),
+        emptyDiv : document.querySelector('.all-students > .bottom-area > .content-box > .empty-parent'),
         allData : null,
         buttonLoading : false,
         _contentLoadingState : false,
@@ -235,10 +236,8 @@ function onLoad() {
                 }, 10)
             } else if (arg === false) {
                 this.loadingDiv.classList = 'loading-parent'
-                setTimeout(() => {
-                    this.loadingDiv.style.display = 'none'
-                    this.contentArea.style.display = 'grid'
-                }, 510)
+                this.loadingDiv.style.display = 'none'
+                this.contentArea.style.display = 'grid'
             }
             this._contentLoadingState = arg;
         },
@@ -284,42 +283,49 @@ function onLoad() {
             })
         },
         addStudentItems : function (data) {
-            for (let x of data) {
-                const studentItem = createElementWithAttributes('div', {classList : 'student-item'})
-
-                studentItem.appendChild(createElementWithAttributes('img', {src : x[2]}))
-                studentItem.appendChild(createElementWithAttributes('span', {classList : 'name', innerText : x[1]}))
-
-                const button = createElementWithAttributes('button')
-                button.appendChild(createElementWithAttributes('span', {innerText : 'Remove'}))
-                button.appendChild(createElementWithAttributes('div', {classList : 'spinner'}))
-                studentItem.appendChild(button)
-
-                button.onclick = async () => {
-                    try {
-                        if (!this.buttonLoading) {
-                            this.buttonLoading = true
-                            const confirmation = window.confirm(`Are you sure about removing '${x[1]}' from the class '${classTitle}' ?\n1. All the submissions and messages of ${x[1]} will be removed.\n2. Options polled by ${x[1]} will remain.\n3. ${x[1]} can send join request in the future.\n4. This change is irreversible`)
-                            if (confirmation) {
-                                button.classList = 'loading'
-                                await this.sendPostRequestRemove(x[0])
-                                button.classList = ''
-                                this.buttonLoading = false
-                                this.removeAllStudentItems()
-                                setTimeout(() => {
-                                    alert(`'${x[1]}' removed successfully`)
-                                }, 10)
-                                this.asyncFunc()
-                            } else {
-                                this.buttonLoading = false
+            if (data.length > 0) {
+                this.contentArea.style.display = 'grid'
+                this.emptyDiv.style.display = 'none'
+                for (let x of data) {
+                    const studentItem = createElementWithAttributes('div', {classList : 'student-item'})
+    
+                    studentItem.appendChild(createElementWithAttributes('img', {src : x[2]}))
+                    studentItem.appendChild(createElementWithAttributes('span', {classList : 'name', innerText : x[1]}))
+    
+                    const button = createElementWithAttributes('button')
+                    button.appendChild(createElementWithAttributes('span', {innerText : 'Remove'}))
+                    button.appendChild(createElementWithAttributes('div', {classList : 'spinner'}))
+                    studentItem.appendChild(button)
+    
+                    button.onclick = async () => {
+                        try {
+                            if (!this.buttonLoading) {
+                                this.buttonLoading = true
+                                const confirmation = window.confirm(`Are you sure about removing '${x[1]}' from the class '${classTitle}' ?\n1. All the submissions and messages of ${x[1]} will be removed.\n2. Options polled by ${x[1]} will remain.\n3. ${x[1]} can send join request in the future.\n4. This change is irreversible`)
+                                if (confirmation) {
+                                    button.classList = 'loading'
+                                    await this.sendPostRequestRemove(x[0])
+                                    button.classList = ''
+                                    this.buttonLoading = false
+                                    this.removeAllStudentItems()
+                                    setTimeout(() => {
+                                        alert(`'${x[1]}' removed successfully`)
+                                    }, 10)
+                                    this.asyncFunc()
+                                } else {
+                                    this.buttonLoading = false
+                                }
                             }
+                        } catch(err) {
+                            err.call()
                         }
-                    } catch(err) {
-                        err.call()
                     }
+                    
+                    this.contentArea.appendChild(studentItem)
                 }
-                
-                this.contentArea.appendChild(studentItem)
+            } else {
+                this.contentArea.style.display = 'block'
+                this.emptyDiv.style.display = 'flex'
             }
         },
         sendPostRequestRemove : function (studentID) {
