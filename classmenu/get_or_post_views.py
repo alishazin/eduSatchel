@@ -10,6 +10,7 @@ from home.send_notifications import (
     after_declining_join_request,
     after_accepting_join_request,
     after_closing_poll,
+    after_removing_student
 )
 from register.models import CustomUser
 
@@ -343,6 +344,7 @@ class RemoveStudentView(PostOnlyViewBase):
             except:
                 return HttpResponse(json.dumps({'success' : False}))
             else:
+                after_removing_student(classObj, userObj)
                 return HttpResponse(json.dumps({'success' : True}))
 
         return HttpResponse(json.dumps({'success' : False}))

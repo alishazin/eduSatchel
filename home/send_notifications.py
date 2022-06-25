@@ -68,3 +68,10 @@ def after_correcting_submission(classObj, assignmentObj, correctionObj):
         header="Submission Reviewed",
         body=body
     )
+
+def after_removing_student(classObj, studentObj):
+    body = f"You were removed from the class '{classObj.title}'. You can send join request in the future if needed."
+    studentObj.notification_set.create(
+        header="Removed From Class",
+        body=body
+    )
