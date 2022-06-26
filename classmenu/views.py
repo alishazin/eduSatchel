@@ -19,6 +19,14 @@ import json
 import datetime
 import math
 
+class AccountTypeView(View):
+    @classentry_check()
+    def get(self, request, *args, **kwargs):
+        if request.user.account_type == 'teacher':
+            return self.teacher_get(request, *args, **kwargs)
+        else:
+            return self.student_get(request, *args, **kwargs)
+
 # Create your views here.
 
 class ClassMenuView(View):
@@ -29,11 +37,16 @@ class ClassMenuView(View):
             'classObj' : classObj,
         })
 
-class ClassSettingsView(View):
-    @classentry_check(account_type='teacher')
-    def get(self, request, classID):
+class ClassSettingsView(AccountTypeView):
+    def teacher_get(self, request, classID):
         classObj = Class.objects.get(id=classID)
         return render(request, 'classmenu/settings.html', {
+            'classObj' : classObj,
+        })
+
+    def student_get(self, request, classID):
+        classObj = Class.objects.get(id=classID)
+        return render(request, 'classmenu/settings_student.html', {
             'classObj' : classObj,
         })
 

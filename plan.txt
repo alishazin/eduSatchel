@@ -70,5 +70,5 @@ SI.no name submitted date corrected date ontime marks
 sort by: name, submission date, corrected date, marks
 
 create todo for both teacher and student
-create settings for students
+create settings for students (to leave class)
 give option for teacher to kick out students from settings

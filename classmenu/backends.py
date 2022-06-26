@@ -88,3 +88,19 @@ def addDateStamps(ObjList):
         newList.append(obj)
 
     return newList
+
+def removeStudent(studentObj, classObj):
+    # checking if student
+    if studentObj.isTeacher:
+        return False
+    
+    # deleting all submissions (correction deleted by cascade)
+    for i in studentObj.submission_set.all():
+        i.delete()
+
+    # deleting all messages
+    for i in studentObj.messagepublic_set.all():
+        i.delete()
+
+    studentObj.classenrollment_set.filter(class_obj=classObj)[0].delete()
+    return True

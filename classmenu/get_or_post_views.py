@@ -10,7 +10,8 @@ from home.send_notifications import (
     after_declining_join_request,
     after_accepting_join_request,
     after_closing_poll,
-    after_removing_student
+    after_removing_student,
+    after_leaving_class,
 )
 from register.models import CustomUser
 
@@ -18,6 +19,7 @@ from .backends import (
     validate_urls_files,
     insert_url_and_file_values,
     addDateStamps,
+    removeStudent,
 )
 
 import json
@@ -327,20 +329,8 @@ class RemoveStudentView(PostOnlyViewBase):
             try:
                 studentID = urlsafe_base64_decode(studentEncodedID).decode()
                 userObj = CustomUser.objects.get(id=studentID)
-                print(userObj)
-                # checking if student
-                if userObj.isTeacher:
+                if not removeStudent(userObj, classObj):
                     return HttpResponse(json.dumps({'success' : False}))
-                
-                # deleting all submissions (correction deleted by cascade)
-                for i in userObj.submission_set.all():
-                    i.delete()
-
-                # deleting all messages
-                for i in userObj.messagepublic_set.all():
-                    i.delete()
-
-                userObj.classenrollment_set.filter(class_obj=classObj)[0].delete()
             except:
                 return HttpResponse(json.dumps({'success' : False}))
             else:
@@ -348,3 +338,13 @@ class RemoveStudentView(PostOnlyViewBase):
                 return HttpResponse(json.dumps({'success' : True}))
 
         return HttpResponse(json.dumps({'success' : False}))
+
+class LeaveClassView(PostOnlyViewBase):
+    @classentry_check(account_type='student')
+    def post_only(self, request, classID):
+        classObj = Class.objects.get(id=classID)
+        import time
+        time.sleep(2)
+        removeStudent(request.user, classObj)
+        after_leaving_class(classObj, request.user)
+        return HttpResponse(json.dumps({'success' : True}))

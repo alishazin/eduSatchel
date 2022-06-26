@@ -75,3 +75,10 @@ def after_removing_student(classObj, studentObj):
         header="Removed From Class",
         body=body
     )
+
+def after_leaving_class(classObj, studentObj):
+    body = f"'{studentObj.username}' has left the class '{classObj.title}'.\n\n'{studentObj.username}' will be able to send join request in the future if needed."
+    classObj.teacher.notification_set.create(
+        header="Student Left The Class",
+        body=body
+    )

@@ -1,0 +1,23 @@
+{% extends 'classmenu/base.html' %}
+{% load static %}
+
+{% block title %}{{ classObj.title }}: Settings{% endblock title %}
+
+{% block headextraextra %}
+<link rel='stylesheet' href="{% static 'css/classmenu/settings_student.css' %}">
+<script src="{% static 'js/classmenu/settings_student.js' %}"></script>
+{% endblock headextraextra %}
+
+{% block bodyextra %}
+<div class="settings-content">
+    <div class="item leave-class">
+        <span>Leave Class</span>    
+        <button><span>Leave</span><div class="spinner"></div></button>
+    </div>  
+</div>
+<script>
+    var classIDGlobal = '{{ classObj.id }}';
+    var csrftoken = '{{ csrf_token }}';
+    var classTitle = '{{ classObj.title }}';
+</script>
+{% endblock bodyextra %}
