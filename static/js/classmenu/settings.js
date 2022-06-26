@@ -259,7 +259,6 @@ function onLoad() {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
-                        console.log(response)
                         resolve(response.data);
                     }
                 }
@@ -336,7 +335,6 @@ function onLoad() {
                 var req = new XMLHttpRequest();
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                        console.log(this.responseText)
                         resolve()
                     }
                 }

@@ -118,7 +118,6 @@ function onLoad() {
                 req.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         const response = JSON.parse(this.responseText);
-                        console.log(response)
                         resolve(response);
                     }
                 }

@@ -22,7 +22,6 @@ function addClickEventToCustomCheckBox() {
             checkboxParent.classList = 'checkbox'
             icon.style.display = 'none';
         }
-        console.log(realhiddenCheckBox.checked);
     }
 }
 

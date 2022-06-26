@@ -63,8 +63,6 @@ class ToDoPageView(View):
                 if not i.is_submitted(request.user):
                     returnList.append([i.class_obj.title, i.content, i.get_ist_date_due, i.get_submit_url()])
 
-            print(returnList)
-
         return render(request, 'home/todo.html', {
             'notifications' : get_number_of_unseen_notification(request),
             'allData' : returnList,

@@ -195,7 +195,6 @@ async function asyncFunctionForSendingMessage() {
         sendMessageBox.state = false;
         addMessageToList(response, true);
     } catch(error) {
-        console.log(error);
         sendMessageBox.errorDiv.innerText = error;
         sendMessageBox.loadingState = false;
     }
