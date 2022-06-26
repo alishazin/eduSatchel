@@ -85,10 +85,20 @@ WSGI_APPLICATION = 'edusatchel.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dd9irgo4hnuoeo',
+        'USER': 'xcdrlawedrlgxh',
+        'PASSWORD': '3ec12327b0e8c05e006dd5d38fc586ce975b21c3b511c0dc2b7c0bfd71eb6332',
+        'HOST': 'ec2-44-205-41-76.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
