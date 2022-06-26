@@ -2,7 +2,7 @@
 {% load static %}
 {% load assignment_extras %}
 
-{% block title %}Submit Assignment{% endblock title %}
+{% block title %}{{ classObj.title }}: Submit Assignment{% endblock title %}
 
 {% block headextraextra %}
 <link rel='stylesheet' href="{% static 'css/assignment/submit.css' %}">

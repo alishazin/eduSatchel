@@ -1,7 +1,7 @@
 {% extends 'classmenu/base.html' %}
 {% load static %}
 
-{% block title %}More Details{% endblock title %}
+{% block title %}{{ classObj.title }}: More Details{% endblock title %}
 
 {% block headextraextra %}
 <link rel='stylesheet' href="{% static 'css/assignment/more-details.css' %}">

@@ -132,8 +132,6 @@ def get_date_min_remaining_dates(dateFuture, convertToIST = False, reverse = Fal
     if convertToIST:
         dateFuture = get_IST_from_UTC(dateFuture)
 
-    print(dateFuture, dateToCompare)
-
     if reverse:
         remaining = (dateToCompare - dateFuture.replace(tzinfo=None))
     else:
@@ -145,7 +143,6 @@ def get_date_min_remaining_dates(dateFuture, convertToIST = False, reverse = Fal
     if remaining.days > 0:
         returnString += f'{remaining.days} day(s) ' 
     remainingHours =  remainingSeconds // 3600
-    print(remainingHours)
     if remainingHours > 0:
         returnString += f'{remainingHours} hr(s) ' 
         remainingSeconds = remainingSeconds - (remainingHours * 3600)

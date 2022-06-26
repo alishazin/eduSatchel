@@ -124,7 +124,6 @@ class AddPollView(View):
     @classentry_check(account_type='teacher')
     def post(self, request, classID):
         formPost = request.POST
-        print(formPost)
 
         if 'title' in formPost.keys() and 'option-1' in formPost.keys() and 'option-2' in formPost.keys() and 'option-3' in formPost.keys() and 'option-4' in formPost.keys() and 'option-5' in formPost.keys():
             title = formPost['title'].strip()
