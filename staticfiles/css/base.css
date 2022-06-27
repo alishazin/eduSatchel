@@ -1,0 +1,37 @@
+* {
+    box-sizing: border-box;
+}
+:root {
+    --primary-color: #022449;
+    --secondary-color: #A8D0E6;
+    --secondary-dark-color: #a7ffff;
+    --secondary-light-color: white;
+    --secondary-lighter-color: white;
+    --tertiary-color: #F76C6C;
+    --quaternary-color: #F8E9A1;
+    --text-color: #757575; 
+    --shadow-color: rgba(0, 0, 0, 0.349);
+    --shadow-light-color: rgba(0, 0, 0, 0.171);
+    --green-color: #00ff00;
+    --green-light-color: #83ff83;
+    --light-text-color: rgb(230, 230, 230);
+    --error-red-color: red;
+}
+@keyframes on-load-translate-animation {
+    from {
+        transform: translateY(-8px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes message-changing-clr {
+    from {
+        color: white;
+    }
+    to {
+        color: var(--green-light-color);
+    }
+}

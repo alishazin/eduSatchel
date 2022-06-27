@@ -1,0 +1,369 @@
+.content-parent {
+    overflow: auto !important;
+    width: 800px;
+    max-width: 100%;
+    min-height: 100%;
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    border-bottom: none;
+    border-top: none;
+}
+.content-parent > h2.section-headers {
+    color: black;
+    font-size: 15px;
+    font-family: "Lato", Arial, Helvetica, sans-serif;
+    padding: 8px 10px;
+    border: 2px solid black;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: fit-content;
+    border-radius: 10px;
+    background-color: var(--quaternary-color);
+}
+.content-parent > .box {
+    margin-bottom: 30px;
+}
+.content-parent > .box > .header {
+    font-size: 14px;
+    color: #adadad;
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 2px;
+}
+.content-parent > .box > .separator {
+    width: 100%;
+    height: 1px;
+    background-color: #adadad;
+    margin-bottom: 10px;
+}
+.content-parent > .box > .text {
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18px;    
+}
+.content-parent > .file-area > .all-files, .content-parent > .url-area > .all-urls {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, 243px);
+    width: 100%;
+    min-height: 25px;
+    height: fit-content;
+}
+.content-parent > .file-area > .all-files > .file-container {
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border: 1px solid var(--tertiary-color);
+    border-radius: 10px;
+    box-shadow: 2px -2px 6px white, -2px 2px 6px var(--shadow-light-color);
+}
+.content-parent > .file-area > .all-files > .file-container > .download-butt {
+    border-radius: 6px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 5px;
+    color: var(--tertiary-color);
+    font-size: 18px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+.content-parent > .file-area > .all-files > .file-container > .download-butt:hover {
+    color: white;
+    background-color: var(--tertiary-color);
+}
+.content-parent > .file-area > .all-files > .file-container > .format-parent {
+    min-height: 170px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.content-parent > .file-area > .all-files > .file-container > .format-parent > .format-box {
+    max-width: 100%; 
+    background-color: var(--tertiary-color);
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+.content-parent > .file-area > .all-files > .file-container > .bottom-box {
+    min-height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 8px;
+    width: 100%;
+}
+.content-parent > .file-area > .all-files > .file-container > .bottom-box > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    width: 100%;
+    color: var(--text-color);
+}
+.content-parent > .url-area > .all-urls > .url-container {
+    background-color: white;
+    min-height: 25px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+.content-parent > .url-area > .all-urls > .url-container > span {
+    width: calc(100% - 30px);
+    padding: 5px 8px;
+    color: var(--text-color);
+    font-family: "Lato", Calibri, 'Trebuchet MS', sans-serif, monospace;
+    height: 100%;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.content-parent > .url-area > .all-urls > .url-container > span {
+    width: calc(100% - 30px);
+    padding: 5px 8px;
+    color: var(--text-color);
+    font-family: "Lato", Calibri, 'Trebuchet MS', sans-serif, monospace;
+    height: 100%;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.content-parent > .url-area > .all-urls > .url-container > .icon-butt {
+    display: none;
+    height: 100%;
+    width: 30px;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    color: var(--tertiary-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s, background-color 0.3s;
+}
+.content-parent > .url-area > .all-urls > .url-container > .icon-butt:active {
+    opacity: 0.5;
+}
+.content-parent > .url-area > .all-urls > .url-container > .icon-butt:hover {
+    color: white;
+    background-color: var(--tertiary-color);
+}
+.content-parent > .url-area > .all-urls > .url-container > .icon-butt > i {
+    transform: translateY(1px);
+}
+.content-parent > .reply-from-teacher {
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid #adadad;
+    margin: 30px 0;
+    position: relative;
+    box-shadow: 0 -2px 10px white, -2px -2px 10px white, 2px -2px 10px white, 0 0 10px var(--shadow-light-color);
+}
+.content-parent > .reply-from-teacher > .header {
+    position: absolute;
+    background-color: white;
+    color: #adadad;
+    top: -12px;
+    left: 20px;
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0 5px;
+}
+.content-parent > .reply-from-teacher > .top-area {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #adadad;
+}
+.content-parent > .reply-from-teacher > .top-area > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.content-parent > .reply-from-teacher > .top-area > .name {
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.content-parent > .reply-from-teacher > .bottom-area {
+    width: 100%;
+    min-height: 80px;
+    max-height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    color: var(--text-color);
+}
+.content-parent > .reply-from-teacher > .bottom-area > .msg {
+    font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    width: 100%;
+    word-wrap: break-word;
+}
+.content-parent > .not-corrected-parent {
+    width: 100%;
+    background-color: var(--secondary-color);
+    height: 60px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px var(--shadow-light-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    padding-right: 0;
+    margin-bottom: 10px;
+}
+.content-parent > .not-corrected-parent > .time-left {
+    width: calc(100% - 150px);
+    height: 100%;
+    background-color: white;
+    box-shadow: inset 2px 2px 6px var(--shadow-light-color);
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.content-parent > .not-corrected-parent > .time-left > span {
+    width: 100%;
+    padding-left: 10px;
+    font-size: 16px;
+    font-family: "Lato", Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.content-parent > .not-corrected-parent > .total-marks {
+    width: 150px;
+    text-align: center;
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.content-parent > .not-corrected-parent > .total-marks > span {
+    font-size: 16px;
+    text-shadow: -2px 2px 5px var(--shadow-color);
+    color: var(--quaternary-color);
+}
+.content-box {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px 0;
+    padding-top: 0;
+}
+.content-box.delete-submission {
+    align-items: flex-start;
+}
+.content-box.delete-submission > p {
+    color: var(--text-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+}
+.content-box.delete-submission > ul {
+    margin: 0;
+}
+.content-box.delete-submission > ul > li {
+    color: var(--text-color);
+    font-size: 12px;
+    padding-bottom: 5px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.content-box > .error-div {
+    margin: 10px 0;
+    width: 100%;
+    font-size: 12px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: red;
+}
+.content-box > .attach-file-parent {
+    width: 100%;
+    height: 130px;
+    border-radius: 10px;
+    border: 2px solid var(--secondary-color);
+    margin-bottom: 25px;
+}
+.content-box > label {
+    width: 100%;
+    font-size: 16px;
+    display: block;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+.content-box > textarea {
+    width: 100%;
+    border-radius: 10px;
+    resize: none;
+    padding: 15px;
+    font-size: 16px;
+    outline: none;
+    border: 2px solid #ddd;
+    font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
+    min-height: 100px;
+    margin-bottom: 20px;
+}
+.content-box > textarea:focus {
+    border-color: dodgerblue !important;
+}
+.content-box > textarea.inputted {
+    border-color: var(--secondary-color);
+}
+.content-box > button {
+    position: relative;
+    height: 35px;
+    width: 80px;
+    border-radius: 10px;
+    background-color: transparent;
+    outline: none;
+    border: 1px solid var(--tertiary-color);
+    margin: 20px 0;
+    color: var(--tertiary-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.content-box > button > .spinner {
+    border: 3px solid #00000033;
+    border-radius: 50%;
+    border-top: 3px solid white;
+    width: 24px;
+    height: 24px;
+    animation: loading-spin 1.5s linear infinite;
+    position: absolute;
+    left: calc(50% - 12px);
+    top: calc(50% - 12px);
+    display: none;
+}
+.content-box > button.loading > .spinner {
+    display: block;
+}
+.content-box > button.loading > span {
+    display: none;
+}
+.content-box > button:not(.loading):hover {
+    background-color: var(--tertiary-color);
+    color: white;
+    cursor: pointer;
+}

@@ -1,0 +1,200 @@
+.parent {
+    width: 450px;
+    height: fit-content;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--shadow-color);
+    border-radius: 15px;
+    padding: 10px;
+    padding-bottom: 50px;
+}
+.parent > .message-div {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.parent > .message-div > i {
+    color: var(--green-light-color);
+    margin-right: 10px;
+    font-size: 18px;
+    transform: translateY(1px);
+}
+.parent > .message-div > p {
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    animation-name: message-changing-clr;
+    animation-duration: 1.5s;
+    animation-iteration-count: 6;
+    animation-direction: alternate;
+}
+.parent > .header-container {
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
+}
+.parent > .header-container > h1 {
+    font-size: 25px;
+    color: var(--quaternary-color);
+    font-family: "Poppins", Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+.parent > .header-container > p {
+    font-size: 14px;
+    color: var(--secondary-color);
+    margin-top: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.parent > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+.parent > form > .field-parent {
+    width: 80%;
+    height: fit-content;
+    position: relative;
+    height: 70px;
+    margin-bottom: 10px;
+}
+.parent > form > .field-parent > label {
+    position: absolute;
+    z-index: 2;
+    color: var(--light-text-color);
+    top: 12.7px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    left: 10px;
+    background-color: var(--primary-color);
+    pointer-events: none;
+    padding: 0 5px;
+    transition: font-size 0.3s, top 0.3s;
+}
+.parent > form > .field-parent > input {
+    position: absolute;
+    height: 60%;
+    width: 100%;
+    z-index: 1;
+    border-radius: 8px;
+    border: 2px solid var(--secondary-dark-color);
+    outline: none;
+    background-color: transparent;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    color: white;
+    transition: border-color 0.3s, color 0.3s;
+}
+.parent > form > .field-parent > input:focus {
+    border-color: var(--quaternary-color);
+}
+.parent > form > .field-parent > input:focus ~ label {
+    color: var(--quaternary-color);
+}
+.parent > form > .field-parent > .error-div {
+    width: 100%;
+    position: absolute;
+    top: 60%;
+    height: 40%;
+    z-index: 2;
+    font-size: 13px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--error-red-color);
+    padding: 0 10px;
+    padding-top: 5px;
+}
+.parent > form > .field-parent.conf-pass-box {
+    margin-bottom: 40px;
+    height: 42px;
+}
+.parent > form > .field-parent.conf-pass-box > input {
+    height: 100%;
+}
+.parent > form > .button-container {
+    display: flex;
+    width: 100%;
+    padding: 0 45px;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    animation-name: on-load-translate-animation;
+    animation-duration: 1s;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.parent > form > .button-container > p {
+    color: var(--secondary-color);
+}
+.parent > form > .button-container > p > a {
+    color: var(--tertiary-color);
+    font-size: inherit;
+    font-family: inherit;
+    text-decoration: none;
+}
+.parent > form > .button-container > p > a:hover {
+    text-decoration: underline;
+}
+.parent > form > .button-container > p > a:active {
+    color: var(--secondary-color);
+}
+.parent > form > .button-container > button {
+    padding: 8px 12px;
+    font-family: "Montserrat", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--tertiary-color);
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--tertiary-color);
+    transition: color 0.3s, background-color 0.3s;
+}
+.parent > form > .button-container > button:hover {
+    color: white;
+    background-color: var(--tertiary-color);
+}
+/* Change the white to any color */
+/* Change autocomplete styles in WebKit */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-text-fill-color: white;
+    box-shadow: 0 0 0px 1000px var(--primary-color) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
+@media (max-width:500px) {
+    body {
+        background-color: var(--primary-color) !important;
+    }
+    body > i {
+        color: var(--secondary-color) !important;
+    }
+    .parent {
+        box-shadow: none !important;
+    }
+    .parent > form > .button-container {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+    .parent > form > .field-parent.conf-pass-box {
+        margin-bottom: 10px;
+    }
+    .parent > form > .button-container > p {
+        padding-bottom: 10px;
+        font-size: 15px;
+    }
+}

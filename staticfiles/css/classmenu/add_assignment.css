@@ -1,0 +1,128 @@
+.content-box {
+    width: 800px;
+    max-width: 100%;
+    min-height: 100%;
+    overflow: auto !important;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 20px;
+    border: 2px solid #ddd;
+    border-top: none;
+    border-bottom: none;
+}
+.content-box > label, .content-box > .datetime-container > label {
+    width: 100%;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+.content-box > textarea {
+    width: 100%;
+    border-radius: 10px;
+    resize: none;
+    padding: 15px;
+    font-size: 16px;
+    outline: none;
+    border: 2px solid #ddd;
+    font-family: monospace, Verdana, Geneva, Tahoma, sans-serif;
+    min-height: 200px;
+    margin-bottom: 20px;
+}
+.content-box > textarea:focus, .content-box > .datetime-container > input[type='datetime-local']:focus, .content-box > input[type='number']:focus {
+    border-color: dodgerblue !important;
+}
+.content-box > textarea.inputted, .content-box > .datetime-container > input[type='datetime-local'].inputted, .content-box > input[type='number'].inputted {
+    border-color: var(--secondary-color);
+}
+.content-box > .error-div {
+    margin: 10px 0;
+    width: 100%;
+    font-size: 12px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: red;
+    display: none;
+}
+.content-box > .attach-file-parent {
+    width: 100%;
+    min-height: 130px;
+    border-radius: 10px;
+    border: 2px solid var(--secondary-color);
+    margin-bottom: 25px;
+}
+.content-box > .datetime-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+.content-box > .datetime-container > input[type='datetime-local'], .content-box > input[type='number'] {
+    width: 100%;    
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--text-color);
+    border: 2px solid #ddd;
+    outline: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.content-box > ul {
+    width: 100%;    
+    font-size: 16px;
+    color: var(--text-color);
+    font-family: "Lato", Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 20px;
+}
+.content-box > ul > li {
+    margin-bottom: 10px;
+}
+.content-box > ul > li:last-of-type {
+    margin: 0;
+}
+.content-box > button {
+    position: relative;
+    min-height: 35px;
+    width: 60px;
+    border-radius: 10px;
+    background-color: transparent;
+    outline: none;
+    border: 1px solid var(--tertiary-color);
+    margin: 20px 0;
+    color: var(--tertiary-color);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.content-box > button > .spinner {
+    border: 3px solid #00000033;
+    border-radius: 50%;
+    border-top: 3px solid white;
+    width: 24px;
+    min-height: 24px;
+    animation: loading-spin 1.5s linear infinite;
+    position: absolute;
+    left: calc(50% - 12px);
+    top: calc(50% - 12px);
+    display: none;
+}
+.content-box > button.loading > .spinner {
+    display: block;
+}
+.content-box > button.loading > span {
+    display: none;
+}
+.content-box > button:not(.loading):hover {
+    background-color: var(--tertiary-color);
+    color: white;
+    cursor: pointer;
+}
+@media (max-width:800px) {
+    .content-box {
+        padding: 20px 10px;
+        border: none;
+    }
+}

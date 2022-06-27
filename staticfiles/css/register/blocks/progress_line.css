@@ -1,0 +1,57 @@
+.parent > .progress-container {
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.parent > .progress-container > .line {
+    height: 6px;
+    background-color: var(--secondary-lighter-color);
+    width: 80%;
+    border-radius: 8px;
+    position: relative;
+    overflow: visible;
+    z-index: 0;
+}
+.parent > .progress-container > .line > .color-line {
+    position: absolute;
+    z-index: 1;
+    width: 0;
+    left: 0;
+    top: calc(50% - 3px);
+    background-color: var(--green-color);
+    height: 100%;
+    border-radius: 8px;
+    transition: width 1.5s;
+}
+.parent > .progress-container > .line > .ball {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: var(--secondary-lighter-color);
+    top: calc(50% - 12.5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: var(--primary-color);
+    font-family: monospace, Arial, Helvetica, sans-serif;
+    z-index: 2;
+    transition: background-color 0.2s;
+    font-weight: bold;
+}
+.parent > .progress-container > .line > #one {
+    left: calc(25% - 10px);
+}
+.parent > .progress-container > .line > #two {
+    left: calc(50% - 10px);
+}
+.parent > .progress-container > .line > #three {
+    left: calc(75% - 10px);
+}
+.parent > .progress-container > .line > .ball > i {
+    font-size: 19px;
+    color: white;
+    transform: translateY(1px);
+}
