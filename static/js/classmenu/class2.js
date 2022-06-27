@@ -110,7 +110,7 @@ function addMessageToList(response, beginning = false) {
     const parent = createElementWithAttributes('div', {classList : 'item recieve-msg'})
     
     const topBar = createElementWithAttributes('div', {classList : 'top-bar'})
-    const profileImage = createElementWithAttributes('img', {src : response['profilePath']})
+    const profileImage = createElementWithAttributes('img', {src : `${media_url}${response['profilePath']}`})
     topBar.appendChild(profileImage)
 
     let senderNameBox;
@@ -182,7 +182,7 @@ function addMessageToList(response, beginning = false) {
             const fileContainer = createElementWithAttributes('div', {classList : 'file-container'})
             const downloadButt = createElementWithAttributes('div', {classList : 'download-butt'})
             downloadButt.onclick = () => {
-                downloadFile(file['path'])
+                downloadFile(`${media_url}${file['path']}`)
             }
             downloadButt.appendChild(createElementWithAttributes('i', {classList : 'bi bi-download'}))
             fileContainer.appendChild(downloadButt)

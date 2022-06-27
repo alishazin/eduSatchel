@@ -39,7 +39,7 @@ class File(models.Model):
         
     @property
     def file_location(self):
-        return f"/media/{self.file}"
+        return f"{self.file}"
 
     @property
     def availableIcon(self):

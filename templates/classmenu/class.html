@@ -30,7 +30,7 @@
     </div>
     <div class="item msg-div">
         <div class="dummy-overlay">
-            <img src="{{ user.profile_pic_path }}">
+            <img src="{% get_media_prefix %}{{ user.profile_pic_path }}">
             <span>Send a message to the class..</span>
         </div>
         <div class="loading-overlay">
@@ -79,7 +79,7 @@
     <div class="item teacher-details">
         <div class="header">Teacher Details</div>
         <div class="sub-box">
-            <img src="{{ classObj.teacher.profile_pic_path }}"></img>
+            <img src="{% get_media_prefix %}{{ classObj.teacher.profile_pic_path }}"></img>
             <div class="name-box"><p>{{ classObj.teacher.username }}</p></div>
         </div>
         <div class="extra-box">

@@ -288,7 +288,7 @@ function onLoad() {
                 for (let x of data) {
                     const studentItem = createElementWithAttributes('div', {classList : 'student-item'})
     
-                    studentItem.appendChild(createElementWithAttributes('img', {src : x[2]}))
+                    studentItem.appendChild(createElementWithAttributes('img', {src : `${media_url}${x[2]}`}))
                     studentItem.appendChild(createElementWithAttributes('span', {classList : 'name', innerText : x[1]}))
     
                     const button = createElementWithAttributes('button')
