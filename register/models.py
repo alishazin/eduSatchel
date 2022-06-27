@@ -82,7 +82,7 @@ class CustomUser(AbstractBaseUser):
 
     @property
     def profile_pic_path(self):
-        return f'/media/{self.profile_pic}'
+        return f'{self.profile_pic}'
 
     @property
     def isTeacher(self):

@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-22vbhmrs=ogr_w(t5ioc*$w2$(i&9ul8@w0uywpbp9=zy8rz$4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','edusatchel.herokuapp.com']
 
@@ -60,8 +60,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
 
 ROOT_URLCONF = 'edusatchel.urls'
 
@@ -139,17 +139,18 @@ USE_TZ = True
 
 # Media Files
 
-AWS_ACCESS_KEY_ID = 'AKIA3Q4ET2JJNQ7QWJ3P'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 'AKIA3Q4ET2JJMVPVIPMV'
+AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'edusatchel'
-AWS_S3_CUTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_S3_OBJECT_PARAMETERS = {'CacheControl' : 'max-age=86400'}
-AWS_DEFAULT_ACL = 'public-read' 
-AWS_LOCATION = 'media'
+AWS_S3_REGION_NAME = 'ap-south-1'
+AWS_S3_ADDRESSING_STYLE = "virtual"
 
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_QUERYSTRING_AUTH = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUTOM_DOMAIN, AWS_LOCATION)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+MEDIA_URL = 'https://edusatchel.s3.ap-south-1.amazonaws.com/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

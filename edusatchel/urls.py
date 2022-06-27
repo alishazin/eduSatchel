@@ -29,7 +29,7 @@ urlpatterns = [
     path('home/', include('home.urls', namespace='home')),
     path('class/', include('classmenu.urls', namespace='classmenu')),
     path('assignment/', include('assignment.urls', namespace='assignment')),
-    re_path(r'^media/(?P<path>.*)$', serve,{'document_root':  settings.MEDIA_ROOT}), 
+    # re_path(r'^media/(?P<path>.*)$', serve,{'document_root':  settings.MEDIA_ROOT}), 
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

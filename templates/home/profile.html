@@ -14,7 +14,7 @@
         <div class="loading-box">
             <div class="spinner"></div>
         </div>
-        <img src="{{ user.profile_pic_path }}">
+        <img src="{% get_media_prefix %}{{ user.profile_pic_path }}">
         <div class="popup-box">
             <i class="bi bi-pencil"></i>
             <label><input disabled type="file" style="display: none; position: fixed; top: -100px;" name="profile_pic" id="profile_pic_id" accept="image/*"><div class="row-one">Change Profile</div></label>

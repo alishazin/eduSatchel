@@ -53,8 +53,8 @@ class ProfileChangePostOnlyView(PostOnlyViewBase):
                 request.user.profile_pic = fileObj
                 request.user.save()
             else:
-                pathToFile = os.path.join(settings.MEDIA_ROOT, str(request.user.profile_pic))
-                newPath = os.path.join(settings.MEDIA_ROOT, f'profile/{request.user.image_storage_id}/image.{fileFormat}')
+                pathToFile = os.path.join(settings.MEDIA_URL, str(request.user.profile_pic))
+                newPath = os.path.join(settings.MEDIA_URL, f'profile/{request.user.image_storage_id}/image.{fileFormat}')
                 os.remove(pathToFile)
                 with open(newPath, 'wb+') as destination:
                     for chunk in fileObj.chunks():
@@ -70,8 +70,8 @@ class ProfileRemovePostOnlyView(PostOnlyViewBase):
         if request.user.profile_pic == 'profile/default.jpg':
             return HttpResponse('invalid')
         else:
-            pathToFile = os.path.join(settings.MEDIA_ROOT, str(request.user.profile_pic))
-            os.remove(pathToFile)
+            pathToFile = os.path.join(settings.MEDIA_URL, str(request.user.profile_pic))
+            # os.remove(pathToFile) # used during development
             request.user.profile_pic = 'profile/default.jpg'
             request.user.save()
             return HttpResponse("success")
