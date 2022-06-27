@@ -137,15 +137,26 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Media Files
+
+AWS_ACCESS_KEY_ID = 'AKIA3Q4ET2JJNQ7QWJ3P'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'edusatchel'
+AWS_S3_CUTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl' : 'max-age=86400'}
+AWS_DEFAULT_ACL = 'public-read' 
+AWS_LOCATION = 'media'
+
+MEDIAFILES_STORAGE = 'storage.backends.s3boto3.S3Boto3Storage'
+MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUTOM_DOMAIN, AWS_LOCATION)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles/")
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
