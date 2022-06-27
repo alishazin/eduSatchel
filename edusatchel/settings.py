@@ -147,7 +147,7 @@ AWS_S3_OBJECT_PARAMETERS = {'CacheControl' : 'max-age=86400'}
 AWS_DEFAULT_ACL = 'public-read' 
 AWS_LOCATION = 'media'
 
-MEDIAFILES_STORAGE = 'storage.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_URL = 'https://%s/%s/' % (AWS_S3_CUTOM_DOMAIN, AWS_LOCATION)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
