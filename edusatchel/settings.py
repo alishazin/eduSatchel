@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-22vbhmrs=ogr_w(t5ioc*$w2$(i&9ul8@w0uywpbp9=zy8rz$4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1',' edusatchel.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','edusatchel.herokuapp.com']
 
 AUTH_USER_MODEL = 'register.CustomUser'
 AUTHENTICATION_BACKENDS = (
