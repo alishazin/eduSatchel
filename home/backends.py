@@ -5,7 +5,7 @@ from datetime import timedelta
 
 from .models import Class
 
-import os
+from pytz import timezone 
 
 DEFAULT_NUMBER_OF_DATA_IN_ONE_STEP = 25
 
@@ -119,13 +119,13 @@ def check_if_past_date(dateToCheck, convertToIST = False):
     if convertToIST:
         dateToCheck = get_IST_from_UTC(dateToCheck)
 
-    return dateToCheck.replace(tzinfo=None) < datetime.datetime.now().replace(tzinfo=None)
+    return dateToCheck.replace(tzinfo=None) < datetime.datetime.now(timezone("Asia/Kolkata")).replace(tzinfo=None)
 
 def get_date_min_remaining_dates(dateFuture, convertToIST = False, reverse = False, dateToCompare = False):
     if dateToCompare:
         dateToCompare = get_IST_from_UTC(dateToCompare).replace(tzinfo=None)
     else:
-        dateToCompare = datetime.datetime.now().replace(tzinfo=None)
+        dateToCompare = datetime.datetime.now(timezone("Asia/Kolkata")).replace(tzinfo=None)
 
 
     dateToCompare = dateToCompare.replace(tzinfo=None)
@@ -156,7 +156,7 @@ def get_IST_from_UTC(timedate):
 
 def check_if_today_or_yesterday(argumentDate):
     argumentDate = get_IST_from_UTC(argumentDate)
-    dateNow = datetime.datetime.now()
+    dateNow = datetime.datetime.now(timezone("Asia/Kolkata"))
     if argumentDate.day == dateNow.day and argumentDate.month == dateNow.month and argumentDate.year == dateNow.year:
         return 'Today'
     else:
