@@ -75,7 +75,7 @@ async function asyncChangeBio() {
         }
     } catch(error) {
         if (error == 'invalid') {
-            alert("Bio cannot be longer than 300 characters")
+            alert("Bio cannot empty or longer than 300 characters")
         } else if (error == 'wrong') {
             alert("Something Went Wrong. Refresh the page ?")
             location.href = '/home/profile/';

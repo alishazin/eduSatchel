@@ -82,7 +82,7 @@ class BioUpdatePostOnlyView(PostOnlyViewBase):
         data = request.POST
         if 'bio' in data.keys():
             bio = data['bio'].strip()
-            if len(bio) > 300:
+            if len(bio) > 300 or len(bio) == 0:
                 return HttpResponse("invalid")
             
             request.user.bio = bio
