@@ -139,9 +139,9 @@ USE_TZ = True
 
 # Media Files
 
-AWS_ACCESS_KEY_ID = 'AKIA3Q4ET2JJMVPVIPMV'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'edusatchel'
+AWS_ACCESS_KEY_ID = 'AKIAY4A5NNJUPHPRXAUO'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'edusatchelmedia'
 AWS_S3_REGION_NAME = 'ap-south-1'
 AWS_S3_ADDRESSING_STYLE = "virtual"
 
@@ -150,7 +150,7 @@ AWS_DEFAULT_ACL = None
 AWS_QUERYSTRING_AUTH = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-MEDIA_URL = 'https://edusatchel.s3.ap-south-1.amazonaws.com/'
+MEDIA_URL = 'https://edusatchelmedia.s3.ap-south-1.amazonaws.com/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
