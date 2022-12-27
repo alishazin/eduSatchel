@@ -76,7 +76,7 @@ class AddAssignmentView(View):
             except:
                 return HttpResponse(json.dumps({'success' : False, 'element' : 'dueDate', 'error_message' : 'Due date is a required field'}))
             else:
-                if dueDateTimeObj <= datetime.datetime.now(timezone("Asia/Kolkata")):
+                if dueDateTimeObj <= datetime.datetime.now():
                     return HttpResponse(json.dumps({'success' : False, 'element' : 'dueDate', 'error_message' : 'Due date and time should be greater than the current datetime'}))
 
             totalMarks = request.POST['total-marks']
