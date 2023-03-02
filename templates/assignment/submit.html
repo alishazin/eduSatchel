@@ -24,7 +24,7 @@
             <div class="all-files">
                 {% for obj in assignmentObj.files.all %}
                     <div class="file-container">
-                        <div class="download-butt" onclick="downloadFile('{% get_media_prefix %}{{ obj.file_location }}')">
+                        <div class="download-butt" onclick="downloadFile('{{ obj.file_location }}')">
                             <i class="bi bi-download"></i>
                         </div>
                         <div class="format-parent">
@@ -79,7 +79,7 @@
                 <div class="reply-from-teacher">
                     <div class="header">Message From Teacher</div>
                     <div class="top-area">
-                        <img src="{% get_media_prefix %}{{ classObj.teacher.profile_pic_path }}">
+                        <img src="{{ classObj.teacher.profile_pic_path }}">
                         <span class="name">{{ classObj.teacher.username|capfirst }}</span>
                     </div>
                     <div class="bottom-area">

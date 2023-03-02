@@ -37,14 +37,6 @@
     <h1>{{ header }}</h1>
 </div>
 <div class="main-content">
-    <div class="class-box create-new" onclick="location.href = '{{ url_new }}'">
-        <div class="horizontal-line"></div>
-        <div class="vertical-line"></div>
-        <div class="icon-container">
-            <i class="bi bi-plus"></i>
-        </div>
-        <div class="text-area">{{ create_new_title }}</div>
-    </div>
     {% if class_obj_array %}
         {% for class_obj in class_obj_array %}
             <div class="class-box">
