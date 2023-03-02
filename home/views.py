@@ -67,13 +67,6 @@ class ToDoPageView(View):
             'notifications' : get_number_of_unseen_notification(request),
             'allData' : returnList,
         })
-
-class ProfilePageView(View):
-    @authentication_check()
-    def get(self, request):
-        return render(request, 'home/profile.html', {
-            'notifications' : get_number_of_unseen_notification(request),
-        })
         
 class NotificationsPageView(View):
     @authentication_check()
@@ -88,63 +81,3 @@ class SettingsPageView(View):
         return render(request, 'home/settings.html', {
             'notifications' : get_number_of_unseen_notification(request),
         })
-
-class CreateNewClassView(View):
-    @authentication_check(account_type='teacher')
-    def get(self, request):
-        return render(request, 'home/create_new.html', {
-            'notifications' : get_number_of_unseen_notification(request),
-        })
-
-    @authentication_check(account_type='teacher')
-    def post(self, request):
-        returnStatus = validate_new_class(request)
-
-        if returnStatus == True:    
-            title = request.POST['title'].strip()
-            description = request.POST['description'].strip()
-            active = False if 'active' in request.POST.keys() else True
-            
-            newClassObj = request.user.class_set.create(
-                title=title,
-                description=description,
-                active=active,
-            )
-            after_creating_class(request.user, newClassObj)
-            messages.error(request, 'Class created successfully')
-            return redirect(reverse('home:home-page'))
-
-        else:
-            return render(request, 'home/create_new.html', {
-                'title_error' : returnStatus['title_error'],
-                'description_error' : returnStatus['description_error'],
-                'general_error' : returnStatus['general_error'],
-                'notifications' : get_number_of_unseen_notification(request),
-            })
-
-class JoinNewClassView(View):
-    @authentication_check(account_type='student')
-    def get(self, request):
-        return render(request, 'home/join_new.html', {
-            'notifications' : get_number_of_unseen_notification(request),
-        })
-
-    @authentication_check(account_type='student')
-    def post(self, request):
-        returnStatus = validate_join_class(request)
-
-        if returnStatus[0] == True:
-
-            request.user.classenrollment_set.create(
-                class_obj=returnStatus[1],
-            )
-            after_joining_class(request.user, returnStatus[1])
-            messages.error(request, 'Join Request send successfully')
-            return redirect(reverse('home:home-page'))
-
-        else:
-            return render(request, 'home/join_new.html', {
-                'class_id_error' : returnStatus[1]['class_id_error'],
-                'general_error' : returnStatus[1]['general_error'],
-                'notifications' : get_number_of_unseen_notification(request),
-            })

@@ -9,9 +9,6 @@ function addClickToNavBarContentBox() {
     document.querySelector('body > .nav-bar > #todo-box').onclick = () => {
         location.href = todoURL;
     }
-    document.querySelector('body > .nav-bar > #profile-box').onclick = () => {
-        location.href = profileURL;
-    }
     document.querySelector('body > .nav-bar > #notification-box').onclick = () => {
         location.href = notificationsURL;
     }

@@ -17,14 +17,8 @@ from .rest_view import CreateTeacherAccountView, CreateStudentAccountView
 app_name = 'register'
 
 urlpatterns = [
-    # path('create/', choose_type_of_account, name='create-account'),
     path('create/teacher/', CreateTeacherAccountView.as_view(), name="create-teacher"),
     path('create/student/', CreateStudentAccountView.as_view(), name="create-student"),
-    # path('teacher/activate-user/<uidb64>/<token>/', SignUpTeacherFinalView.as_view(), name='activate-teacher'),
-    # path('student/activate-user/<uidb64>/<token>/', SignUpStudentFinalView.as_view(), name='activate-student'),
     path('login/', LogInView.as_view(), name="log-in"),
-    # path('forgot-password/', ForgotPasswordView.as_view(), name="forgot-password"),
-    # path('reset-password/<uidb64>/<token>/', ResetPasswordView.as_view(template_name='register/reset_password.html'), name="reset-password"),
-    # path('change-password/', ChangePasswordView.as_view(), name="change-password"),
     path('logout/', LogoutView.as_view(), name="logout"),
 ]
