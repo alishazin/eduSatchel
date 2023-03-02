@@ -41,3 +41,15 @@ class CreateStudentAccountView(View):
             return HttpResponse("ok")
         
         return HttpResponse("not ok")
+
+@method_decorator(csrf_exempt, name='dispatch')
+class DeleteAccountView(View):
+
+    def post(self, request):
+        if "HTTP_ADMIN_ACCESS_CODE" in request.META and request.META["HTTP_ADMIN_ACCESS_CODE"] == ADMIN_ACCES_CODE:
+            data = request.POST
+            obj = CustomUser.objects.get(portal_id=data['portal_id'])
+            obj.delete()
+            return HttpResponse("ok")
+        
+        return HttpResponse("not ok")
