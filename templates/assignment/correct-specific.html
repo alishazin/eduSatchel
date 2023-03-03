@@ -22,7 +22,7 @@
         <h2 class="section-headers">Submission Details</h2>
         <div class="student-detail-parent">
             <span class="header">Student Name</span>
-            <img src="{{ submissionObj.student.profile_pic_path }}">
+            <img src="{% get_media_prefix %}{{ submissionObj.student.profile_pic_path }}">
             <span class="text">{{ submissionObj.student.username }}</span>
         </div>
         {% if submissionObj.message %}

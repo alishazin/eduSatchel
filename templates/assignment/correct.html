@@ -24,7 +24,7 @@
                 <div class="all-files">
                     {% for obj in assignmentObj.files.all %}
                         <div class="file-container">
-                            <div class="download-butt" onclick="downloadFile('{{ obj.file_location }}')">
+                            <div class="download-butt" onclick="downloadFile('{% get_media_prefix %}{{ obj.file_location }}')">
                                 <i class="bi bi-download"></i>
                             </div>
                             <div class="format-parent">

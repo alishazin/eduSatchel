@@ -34,8 +34,8 @@ class HomePageView(AccountTypeView):
     def teacher_get(self, request):
         return render(request, 'home/home.html', {
             'header' : 'Classes Created',
-            # 'create_new_title' : 'Create A New Class',
-            # 'url_new' : f"{reverse('home:create-class')}",
+            'create_new_title' : 'Create A New Class',
+            'url_new' : f"{reverse('home:create-class')}",
             'class_obj_array' : request.user.class_set.all(),
             'notifications' : get_number_of_unseen_notification(request),
         })
@@ -43,8 +43,8 @@ class HomePageView(AccountTypeView):
     def student_get(self, request):
         return render(request, 'home/home.html', {
             'header' : 'Classes Entrolled',
-            # 'create_new_title' : 'Join A New Class',
-            # 'url_new' : f"{reverse('home:join-class')}",
+            'create_new_title' : 'Join A New Class',
+            'url_new' : f"{reverse('home:join-class')}",
             'classenrollment_obj_array' : request.user.classenrollment_set.filter(enrolled=True),
             'notifications' : get_number_of_unseen_notification(request),
         })
