@@ -13,7 +13,7 @@ def get_image_upload_location(self, filename):
     return f"profile/{self.image_storage_id}/image.{filename.split('.')[-1]}"
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username, password, account_type, portal_id):
+    def create_user(self, email, username, password, account_type):
         if not email:
             raise ValueError("User must have an email address.")
         if not username:
@@ -24,7 +24,6 @@ class CustomUserManager(BaseUserManager):
             email=self.normalize_email(email),
             username=username,
             account_type=account_type,
-            portal_id=portal_id,
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -49,7 +48,6 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser):
 
-    portal_id = models.IntegerField(verbose_name='portal_id', unique=True, null=True, blank=True) 
     email = models.EmailField(verbose_name='email', max_length=254, unique=True) 
     username = models.CharField(max_length=30, unique=False)
     date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True) 
@@ -59,9 +57,9 @@ class CustomUser(AbstractBaseUser):
     is_staff = models.BooleanField(default=False) 
     is_superuser = models.BooleanField(default=False) 
     account_type = models.CharField(max_length=7, choices=ACCOUNT_TYPES, blank=False, null=False)
-    profile_pic = models.URLField(blank=True, null=True)
+    profile_pic = models.ImageField(blank=True, upload_to=get_image_upload_location, default='profile/default.jpg')
     bio = models.TextField(max_length=300, null=True, blank=True)
-    is_email_verified = models.BooleanField(default=True)
+    is_email_verified = models.BooleanField(default=False)
     image_storage_id = models.UUIDField(default=uuid.uuid4, editable=False)
 
     objects = CustomUserManager()
