@@ -38,6 +38,19 @@ class ClassMenuView(View):
             'classObj' : classObj,
         })
 
+class ClassSettingsView(AccountTypeView):
+    def teacher_get(self, request, classID):
+        classObj = Class.objects.get(id=classID)
+        return render(request, 'classmenu/settings.html', {
+            'classObj' : classObj,
+        })
+
+    def student_get(self, request, classID):
+        classObj = Class.objects.get(id=classID)
+        return render(request, 'classmenu/settings_student.html', {
+            'classObj' : classObj,
+        })
+
 class AddAssignmentView(View):
     @classentry_check(account_type='teacher')
     def get(self, request, classID):

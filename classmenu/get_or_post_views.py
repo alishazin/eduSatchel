@@ -313,3 +313,38 @@ class ClosePollView(PostOnlyViewBase):
             return HttpResponse(json.dumps({'success' : True, 'optionDetails' : pollObj.get_option_results(request.user), 'total' : pollObj.total_votes}))
         
         return generalError
+
+class AllStudentsView(GetOnlyViewBase):
+    @classentry_check(account_type='teacher')
+    def get_only(self, request, classID):
+        classObj = Class.objects.get(id=classID)
+        return HttpResponse(json.dumps({'data' : [[i.student.encoded_id, i.student.username, i.student.profile_pic_path] for i in classObj.get_enrolled_students()]}))
+
+class RemoveStudentView(PostOnlyViewBase):
+    @classentry_check(account_type='teacher')
+    def post_only(self, request, classID):
+        if 'studentID' in request.POST.keys():
+            classObj = Class.objects.get(id=classID)
+            studentEncodedID = request.POST['studentID']
+            try:
+                studentID = urlsafe_base64_decode(studentEncodedID).decode()
+                userObj = CustomUser.objects.get(id=studentID)
+                if not removeStudent(userObj, classObj):
+                    return HttpResponse(json.dumps({'success' : False}))
+            except:
+                return HttpResponse(json.dumps({'success' : False}))
+            else:
+                after_removing_student(classObj, userObj)
+                return HttpResponse(json.dumps({'success' : True}))
+
+        return HttpResponse(json.dumps({'success' : False}))
+
+class LeaveClassView(PostOnlyViewBase):
+    @classentry_check(account_type='student')
+    def post_only(self, request, classID):
+        classObj = Class.objects.get(id=classID)
+        import time
+        time.sleep(2)
+        removeStudent(request.user, classObj)
+        after_leaving_class(classObj, request.user)
+        return HttpResponse(json.dumps({'success' : True}))

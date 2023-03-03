@@ -23,6 +23,11 @@
         <span>To Do</span>
     </div>
     <div class="separator"></div>
+    <div class="content-box" id="profile-box">
+        <i class="bi bi-person-circle"></i>
+        <span>Profile</span>
+    </div>
+    <div class="separator"></div>
     <div class="content-box" id="notification-box">
         <i>
             {% if notifications != False %}
@@ -53,6 +58,5 @@
     var homeURL = "{% url 'home:home-page' %}";
     var todoURL = "{% url 'home:todo-page' %}";
     var notificationsURL = "{% url 'home:notifications-page' %}";
-    var settingsURL = "{% url 'home:settings-page' %}";
 </script>
 {% endblock body %}
