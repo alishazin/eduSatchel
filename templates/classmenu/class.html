@@ -30,7 +30,7 @@
     </div>
     <div class="item msg-div">
         <div class="dummy-overlay">
-            <img src="{{ user.profile_pic_path }}">
+            <img src="{% get_media_prefix %}{{ user.profile_pic_path }}">
             <span>Send a message to the class..</span>
         </div>
         <div class="loading-overlay">
@@ -67,10 +67,19 @@
     </div>
 </div>
 <div class="right-content" tabindex="0">
+    <div class="item class-id">
+        <div class="header">Class ID</div>
+        <div class="id-box">
+            <span>{{ classObj.id }}</span>
+            <div class="icon-box" title="copy">
+                <i class="bi bi-clipboard"></i>
+            </div>
+        </div>
+    </div>
     <div class="item teacher-details">
         <div class="header">Teacher Details</div>
         <div class="sub-box">
-            <img src="{{ classObj.teacher.profile_pic_path }}"></img>
+            <img src="{% get_media_prefix %}{{ classObj.teacher.profile_pic_path }}"></img>
             <div class="name-box"><p>{{ classObj.teacher.username }}</p></div>
         </div>
         <div class="extra-box">
@@ -83,7 +92,7 @@
         {% endif %}
     </div>
     <div class="item class-desc">
-        <div class="header">Class Title</div>
+        <div class="header">Class Description</div>
         <div class="sub-box">
             <div class="desc-box">{{ classObj.description }}</div>
         </div>

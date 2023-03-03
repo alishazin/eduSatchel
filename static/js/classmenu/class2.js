@@ -110,7 +110,7 @@ function addMessageToList(response, beginning = false) {
     const parent = createElementWithAttributes('div', {classList : 'item recieve-msg'})
     
     const topBar = createElementWithAttributes('div', {classList : 'top-bar'})
-    const profileImage = createElementWithAttributes('img', {src : `${response['profilePath']}`})
+    const profileImage = createElementWithAttributes('img', {src : `${media_url}${response['profilePath']}`})
     topBar.appendChild(profileImage)
 
     let senderNameBox;
