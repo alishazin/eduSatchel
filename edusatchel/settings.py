@@ -183,5 +183,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'edusatchel@gmail.com'
 EMAIL_HOST_PASSWORD = 'xxcdugvupuhgimlu'
-
-ADMIN_ACCES_CODE = "@6f6BVWD5Ly6"
